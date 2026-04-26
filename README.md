@@ -413,6 +413,37 @@ against Processing's `core.jar` and packages the result. Native Windows
 PowerShell cannot run `.sh` files directly; use Git Bash/WSL or add a small
 PowerShell wrapper if native Windows builds become a regular workflow.
 
+### Deploying to your sketchbook
+
+After building, `deploy.sh` installs the library directly into your local
+Processing sketchbook so Processing can load it immediately — no manual copying
+required.  `build.sh` calls `deploy.sh` automatically, so a single
+`bash build.sh` both compiles and deploys.
+
+You can also run it on its own after a successful build:
+
+```bash
+bash deploy.sh
+```
+
+The script resolves the sketchbook location by platform:
+
+| Platform | Default sketchbook path |
+|---|---|
+| macOS | `~/Documents/Processing` |
+| Linux | `~/sketchbook` (falls back to `~/Documents/Processing`) |
+| Windows (Git Bash / MSYS2 / Cygwin) | `%USERPROFILE%\Documents\Processing` |
+
+If your sketchbook is in a non-standard location, override it:
+
+```bash
+PROCESSING_SKETCHBOOK="/path/to/sketchbook" bash deploy.sh
+```
+
+**Note:** if Processing has the library open when you deploy, the copy may
+fail.  Close Processing first, then re-run `bash deploy.sh`.  The compiled JAR
+is always available at `library/SpriteGame.jar` regardless.
+
 ---
 
 ## Credits
