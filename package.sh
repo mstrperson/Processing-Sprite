@@ -37,7 +37,15 @@ pushd "$STAGE" > /dev/null
 zip -r "$OUT" SpriteGame
 popd > /dev/null
 
-# ── 4. Clean up ──────────────────────────────────────────────────────────────
+# ── 4. Copy the metadata file (upload alongside the ZIP as a release asset) ──
+cp SpriteGame.txt "$SCRIPT_DIR/SpriteGame.txt"
+
+# ── 5. Clean up ──────────────────────────────────────────────────────────────
 rm -rf "$STAGE"
 
 echo "Packaged: $OUT"
+echo "Metadata: $SCRIPT_DIR/SpriteGame.txt"
+echo ""
+echo "Upload both files as GitHub release assets:"
+echo "  SpriteGame.zip"
+echo "  SpriteGame.txt"
