@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
 # ── 1. Build the JAR ────────────────────────────────────────────────────────
-bash build.sh
+#bash build.sh
 
 # ── 2. Assemble the staging tree ────────────────────────────────────────────
 STAGE="$(mktemp -d)"
