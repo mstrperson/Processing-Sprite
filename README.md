@@ -319,6 +319,17 @@ The `Tree` class is intentionally left incomplete — drawing the tree is the st
 
 ---
 
+### AsteroidsGame
+
+A playable Asteroids-style arcade game with a rotating ship, thrust, bullets,
+splitting asteroids, scoring, lives, waves, invincibility after respawn, and
+restart after game over.
+
+**Concepts:** Custom `Sprite` subclasses, `Vector2D` velocity math, sprite
+lists, collision checks, game state, and screen wrapping
+
+---
+
 ### CalculatorExample
 
 A fully functional four-function calculator where each key is a `Button` sprite wired to a lambda via `onClicked()`.
