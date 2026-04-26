@@ -51,14 +51,13 @@ The library intentionally keeps its own source code readable and well-documented
 
 ## Installation
 
-1. Download or clone this repository.
-2. Copy the `Processing-Sprite` folder into your Processing libraries directory:
+1. Download [SpriteGame.zip](https://github.com/mstrperson/Processing-Sprite/blob/master/SpriteGame.zip).
+2. Copy the unzipped folder into your Processing libraries directory:
    - **Windows:** `Documents\Processing\libraries\`
    - **macOS:** `~/Documents/Processing/libraries/`
    - **Linux:** `~/sketchbook/libraries/`
-3. Rename the folder to `SpriteGame` so Processing can find it.
-4. Restart Processing.
-5. Verify the install: **Sketch → Import Library → SpriteGame** should appear in the menu.
+3. Restart Processing, if you have it running.
+4. Verify the install: **Sketch → Import Library → SpriteGame** should appear in the menu.
 
 ---
 
