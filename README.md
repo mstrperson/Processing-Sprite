@@ -172,10 +172,14 @@ Block wall = new Block(this, 0, 300, width, 20, color(80));
 
 ### `ImageSprite`
 
-A sprite that displays a picture file instead of a drawn shape.  Place the image in your sketch's `data/` folder.  The image is automatically resized to 100 × 100 pixels and centred on the sprite's position.
+A sprite that displays a picture file instead of a drawn shape.  Place the image in your sketch's `data/` folder.  By default, the image is drawn 100 × 100 pixels and centered on the sprite's position.  You can also set a custom display size and rotate the image in radians.
 
 ```java
 ImageSprite hero = new ImageSprite(this, 200, 300, "hero.png");
+ImageSprite boss = new ImageSprite(this, 400, 300, "boss.png", 180, 120);
+
+boss.setRotation(PI / 4); // turn to 45 degrees
+boss.rotate(0.03);        // add a little more rotation each frame
 ```
 
 ---
