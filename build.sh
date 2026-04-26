@@ -54,7 +54,9 @@ add_root() {
 add_existing_roots() {
   local root
   for root in "$@"; do
-    [ -d "$root" ] && SEARCH_ROOTS+=("$root")
+    if [ -d "$root" ]; then
+      SEARCH_ROOTS+=("$root")
+    fi
   done
 }
 
@@ -187,3 +189,6 @@ echo "Building $LIB_DIR/$JAR_NAME"
 "$JAR_TOOL_PATH" cf "$LIB_DIR/$JAR_NAME" -C "$BIN_DIR" .
 
 echo "Built $LIB_DIR/$JAR_NAME"
+
+# ── Deploy to local Processing libraries directory ───────────────────────────
+bash "$SCRIPT_DIR/deploy.sh"
