@@ -11,8 +11,10 @@ import processing.core.PApplet;
  * like {@link Blob} or {@link Block} that fills in the {@link #drawSprite()}
  * method with the actual drawing code.</p>
  *
- * <p>Every sprite stores its position and velocity as {@link Vector2D} objects,
- * and wraps around the screen edges when {@link #move()} is called.</p>
+ * <p>Every sprite stores its position and velocity as {@link Vector2D} objects.
+ * What happens when a sprite reaches the edge of the screen is controlled by
+ * the static {@link #screenBehavior} field — change it once in {@code setup()}
+ * and every sprite obeys it automatically.</p>
  *
  * <p>Pass your sketch's {@code this} reference as the first argument to any
  * constructor so the sprite can access screen dimensions and draw itself:
@@ -33,6 +35,26 @@ public abstract class Sprite {
 
     /** The sprite's current velocity — how far it moves each frame. */
     protected Vector2D vel;
+
+    /**
+     * Controls what happens to every sprite when it reaches the edge of the screen.
+     * Change this once in your sketch's {@code setup()} and all sprites obey it.
+     *
+     * <ul>
+     *   <li>{@link ScreenBehavior#Wrapping}    — sprite exits one edge and re-enters the opposite (default)</li>
+     *   <li>{@link ScreenBehavior#HardWalls}   — sprite stops at the edge and velocity on that axis is zeroed</li>
+     *   <li>{@link ScreenBehavior#BouncyWalls} — sprite bounces by reversing the relevant velocity component</li>
+     *   <li>{@link ScreenBehavior#NoWalls}     — sprite moves freely and can travel off-screen</li>
+     * </ul>
+     *
+     * <p>Example:</p>
+     * <pre>
+     *   void setup() {
+     *     Sprite.screenBehavior = ScreenBehavior.BouncyWalls;
+     *   }
+     * </pre>
+     */
+    public static ScreenBehavior screenBehavior = ScreenBehavior.Wrapping;
 
     /**
      * Creates a sprite at position (x, y) with no initial velocity.
@@ -119,15 +141,38 @@ public abstract class Sprite {
 
     /**
      * Moves the sprite forward one step by adding its velocity to its position,
-     * then wraps it around if it goes off any edge of the screen.
+     * then applies the current {@link #screenBehavior} to handle screen edges.
      * Call this once per frame inside your {@code draw()} loop.
      */
     public void move() {
         pos = pos.add(vel);
-        if (pos.x > parent.width)  pos.x -= parent.width;
-        if (pos.x < 0)             pos.x += parent.width;
-        if (pos.y > parent.height) pos.y -= parent.height;
-        if (pos.y < 0)             pos.y += parent.height;
+
+        switch (screenBehavior) {
+            case Wrapping:
+                if (pos.x > parent.width)  pos.x -= parent.width;
+                if (pos.x < 0)             pos.x += parent.width;
+                if (pos.y > parent.height) pos.y -= parent.height;
+                if (pos.y < 0)             pos.y += parent.height;
+                break;
+
+            case HardWalls:
+                if (pos.x > parent.width)  { pos.x = parent.width;  vel.x = 0; }
+                if (pos.x < 0)             { pos.x = 0;             vel.x = 0; }
+                if (pos.y > parent.height) { pos.y = parent.height; vel.y = 0; }
+                if (pos.y < 0)             { pos.y = 0;             vel.y = 0; }
+                break;
+
+            case BouncyWalls:
+                if (pos.x > parent.width)  { pos.x = parent.width;  vel.x = -vel.x; }
+                if (pos.x < 0)             { pos.x = 0;             vel.x = -vel.x; }
+                if (pos.y > parent.height) { pos.y = parent.height; vel.y = -vel.y; }
+                if (pos.y < 0)             { pos.y = 0;             vel.y = -vel.y; }
+                break;
+
+            case NoWalls:
+                // No boundary enforcement — sprites move freely off-screen.
+                break;
+        }
     }
 
     /**
