@@ -390,7 +390,9 @@ new Button(this, x, y, 75, 75, "+", orange, white)
 
 ## Building from Source
 
-The build script uses Processing's own bundled Java 17 compiler and requires no additional tools.
+The build script looks for Processing's bundled Java compiler and `core.jar`
+automatically on macOS, Linux, and Windows Bash environments such as Git Bash,
+MSYS2, Cygwin, or WSL.
 
 ```bash
 # From the repository root
@@ -399,7 +401,17 @@ bash build.sh
 
 Output: `library/SpriteGame.jar`
 
-The script compiles all sources in `src/coxprogramming/processing/sprites/` against Processing's `core.jar` and packages the result.  If you move or upgrade Processing, update the `CORE_JAR` and `JAVAC` paths at the top of `build.sh`.
+If Processing is installed in an unusual location, pass explicit paths:
+
+```bash
+PROCESSING_HOME="/path/to/Processing" bash build.sh
+CORE_JAR="/path/to/core.jar" JAVAC="/path/to/javac" bash build.sh
+```
+
+The script compiles all sources in `src/coxprogramming/processing/sprites/`
+against Processing's `core.jar` and packages the result. Native Windows
+PowerShell cannot run `.sh` files directly; use Git Bash/WSL or add a small
+PowerShell wrapper if native Windows builds become a regular workflow.
 
 ---
 
