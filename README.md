@@ -107,6 +107,7 @@ Sprite  (abstract)
 │   └── Block
 ├── ImageSprite
 └── CompoundSprite
+    └── AnimatedSprite
 
 Vector2D   — 2D vector math
 Event      — event / listener system
@@ -204,6 +205,30 @@ player.drawSprite();
 ```
 
 `addSprite()` and `removeSprite()` return `this` for builder-style chaining.
+
+---
+
+### `AnimatedSprite`
+
+A `CompoundSprite` that uses its child sprites as animation frames and draws
+one frame at a time.  `frameRate` means game frames per animation frame: a
+value of `8` holds each animation frame for 8 calls to `drawSprite()`.
+
+```java
+AnimatedSprite cloud = AnimatedSprite.FromSprite(frame0)
+    .AddFrameSprite(frame1)
+    .AddFrameSprite(frame2)
+    .setFrameRate(8);
+
+cloud.setVelocity(1, 0);
+
+// In draw():
+cloud.move();
+cloud.drawSprite();
+```
+
+Use `getFrameNumber()`, `setFrameNumber(n)`, `getFrameRate()`, and
+`setFrameRate(n)` to inspect or control the animation.
 
 ---
 
@@ -319,6 +344,18 @@ A sky-and-ground scene with a drifting sun, animated clouds, and placeholder tre
 **Concepts:** Extending `Sprite`, `drawSprite()` implementation, draw-order layering, the `size` scaling pattern
 
 The `Tree` class is intentionally left incomplete — drawing the tree is the student's assignment.
+
+---
+
+### AnimatedSceneExample
+
+A variation on `SceneExample` that uses `AnimatedSprite` for drifting clouds
+and a shimmering sun.  Each cloud animation is built from several `CloudFrame`
+sprites with slightly different shapes and grey values; the sun animation uses
+several `SunFrame` sprites with changing ray lengths.
+
+**Concepts:** `AnimatedSprite`, sprite frames, frame rate, builder-style
+animation setup, grouped movement
 
 ---
 
