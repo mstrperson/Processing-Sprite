@@ -65,8 +65,12 @@ do_deploy() {
   mkdir -p "$DEPLOY_DIR/library"
   cp "$LIB_DIR/$JAR_NAME"             "$DEPLOY_DIR/library/$JAR_NAME"
   cp "$SCRIPT_DIR/library.properties" "$DEPLOY_DIR/library.properties"
+  cp "$SCRIPT_DIR/LICENSE"            "$DEPLOY_DIR/LICENSE"
   cp -r "$SCRIPT_DIR/examples"        "$DEPLOY_DIR/examples"
   cp -r "$SCRIPT_DIR/src"             "$DEPLOY_DIR/src"
+  if [ -d "$SCRIPT_DIR/reference" ]; then
+    cp -r "$SCRIPT_DIR/reference"     "$DEPLOY_DIR/reference"
+  fi
   echo "Deployed to $DEPLOY_DIR"
 }
 
