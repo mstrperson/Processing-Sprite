@@ -1,0 +1,12 @@
+Place your image files in this folder.
+
+The main sketch expects:
+  hero.png  — your player character image
+  tree.png  — a decoration image (or rename/replace with whatever you like)
+
+Tips:
+  - PNG files with transparent backgrounds look best
+  - Any size works — Processing will scale the image to whatever size you specify
+  - Recommended free resources:
+      opengameart.org   — game sprites, free to use
+      remove.bg         — remove the background from any photo (free, online)

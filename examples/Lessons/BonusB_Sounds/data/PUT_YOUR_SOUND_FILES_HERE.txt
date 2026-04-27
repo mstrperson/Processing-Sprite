@@ -1,0 +1,15 @@
+Place your sound files in this folder.
+
+The main sketch expects:
+  collect.wav   — a short sound effect for collecting a coin (WAV recommended)
+  gameover.wav  — a sound for when the game ends
+  music.mp3     — background music that will loop (MP3 or WAV)
+
+Tips:
+  - WAV files are the most reliable format in Processing
+  - Keep sound effects short (under 2 seconds)
+  - Lower the music volume in code with bgMusic.amp(0.4) so effects can be heard
+  - Recommended free resources:
+      freesound.org       — thousands of free sound effects (free account required)
+      opengameart.org     — free game music and sounds
+      zapsplat.com        — free sound effects (free account required)
