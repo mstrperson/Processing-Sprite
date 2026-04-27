@@ -49,18 +49,24 @@ Key things to demonstrate:
 
 **New tab — MyCharacter.pde:**
 ```java
-// MyCharacter — this is YOUR character. Change everything!
+/** 
+ * MyCharacter — this is YOUR character. Change everything!
+ */
 class MyCharacter extends Blob {
 
-  // The constructor: called once when you create the character.
-  // "super" connects your character to the Blob it's built on.
-  // The radius (30) is the invisible collision circle — make it match your character's size.
+  /** 
+   * The constructor: called once when you create the character.
+   * "super" connects your character to the Blob it's built on.
+   * The radius (30) is the invisible collision circle — make it match your character's size.
+   */
   MyCharacter(PApplet p, float x, float y) {
     super(p, x, y, 30, color(100, 180, 255));
   }
 
-  // drawSprite: called every frame to draw your character on screen.
-  // Use pos.x and pos.y as the center — all other shapes are measured from there.
+  /** 
+   * drawSprite: called every frame to draw your character on screen.
+   * Use pos.x and pos.y as the center — all other shapes are measured from there.
+   */
   void drawSprite() {
     // Body
     fill(100, 180, 255);

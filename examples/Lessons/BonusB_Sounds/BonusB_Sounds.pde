@@ -37,6 +37,11 @@ SoundFile collectSound;
 SoundFile gameOverSound;
 SoundFile bgMusic;
 
+/**
+ * Creates the window, loads all sound files, starts background music,
+ * places the character, and spawns 10 coins.
+ * Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
 
@@ -60,6 +65,10 @@ void setup() {
   }
 }
 
+/**
+ * Clears the screen and routes to the active game or the win screen.
+ * Called automatically ~60 times per second.
+ */
 void draw() {
   background(240);
 
@@ -70,6 +79,11 @@ void draw() {
   }
 }
 
+/**
+ * Moves and draws every coin, checks for collision, removes collected coins,
+ * plays the collect sound on each hit, and triggers the end sequence when
+ * all coins are gone. Called from draw() while the game is active.
+ */
 void playGame() {
   for (int i = coins.size() - 1; i >= 0; i--) {
     Blob c = coins.get(i);
@@ -97,6 +111,10 @@ void playGame() {
   text("Score: " + score, 20, 36);
 }
 
+/**
+ * Displays the win screen with the final score.
+ * Called from draw() after all coins have been collected.
+ */
 void showGameOver() {
   textAlign(CENTER, CENTER);
   fill(80, 180, 80);

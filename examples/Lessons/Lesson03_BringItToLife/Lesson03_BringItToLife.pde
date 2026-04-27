@@ -12,19 +12,28 @@
  *   - Change the background color to set a mood
  *
  * Reminder: positive vx moves RIGHT, negative vx moves LEFT.
- *           positive vy moves DOWN, negative vy moves UP.
+ *           positive vy moves DOWN,  negative vy moves UP.
  */
 
 import coxprogramming.processing.sprites.*;
 
 MyCharacter player;
 
+/**
+ * Creates the window, places the character, and gives it a starting velocity.
+ * Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
   player = new MyCharacter(this, width/2, height/2);
   player.setVelocity(3, -2);  // 3 pixels right, 2 pixels up per frame
 }
 
+/**
+ * Clears the screen, moves the character, then draws it.
+ * Called automatically ~60 times per second.
+ * move() must come before drawSprite() so the position is updated first.
+ */
 void draw() {
   background(240);
   player.move();        // update position — always before drawSprite()

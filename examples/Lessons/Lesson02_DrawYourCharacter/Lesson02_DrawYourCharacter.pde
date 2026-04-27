@@ -15,11 +15,18 @@ import coxprogramming.processing.sprites.*;
 
 MyCharacter player;
 
+/**
+ * Creates the window and places the character in the center.
+ * Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
   player = new MyCharacter(this, width/2, height/2);
 }
 
+/**
+ * Clears the screen and draws the character. Called automatically ~60 times per second.
+ */
 void draw() {
   background(240);
   player.drawSprite();

@@ -19,6 +19,10 @@ ArrayList<Blob> coins;
 int score = 0;
 boolean gameOver = false;
 
+/**
+ * Creates the window, places the character, and spawns 10 coins.
+ * Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
 
@@ -35,6 +39,10 @@ void setup() {
   }
 }
 
+/**
+ * Clears the screen and routes to the active game or the win screen.
+ * Called automatically ~60 times per second.
+ */
 void draw() {
   background(240);
 
@@ -45,6 +53,10 @@ void draw() {
   }
 }
 
+/**
+ * Moves and draws all coins and the player. Checks the win condition.
+ * Displays the current score. Called from draw() while the game is active.
+ */
 void playGame() {
   for (Blob c : coins) {
     c.move();
@@ -63,6 +75,10 @@ void playGame() {
   text("Score: " + score, 20, 36);
 }
 
+/**
+ * Displays the win screen with the final score.
+ * Called from draw() after the game is over.
+ */
 void showWin() {
   textAlign(CENTER, CENTER);
   fill(80, 180, 80);
