@@ -1,8 +1,6 @@
 package coxprogramming.processing.sprites;
 
-/*
- * Original author: Stephcraft
- */
+// Original author: Stephcraft
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -69,9 +67,9 @@ public class Event {
 
         @Override
         public int hashCode() {
-            int className    = method.getDeclaringClass().getName().hashCode();
+            int className = method.getDeclaringClass().getName().hashCode();
             int functionName = method.getName().hashCode();
-            int parameters   = method.getParameterTypes().hashCode();
+            int parameters = method.getParameterTypes().hashCode();
             return className ^ functionName ^ parameters;
         }
     }

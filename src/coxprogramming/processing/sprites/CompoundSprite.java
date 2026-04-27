@@ -1,7 +1,8 @@
 package coxprogramming.processing.sprites;
 
-import processing.core.PApplet;
 import java.util.ArrayList;
+
+import processing.core.PApplet;
 
 /**
  * A sprite made up of multiple other sprites that move together as a group.

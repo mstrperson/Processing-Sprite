@@ -149,24 +149,24 @@ public abstract class Sprite {
 
         switch (screenBehavior) {
             case Wrapping:
-                if (pos.x > parent.width)  pos.x -= parent.width;
-                if (pos.x < 0)             pos.x += parent.width;
+                if (pos.x > parent.width) pos.x -= parent.width;
+                if (pos.x < 0) pos.x += parent.width;
                 if (pos.y > parent.height) pos.y -= parent.height;
-                if (pos.y < 0)             pos.y += parent.height;
+                if (pos.y < 0) pos.y += parent.height;
                 break;
 
             case HardWalls:
-                if (pos.x > parent.width)  { pos.x = parent.width;  vel.x = 0; }
-                if (pos.x < 0)             { pos.x = 0;             vel.x = 0; }
+                if (pos.x > parent.width) { pos.x = parent.width; vel.x = 0; }
+                if (pos.x < 0) { pos.x = 0; vel.x = 0; }
                 if (pos.y > parent.height) { pos.y = parent.height; vel.y = 0; }
-                if (pos.y < 0)             { pos.y = 0;             vel.y = 0; }
+                if (pos.y < 0) { pos.y = 0; vel.y = 0; }
                 break;
 
             case BouncyWalls:
-                if (pos.x > parent.width)  { pos.x = parent.width;  vel.x = -vel.x; }
-                if (pos.x < 0)             { pos.x = 0;             vel.x = -vel.x; }
+                if (pos.x > parent.width) { pos.x = parent.width; vel.x = -vel.x; }
+                if (pos.x < 0) { pos.x = 0; vel.x = -vel.x; }
                 if (pos.y > parent.height) { pos.y = parent.height; vel.y = -vel.y; }
-                if (pos.y < 0)             { pos.y = 0;             vel.y = -vel.y; }
+                if (pos.y < 0) { pos.y = 0; vel.y = -vel.y; }
                 break;
 
             case NoWalls:
@@ -208,11 +208,11 @@ public abstract class Sprite {
      */
     public void keyboardControl() {
         switch (parent.keyCode) {
-            case PApplet.UP:    vel.y = -5; vel.x =  0; break;
-            case PApplet.DOWN:  vel.y =  5; vel.x =  0; break;
-            case PApplet.LEFT:  vel.y =  0; vel.x = -5; break;
-            case PApplet.RIGHT: vel.y =  0; vel.x =  5; break;
-            default:            vel.x =  0; vel.y =  0; break;
+            case PApplet.UP: vel.y = -5; vel.x = 0; break;
+            case PApplet.DOWN: vel.y = 5; vel.x = 0; break;
+            case PApplet.LEFT: vel.y = 0; vel.x = -5; break;
+            case PApplet.RIGHT: vel.y = 0; vel.x = 5; break;
+            default: vel.x = 0; vel.y = 0; break;
         }
     }
 

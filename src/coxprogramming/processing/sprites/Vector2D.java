@@ -115,7 +115,7 @@ public class Vector2D {
      * @return the length of this vector as a non-negative float
      */
     public float mag() {
-        return (float) Math.sqrt(x * x + y * y);
+        return (float) Math.sqrt(x*x + y*y);
     }
 
     /**
@@ -128,7 +128,7 @@ public class Vector2D {
      * @return the dot product as a float
      */
     public float dotProduct(Vector2D other) {
-        return this.x * other.x + this.y * other.y;
+        return this.x*other.x + this.y*other.y;
     }
 
     /**
