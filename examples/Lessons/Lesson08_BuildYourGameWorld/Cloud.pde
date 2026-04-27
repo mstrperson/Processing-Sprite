@@ -1,14 +1,28 @@
 /**
  * Cloud — a drifting background decoration.
+ *
+ * {@code extends Blob} means Cloud already knows how to move and wrap —
+ * all we add is what it looks like inside {@code drawSprite()}.
  * Redesign this to fit your world (star, fish, rock, bubble …).
  */
 class Cloud extends Blob {
 
+  /**
+   * Creates a cloud at (x, y) that drifts to the right at the given speed.
+   *
+   * @param p      the Processing sketch — always pass {@code this}
+   * @param x      starting x position (center of the cloud)
+   * @param y      starting y position (center of the cloud)
+   * @param speed  horizontal speed in pixels per frame
+   */
   Cloud(PApplet p, float x, float y, float speed) {
     super(p, x, y, 40, color(255));
     setVelocity(speed, 0);
   }
 
+  /**
+   * Draws the cloud as overlapping ellipses. Called automatically every frame.
+   */
   void drawSprite() {
     noStroke();
     fill(250, 250, 255);

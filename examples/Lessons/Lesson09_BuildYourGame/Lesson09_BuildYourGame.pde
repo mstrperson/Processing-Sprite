@@ -32,11 +32,19 @@ int score = 0;
 boolean gameOver = false;
 boolean playerWon = false;
 
+/**
+ * Creates the window and calls restartGame() to build all sprites.
+ * Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
   restartGame();
 }
 
+/**
+ * Clears the screen, draws background elements, then routes to the
+ * correct screen based on game state. Called automatically ~60 times per second.
+ */
 void draw() {
   background(135, 206, 235);  // CHANGE: your sky / background color
 
@@ -56,6 +64,10 @@ void draw() {
   }
 }
 
+/**
+ * Moves and draws collectibles and hazards, checks for collisions with the player,
+ * updates score, and draws the player. Called from draw() during active play.
+ */
 void playGame() {
   // Collectibles — touch these to score
   for (int i = collectibles.size() - 1; i >= 0; i--) {
@@ -77,7 +89,7 @@ void playGame() {
     }
   }
 
-  // Player — drawn last so it appears in front
+  // Player — drawn last so it appears in front of everything
   player.followMouse();
   player.drawSprite();
 
@@ -90,6 +102,9 @@ void playGame() {
   text("Score: " + score, 20, 32);
 }
 
+/**
+ * Displays the win screen. Called from draw() when all collectibles are collected.
+ */
 void showWin() {
   textAlign(CENTER, CENTER);
   fill(80, 200, 100);
@@ -102,6 +117,9 @@ void showWin() {
   textAlign(LEFT, TOP);
 }
 
+/**
+ * Displays the game over screen. Called from draw() when the player hits a hazard.
+ */
 void showGameOver() {
   textAlign(CENTER, CENTER);
   fill(220, 60, 60);
@@ -114,12 +132,20 @@ void showGameOver() {
   textAlign(LEFT, TOP);
 }
 
+/**
+ * Called once each time the mouse button is clicked.
+ * Restarts the game if it has ended.
+ */
 void mousePressed() {
   if (gameOver || playerWon) {
     restartGame();
   }
 }
 
+/**
+ * Resets all variables to their starting values and rebuilds every sprite list.
+ * Called from setup() at the start and from mousePressed() to replay.
+ */
 void restartGame() {
   score = 0;
   gameOver = false;

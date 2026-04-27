@@ -5,8 +5,8 @@
  *   - A counting loop in setup() creates the coins.
  *   - A for-each loop in draw() visits every coin to move and draw it.
  *
- * An optional Cloud class lives in Cloud.pde — open that tab to see
- * how to build your own simple environment sprite.
+ * The Cloud class lives in Cloud.pde — open that tab to see how to build
+ * your own simple environment sprite.
  *
  * Things to try:
  *   - Change the number 12 in setup() to add more or fewer coins
@@ -21,13 +21,17 @@ MyCharacter player;
 ArrayList<Blob> coins;
 ArrayList<Cloud> clouds;
 
+/**
+ * Creates the window, spawns 12 coins at random positions, and adds clouds.
+ * Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
 
   player = new MyCharacter(this, width/2, height/2);
   player.setVelocity(4, 0);
 
-  // Counting loop — runs 12 times to add 12 coins
+  // Counting loop — runs 12 times to create 12 coins
   coins = new ArrayList<Blob>();
   for (int i = 0; i < 12; i++) {
     coins.add(new Blob(
@@ -41,13 +45,17 @@ void setup() {
     ));
   }
 
-  // A few drifting clouds in the background
   clouds = new ArrayList<Cloud>();
   clouds.add(new Cloud(this, 100,  80, 0.6));
   clouds.add(new Cloud(this, 370,  55, 0.4));
   clouds.add(new Cloud(this, 620, 110, 0.7));
 }
 
+/**
+ * Clears the screen then moves and draws clouds, coins, and the player.
+ * Called automatically ~60 times per second.
+ * Draw order matters: things drawn first appear behind things drawn later.
+ */
 void draw() {
   background(135, 206, 235);  // sky blue
 
@@ -68,7 +76,10 @@ void draw() {
   player.drawSprite();
 }
 
-// Click to add a new coin at the mouse position
+/**
+ * Called once each time the mouse button is clicked.
+ * Adds a new coin at the mouse position.
+ */
 void mousePressed() {
   coins.add(new Blob(
     this, mouseX, mouseY,

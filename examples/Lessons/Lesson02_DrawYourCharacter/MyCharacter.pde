@@ -1,21 +1,32 @@
 /**
- * MyCharacter — redesign this to make it yours!
+ * MyCharacter — this is YOUR character. Change everything!
  *
- * extends Blob means your character is built on top of Blob.
+ * {@code extends Blob} means your character is built on top of Blob.
  * It already knows how to move, wrap around the screen, and detect collisions.
- * All you have to do is decide what it looks like inside drawSprite().
- *
- * Use pos.x and pos.y as your character's center.
- * Every other shape is measured from there.
+ * All you add is what it looks like, inside {@code drawSprite()}.
  */
 class MyCharacter extends Blob {
 
+  /**
+   * Creates a new MyCharacter at position (x, y).
+   * The radius (30) is the invisible collision circle — adjust it if your
+   * character grows much larger or smaller.
+   *
+   * @param p  the Processing sketch — always pass {@code this}
+   * @param x  starting x position (center of the character)
+   * @param y  starting y position (center of the character)
+   */
   MyCharacter(PApplet p, float x, float y) {
-    // super() is the handshake that connects your character to the library.
-    // The 30 is the collision radius — change it if your character is much bigger or smaller.
     super(p, x, y, 30, color(100, 180, 255));
   }
 
+  /**
+   * Draws your character on screen. Called automatically every frame.
+   *
+   * Use {@code pos.x} and {@code pos.y} as your character's center.
+   * Every other shape is placed relative to that point — think of it
+   * as your character's belly button.
+   */
   void drawSprite() {
     // Body
     fill(100, 180, 255);

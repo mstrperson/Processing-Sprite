@@ -23,6 +23,10 @@ ArrayList<Cloud> clouds;
 int score = 0;
 boolean gameOver = false;
 
+/**
+ * Creates the window, builds the ground and clouds, places the character,
+ * and spawns 10 coins. Runs once when the sketch starts.
+ */
 void setup() {
   size(800, 600);
 
@@ -46,6 +50,11 @@ void setup() {
   }
 }
 
+/**
+ * Clears the screen and draws everything in the correct order.
+ * Draw order: sky (background) → clouds → ground → game objects → player.
+ * Called automatically ~60 times per second.
+ */
 void draw() {
   background(135, 206, 235);  // sky — change this first!
 
@@ -65,6 +74,11 @@ void draw() {
   }
 }
 
+/**
+ * Moves and draws all coins, checks for collision with the player,
+ * and removes collected coins. Draws the player in front of everything.
+ * Called from draw() while the game is active.
+ */
 void playGame() {
   // 3. Coins
   for (int i = coins.size() - 1; i >= 0; i--) {
@@ -90,6 +104,10 @@ void playGame() {
   text("Score: " + score, 20, 36);
 }
 
+/**
+ * Displays the win screen with the final score.
+ * Called from draw() after all coins have been collected.
+ */
 void showWin() {
   textAlign(CENTER, CENTER);
   fill(80, 180, 80);
