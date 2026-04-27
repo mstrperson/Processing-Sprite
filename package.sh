@@ -1,51 +1,73 @@
 #!/usr/bin/env bash
-# package.sh — build SpriteGame.jar and bundle it into SpriteGame.zip
-# for submission to the Processing Contributed Library Manager.
+# package.sh — bundle SpriteGame into a release zip for the Processing
+# Contributed Library Manager.
 #
-# The ZIP must contain a single top-level folder named SpriteGame/ with:
-#   SpriteGame/library/SpriteGame.jar
-#   SpriteGame/library.properties
-#   SpriteGame/examples/
-#   SpriteGame/src/
+# Prerequisites (run in order before this script):
+#   1. bash build.sh      — compiles library/SpriteGame.jar
+#   2. bash javadoc.sh    — generates reference/ (optional but recommended)
+#
+# Output (all written to releases/download/latest/):
+#   SpriteGame.zip    — the distributable archive
+#   SpriteGame.pdex   — identical to .zip; enables IDE pde:// installation
+#   SpriteGame.txt    — copy of library.properties for the Contribution Manager
 #
 # Usage: bash package.sh
-set -e
+
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# ── 1. Build the JAR ────────────────────────────────────────────────────────
-#bash build.sh
+[ -f library/SpriteGame.jar ] || {
+  echo "package.sh: library/SpriteGame.jar not found — run build.sh first." >&2
+  exit 1
+}
 
-# ── 2. Assemble the staging tree ────────────────────────────────────────────
+# ── 1. Assemble the staging tree ─────────────────────────────────────────────
 STAGE="$(mktemp -d)"
 LIB_STAGE="$STAGE/SpriteGame"
 
 mkdir -p "$LIB_STAGE/library"
 
-cp  library/SpriteGame.jar   "$LIB_STAGE/library/SpriteGame.jar"
-cp  library.properties        "$LIB_STAGE/library.properties"
-cp -r examples                "$LIB_STAGE/examples"
-cp -r src                     "$LIB_STAGE/src"
+cp library/SpriteGame.jar "$LIB_STAGE/library/SpriteGame.jar"
+cp library.properties     "$LIB_STAGE/library.properties"
+cp LICENSE                "$LIB_STAGE/LICENSE"
+cp -r examples            "$LIB_STAGE/examples"
+cp -r src                 "$LIB_STAGE/src"
 
-# ── 3. Zip ───────────────────────────────────────────────────────────────────
-OUT="$SCRIPT_DIR/SpriteGame.zip"
-rm -f "$OUT"
+# Include generated reference docs if they exist
+if [ -d reference ]; then
+  cp -r reference "$LIB_STAGE/reference"
+else
+  echo "package.sh: reference/ not found — run javadoc.sh first for complete docs."
+fi
 
-# Use pushd so relative paths inside the ZIP are SpriteGame/...
+# ── 2. Zip ────────────────────────────────────────────────────────────────────
+RELEASE_DIR="$SCRIPT_DIR/releases/download/latest"
+mkdir -p "$RELEASE_DIR"
+
+ZIP="$RELEASE_DIR/SpriteGame.zip"
+PDEX="$RELEASE_DIR/SpriteGame.pdex"
+TXT="$RELEASE_DIR/SpriteGame.txt"
+
+rm -f "$ZIP" "$PDEX" "$TXT"
+
 pushd "$STAGE" > /dev/null
-zip -r "$OUT" SpriteGame
+zip -r "$ZIP" SpriteGame
 popd > /dev/null
 
-# ── 4. Copy the metadata file (upload alongside the ZIP as a release asset) ──
-cp SpriteGame.txt "$SCRIPT_DIR/SpriteGame.txt"
+# ── 3. Create .pdex (identical to .zip — enables IDE pde:// installation) ────
+cp "$ZIP" "$PDEX"
 
-# ── 5. Clean up ──────────────────────────────────────────────────────────────
+# ── 4. Create .txt (copy of library.properties for Contribution Manager) ─────
+cp library.properties "$TXT"
+
+# ── 5. Clean up ───────────────────────────────────────────────────────────────
 rm -rf "$STAGE"
 
-echo "Packaged: $OUT"
-echo "Metadata: $SCRIPT_DIR/SpriteGame.txt"
+echo "Packaged:"
+echo "  $ZIP"
+echo "  $PDEX"
+echo "  $TXT"
 echo ""
-echo "Upload both files as GitHub release assets:"
-echo "  SpriteGame.zip"
-echo "  SpriteGame.txt"
+echo "Commit and push releases/ to publish the update."

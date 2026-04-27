@@ -1,7 +1,7 @@
 name=SpriteGame
 version=1
 prettyVersion=0.1.0
-minRevision=228
+minRevision=1270
 maxRevision=0
 authors=[Jason Cox]
 url=https://github.com/mstrperson/Processing-Sprite
@@ -9,5 +9,5 @@ sentence=Sprite-based game development library for teaching OOP in Processing.
 paragraph=Provides Sprite, Blob, Block, ImageSprite, CompoundSprite, AnimatedSprite, Vector2D, and Event classes for educational sprite-based game development.
 keywords=sprite,game,oop,education,objects-first
 category=Other
-download=https://github.com/mstrperson/Processing-Sprite/blob/master/releases/download/latest/SpriteGame.zip
+download=https://raw.githubusercontent.com/mstrperson/Processing-Sprite/master/releases/download/latest/SpriteGame.zip
 source=https://github.com/mstrperson/Processing-Sprite
