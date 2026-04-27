@@ -21,10 +21,10 @@
 <!--
 Key things to demonstrate:
 
-Block constructor: new Block(this, x, y, width, height, vx, vy, color)
+Block constructor: new Block(this, x, y, width, height, color)
   - x, y is the top-left corner (unlike Blob where it's the center)
-  - For static terrain: vx=0, vy=0
-  - A ground strip: new Block(this, 0, height-80, width, 80, 0, 0, color(80, 160, 60))
+  - Block is always stationary — there is no velocity parameter
+  - A ground strip: new Block(this, 0, height-80, width, 80, color(80, 160, 60))
 
 Draw order:
   - Show a concrete example on projector: draw a big block, then draw a blob on top
@@ -61,7 +61,7 @@ void setup() {
   size(800, 600);
 
   // Ground strip along the bottom
-  ground = new Block(this, 0, height - 70, width, 70, 0, 0, color(80, 160, 60));
+  ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));
 
   // Background decorations (slow-moving clouds, drifting stars, etc.)
   decorations = new ArrayList<Blob>();

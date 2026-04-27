@@ -1,7 +1,8 @@
 package coxprogramming.processing.sprites;
 
-import processing.core.PApplet;
 import java.util.ArrayList;
+
+import processing.core.PApplet;
 
 /**
  * A sprite that creates animation by showing one sprite frame at a time.

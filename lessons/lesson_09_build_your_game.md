@@ -153,7 +153,7 @@ void restartGame() {
   player.setVelocity(4, 0);
 
   // Ground
-  ground = new Block(this, 0, height - 70, width, 70, 0, 0, color(80, 160, 60));
+  ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));
 
   // Collectibles — CHANGE: color, size, count, speed
   collectibles = new ArrayList<Blob>();

@@ -30,7 +30,7 @@ boolean gameOver = false;
 void setup() {
   size(800, 600);
 
-  ground = new Block(this, 0, height - 70, width, 70, 0, 0, color(80, 160, 60));
+  ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));
 
   clouds = new ArrayList<Cloud>();
   clouds.add(new Cloud(this, 100,  75, 0.5));
