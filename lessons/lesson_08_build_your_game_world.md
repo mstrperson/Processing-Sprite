@@ -160,3 +160,30 @@ This lesson is mostly creative work — students should spend most of it designi
 <!-- Students who want more complex shapes should be encouraged to write a new extends Blob class -->
 <!-- rather than piling up raw shapes in the main tab -->
 <!-- This lesson can expand to two periods if students are deeply engaged in world-building -->
+
+---
+
+## Rubric — Build Your Game World
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Create terrain with `Block` (remember: `x, y` is the top-left corner).
+- [ ] Order my `draw()` calls so the right things appear in front.
+- [ ] Mix static sprites with moving ones.
+- [ ] Make a deliberate draw-order decision and explain it.
+
+**Where am I?**  *Standard: use `Block` for terrain, control draw order for layering, and combine static and moving sprites to design a world.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My world pieces overlap wrong, or the ground hides my player. **Next step:** things drawn *later* appear on top — background first, player last. And `Block`'s `x, y` is the *top-left corner*, not the center. |
+| **Got It Working** | My scene has a background, ground/terrain made with `Block`, and at least one decoration, layered in a sensible order. |
+| **Made It Mine** ⭐ | …and I designed a world with a clear theme — themed colors, multiple blocks, restyled coins — that reads as a *place*, not placeholders. |
+| **Went Beyond** | …and I wrote a new decoration sprite class (Tree/Star/Fish/Rock) in a tab, used transparency/layering, or built platforms or borders that shape how the game plays. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** Name one draw-order decision you made, and what it changed.

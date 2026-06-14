@@ -131,3 +131,30 @@ This lesson IS the make-it-yours. Students should spend most of the time persona
 <!-- Fast finishers: can they make a second character class in another new tab? (a sidekick?) -->
 <!-- The radius in super() is the invisible collision circle used later — remind students to -->
 <!-- keep it roughly the same size as their character's body. -->
+
+---
+
+## Rubric — Draw Your Character
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Make a new tab and write `class MyCharacter extends Blob`.
+- [ ] Override `drawSprite()` with my own shapes.
+- [ ] Use `pos.x` and `pos.y` to place every shape from my character's center.
+- [ ] Say in one sentence what `extends` gives my character.
+
+**Where am I?**  *Standard: create a custom `extends Blob` class and override `drawSprite()` to draw a character anchored at `pos.x`/`pos.y`.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My new tab won't compile, or nothing draws. **Next step:** check that the class line reads `class MyCharacter extends Blob`, and that the `super(...)` line is copied exactly — that's the handshake that connects your character to the library. |
+| **Got It Working** | A character of my own appears on screen, built from a few shapes anchored to `pos.x`/`pos.y`. |
+| **Made It Mine** ⭐ | …and my character is clearly *mine* — I added or changed shapes, colors, and details (hair, hat, eyes, ears…) so it's recognizably my creation, not the starter blob. |
+| **Went Beyond** | …and I pushed the art further — layered/overlapping shapes or a non-circular body — or I made a second character class (a sidekick) in another tab. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** Which shape was trickiest to place, and how did you figure out its offset from `pos.x`/`pos.y`?

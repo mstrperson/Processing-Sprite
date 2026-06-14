@@ -201,3 +201,30 @@ Push further in any of these directions:
 <!-- keyboardControl coasting reminder: velocity stays set after key-release — player coasts. -->
 <!-- Students may want to zero velocity on key release; that requires a keyReleased() function -->
 <!-- with player.setVelocity(0,0) — fine to introduce if they ask -->
+
+---
+
+## Rubric — Build Your Game (Capstone)
+
+*This isn't a test — it's a map of where you are and what to try next. The goal here is ownership and a game you're proud of — you can keep revising it.*
+
+**✅ Check yourself first — I can…**
+- [ ] Combine movement, control, lists, collisions, state, and world into one game.
+- [ ] Write win *and* lose conditions.
+- [ ] Reset the game with `restartGame()`.
+- [ ] Make and defend my own design decisions.
+
+**Where am I?**  *Standard: combine all prior skills into a complete, playable, replayable mini-game with win/lose conditions and independent design decisions.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | The pieces aren't coming together into something playable yet. **Next step:** get *one* full loop working first — player + collectibles + a win or lose check — then build outward. Use `restartGame()` to reset by *re-running* your setup steps, not by undoing changes. |
+| **Got It Working** | A playable game with my character: collectibles, a win and/or lose condition, a score, and a working restart. |
+| **Made It Mine** ⭐ | …and the game is unmistakably *mine* — themed world, my own rules and difficulty, my character at the center — with design decisions I made on purpose about how it plays. |
+| **Went Beyond** | …and I pushed the game past the assignment in a direction *I* chose — a second mechanic that genuinely deepens play (lives, an ability, levels, a smart enemy…), a rule nobody handed me, something I invented. The mark of this level is a design call that's mine, not cosmetics. |
+
+⭐ **Made It Mine** is the goal for everyone this capstone.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (2–3 sentences):** What's your game about? What design decision are you proudest of, and what would you add with another week?
