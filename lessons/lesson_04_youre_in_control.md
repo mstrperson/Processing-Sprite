@@ -98,3 +98,30 @@ void keyPressed() {
 <!-- velocity stays set. Students expect it to stop — this is a useful discussion about state -->
 <!-- Make sure students are clicked inside the sketch window for keyboard input to register -->
 <!-- Common mistake: putting keyboardControl() inside draw() — nothing will happen (keyCode is 0) -->
+
+---
+
+## Rubric — You're in Control
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Drive my character with `followMouse()` (in `draw`) *or* `keyboardControl()` (in `keyPressed`).
+- [ ] Set a speed so `followMouse()` actually moves.
+- [ ] Explain why `keyboardControl()` goes in `keyPressed()`, not `draw()`.
+- [ ] Tell the difference between *continuous* input and an *event*.
+
+**Where am I?**  *Standard: control the character with `followMouse()` or `keyboardControl()`, and distinguish continuous input from event input.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My character doesn't respond to input yet. **Next step:** for `followMouse`, set a speed with `setVelocity()` in `setup()` — it needs a speed > 0 to move. For keys, make sure `keyboardControl()` is inside `keyPressed()`, not `draw()`. |
+| **Got It Working** | I can drive my character with the mouse or the arrow keys. |
+| **Made It Mine** ⭐ | …and I picked the control style that fits my game and tuned it — a speed that feels right, or a `mousePressed()` that does something fun. |
+| **Went Beyond** | …and I combined inputs (e.g., keyboard control *plus* a `mousePressed()` ability), or added a second blob that moves on its own while I steer the player. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** Which control style did you choose for your game, and what made it the right fit?
