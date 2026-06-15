@@ -153,3 +153,30 @@ class MyImageCharacter extends Blob {
 <!-- spinning decoration effects. Mention if students ask. -->
 <!-- Fast finishers: can they animate the character by swapping between two image files? -->
 <!-- (Two PImage fields, toggled on a frame counter — a preview of AnimatedSprite ideas) -->
+
+---
+
+## Rubric — Bonus: Images
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Put image files in the sketch's `data/` folder.
+- [ ] Show an image with `ImageSprite`.
+- [ ] Put a `PImage` inside an `extends Blob` character.
+- [ ] Explain why an `ImageSprite` can't collide, and what to do instead.
+
+**Where am I?**  *Standard: add images via the `data/` folder, display decorations with `ImageSprite`, and use a `PImage` inside an `extends Blob` character so collisions still work.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My image draws as a blank/colored box, or not at all. **Next step:** make sure the file is in the sketch's `data/` folder (Sketch → Show Sketch Folder) and the filename matches *exactly*. A white box usually means the PNG has no transparency. |
+| **Got It Working** | My own image appears in the sketch — as an `ImageSprite` decoration and/or as my character. |
+| **Made It Mine** ⭐ | …and I themed the look with my own art — a character image plus decorations (or a background image), sized to fit. |
+| **Went Beyond** | …and I used an image *inside* an `extends Blob` character so collisions still work, drifting image decorations, or swapped between two images to fake animation. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** Why does a picture-character still need to `extends Blob`?

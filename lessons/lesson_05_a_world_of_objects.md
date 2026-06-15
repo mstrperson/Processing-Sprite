@@ -135,3 +135,30 @@ class Cloud extends Blob {
 <!-- Draw order matters: draw coins BEFORE the player so the player appears on top -->
 <!-- Cloud class uses extends Blob (not extends Sprite) so it gets collidesWith() later — -->
 <!-- if students want clouds to be interactive obstacles in Lesson 7, this matters -->
+
+---
+
+## Rubric — A World of Objects
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Declare and create an `ArrayList`.
+- [ ] Use a *counting* `for` loop to make many objects.
+- [ ] Use a *for-each* loop to move and draw each one.
+- [ ] Explain the difference between the two loops.
+
+**Where am I?**  *Standard: store many objects in an `ArrayList` and process them with both loop styles; use `random()` for variety.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My list of objects isn't appearing. **Next step:** *create* things with a counting loop in `setup()` (`for (int i …)`) and *draw* them with a for-each loop in `draw()` (`for (Blob c : coins)`). Check you call `drawSprite()` on each item `c`, not on the whole list. |
+| **Got It Working** | Many objects appear and move — created in a counting loop, drawn in a for-each loop. |
+| **Made It Mine** ⭐ | …and I tuned the world: changed the count/size/speed, added a second list of a different kind (enemies, stars, bubbles), or spawn objects on click. |
+| **Went Beyond** | …and I wrote my own environment sprite class (e.g., a `Cloud`) in a new tab and filled the world with it. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** In your own words, when do you use a *counting* loop versus a *for-each* loop?

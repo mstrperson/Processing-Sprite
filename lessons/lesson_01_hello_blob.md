@@ -83,3 +83,30 @@ void draw() {
 <!-- The no-velocity constructor (Blob(this, x, y, radius, color)) is intentional here. -->
 <!-- We are not talking about velocity yet — that comes in Lesson 3. -->
 <!-- Students will ask "how do I make it move?" — tell them that's coming next time. -->
+
+---
+
+## Rubric — Hello, Blob!
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Run a sketch with ▶ and stop it with ■.
+- [ ] Point to my Blob on the screen.
+- [ ] Say which code runs **once** (`setup`) and which runs **over and over** (`draw`).
+- [ ] Change something about my blob on purpose, so it feels like *mine*.
+
+**Where am I?**  *Standard: create and display a `Blob`, using `setup()`/`draw()` and RGB color.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My sketch isn't running yet, or no blob appears. **Next step:** check the very first line — a missing `import coxprogramming.processing.sprites.*;` is the #1 reason a sketch won't run. Fix it and run again. |
+| **Got It Working** | My sketch runs and a Blob appears on screen. |
+| **Made It Mine** ⭐ | …and I deliberately changed at least one thing — color (via Tools → Color Selector), size, position, or background — and I can say *why* I chose it. |
+| **Went Beyond** | …and I added a second blob with its own color and place, or arranged several blobs into a small scene of my own. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** What did you change, and what's one thing you'd try with more time?
