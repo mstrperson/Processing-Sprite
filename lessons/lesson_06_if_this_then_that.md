@@ -138,3 +138,30 @@ void showGameOver() {
 <!-- Global variables: students sometimes try to declare them inside setup() or draw() — -->
 <!-- if they do, the variable disappears when that function ends (scope issue) -->
 <!-- Note: coins are drawn but not yet collected — that happens in Lesson 7 -->
+
+---
+
+## Rubric — If This, Then That
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Declare a variable and change it over time.
+- [ ] Write an `if` statement that branches behavior.
+- [ ] Show a value on screen with `text()`.
+- [ ] Explain what a `boolean` is and give an example.
+
+**Where am I?**  *Standard: use `if`, changing variables (`int score`), and `text()` to make the program react and track state.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My score/text won't show, or my `if` never triggers. **Next step:** declare your variables at the *top* (outside `setup`/`draw`) so every function can see them, and double-check your `if` condition. |
+| **Got It Working** | A variable changes during play, shows on screen with `text()`, and an `if` branches the game (e.g., playing vs. game over). |
+| **Made It Mine** ⭐ | …and I changed what triggers the state change (a time limit, a different score), restyled the game-over screen, or added a second variable like `lives`. |
+| **Went Beyond** | …and I combined multiple conditions or variables so the game reacts in layered ways — the background shifts as score rises, lives count down, etc. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** What state does your game track, and what flips it from one state to another?
