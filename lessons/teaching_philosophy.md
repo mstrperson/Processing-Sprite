@@ -5,7 +5,7 @@
 
 ## Preamble
 
-This document is meant to be read.  It exists so that any colleague, collaborator, or administrator who picks up a lesson plan, a grading rubric, or a feedback form I've written can understand what I am actually trying to do.  The principles here describe the practice as it already operates, and they apply consistently across classroom instruction, advisory work, technology integration, and any other role I carry in this school.
+This document is meant to be read.  It exists so that any colleague, collaborator, or administrator who picks up a lesson plan, a grading rubric, or a feedback form I've written can understand what I am actually trying to do.  The principles here describe the practice as it already operates, and they apply consistently across classroom instruction, advisory work, my use of tools in the classroom, and any other role I carry in this school.
 
 I came to this work from the outside in.  I grew up in the New River Valley of Virginia, first in my family to earn a college degree, trained in Integrative STEM Education at Virginia Tech under Dr. John Wells, and arrived at independent school teaching with nearly twenty years of practice since.  I say this not as biography for its own sake but because my philosophy is not separable from where it came from.  Teaching is always a positioned act.  I know what it costs a person to enter a room where the language, the assumptions, and the unspoken rules were built by someone else — and I teach with that knowledge present.
 
@@ -13,21 +13,21 @@ I came to this work from the outside in.  I grew up in the New River Valley of V
 
 ## Core Commitments
 
-### 1.  Students are people to be addressed, not products to be processed.
+### 1.  I address students as people, and I refuse to process them as products.
 
-Every pedagogical decision I make rests on this.  A student sitting in front of me is a person with an existing way of knowing, an existing relationship to their own intelligence, and an existing sense of whether the adults around them take them seriously — not a vessel to be filled, a metric to be improved, or a transcript to be built.
+Every pedagogical decision I make rests on this.  A student sitting in front of me is a person — with an existing way of knowing, an existing relationship to their own intelligence, and an existing sense of whether the adults around them take them seriously.  A vessel to be filled, a metric to be improved, a transcript to be built: those are the school's categories, and I work outside them.
 
 This means I write *to* students and families, not *about* them.  It means feedback is addressed to a thinker, not applied to a performance.  It means advisory letters are portraits, not summaries.  And it means that when I design an assignment or a rubric, the first question I ask is: does this treat the student as an agent, or as a subject?
 
 The banking model of education — Paulo Freire's term for the practice of depositing pre-formed knowledge into passive students — is pedagogically weak and a form of disrespect.  I do not practice it, and I do not design systems that require it.
 
-### 2.  Knowing comes through building, not through receiving.
+### 2.  Knowing comes through building.
 
 I was trained in the constructionist tradition — Seymour Papert's extension of Piaget's constructivism — which holds that people learn most durably when they construct knowledge through the act of making something shareable.  The thing made can be a physical object, a piece of writing, a solution to a problem, a performance, an argument.  What matters is that the student had to bring something into existence that did not exist before, and had to reckon with what it actually did rather than what they thought it would.
 
-This shapes my lesson design at every level.  I favor process over product as the site of learning.  I build in failure as a feature rather than a flaw.  I use rubrics that reward demonstrated thinking, not just demonstrated compliance.  I structure feedback so that a student's next move is to revise and resubmit, not to file and forget.
+This shapes my lesson design at every level.  I favor process over product as the site of learning.  I build in failure as a feature rather than a flaw.  I build rubrics that reward demonstrated thinking over demonstrated compliance.  I structure feedback so that a student's next move is to revise and resubmit, not to file and forget.
 
-The corollary: I do not teach to a ceiling.  Rules-based reasoning — the ability to apply given procedures to expected problems — is a foundation, not a destination.  Above that ceiling sits judgment: the capacity to act well in situations the rules did not anticipate.  Developing judgment requires exposure to genuine ambiguity, tolerance for sitting with unresolved problems, and repeated practice at making a reasoned call and then examining what happened.  I design for that, not just for the foundation.
+The corollary: I teach past the ceiling.  Rules-based reasoning — the ability to apply given procedures to expected problems — is the foundation, and judgment is the building that goes up on top of it: the capacity to act well in situations the rules did not anticipate.  Developing judgment requires exposure to genuine ambiguity, tolerance for sitting with unresolved problems, and repeated practice at making a reasoned call and then examining what happened.  I design for the whole structure, foundation and building both.
 
 ### 3.  The goal is a learner who does not need me.
 
@@ -45,7 +45,7 @@ Directness is respect.  A student who receives vague, encouraging non-feedback h
 
 Directness and care work together.  I write and speak *to* a person.  I am specific: "this claim needs evidence, and here is the kind of evidence that would support it" — not "this argument is weak."  I hold the student's dignity while I hold the standard, because those two things are not in conflict.
 
-Feedback is a conversation, not a verdict.  Grades are information, not judgments of worth.
+Feedback is a conversation.  A grade is information about the work, and it says nothing about the worth of the person who did it.
 
 ### 5.  Students deserve to see their own conditioning.
 
@@ -69,15 +69,17 @@ I am fully aware that this position does not map cleanly onto the realities of t
 
 Where grading becomes genuinely consequential in my context, I will apply it honestly and transparently, with clear standards the student knew in advance and specific evidence they can trace.  What I will not do is pretend that the grade tells the whole story, or use it as a proxy for compliance, or allow it to become one more instrument of competition in an environment that already has too many.
 
+I will also say plainly that I do not hold this position as gospel.  Colleagues I respect read the same research I do and land in a different place, and they have real arguments — that documented assessment protects against the bias my informal methods inevitably carry, that students preparing for a credentialed world are served by learning to navigate grades, that some learners genuinely need external structure before they have built the capacity to work without it.  Those arguments carry real weight; they are true about something.  My disagreement is with the one-dimensional numeric grade as the *default* instrument in *this* environment, and it is not a disagreement with the people who believe grades matter or with the genuine goods that careful grading can serve.
+
 ---
 
 ## On Feedback
 
 My primary mode of feedback is verbal, in the moment, and embedded in the work itself.  It is part of a dialog with a student or a group — a question asked back, a redirect, a "what happens if you try it the other way" — woven so thoroughly into how I conduct a class that students often do not register it as feedback at all.  They are accustomed to feedback arriving as a one-way transmission: a grade, maybe some notes, after the fact.  What I do looks different enough that it doesn't trip that wire.  That is by design.  Feedback that a student experiences as a verdict tends to close thinking down.  Feedback that arrives inside the work tends to keep it open.
 
-The limitation of that approach is that it leaves no record.  I am now in a position to write more of it down — not to replace the dialogic practice but to make it more durable, to create something a student can return to, and to build documentation that serves the student over time.  Where written feedback appears in my practice, it carries the same characteristics as the verbal: specific, actionable, addressed to a thinker.  Specific means it points to something the student actually did, precisely enough that they know where to look.  Actionable means it names a direction: "this claim needs evidence, and here is the kind of evidence that would support it."  Addressed to a thinker means it assumes the student is capable of using the information.
+The limitation of that approach is that it leaves no record.  I am now in a position to write more of it down — to make the dialogic practice more durable, to create something a student can return to, and to build documentation that serves the student over time.  Writing it down extends the conversation; it does not replace it.  Where written feedback appears in my practice, it carries the same characteristics as the verbal: specific, actionable, addressed to a thinker.  Specific means it points to something the student actually did, precisely enough that they know where to look.  Actionable means it names a direction: "this claim needs evidence, and here is the kind of evidence that would support it."  Addressed to a thinker means it assumes the student is capable of using the information.
 
-Feedback in my classroom also addresses process, not only product.  How a student approached a problem, what they tried, what they abandoned, how they handled being stuck — these are worth naming and examining, because they are where the actual learning lives.
+Feedback in my classroom addresses process as much as product.  How a student approached a problem, what they tried, what they abandoned, how they handled being stuck — these are worth naming and examining, because they are where the actual learning lives.
 
 One pattern worth naming directly: when a student asks "can I use this tool" or "can I do this," my response is usually some version of "I'm confident you are capable of that."  This reads as a grammar correction, and students and colleagues sometimes take it that way.  It is not.  If the student then corrects to "may I," I give them the same non-answer — because the lesson has nothing to do with the form of the question.  The lesson is that they are asking permission for something that does not require permission.  That reflex — check with the adult before acting, wait for authorization before trusting your own judgment — is one of the things schooling most reliably installs in students.  I work against it wherever I can.  Feedback, ultimately, is practice for the moment when I am not in the room.
 
@@ -93,7 +95,7 @@ When a tool short-circuits the productive struggle that produces learning, calli
 
 ## A Note on Authority
 
-I hold authority in my classroom, and I use it — but I try to use it honestly.  I set standards because standards matter, not because I am the one setting them.  I enforce expectations because the expectations serve the learning, not because compliance is itself a goal.
+I hold authority in my classroom, and I use it — but I try to use it honestly.  I set standards because the standards matter on their own terms, and my setting them is incidental to that.  I enforce expectations because the expectations serve the learning, not because compliance is itself a goal.
 
 When I ask students to do something difficult or uncomfortable, I tell them why.  When I make a decision they might reasonably question, I am willing to explain my reasoning.  I do not mistake the performance of authority for its exercise.
 
@@ -101,11 +103,29 @@ Students who push back, ask hard questions, or refuse easy answers are doing exa
 
 ---
 
+## On Sharing Ground With Colleagues Who Disagree
+
+The reality on the ground in education is that the grade-skeptic position and the grade-believing position are both valuable — so long as each is recognized as a valid and valuable part of the whole, and so long as neither takes itself as the one true gospel.  The pursuit of purity as an end is the more destructive path here, as it is in most things.  A faculty where someone who believes as I do can share ground with someone who believes in the deliberate, careful use of grades — in genuine, good-faith dialogue rather than entrenched camps — produces better outcomes for students than either position could alone.
+
+I should be plain about my own temperament, since it bears on how I do this work.  I run hot, and I do not apologize for it.  John Lewis taught that there is such a thing as good trouble — necessary trouble — and that a person who cares about the right things should never be afraid to make some noise to start it.  I aim that fire at the system: the meaningless grade, the banking model, the unexamined assumption about who belongs in the room.  I work to keep it off the colleagues who are arguing in good faith, because the same heat that does good trouble against a broken structure does only damage when it lands on a person who is reasoning honestly toward a different conclusion.  Good trouble is aimed at what deserves it.  Good faith is owed to the people across the table.
+
+I hold my own view firmly.  I have also done enough honest reckoning with the counter-arguments to know they have substance, and to know that my informal methods carry my own irreducible subjectivity into every judgment I make.  Awareness of that bias does not remove it.  Holding both of those things at once — real conviction and real humility about its limits — is harder than winning the argument, and it is the posture I am after.
+
+I will offer one piece of evidence for why I believe this matters.  This spring I watched a student graduate whom I had taught and mentored since the fifth grade.  She is, by every measure the school values, a success — headed to a demanding engineering program, having navigated what she herself called "the grind."  She achieved in exactly the terms a grade-centric system rewards.  And she also absorbed what I was teaching without my ever naming it as a lesson: in a project designing an engineering curriculum for sixth-graders, I watched her deploy strategies for cultivating intrinsic motivation that I use in my own classes and never explicitly taught her.  She had internalized them.
+
+She is also one of the people who argued with me, directly and well, about the importance of giving students real grades.
+
+I do not experience that as a contradiction.  A student who can carry the school's standard of achievement, internalize a pedagogy of intrinsic motivation deeply enough to pass it on unprompted, and then disagree with her own teacher in good faith about how assessment should work — that student is the proof of the whole thing.  The school's system produced her transcript.  Something in my classroom helped produce her instincts.  Both are true, and the student is better for having lived inside both.  That is the case for sharing ground, made in a single person.
+
+---
+
 ## Summary
 
 The shortest version of this document is this: I am trying to produce students who think for themselves, know that they are thinking for themselves, and have enough skill and honesty to do it well.  Everything else — the lesson design, the grading structure, the feedback practice, the advisory work — is in service of that.
 
-That is what this document is for.  If a lesson plan or a rubric or a feedback form I've written seems to pull against these principles, it deserves to be questioned.
+I hold these commitments firmly and I hold them without claiming they are the only defensible way to teach.  The students I serve are best served when educators of genuinely different convictions can do this work alongside each other in good faith.  That is the spirit in which I offer this.
+
+If a lesson plan or a rubric or a feedback form I've written seems to pull against these principles, it deserves to be questioned.
 
 *Jason Cox*
 *Educator, Advisor, Educational Technologist*
