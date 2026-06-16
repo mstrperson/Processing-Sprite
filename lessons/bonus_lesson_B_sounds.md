@@ -183,3 +183,30 @@ void showGameOver() {
 <!-- bgMusic.amp(0.3) lowers the music volume so it doesn't overpower effects — worth showing -->
 <!-- The Sound library must be imported with: import processing.sound.*; -->
 <!-- If students get a null pointer error on a SoundFile, the file isn't found — check data/ folder -->
+
+---
+
+## Rubric — Bonus: Sounds
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Install and import the Sound library.
+- [ ] Load a `SoundFile` in `setup()`.
+- [ ] Play a one-shot effect on an event with `.play()`.
+- [ ] Loop music with `.loop()` and stop it with `.stop()`.
+
+**Where am I?**  *Standard: install the Sound library, load a `SoundFile` from `data/`, play one-shot effects on game events, and loop background music.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | No sound plays, or I get a null-pointer error on a `SoundFile`. **Next step:** install the Sound library (Sketch → Import Library → Add Library → "Sound"), and check the file is in `data/` with an *exact* name — a null pointer means the file wasn't found. |
+| **Got It Working** | A sound effect plays on a game event (like collecting), triggered from the right spot in the code. |
+| **Made It Mine** ⭐ | …and I chose sounds that fit my game and wired them to my events — a collect sound, a hazard/crash sound, or looping background music. |
+| **Went Beyond** | …and I layered audio thoughtfully — music looping under one-shot effects with balanced volume (`amp`), milestone sounds, or guarded playback so rapid hits don't stutter. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** Where in your code did you put your sound call, and why there and not somewhere else?

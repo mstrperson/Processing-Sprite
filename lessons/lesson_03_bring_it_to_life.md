@@ -74,3 +74,30 @@ void draw() {
 <!-- Second most common: calling drawSprite() before move() — one-frame lag, usually harmless but good to discuss -->
 <!-- The wrapping behavior is a great "wow" moment — let students discover it on their own -->
 <!-- Positive vy = DOWN (y increases downward in Processing) — this surprises many students -->
+
+---
+
+## Rubric — Bring It to Life
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Set a velocity with two numbers (left/right, up/down).
+- [ ] Call `move()` *before* `drawSprite()` in `draw()`.
+- [ ] Explain what screen wrapping is.
+- [ ] Use `random(a, b)` to vary the motion.
+
+**Where am I?**  *Standard: use `setVelocity()` and `move()` to animate the character, with screen wrapping and `random()` for variety.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | My character is frozen. **Next step:** make sure you call `player.move()` inside `draw()` — a character with velocity but no `move()` never budges. |
+| **Got It Working** | My character moves on its own and wraps around the screen edges. |
+| **Made It Mine** ⭐ | …and I chose a velocity that gives my character its own feel — fast, slow, diagonal, or a `random()` speed — and set a background mood to match. |
+| **Went Beyond** | …and I experimented with `random()` velocities across runs, or added a second self-moving blob alongside the player. |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** What velocity felt right for your character, and why?

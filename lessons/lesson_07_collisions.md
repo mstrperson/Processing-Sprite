@@ -142,3 +142,30 @@ void showGameOver() {
 <!-- "the magic safe loop for removing things" that they can copy and use -->
 <!-- Fast finishers: can they add a "dodge" mechanic — a second ArrayList of red enemies that -->
 <!-- the player must not touch? This naturally sets up Lesson 9 -->
+
+---
+
+## Rubric — Collisions!
+
+*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+
+**✅ Check yourself first — I can…**
+- [ ] Use `collidesWith()` inside an `if`.
+- [ ] Remove items from a list with the backwards loop.
+- [ ] Connect a collision to score and game state.
+- [ ] Explain why we loop backwards when removing.
+
+**Where am I?**  *Standard: use `collidesWith()` with `if` to trigger game events, remove from a list safely, and connect collisions to score and state.*
+
+| Level | What it looks like |
+|---|---|
+| **Getting Started** | Collisions aren't registering, or collecting a coin crashes the sketch. **Next step:** use the backwards loop (`for (int i = list.size()-1; i >= 0; i--)`) when removing items — and remember `collidesWith()` works because `MyCharacter extends Blob`. |
+| **Got It Working** | The player collects coins on contact, the score goes up, and collected coins disappear without errors. |
+| **Made It Mine** ⭐ | …and I added my own twist — a list of hazards to dodge, more coins spawning, or a changed win condition. |
+| **Went Beyond** | …and I built a real dodge mechanic (enemies that cost or end the game), or made collisions do something richer (coins splitting into smaller blobs). |
+
+⭐ **Made It Mine** is the goal for everyone this lesson.
+
+*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+
+**✍️ Show your thinking (1–2 sentences):** What happens in your game when the player touches something — and why did you loop backwards?
