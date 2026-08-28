@@ -1,5 +1,9 @@
 # Guiding Principles — Processing Sprite Lessons (6th Grade)
 
+*This is the project-specific application of the general, transferable
+principles in [`CS_GUIDING_PRINCIPLES.md`](../CS_GUIDING_PRINCIPLES.md). Each
+numbered principle below corresponds 1:1 to a principle there.*
+
 ## Who These Lessons Are For
 
 Students in approximately 6th grade (ages 11–12) with little or no prior programming experience.
