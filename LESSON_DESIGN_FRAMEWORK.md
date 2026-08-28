@@ -17,6 +17,10 @@ Following this process yields two artifacts:
 The framework below is the *process* for building those two artifacts.
 The [Processing-Sprite lessons](lessons/) folder is a reference implementation.
 
+The beliefs this process is trying to protect are stated independently in
+[`CS_GUIDING_PRINCIPLES.md`](CS_GUIDING_PRINCIPLES.md) — read that first if
+you want the "why" before the "how."
+
 ---
 
 ## Phase 1 — Foundation Analysis
