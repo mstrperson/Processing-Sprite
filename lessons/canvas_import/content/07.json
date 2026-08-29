@@ -1,0 +1,217 @@
+{
+  "id": "07",
+  "num": "7",
+  "kind": "core",
+  "slug": "lesson-07-collisions",
+  "title": "Collisions!",
+  "tagline": "Things finally touch each other &mdash; and that is when it becomes a game.",
+  "whenToUse": null,
+  "timing": "One period (~50 min)",
+  "newIdea": "Detecting when two sprites overlap, and removing things from a list",
+  "builtOn": "Lesson 6 &mdash; `if`, `score`, and `gameOver`.",
+
+  "goals": [
+    "Use `collidesWith()` to detect when your player touches another blob",
+    "Combine `if` with a collision to make something happen &mdash; collecting, scoring, losing",
+    "Remove items from an `ArrayList` safely with the backwards loop",
+    "Connect collisions to the score and game state you built last lesson"
+  ],
+
+  "vocab": [
+    { "term": "collision", "def": "when two sprites overlap on screen" },
+    { "term": "`collidesWith(blob)`", "def": "a method on Blob that gives back `true` when this sprite's circle overlaps another blob's circle" },
+    { "term": "index", "def": "an item's position in a list. The first item is at index **0**" },
+    { "term": "hitbox", "def": "the invisible circle used to decide if something is touching. For your character it is the radius in the `super(...)` line" }
+  ],
+
+  "warmup": "What does an `if` statement do? What is a `boolean`? Name one from your own game.",
+
+  "howItWorks": [
+    {
+      "h": "collidesWith() asks a yes-or-no question",
+      "p": [
+        "The library checks whether two circles overlap and hands you back `true` or `false`. That is exactly the kind of thing an `if` wants."
+      ],
+      "code": {
+        "label": "The whole idea in one line",
+        "body": "if (player.collidesWith(someCoin)) {\n  // they're touching! do something\n}"
+      },
+      "bullets": [
+        "This works because you wrote `class MyCharacter extends Blob` back in Lesson 2. Your character got `collidesWith()` for free, and you never had to write it."
+      ]
+    },
+    {
+      "h": "Your hitbox is the radius you set in Lesson 2",
+      "p": [
+        "Remember the `30` in your `super(...)` line? That is the invisible circle the collision check uses. Your art does not matter to it &mdash; only that number does.",
+        "A **bigger** radius means collisions trigger from further away, which feels generous and forgiving. A **smaller** radius means you have to be right on top of something, which feels precise and harsh.",
+        "If your collisions feel wrong today, that number is what to change."
+      ]
+    },
+    {
+      "h": "The problem with removing things while looping",
+      "p": [
+        "When you collect a coin, you want it to disappear &mdash; you remove it from the list. But removing something from a list *while you are walking through that list* causes a real problem.",
+        "Picture five coins in a row. You are standing on coin 2 and you remove it. Every coin after it shifts back one place to fill the gap. Then the loop moves you forward to position 3&hellip; but the coin that *was* at 3 is now at 2, behind you. **You just skipped it.**"
+      ]
+    },
+    {
+      "h": "The fix: walk backwards",
+      "p": [
+        "If you walk from the **end** toward the front, removing something only shifts items you have already passed. Nothing gets skipped.",
+        "You do not need to memorize why. Recognize it as \"the safe way to remove things while looping\" and copy it when you need it."
+      ],
+      "code": {
+        "label": "The safe removal loop",
+        "body": "for (int i = coins.size() - 1; i >= 0; i--) {\n  Blob c = coins.get(i);      // grab the coin at position i\n  c.move();\n  c.drawSprite();\n\n  if (player.collidesWith(c)) {\n    coins.remove(i);          // take it out of the list\n    score = score + 1;        // and score a point\n  }\n}"
+      },
+      "bullets": [
+        "`coins.size()` is how many are in the list. `- 1` because the last index is one less than the count.",
+        "`i--` counts **down** instead of up.",
+        "`coins.get(i)` reaches into the list and hands you the item at that position."
+      ]
+    },
+    {
+      "h": "Winning when the list runs out",
+      "p": [
+        "`coins.size()` shrinks every time you collect one. So the win condition writes itself:"
+      ],
+      "code": {
+        "label": "An empty list means you got them all",
+        "body": "if (coins.size() == 0) {\n  gameOver = true;\n}"
+      }
+    }
+  ],
+
+  "steps": [
+    "Open your Lesson 6 sketch.",
+    "Find the for-each loop inside `playGame()` that moves and draws your coins.",
+    "**Replace it** with the backwards index loop from the starter code. Run it &mdash; nothing should look different yet.",
+    "Inside that loop, add the `if (player.collidesWith(c))` check with `coins.remove(i);` and `score = score + 1;` inside it.",
+    "Run it and go collect a coin. It should vanish and your score should go up.",
+    "If collisions feel too hard or too easy, open your `MyCharacter` tab and change the radius in the `super(...)` line.",
+    "Change your win condition to `if (coins.size() == 0)` so you win by clearing the board.",
+    "Now add hazards. Make a second `ArrayList<Blob>` of red blobs in `setup()`, using the same counting-loop pattern from Lesson 5.",
+    "In `playGame()`, loop over the hazards with a **for-each** loop (you are not removing them, so no backwards loop needed) and set `gameOver = true` if the player touches one.",
+    "Tune it until it is actually fun to play. How many hazards? How fast? That is a design decision and it is yours."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab (builds directly on Lesson 6)",
+      "body": "// Lesson 7 - Collisions!\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\nint score = 0;\nboolean gameOver = false;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coins = new ArrayList<Blob>();\n  for (int i = 0; i < 12; i++) {\n    coins.add(new Blob(\n      this, random(width), random(height),\n      random(8, 18), random(-2, 2), random(-2, 2),\n      color(255, 220, 50)\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  // Backwards loop - safe to remove coins while iterating\n  for (int i = coins.size() - 1; i >= 0; i--) {\n    Blob c = coins.get(i);\n    c.move();\n    c.drawSprite();\n\n    if (player.collidesWith(c)) {\n      coins.remove(i);   // collect the coin\n      score = score + 1; // increase the score\n    }\n  }\n\n  player.followMouse();\n  player.drawSprite();\n\n  // Win when all coins are collected\n  if (coins.size() == 0) {\n    gameOver = true;\n  }\n\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  fill(80, 180, 80);\n  textAlign(CENTER, CENTER);\n  textSize(52);\n  text(\"You Win!\", width/2, height/2 - 20);\n  textSize(22);\n  text(\"Final score: \" + score, width/2, height/2 + 26);\n  textAlign(LEFT, TOP);\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Add a second `ArrayList` of **obstacles** (red blobs) that you have to dodge. Touching one costs a life or ends the game.",
+    "Spawn more coins when the player collects a certain number &mdash; add to the list right after removing from it.",
+    "Change what counts as winning. Clear the board? Reach a score? Survive for a while?",
+    "Make collected coins **explode** into two or three smaller blobs added to the list.",
+    "Tune your hitbox radius until the collisions feel fair."
+  ],
+  "challenge": "Make the game get harder as it goes: every time the player collects five coins, add two more hazards, or make the existing ones faster. Difficulty that responds to the player is what separates a demo from a game.",
+
+  "flintHint": "Good things to ask: \"my sketch crashes when I collect a coin\", \"why do we loop backwards?\", or \"how do I add a second list of enemies that end the game?\" Paste your `playGame()` in if you are getting an error.",
+
+  "wrapup": "Why do we loop backwards when removing items from a list?",
+
+  "assignmentTask": "Make things in your world actually interact. The player touches something, and something happens.",
+  "assignmentDo": [
+    "Use `collidesWith()` inside an `if` so contact triggers an event.",
+    "Remove collected items from the list using the **backwards loop**.",
+    "Connect the collision to your score and to your game state from Lesson 6.",
+    "Add your own twist &mdash; hazards to dodge, respawning coins, a different win condition. This is where your game starts having rules that are yours."
+  ],
+  "submit": [
+    "Your sketch folder, zipped.",
+    "A short screen recording showing a collision actually happening &mdash; the score going up, or the game ending.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Use `collidesWith()` inside an `if`.",
+    "Remove items from a list with the backwards loop.",
+    "Connect a collision to score and game state.",
+    "Explain why we loop backwards when removing."
+  ],
+
+  "standard": "Use `collidesWith()` with `if` to trigger game events, remove from a list safely, and connect collisions to score and state.",
+  "stages": [
+    { "name": "Getting Started", "text": "Collisions are not registering, or collecting a coin crashes the sketch. **Next step:** use the backwards loop (`for (int i = list.size()-1; i >= 0; i--)`) when removing items &mdash; and remember `collidesWith()` works because `MyCharacter extends Blob`." },
+    { "name": "Got It Working", "text": "The player collects coins on contact, the score goes up, and collected coins disappear without errors." },
+    { "name": "Made It Mine", "text": "&hellip;and I added my own twist &mdash; a list of hazards to dodge, more coins spawning, or a changed win condition." },
+    { "name": "Went Beyond", "text": "&hellip;and I built a real dodge mechanic (enemies that cost or end the game), or made collisions do something richer (coins splitting into smaller blobs)." }
+  ],
+  "thinking": "In one or two sentences: what happens in your game when the player touches something &mdash; and why did you loop backwards?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "collidesWith() &mdash; and why they already have it",
+        "p": [
+          "\"The library checks whether the two circles overlap and returns true or false.\"",
+          "Make the connection explicit: **because `MyCharacter extends Blob`**, their character can use `collidesWith()` against any other Blob. This is the payoff for the one-word decision back in Lesson 2, and it is worth naming so `extends` feels like it earned its keep.",
+          "Do not say the word *inheritance*."
+        ]
+      },
+      {
+        "h": "The hitbox is the radius from super()",
+        "p": [
+          "Circle back to the `30` in their Lesson 2 constructor. That is the collision circle, and it has nothing to do with how big their art looks.",
+          "A big radius is forgiving; a small one is precise. Students whose character art drifted far from their radius will get collisions that feel wrong, and this is the fix."
+        ]
+      },
+      {
+        "h": "Show the bug before the fix",
+        "p": [
+          "Run a **forward** loop with a `remove()` inside it on the projector. Collect coins and let students watch items get skipped &mdash; some coins become uncollectable.",
+          "Seeing the skipping artifact makes the backwards loop feel like a solution instead of an arbitrary incantation. This is the highest-value ninety seconds of the lesson."
+        ]
+      },
+      {
+        "h": "Then explain the backwards loop",
+        "p": [
+          "\"If you walk forward through a list and remove something, everything after it shifts back one, and you skip the item right after it. Walking backwards avoids that problem.\"",
+          "Students do **not** need to memorize this or derive it. Teach it as \"the safe loop for removing things\" &mdash; a pattern they can recognize and copy."
+        ],
+        "code": {
+          "label": "The pattern to copy",
+          "body": "for (int i = coins.size() - 1; i >= 0; i--) {\n  Blob c = coins.get(i);\n  if (player.collidesWith(c)) {\n    coins.remove(i);\n    score = score + 1;\n  }\n}"
+        }
+      },
+      {
+        "h": "Wire it to Lesson 6",
+        "p": [
+          "The collision changes `score`. The `score`/`size()` check flips `gameOver`. The `gameOver` boolean drives the `if/else` in `draw()`.",
+          "Trace that chain out loud once. It is the first time the whole machine connects end to end, and students who see it will build Lesson 9 much more confidently."
+        ]
+      }
+    ],
+    "guided": [
+      "Everyone opens Lesson 6's sketch and finds the for-each coin loop inside `playGame()`.",
+      "Replace it with the backwards index loop, with **no** collision check yet. Run. Nothing looks different &mdash; that is the point, the loop is equivalent until you remove something.",
+      "Add the `collidesWith()` check with `remove()` and the score increment. Run. Everyone collects a coin. Let the room react.",
+      "Show the forward-loop bug on the projector if you did not already.",
+      "Switch the win condition to `coins.size() == 0` and let someone clear the board.",
+      "Anyone whose collisions feel wrong: open `MyCharacter` and tune the radius in `super(...)`.",
+      "Introduce hazards as the main personalization task. Second `ArrayList`, for-each loop (no removal), `gameOver = true` on contact. This directly sets up Lesson 9."
+    ],
+    "pitfalls": [
+      "**`ConcurrentModificationException`** &mdash; removing inside a for-each loop. The crash message is intimidating and means nothing to a sixth grader. Translate it: \"you changed the list while walking through it.\" The backwards loop is the fix.",
+      "**Off-by-one:** writing `coins.size()` instead of `coins.size() - 1`, which throws an index-out-of-bounds on the first pass.",
+      "**`i++` instead of `i--`** in the backwards loop &mdash; an infinite loop that freezes the sketch.",
+      "Collisions that never fire because the character's radius is tiny compared to the art.",
+      "Removing from the list but forgetting to increase the score, so coins vanish silently.",
+      "Adding hazards with a **backwards** loop out of habit. They are not being removed, so a for-each is simpler. Not wrong, just unnecessary."
+    ],
+    "wrapupAnswer": "Because removing an item shifts everything after it back one position, so a forward loop skips the next item. Going backwards means removals only affect items you already passed.",
+    "notes": [
+      "This is the lesson where it becomes a **game** rather than a moving picture. Expect energy, and leave time for play-testing.",
+      "The hazard extension is the most valuable personalization here &mdash; it naturally produces the collect/avoid structure Lesson 9 is built on. Push most students toward it.",
+      "Radius tuning is a real design decision. Frame it that way: \"do you want your game generous or precise?\"",
+      "The backwards loop is a copy-and-use pattern, not something to test students on. Do not let it become the hard part of the lesson.",
+      "Fast finishers: coins that split into smaller blobs on collection, or difficulty that ramps with score."
+    ]
+  }
+}

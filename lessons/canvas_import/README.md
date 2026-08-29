@@ -1,6 +1,43 @@
-# Canvas Import — Processing Sprite Rubrics
+# Canvas Import — Processing Sprite
 
-These rubrics are **formative and non-scoring**. They mirror the `## Rubric` section at the
+This folder holds everything needed to put the lesson series into Canvas:
+
+| What | Where |
+|---|---|
+| **Lesson Pages, Assignments, and teacher copies** as Canvas-ready HTML | [`html/`](html/) — see [`html/README.md`](html/README.md) |
+| Lesson content, one JSON file per lesson (the source the HTML is built from) | [`content/`](content/) |
+| The generator that turns the JSON into HTML | [`build_canvas_html.ps1`](build_canvas_html.ps1) |
+| Non-scoring rubrics as a CSV, for Canvas's rubric importer | [`canvas_rubrics.csv`](canvas_rubrics.csv) |
+
+## Building the HTML
+
+```powershell
+powershell -ExecutionPolicy Bypass -File build_canvas_html.ps1
+```
+
+Reads every `content/*.json` and writes 3 files per lesson into `html/` — a student-facing
+Page, a student-facing Assignment, and a teacher copy. 12 lessons → 36 files.
+
+Each output file is a **body fragment**: copy the whole file and paste it into the Canvas
+HTML editor (the `</>` button in the Rich Content Editor). There are no `<style>` or
+`<script>` tags and no external assets, so Canvas strips nothing.
+
+**Before publishing:** every Page and Assignment has an AI-helper button with a placeholder
+`href="PASTE_FLINT_URL_HERE"`, flagged by a `<!-- FLINT-LINK -->` comment. Swap in the Flint
+chat URL for that lesson — two per lesson, one on the Page and one on the Assignment.
+
+**Teacher copies** open with a red "keep this page unpublished" banner. They carry the direct
+instruction notes, guided-activity script, common mistakes, and wrap-up answers that are held
+in HTML comments in the source `.md` files. Put them in an unpublished module.
+
+To change wording, edit the lesson's JSON in `content/` and re-run the build. Do not edit the
+generated HTML by hand — the next build overwrites it.
+
+---
+
+## The rubrics
+
+These rubrics are **formative and non-scoring**. They mirror the `Rubric` section at the
 end of each lesson file. Their job is to give a student (and you) a clear picture of where
 they are and what to try next — a *map*, not a grade. There are no points, no mastery
 numbers, and nothing that produces a rankable score.

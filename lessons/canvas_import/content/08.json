@@ -1,0 +1,214 @@
+{
+  "id": "08",
+  "num": "8",
+  "kind": "core",
+  "slug": "lesson-08-build-your-game-world",
+  "title": "Build Your Game World",
+  "tagline": "Stop making a sketch and start making a place.",
+  "whenToUse": null,
+  "timing": "One period, but it can happily fill two if students are deep in world-building.",
+  "newIdea": "Draw order and layering &mdash; and `Block` for terrain",
+  "builtOn": "Lesson 7 &mdash; a working collect-and-avoid game.",
+
+  "goals": [
+    "Use `Block` to add ground, walls, sky, and other terrain",
+    "Explain that draw order decides layering &mdash; later draws go on top",
+    "Mix static sprites with moving ones to make a background feel alive",
+    "Design the world your game actually takes place in"
+  ],
+
+  "vocab": [
+    { "term": "`Block`", "def": "a rectangle sprite from the library. Great for ground, walls, and platforms" },
+    { "term": "draw order", "def": "the sequence you draw things in. Whatever is drawn later appears in front" },
+    { "term": "static sprite", "def": "a sprite with no velocity. It sits in one place, but it is still a real sprite object" },
+    { "term": "alpha", "def": "a fourth number in `color()` that sets transparency. 0 is invisible, 255 is solid" }
+  ],
+
+  "warmup": "On paper, sketch the world your game takes place in. What is in the background? Is there ground? Sky? Anything decorating it? Three minutes, then show a neighbor.",
+
+  "howItWorks": [
+    {
+      "h": "Block is a rectangle that stays put",
+      "p": [
+        "`Block` is the library's rectangle sprite. Unlike `Blob`, it has no velocity &mdash; it is built to sit still and be scenery."
+      ],
+      "code": {
+        "label": "A strip of ground along the bottom",
+        "body": "Block ground;\n\n// in setup():\nground = new Block(this, 0, height - 80, width, 80, color(80, 160, 60));\n//                       |      |          |      |        |\n//                       |      |          |      |        +-- color\n//                       |      |          |      +----------- height\n//                       |      |          +------------------ width\n//                       |      +----------------------------- y of the TOP-LEFT corner\n//                       +------------------------------------ x of the TOP-LEFT corner"
+      },
+      "bullets": [
+        "**Watch out:** for a `Block`, `x` and `y` are the **top-left corner**. For a `Blob` they were the **center**. This catches everyone once."
+      ]
+    },
+    {
+      "h": "Draw order is the whole lesson",
+      "p": [
+        "Processing draws like paint, not like a computer game engine. Whatever you draw **later** covers whatever you drew earlier. There is no depth, no 3D, no layers panel &mdash; just the order of your lines.",
+        "So the order of the calls in `draw()` *is* your layering."
+      ],
+      "code": {
+        "label": "Back to front",
+        "body": "void draw() {\n  background(135, 206, 235);   // 1. sky - furthest back\n\n  for (Blob d : decorations) { // 2. clouds drifting behind everything\n    d.move();\n    d.drawSprite();\n  }\n\n  ground.drawSprite();         // 3. ground on top of the sky\n\n  // ... coins ...              // 4. things in the world\n\n  player.drawSprite();         // 5. player - always last, always in front\n}"
+      },
+      "bullets": [
+        "**Rule of thumb: background first, player last.**"
+      ]
+    },
+    {
+      "h": "background() wipes the slate every frame",
+      "p": [
+        "Remember from Lesson 1 that `background()` erases everything. That is why it goes at the **top** of `draw()`.",
+        "Everything after it is layered onto a clean canvas, in the order you wrote it. If you call `background()` halfway through `draw()`, you erase everything you already drew that frame."
+      ]
+    },
+    {
+      "h": "Transparency makes things look far away",
+      "p": [
+        "`color()` takes an optional fourth number: transparency, called **alpha**. `0` is completely invisible, `255` is completely solid.",
+        "Semi-transparent decorations look soft and distant, which is a cheap and very effective way to create depth."
+      ],
+      "code": {
+        "label": "A faint cloud",
+        "body": "color(255, 255, 255, 180)   // white, slightly see-through"
+      }
+    },
+    {
+      "h": "Static and moving sprites together",
+      "p": [
+        "A world feels alive when some of it moves and most of it does not. Ground sits still. Clouds drift slowly. Coins bounce around. The player darts.",
+        "Different speeds at different layers is what makes a scene read as a *place* rather than a pile of shapes."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Open your Lesson 7 sketch. All your game logic stays &mdash; you are adding a world around it.",
+    "Declare `Block ground;` at the top of your sketch.",
+    "In `setup()`, create it: `ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));`",
+    "In `draw()`, after `background()`, add `ground.drawSprite();`. Run it. You should have a strip of green along the bottom.",
+    "Change `background(240)` to a color that fits your world &mdash; sky blue, deep space black, ocean teal, lava red.",
+    "**Experiment with draw order:** move `ground.drawSprite()` to the very last line of `draw()` and run. Your player is now buried under the ground. Move it back and say out loud what happened.",
+    "Add background decorations: an `ArrayList<Blob>` created with a counting loop in `setup()`, drawn **first** in `draw()`. Give them a slow drift and use a fourth alpha number in their color.",
+    "Add a second `Block` &mdash; a wall, a platform, a ceiling. Put it somewhere that changes how the game feels to play.",
+    "Restyle your coins and hazards so they belong in this world. Gold coins in a space game look wrong. Make them asteroids, or stars, or fish.",
+    "Play it. Does it look like a place? Keep going until it does."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab",
+      "body": "// Lesson 8 - Build Your Game World\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\nBlock ground;\nArrayList<Blob> decorations;  // clouds, stars, trees - whatever fits your theme\nint score = 0;\nboolean gameOver = false;\n\nvoid setup() {\n  size(800, 600);\n\n  // Ground strip along the bottom\n  ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));\n\n  // Background decorations (slow-moving clouds, drifting stars, etc.)\n  decorations = new ArrayList<Blob>();\n  for (int i = 0; i < 5; i++) {\n    decorations.add(new Blob(\n      this, random(width), random(height * 0.7),\n      random(20, 50), random(0.2, 0.8), 0,\n      color(255, 255, 255, 180)  // semi-transparent white blobs as clouds\n    ));\n  }\n\n  // Player\n  player = new MyCharacter(this, width/2, height - 120);\n  player.setVelocity(4, 0);\n\n  // Coins\n  coins = new ArrayList<Blob>();\n  for (int i = 0; i < 10; i++) {\n    coins.add(new Blob(\n      this, random(width), random(100, height - 100),\n      random(8, 16), random(-2, 2), random(-1, 1),\n      color(255, 220, 50)\n    ));\n  }\n}\n\nvoid draw() {\n  background(135, 206, 235);  // sky blue - change to match your theme\n\n  // 1. Background decorations (drawn first = appear behind everything)\n  for (Blob d : decorations) {\n    d.move();\n    d.drawSprite();\n  }\n\n  // 2. Ground (drawn after sky, before player)\n  ground.drawSprite();\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  for (int i = coins.size() - 1; i >= 0; i--) {\n    Blob c = coins.get(i);\n    c.move();\n    c.drawSprite();\n    if (player.collidesWith(c)) {\n      coins.remove(i);\n      score = score + 1;\n    }\n  }\n\n  // 3. Player (drawn last = appears in front of everything)\n  player.followMouse();\n  player.drawSprite();\n\n  if (coins.size() == 0) {\n    gameOver = true;\n  }\n\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  fill(80, 180, 80);\n  textAlign(CENTER, CENTER);\n  textSize(52);\n  text(\"You Win!\", width/2, height/2);\n  textAlign(LEFT, TOP);\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Replace the sky-blue background with **your** theme. Space? Underwater? Lava? A cave? A candy world?",
+    "Write a new decoration sprite class in a tab &mdash; a `Tree`, a `Star`, a `Fish`, a `Rock`. Same `extends Blob` pattern as Lesson 2.",
+    "Add multiple `Block`s to make platforms, walls, or a border that shapes how the game plays.",
+    "Change your coins and hazards to match the theme &mdash; gems, fish, stars, hearts, asteroids.",
+    "Use transparency (`color(r, g, b, alpha)`) on your background layer so it recedes.",
+    "Give background decorations a much slower speed than foreground objects. That difference alone reads as depth."
+  ],
+  "challenge": "Build a real parallax effect: three layers of decorations at three different speeds &mdash; slow and faint at the back, faster and solid at the front. It is the oldest trick in 2D games and it still works.",
+
+  "flintHint": "Good things to ask: \"my ground is covering my player\", \"why is my Block in the wrong place?\", or \"how do I make a background that looks like space?\" Describe the world you are going for and it can help you plan the layers.",
+
+  "wrapup": "Name one draw-order decision you made in your world, and what it changed.",
+
+  "assignmentTask": "Design the place your game happens in. This lesson is mostly creative work &mdash; the code is small and the design is the point.",
+  "assignmentDo": [
+    "Add terrain with at least one `Block`. Remember its `x, y` is the top-left corner.",
+    "Order your `draw()` calls deliberately so the layering is right &mdash; background first, player last.",
+    "Include at least one decoration that moves and one thing that stays still.",
+    "Give the world a **theme** and carry it through: background color, terrain color, and your coins and hazards restyled to match.",
+    "Be able to point at one draw-order decision you made on purpose."
+  ],
+  "submit": [
+    "Your sketch folder, zipped.",
+    "A screenshot of your world &mdash; make it one you would want to show someone.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Create terrain with `Block` (remember: `x, y` is the top-left corner).",
+    "Order my `draw()` calls so the right things appear in front.",
+    "Mix static sprites with moving ones.",
+    "Make a deliberate draw-order decision and explain it."
+  ],
+
+  "standard": "Use `Block` for terrain, control draw order for layering, and combine static and moving sprites to design a world.",
+  "stages": [
+    { "name": "Getting Started", "text": "My world pieces overlap wrong, or the ground hides my player. **Next step:** things drawn **later** appear on top &mdash; background first, player last. And `Block`'s `x, y` is the **top-left corner**, not the center." },
+    { "name": "Got It Working", "text": "My scene has a background, ground or terrain made with `Block`, and at least one decoration, layered in a sensible order." },
+    { "name": "Made It Mine", "text": "&hellip;and I designed a world with a clear theme &mdash; themed colors, multiple blocks, restyled coins &mdash; that reads as a **place**, not placeholders." },
+    { "name": "Went Beyond", "text": "&hellip;and I wrote a new decoration sprite class (Tree, Star, Fish, Rock) in a tab, used transparency and layering, or built platforms or borders that shape how the game plays." }
+  ],
+  "thinking": "In one or two sentences: name one draw-order decision you made, and what it changed.",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Block, and the corner-versus-center trap",
+        "p": [
+          "`new Block(this, x, y, width, height, color)`.",
+          "**`x, y` is the top-left corner**, not the center. This is genuinely confusing after seven lessons of Blob, where it was the center. Say it, write it on the board, and expect to say it again individually.",
+          "`Block` is always stationary &mdash; there is no velocity parameter.",
+          "A ground strip is the canonical example: `new Block(this, 0, height-80, width, 80, color(80, 160, 60))`. Walk through why each number is what it is."
+        ]
+      },
+      {
+        "h": "Draw order &mdash; demonstrate, do not describe",
+        "p": [
+          "On the projector: draw a big block, then draw a blob on top. Fine. Now **reverse the two lines** and re-run. The blob vanishes.",
+          "That five-second demo teaches the whole concept. Then state the rule: **background first, player last.**"
+        ]
+      },
+      {
+        "h": "Reconnect background() to Lesson 1",
+        "p": [
+          "`background()` in `draw()` erases everything before re-drawing. It goes at the top.",
+          "The order of calls **after** `background()` determines what ends up on top. Students have been doing this since Lesson 5 without a name for it; today it gets the name."
+        ]
+      },
+      {
+        "h": "The alpha channel",
+        "p": [
+          "`color(r, g, b, alpha)` &mdash; alpha 0 is invisible, 255 is fully opaque.",
+          "Semi-transparent decorations look genuinely good and cost one number. Show `color(255, 255, 255, 180)` next to `color(255, 255, 255)` on the projector."
+        ]
+      },
+      {
+        "h": "Push toward sprite classes, not shape piles",
+        "p": [
+          "Students who want more complex scenery should write a new `extends Blob` class in a tab, exactly like `MyCharacter` in Lesson 2 &mdash; **not** pile raw `ellipse()` and `rect()` calls into the main tab.",
+          "It is the same pattern they already know, it keeps `draw()` readable, and a decoration built as a sprite can later be given velocity or collision for free."
+        ]
+      }
+    ],
+    "guided": [
+      "Start with the paper sketch warm-up. Three minutes of drawing before any code. It genuinely improves what they build.",
+      "Everyone adds the ground `Block` together. Expect the top-left-corner confusion here &mdash; several students will put it off-screen.",
+      "Everyone changes the background color to something themed. Immediate visible payoff.",
+      "**Deliberately break it as a class:** move `ground.drawSprite()` to the last line of `draw()`. Everyone runs and loses their player under the ground. Move it back. Nobody forgets draw order after doing it with their own hands.",
+      "Add background decorations together with alpha and a slow drift.",
+      "Release for world-building. This is the bulk of the period and it should be.",
+      "Last five minutes: quick share-out. Each student shows their world and names one draw-order decision."
+    ],
+    "pitfalls": [
+      "**`Block` x, y as center instead of top-left.** The block lands half off-screen. The most common problem in this lesson.",
+      "**Drawing the player before the ground**, burying the character.",
+      "**Calling `background()` somewhere other than the top of `draw()`**, erasing everything drawn that frame.",
+      "Forgetting `.drawSprite()` on the ground &mdash; the block exists, nothing appears.",
+      "Piling raw shapes into `draw()` for decoration instead of writing a sprite class. It works, but `draw()` becomes unreadable right before the capstone, which is the worst possible time.",
+      "Decorations drawn with the same speed as gameplay objects, so the depth effect disappears."
+    ],
+    "wrapupAnswer": "Anything specific and deliberate: \"I drew the clouds before the ground so they look like they are behind the hill,\" or \"I moved the player last so it is never hidden.\" You want intent, not correctness.",
+    "notes": [
+      "**This lesson can easily expand to two periods** if students are engaged, and that is a good use of time. The world they build here is the world Lesson 9 happens in, and a student who cares about their world cares more about their game.",
+      "There is very little new code today. It is a design lesson wearing a programming lesson's clothes. Let it be that.",
+      "The paper sketch at the start is not filler. Students who plan on paper build noticeably better scenes.",
+      "Decoration sprite classes written today pay off directly in Lesson 9 &mdash; encourage them, especially from fast finishers.",
+      "Coins and hazards restyled to the theme is the single change that most makes a game feel finished. Push everyone to do at least that."
+    ]
+  }
+}

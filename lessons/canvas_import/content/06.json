@@ -1,0 +1,231 @@
+{
+  "id": "06",
+  "num": "6",
+  "kind": "core",
+  "slug": "lesson-06-if-this-then-that",
+  "title": "If This, Then That",
+  "tagline": "Your program starts making decisions instead of just following orders.",
+  "whenToUse": null,
+  "timing": "One period (~50 min)",
+  "newIdea": "`if` statements and variables that change",
+  "builtOn": "Lesson 5 &mdash; your world full of objects.",
+
+  "goals": [
+    "Use an `if` statement to make your program choose what to do",
+    "Declare variables that track information over time, like `int score`",
+    "Show text and numbers on screen with `text()`",
+    "Explain that a program can be in different **states** &mdash; playing, game over"
+  ],
+
+  "vocab": [
+    { "term": "`if` statement", "def": "\"if this is true, do this block of code\"" },
+    { "term": "`boolean`", "def": "a value that is only ever `true` or `false`. Nothing in between" },
+    { "term": "variable", "def": "a named container for a value. `int score = 0;` names a box called score that starts at zero" },
+    { "term": "`int`", "def": "a variable that holds a whole number &mdash; 0, 7, -3. No decimals" },
+    { "term": "`text()`", "def": "a Processing function that draws words or numbers on the screen" },
+    { "term": "state", "def": "which mode your program is in right now &mdash; playing, or game over, or paused" }
+  ],
+
+  "warmup": "How did you add 12 coins to your world last time? Which loop did you use, and where did it go?",
+
+  "howItWorks": [
+    {
+      "h": "Variables that live at the top",
+      "p": [
+        "Up until now your variables have been things you created and used. Now you need variables that **remember** something across frames &mdash; like a score that keeps going up.",
+        "Those go at the very **top** of your sketch, outside `setup()` and outside `draw()`."
+      ],
+      "code": {
+        "label": "Global variables",
+        "body": "MyCharacter player;\nArrayList<Blob> coins;\nint score = 0;              // a whole number, starts at zero\nboolean gameOver = false;   // true or false, starts false\n\nvoid setup() { ... }"
+      },
+      "bullets": [
+        "Written up there, **every** function can see them.",
+        "Written inside `setup()`, they vanish the second `setup()` finishes and `draw()` cannot see them at all."
+      ]
+    },
+    {
+      "h": "The if statement",
+      "p": [
+        "An `if` asks a yes-or-no question. If the answer is yes, the code inside the braces runs. If not, it is skipped entirely."
+      ],
+      "code": {
+        "label": "A question and an answer",
+        "body": "if (score > 10) {\n  background(255, 0, 0);   // only happens when score is over 10\n}"
+      },
+      "bullets": [
+        "The thing in the parentheses is a **condition** &mdash; it is either true or false.",
+        "`>` greater than, `<` less than, `>=` at least, `<=` at most, `==` exactly equal.",
+        "Careful: `==` is a question (\"are these equal?\"). A single `=` is a command (\"make this equal to that\"). Mixing them up is a classic."
+      ]
+    },
+    {
+      "h": "booleans and the ! operator",
+      "p": [
+        "A `boolean` is the simplest possible variable: it is `true` or it is `false`.",
+        "`!` means **NOT**. So `!gameOver` reads as \"not game over\" &mdash; in other words, \"the game is still going.\""
+      ],
+      "code": {
+        "label": "Two states, one choice",
+        "body": "if (!gameOver) {\n  playGame();       // still playing\n} else {\n  showGameOver();   // it's over\n}"
+      }
+    },
+    {
+      "h": "Putting text on screen",
+      "p": [
+        "`text()` draws words. You give it what to say and where to put it."
+      ],
+      "code": {
+        "label": "Showing the score",
+        "body": "fill(50);                          // the text color\ntextSize(24);                      // how big\ntext(\"Score: \" + score, 20, 36);   // what, then x, then y"
+      },
+      "bullets": [
+        "The `+` glues the words `\"Score: \"` and the number `score` together into one piece of text.",
+        "Set `fill()` **before** `text()`, or your text takes whatever color the last shape used."
+      ]
+    },
+    {
+      "h": "States: your program has modes",
+      "p": [
+        "This is the big idea. Your game is not one thing &mdash; it is in a **mode**. Right now there are two: playing, and game over.",
+        "The `boolean gameOver` remembers which mode you are in, and the `if/else` in `draw()` picks which one to run. Everything else follows from that."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Open your Lesson 5 sketch.",
+    "At the **very top**, above `setup()`, add: `int score = 0;` and `boolean gameOver = false;`",
+    "In `draw()`, after `background()`, add a `text()` call showing the score. Run it. You should see `Score: 0` in the corner.",
+    "Test it: temporarily change `int score = 0;` to `int score = 7;` and run. The display should change. Set it back to 0.",
+    "Now move all your game code out of `draw()` and into a new function called `playGame()`. Look at the starter code to see exactly how.",
+    "In `draw()`, add the `if (!gameOver) { playGame(); } else { showGameOver(); }` block.",
+    "Write the `showGameOver()` function. Run it &mdash; it should still play normally, since `gameOver` is false.",
+    "Test the other branch: temporarily change `boolean gameOver = false;` to `true` and run. You should jump straight to the game over screen. Set it back.",
+    "Add the trigger: inside `playGame()`, `if (score >= 10) { gameOver = true; }`",
+    "Change what triggers game over, and restyle the game over screen so it sounds like your game."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab",
+      "body": "// Lesson 6 - If This, Then That\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\nint score = 0;\nboolean gameOver = false;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coins = new ArrayList<Blob>();\n  for (int i = 0; i < 10; i++) {\n    coins.add(new Blob(\n      this, random(width), random(height),\n      random(8, 18), random(-2, 2), random(-2, 2),\n      color(255, 220, 50)\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  for (Blob c : coins) {\n    c.move();\n    c.drawSprite();\n  }\n\n  player.followMouse();\n  player.drawSprite();\n\n  // When score reaches 10, trigger game over\n  if (score >= 10) {\n    gameOver = true;\n  }\n\n  // Display the score\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  fill(80, 180, 80);\n  textAlign(CENTER, CENTER);\n  textSize(52);\n  text(\"You Win!\", width/2, height/2 - 20);\n  textSize(22);\n  text(\"Final score: \" + score, width/2, height/2 + 26);\n  textAlign(LEFT, TOP);  // reset alignment so score display still works\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Change what triggers game over. A time limit? A score above 20? Something else entirely?",
+    "Restyle the game over screen &mdash; different words, different colors, a message that fits your game.",
+    "Add a second variable: a `lives` counter that starts at 3 and counts down.",
+    "Make the background color change as the score goes up &mdash; a few `if` statements stacked up.",
+    "Show more than the score. A timer, a level number, a message that appears at a milestone."
+  ],
+  "challenge": "Make the game react in layers &mdash; the background shifts at score 5, the text turns red at score 8, and lives count down at the same time. Multiple variables and multiple conditions working together.",
+
+  "flintHint": "Good things to ask: \"my score will not show up on screen\", \"what is the difference between = and ==?\", or \"how do I make my background change when the score goes up?\" Paste your `playGame()` in if something will not run.",
+
+  "wrapup": "What is the difference between an `int` and a `boolean`? Give an example of each from your own game.",
+
+  "assignmentTask": "Give your game a memory and a mind. It should track something, show it, and change what it does based on it.",
+  "assignmentDo": [
+    "Declare at least one variable at the top of your sketch that changes over time.",
+    "Show it on screen with `text()`.",
+    "Use an `if` to branch the game into two different states &mdash; playing and game over.",
+    "Make the trigger and the game over screen **yours**. Do not leave the starter's \"You Win!\" if that is not what your game is about."
+  ],
+  "submit": [
+    "Your sketch folder, zipped.",
+    "Two screenshots: one of the game playing, one of your game over screen.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Declare a variable and change it over time.",
+    "Write an `if` statement that branches behavior.",
+    "Show a value on screen with `text()`.",
+    "Explain what a `boolean` is and give an example."
+  ],
+
+  "standard": "Use `if`, changing variables (`int score`), and `text()` to make the program react and track state.",
+  "stages": [
+    { "name": "Getting Started", "text": "My score or text will not show, or my `if` never triggers. **Next step:** declare your variables at the **top** (outside `setup` and `draw`) so every function can see them, and double-check your `if` condition." },
+    { "name": "Got It Working", "text": "A variable changes during play, shows on screen with `text()`, and an `if` branches the game (playing vs. game over)." },
+    { "name": "Made It Mine", "text": "&hellip;and I changed what triggers the state change (a time limit, a different score), restyled the game-over screen, or added a second variable like `lives`." },
+    { "name": "Went Beyond", "text": "&hellip;and I combined multiple conditions or variables so the game reacts in layered ways &mdash; the background shifts as score rises, lives count down, and so on." }
+  ],
+  "thinking": "In one or two sentences: what state does your game track, and what flips it from one state to another?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Global scope &mdash; say why, not just where",
+        "p": [
+          "`int score = 0;` and `boolean gameOver = false;` go above `setup()`. \"These live outside `setup()` and `draw()` so all functions can see them.\"",
+          "Students will try to declare them inside `setup()`. When they do, the variable disappears the instant `setup()` ends. Show that failure once if you have time &mdash; the error message is not obvious."
+        ]
+      },
+      {
+        "h": "The if statement",
+        "p": [
+          "\"The condition in the parentheses is either true or false. The code inside the braces runs only when it is true.\"",
+          "Demo something loud and visible: `if (score > 10) { background(255, 0, 0); }` and then set the score by hand to show both branches."
+        ]
+      },
+      {
+        "h": "= versus ==",
+        "p": [
+          "Worth thirty explicit seconds. A single `=` **assigns**; a double `==` **asks**. Write both on the board.",
+          "In Java the compiler will usually catch `if (score = 10)`, which is a mercy, but they need the vocabulary to read the error."
+        ]
+      },
+      {
+        "h": "Displaying text",
+        "p": [
+          "`fill(0); textSize(24); text(\"Score: \" + score, 20, 36);`",
+          "\"The `+` here glues text and a number together into one string.\" Do not use the word *concatenation*.",
+          "Point out that `fill()` has to come **before** `text()`, or the text inherits whatever color the last shape used. This will bite someone."
+        ]
+      },
+      {
+        "h": "The boolean state variable",
+        "p": [
+          "`if (!gameOver) { ...play... } else { ...show game over... }`",
+          "\"`!` means NOT &mdash; so `if not gameOver` means `if the game is still going`.\"",
+          "This is the structural idea of the lesson. The game has **modes**, a variable remembers which one, and `draw()` picks. Everything in Lessons 7 and 9 builds on this shape."
+        ]
+      },
+      {
+        "h": "Build it up in stages, not all at once",
+        "p": [
+          "Variable declared &rarr; changed in `draw()` &rarr; displayed on screen &rarr; used in an `if` to branch. Four separate runs.",
+          "Pasting the whole finished structure at once hides where each piece came from."
+        ]
+      }
+    ],
+    "guided": [
+      "Add the two global variables at the top together. Run &mdash; nothing changes yet.",
+      "Add the `text()` call so the score shows. Run. Now there is something on screen to react to.",
+      "**Test by cheating:** change `int score = 0;` to `int score = 7;` and run. The display updates. Set it back. Testing a display by hand-setting the value is a real technique and worth naming.",
+      "Refactor together: move the game body from `draw()` into `playGame()`. Run &mdash; nothing should change. Emphasise that: a refactor that changes nothing visible is a *success*.",
+      "Add the `if/else` in `draw()` and write `showGameOver()`. Run &mdash; still plays normally.",
+      "**Test the other branch by cheating:** set `gameOver = true` in the declaration and run. Straight to the game over screen. Set it back.",
+      "Add the real trigger (`if (score >= 10)`). Release for personalization."
+    ],
+    "pitfalls": [
+      "**Declaring globals inside `setup()`.** Scope error. The most common structural mistake in this lesson.",
+      "**`=` instead of `==`** in a condition.",
+      "**`fill()` after `text()`** &mdash; text comes out in an unexpected color.",
+      "**`textAlign(CENTER, CENTER)` never reset.** It affects every later `text()` call, so the score display in the corner silently moves. The starter resets it with `textAlign(LEFT, TOP)` at the end of `showGameOver()` &mdash; make sure students who restyle that function keep the reset.",
+      "Nothing ever changes `score`, so the `if` can never fire. Note out loud that coins are drawn but **not yet collectable** &mdash; that is Lesson 7. Some students will find this unsatisfying; tell them the payoff is next lesson.",
+      "Forgetting the braces on a one-line `if` and then adding a second line later that runs unconditionally."
+    ],
+    "wrapupAnswer": "`int` holds a whole number (score, lives, level). `boolean` holds only true or false (gameOver, paused). Look for an example from their own sketch, not a generic one.",
+    "notes": [
+      "`score++` is shorthand for `score = score + 1`. Fine to mention if a student asks, but keep `score = score + 1` in the starter so the operation stays explicit.",
+      "Coins are drawn but not collected yet. Say this up front so students do not spend the period hunting for a bug that is not there.",
+      "The \"test by cheating\" move &mdash; hand-setting a variable to check a branch &mdash; is a genuine debugging skill. Name it while you use it.",
+      "Only **one** new concept today: `if`. Variables and `text()` are the supporting cast. If a student is struggling, drop the `playGame()` refactor and just get an `if` working in `draw()`.",
+      "Fast finishers: layered conditions, or a `lives` counter. Both are extensions of the same idea rather than new ones."
+    ]
+  }
+}

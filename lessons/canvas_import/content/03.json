@@ -1,0 +1,206 @@
+{
+  "id": "03",
+  "num": "3",
+  "kind": "core",
+  "slug": "lesson-03-bring-it-to-life",
+  "title": "Bring It to Life",
+  "tagline": "Your character stops sitting there and starts moving on its own.",
+  "whenToUse": null,
+  "timing": "One period (~50 min)",
+  "newIdea": "Velocity &mdash; changing position over time",
+  "builtOn": "Lesson 2 &mdash; your `MyCharacter` class. Keep that tab exactly as it is.",
+
+  "goals": [
+    "Use `setVelocity(vx, vy)` to give your character a speed and a direction",
+    "Call `move()` every frame to animate it",
+    "Explain what screen wrapping is and when it happens",
+    "Use `random()` to make things different every time you run"
+  ],
+
+  "vocab": [
+    { "term": "velocity", "def": "how fast something moves and which way. It has two parts: left/right (`vx`) and up/down (`vy`)" },
+    { "term": "frame", "def": "one single picture in the animation. `draw()` produces one frame per tick, about 60 every second" },
+    { "term": "`random(a, b)`", "def": "picks a surprise number between `a` and `b`, fresh every time it is called" },
+    { "term": "wrap", "def": "when a sprite goes off one edge of the screen and reappears on the opposite edge" }
+  ],
+
+  "warmup": "Where does your character get drawn on the screen? Which function draws it, and how many times per second does that happen?",
+
+  "howItWorks": [
+    {
+      "h": "Velocity is two numbers, not one",
+      "p": [
+        "\"Speed\" in a game is really two separate questions: how fast am I going sideways, and how fast am I going up or down? So velocity is two numbers."
+      ],
+      "bullets": [
+        "`vx` is left and right. **Positive** goes right &rarr;. **Negative** goes left &larr;.",
+        "`vy` is up and down. **Positive** goes DOWN &darr;. **Negative** goes UP &uarr;."
+      ]
+    },
+    {
+      "h": "Yes, positive y really is down",
+      "p": [
+        "This trips up almost everyone. On a math graph, y goes up. On a screen, y goes **down** &mdash; `y = 0` is the top edge, and bigger y means further down.",
+        "So `setVelocity(3, -2)` means: 3 pixels right and 2 pixels **up**, every frame."
+      ]
+    },
+    {
+      "h": "Velocity alone does nothing",
+      "p": [
+        "Setting a velocity is like telling someone how fast to walk. Until they actually take a step, nothing happens.",
+        "`move()` is the step. It takes the velocity and adds it to the position, once. So it has to be inside `draw()`, where it happens 60 times a second."
+      ],
+      "code": {
+        "label": "The order that matters",
+        "body": "void draw() {\n  background(240);\n  player.move();        // 1. update the position\n  player.drawSprite();  // 2. THEN draw at the new position\n}"
+      }
+    },
+    {
+      "h": "Move first, then draw",
+      "p": [
+        "If you draw before you move, you are drawing your character where it *used to be*. It is off by one frame, forever. It is a small bug and mostly harmless, but it is a good habit to get right: **move, then draw**."
+      ]
+    },
+    {
+      "h": "Wrapping is free",
+      "p": [
+        "Run it and wait. When your character slides off the right edge, it comes back in on the left. Off the top, back in at the bottom.",
+        "You did not write that. The library does it for you inside `move()`. That is the \"magic toolbox\" idea &mdash; you push the button, the button works."
+      ]
+    },
+    {
+      "h": "random() makes every run different",
+      "p": [
+        "`random(-5, 5)` picks a new number between -5 and 5 each time it runs. Put it where a velocity number goes and your character takes off in a different direction every single time you press Run."
+      ],
+      "code": {
+        "label": "A different character every run",
+        "body": "player.setVelocity(random(-5, 5), random(-5, 5));"
+      }
+    }
+  ],
+
+  "steps": [
+    "Open your Lesson 2 sketch. **Keep the `MyCharacter` tab exactly as it is** &mdash; you are only changing the main tab.",
+    "In `setup()`, after you create the player, add: `player.setVelocity(3, -2);`",
+    "Press **&#9654; Run**. Nothing moves. That is expected &mdash; you told it a speed but never told it to take a step.",
+    "In `draw()`, add `player.move();` on the line **before** `player.drawSprite();`",
+    "Run again. Your character should drift up and to the right. Watch what happens when it reaches an edge.",
+    "Change the velocity to `(8, 0)`. Run. Now `(0.5, 0)`. Run. Fast and slow.",
+    "Try exact diagonal: `(3, 3)`. Then try `(3, -3)`. Which way does each one go?",
+    "Replace both numbers with `random(-5, 5)` and press Run five times in a row. Different every time.",
+    "Change the background color to set a mood for your character's world."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab (MyCharacter.pde is unchanged from Lesson 2)",
+      "body": "// Lesson 3 - Bring It to Life\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(3, -2);  // 3 pixels right, 2 pixels up per frame\n}\n\nvoid draw() {\n  background(240);\n  player.move();        // update position (do this BEFORE drawing)\n  player.drawSprite();  // draw at new position\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Try `random(-5, 5)` for both velocity values in `setup()`, then run it several times.",
+    "Make your character move **really** fast. Then really slow. Which one suits it?",
+    "Make it move exactly diagonally &mdash; that means `vx` and `vy` have the same size.",
+    "Change the background color to set a mood. A drifting character on dark blue reads completely differently than on white.",
+    "Add a **second** blob with its own velocity so there is something else alive on screen."
+  ],
+  "challenge": "Comment out `background(240)` and run. Your character leaves a trail, because nothing is erasing the old frames. Some of the best-looking sketches do this on purpose.",
+
+  "flintHint": "Good things to ask: \"my character will not move\", \"why does negative y go up?\", or \"how do I make it move in a random direction?\" Tell it you are on Lesson 3 and paste in your `setup()` and `draw()`.",
+
+  "wrapup": "What happens if you call `drawSprite()` before `move()`? What does that change?",
+
+  "assignmentTask": "Give your character motion that feels like it belongs to that character.",
+  "assignmentDo": [
+    "Set a velocity in `setup()` and call `move()` in `draw()`, in the right order.",
+    "Watch it wrap around the screen edges at least once.",
+    "Tune the speed until it feels right for **your** character. A heavy monster and a darting bug should not move at the same speed.",
+    "Set a background color that matches the mood."
+  ],
+  "submit": [
+    "Your sketch folder, zipped.",
+    "A short screen recording (a few seconds) so the motion is visible &mdash; or a screenshot plus a sentence describing how it moves.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Set a velocity with two numbers (left/right, up/down).",
+    "Call `move()` **before** `drawSprite()` in `draw()`.",
+    "Explain what screen wrapping is.",
+    "Use `random(a, b)` to vary the motion."
+  ],
+
+  "standard": "Use `setVelocity()` and `move()` to animate the character, with screen wrapping and `random()` for variety.",
+  "stages": [
+    { "name": "Getting Started", "text": "My character is frozen. **Next step:** make sure you call `player.move()` inside `draw()`. A character with a velocity but no `move()` never budges." },
+    { "name": "Got It Working", "text": "My character moves on its own and wraps around the screen edges." },
+    { "name": "Made It Mine", "text": "&hellip;and I chose a velocity that gives my character its own feel &mdash; fast, slow, diagonal, or a `random()` speed &mdash; and set a background mood to match." },
+    { "name": "Went Beyond", "text": "&hellip;and I experimented with `random()` velocities across runs, or added a second self-moving blob alongside the player." }
+  ],
+  "thinking": "In one or two sentences: what velocity felt right for your character, and why?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Draw the axes on the board",
+        "p": [
+          "Literally draw it. An arrow right labelled `+vx`, an arrow left labelled `-vx`, an arrow **down** labelled `+vy`, an arrow up labelled `-vy`.",
+          "Positive y being down surprises students every year. Getting it on the board once saves a dozen individual explanations."
+        ]
+      },
+      {
+        "h": "Show the failure first",
+        "p": [
+          "Set a velocity in `setup()` and run **without** `move()`. Nothing happens. Let them sit with that for a few seconds and ask why.",
+          "Then add `move()`. The contrast makes the point better than any explanation: velocity is an intention, `move()` is the action."
+        ]
+      },
+      {
+        "h": "Call order inside draw()",
+        "p": [
+          "`move()` first, then `drawSprite()`. If you draw first and then move, the position is one frame behind.",
+          "It is a subtle bug and mostly invisible, but naming it now builds the habit and gives you the wrap-up question."
+        ]
+      },
+      {
+        "h": "Let them discover wrapping",
+        "p": [
+          "Do **not** announce that sprites wrap. Set a velocity, run it, and let the character slide off the edge while you keep talking.",
+          "Someone will shout when it reappears on the other side. That reaction is worth more than telling them."
+        ]
+      },
+      {
+        "h": "random() demo",
+        "p": [
+          "Put `random(-5, 5)` directly into `setVelocity()` in `setup()` and press Run four or five times in a row on the projector. Different every time.",
+          "This is also the first time they see a function call used as an argument to another function call. Do not name that. Just let it look normal."
+        ]
+      }
+    ],
+    "guided": [
+      "Everyone opens their Lesson 2 sketch. Confirm out loud: the `MyCharacter` tab does not change today.",
+      "Add `setVelocity(3, -2)` in `setup()` together. Run. Nothing moves. Ask why before answering.",
+      "Add `move()` in `draw()`, above `drawSprite()`. Run. Motion.",
+      "Let it run long enough to wrap. Wait for the reaction.",
+      "As a class, try fast (`8, 0`), slow (`0.5, 0`), and diagonal (`3, 3`). Ask which direction each one goes before running it.",
+      "Swap in `random(-5, 5)` and have everyone press Run repeatedly.",
+      "Release for personalization: tune a speed that fits their character, set a background mood."
+    ],
+    "pitfalls": [
+      "**Forgetting `move()`.** By far the most common. The character sits still and students assume `setVelocity` is broken.",
+      "Calling `drawSprite()` before `move()`. One-frame lag. Usually invisible, but worth a mention.",
+      "Putting `setVelocity()` inside `draw()`. It technically works, but it resets the velocity 60 times a second, which will confuse them badly in Lesson 4 when the keyboard tries to change it.",
+      "Expecting positive `vy` to go up. It goes down.",
+      "Students who drew their Lesson 2 character at **hard-coded coordinates** will see the hitbox move while the art stays put. This is where that bug surfaces. Fix: re-anchor every shape to `pos.x`/`pos.y`."
+    ],
+    "wrapupAnswer": "One-frame lag &mdash; the character is drawn one step behind where it actually is. Accept any answer that gets at \"it draws the old position.\"",
+    "notes": [
+      "The hard-coded-coordinates bug from Lesson 2 becomes visible today. Expect two or three students to hit it, and treat it as a feature: it is a very clear demonstration of why the belly-button rule exists.",
+      "Wrapping is a genuine \"wow\" moment. Protect it by not spoiling it.",
+      "If a student asks how to make the character bounce off walls instead of wrapping, that is a great question and a great Lesson 9 extension. Park it.",
+      "Speeds above about 15 make the character hard to watch. Let them discover that rather than capping it."
+    ]
+  }
+}

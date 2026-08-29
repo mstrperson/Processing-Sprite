@@ -1,0 +1,212 @@
+{
+  "id": "01",
+  "num": "1",
+  "kind": "core",
+  "slug": "lesson-01-hello-blob",
+  "title": "Hello, Blob!",
+  "tagline": "Run your first program and put something alive on the screen.",
+  "whenToUse": null,
+  "timing": "One period (~50 min)",
+  "newIdea": "`setup()` and `draw()` &mdash; and your first object",
+  "builtOn": "Nothing. This is where we start.",
+
+  "goals": [
+    "Open Processing and run a sketch",
+    "Explain that `setup()` runs **once** and `draw()` runs **over and over**",
+    "Create a `Blob` from the SpriteGame library and put it on screen",
+    "Use RGB numbers to pick any color you want"
+  ],
+
+  "vocab": [
+    { "term": "sketch", "def": "a Processing program" },
+    { "term": "`setup()`", "def": "the function Processing runs one time, right when your sketch starts" },
+    { "term": "`draw()`", "def": "the function Processing runs over and over, about 60 times every second" },
+    { "term": "object", "def": "a thing in your program that has its own information and knows how to do things" },
+    { "term": "method", "def": "something an object knows how to do. You call it with a dot: `myBlob.drawSprite()`" },
+    { "term": "RGB", "def": "the three numbers (Red, Green, Blue) that describe any color. Each one goes from 0 to 255" }
+  ],
+
+  "warmup": "Have you ever seen code before? What do you think it looks like? There is no wrong answer here.",
+
+  "howItWorks": [
+    {
+      "h": "The two magic functions",
+      "p": [
+        "Every Processing sketch is built out of two functions, and you will use them in every single lesson from here on.",
+        "`setup()` is like setting up an art table. It happens **once**, before anything else. You put out your paper and your paints, and then you are done setting up.",
+        "`draw()` is like drawing one page of a flipbook. Processing runs it again, and again, and again &mdash; roughly **60 times a second**. Flip those pages fast enough and it looks like motion."
+      ],
+      "bullets": [
+        "Something that happens one time? It goes in `setup()`.",
+        "Something that has to keep happening? It goes in `draw()`."
+      ]
+    },
+    {
+      "h": "The import line",
+      "p": [
+        "The very first line of your sketch is this:"
+      ],
+      "code": {
+        "label": "The line that must be first",
+        "body": "import coxprogramming.processing.sprites.*;"
+      }
+    },
+    {
+      "h": "Making a Blob",
+      "p": [
+        "A `Blob` is an object &mdash; a thing that lives in your program. To make one you fill in five pieces of information:"
+      ],
+      "code": {
+        "label": "Reading the Blob line",
+        "body": "myBlob = new Blob(this, 400, 300, 40, color(255, 80, 80));\n//                 |     |    |   |    |\n//                 |     |    |   |    +-- what color it is\n//                 |     |    |   +------- its radius (how big)\n//                 |     |    +----------- its y position (up and down)\n//                 |     +---------------- its x position (left and right)\n//                 +---------------------- \"this sketch\" - never change it"
+      },
+      "bullets": [
+        "`x` and `y` are where the **center** of the blob sits. `(0, 0)` is the top-left corner of the window.",
+        "The **radius** is half the blob's width. A radius of 40 makes a circle 80 pixels across.",
+        "`this` means \"this sketch.\" Copy it exactly and never change it."
+      ]
+    },
+    {
+      "h": "Color is just three numbers",
+      "p": [
+        "`color(255, 80, 80)` means: a lot of red, a little green, a little blue. That comes out as a warm pink-red.",
+        "Each number goes from **0** (none of that color) to **255** (as much as possible). `color(0, 0, 0)` is black. `color(255, 255, 255)` is white.",
+        "You do not have to guess. Open **Tools &rarr; Color Selector**, click around until you find a color you like, and read the R, G, and B numbers right off the panel."
+      ]
+    },
+    {
+      "h": "Why background() is inside draw()",
+      "p": [
+        "`background(255)` paints the whole window white. It is inside `draw()` because it has to happen on **every single frame** &mdash; it wipes the previous picture away so the next one starts clean.",
+        "Try taking it out later and see what happens. It is a good surprise."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Open Processing. You get an empty window with a big text area, a **&#9654; Run** button, and a **&#9632; Stop** button.",
+    "Save the sketch first: **File &rarr; Save As**, and name it `HelloBlob`.",
+    "Type or paste in the starter code below. Getting it exactly right matters &mdash; one missing semicolon and it will not run.",
+    "Press **&#9654; Run**. A window should open with a red circle in the middle. Press **&#9632; Stop** to close it.",
+    "Change the radius from `40` to `80` and run again. Then try `15`. Watch what changes.",
+    "Open **Tools &rarr; Color Selector**. Pick a color you like and read its R, G, and B numbers. Put those three numbers into `color( , , )` and run.",
+    "Move your blob: change the `400` and the `300` to put it somewhere else in the window.",
+    "Change `background(255)` to `background(0)` and run. What happened, and why?"
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab",
+      "body": "// Lesson 1 - Hello, Blob!\nimport coxprogramming.processing.sprites.*;\n\nBlob myBlob;\n\nvoid setup() {\n  size(800, 600);\n  myBlob = new Blob(this, 400, 300, 40, color(255, 80, 80));\n}\n\nvoid draw() {\n  background(255);       // white background erases the previous frame\n  myBlob.drawSprite();   // draw the blob at its position\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Change your blob's color using **Tools &rarr; Color Selector**. Pick one you actually like.",
+    "Change its size. Try a radius of `20`, then `80`. Which one feels right?",
+    "Move it somewhere else on the screen &mdash; a corner, the top, off to one side.",
+    "Change the background color to something other than white.",
+    "Add a **second blob** with its own color and its own spot. You will need a second variable, a second `new Blob(...)` in `setup()`, and a second `drawSprite()` in `draw()`."
+  ],
+  "challenge": "Arrange four or five blobs into a small scene &mdash; a face, a snowman, a planet with moons, whatever you see in them.",
+
+  "flintHint": "Good things to ask: \"my sketch will not run and it says cannot find class Blob\", \"how do I pick a color?\", or \"what is the difference between setup and draw?\" Tell it you are on Lesson 1.",
+
+  "wrapup": "What are the two magic functions, and when does each one run?",
+
+  "assignmentTask": "Get the Lesson 1 sketch running, then change your blob so it is unmistakably yours.",
+  "assignmentDo": [
+    "Run the starter sketch and get a Blob on screen.",
+    "Change **at least one thing on purpose** &mdash; color, size, position, or background.",
+    "Be ready to say **why** you chose it. \"Because I like green\" is a perfectly good reason. \"I clicked randomly\" is not."
+  ],
+  "submit": [
+    "Your sketch folder, zipped.",
+    "A screenshot of your sketch running.",
+    "Your answer to **Show your thinking** below (type it in the comment box)."
+  ],
+
+  "checklist": [
+    "Run a sketch with **&#9654;** and stop it with **&#9632;**.",
+    "Point to my Blob on the screen.",
+    "Say which code runs **once** (`setup`) and which runs **over and over** (`draw`).",
+    "Change something about my blob on purpose, so it feels like **mine**."
+  ],
+
+  "standard": "Create and display a `Blob`, using `setup()`/`draw()` and RGB color.",
+  "stages": [
+    { "name": "Getting Started", "text": "My sketch is not running yet, or no blob appears. **Next step:** check the very first line. A missing `import coxprogramming.processing.sprites.*;` is the number one reason a sketch will not run. Fix it and run again." },
+    { "name": "Got It Working", "text": "My sketch runs and a Blob appears on screen." },
+    { "name": "Made It Mine", "text": "&hellip;and I deliberately changed at least one thing &mdash; color, size, position, or background &mdash; and I can say **why** I chose it." },
+    { "name": "Went Beyond", "text": "&hellip;and I added a second blob with its own color and place, or arranged several blobs into a small scene of my own." }
+  ],
+  "thinking": "In one or two sentences: what did you change, and what is one thing you would try with more time?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Tour the Processing IDE",
+        "p": [
+          "Project the IDE. Point at the Run and Stop buttons, the text area, and the tab bar (they will need the tab bar in Lesson 2)."
+        ]
+      },
+      {
+        "h": "setup vs draw &mdash; use the metaphor",
+        "p": [
+          "`setup()` = setting up the art table once. `draw()` = drawing a new page of a flipbook every fraction of a second.",
+          "Establish this now and reinforce it in every single lesson. Students should eventually predict without thinking: one-time things in `setup()`, repeating things in `draw()`."
+        ]
+      },
+      {
+        "h": "The import line",
+        "p": [
+          "\"This tells Processing we want to use the library's tools.\" That is the whole explanation. Do not go further."
+        ]
+      },
+      {
+        "h": "Walk the Blob constructor parameter by parameter",
+        "bullets": [
+          "`this` means \"this sketch.\" Tell them to copy it exactly and never change it.",
+          "`x` and `y` place the **center** of the blob.",
+          "`radius` is how big &mdash; half the width.",
+          "`color()` takes three numbers: how much red, green, and blue."
+        ]
+      },
+      {
+        "h": "Color and RGB &mdash; do not skip this",
+        "p": [
+          "Spend real time here. Open **Tools &rarr; Color Selector** on the projector, pick a color, and show students where to read the R, G, and B values off the panel.",
+          "Most of the personalization in this lesson (and the enthusiasm for it) comes from students discovering they can have *any* color. Make sure every student knows the Color Selector exists before they start working."
+        ]
+      },
+      {
+        "h": "Demonstrate background()",
+        "p": [
+          "Change `background(255)` to `background(0)` live. White vs. black. Then, if you want a good moment, comment `background()` out entirely and add a moving blob later in Lesson 3 to show the smear."
+        ]
+      }
+    ],
+    "guided": [
+      "Everyone opens Processing and saves a new sketch as `HelloBlob` **before** typing anything. Saving first avoids the \"where did my file go\" problem later.",
+      "Type the starter code together on the projector, line by line. Typing beats pasting here &mdash; they need to feel the syntax once.",
+      "Everyone runs it. Circulate. The two failures you will see are a missing import line and a missing semicolon.",
+      "Together: change the radius to `80`, run, change to `15`, run. Name what changed.",
+      "Open the Color Selector as a class. Each student picks a color and puts their own RGB numbers in.",
+      "Release them to move the blob, change the background, and try a second blob."
+    ],
+    "pitfalls": [
+      "**Missing import line.** By far the most common. The sketch will not compile and the error message does not point at the missing import.",
+      "Changing `this` to something else. Tell them up front it is off limits.",
+      "Putting `myBlob = new Blob(...)` inside `draw()` &mdash; it technically runs, but it rebuilds the object 60 times a second. Worth catching now.",
+      "Forgetting the semicolon at the end of a line.",
+      "Expecting `color(255, 80, 80)` to be quoted like text. It is three numbers, no quotes."
+    ],
+    "wrapupAnswer": "`setup()` runs once at the start; `draw()` runs over and over, about 60 times a second. Students should be able to say this without prompting by the end of the period.",
+    "notes": [
+      "The no-velocity constructor `Blob(this, x, y, radius, color)` is used deliberately. Velocity is Lesson 3.",
+      "Students **will** ask \"how do I make it move?\" That is exactly the reaction you want. Tell them that is next time.",
+      "If a student finishes very early, push them toward a scene made of several blobs rather than more fiddling with one.",
+      "Do not explain what an object *is* in any depth. They made one and it showed up. That is enough for today."
+    ]
+  }
+}

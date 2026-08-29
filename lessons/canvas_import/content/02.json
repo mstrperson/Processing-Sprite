@@ -1,0 +1,215 @@
+{
+  "id": "02",
+  "num": "2",
+  "kind": "core",
+  "slug": "lesson-02-draw-your-character",
+  "title": "Draw Your Character",
+  "tagline": "Build the character that will star in everything you make from here on.",
+  "whenToUse": null,
+  "timing": "One period (~50 min). Can stretch to two if students are deep in it.",
+  "newIdea": "Writing your own class with `extends Blob`",
+  "builtOn": "Lesson 1 &mdash; `setup()`, `draw()`, and making a Blob.",
+
+  "goals": [
+    "Make a new tab and write your own sprite class using `extends Blob`",
+    "Override `drawSprite()` so your character looks the way you want",
+    "Use `pos.x` and `pos.y` to anchor every shape to your character's center",
+    "Explain that `extends` means \"built on top of something that already exists\""
+  ],
+
+  "vocab": [
+    { "term": "class", "def": "a blueprint for making a new kind of object" },
+    { "term": "`extends`", "def": "means \"my character is built on top of Blob.\" Everything a Blob can do, your character can do too" },
+    { "term": "`drawSprite()`", "def": "the method you fill in to say what your character looks like" },
+    { "term": "`pos.x` / `pos.y`", "def": "your character's current position. Use these to place every shape relative to its center" },
+    { "term": "tab", "def": "a separate file inside your sketch. Big sketches get easier to read when each class lives in its own tab" }
+  ],
+
+  "warmup": "From last time: what are the two magic functions? And what five pieces of information does a Blob need to be created?",
+
+  "howItWorks": [
+    {
+      "h": "Your character is a Blob with a new face",
+      "p": [
+        "A plain `Blob` already knows how to do a lot: it has a position, it can move, it can wrap around the screen, and later it will detect collisions. What it does *not* have is a look you care about. It is just a circle.",
+        "So instead of building a character from scratch, you build one **on top of** Blob:"
+      ],
+      "code": {
+        "label": "The one line that does the work",
+        "body": "class MyCharacter extends Blob { ... }"
+      }
+    },
+    {
+      "h": "What extends gives you",
+      "p": [
+        "`extends Blob` is the whole deal in one word. Your character now gets everything Blob knows how to do, for free. You do not write any of it.",
+        "All you have to add is **what it looks like**. That is the `drawSprite()` method."
+      ]
+    },
+    {
+      "h": "The handshake line",
+      "p": [
+        "Inside your class there is a constructor, and inside that is a line starting with `super`:"
+      ],
+      "code": {
+        "label": "Copy this exactly",
+        "body": "MyCharacter(PApplet p, float x, float y) {\n  super(p, x, y, 30, color(100, 180, 255));\n}"
+      },
+      "bullets": [
+        "`super(...)` is the handshake that connects your character to the library. **Copy it exactly.**",
+        "The `30` is your character's **radius** &mdash; an invisible circle used later for collisions. Change it so it roughly matches how big your art is.",
+        "The color there is a backup. You are going to draw over it anyway, so it barely matters."
+      ]
+    },
+    {
+      "h": "pos.x and pos.y are your character's belly button",
+      "p": [
+        "Here is the important idea. Do **not** draw your character at fixed numbers like `ellipse(400, 300, 60, 60)`. If you do that, your character is nailed to one spot forever and will not move in Lesson 3.",
+        "Instead, measure every shape from `pos.x` and `pos.y` &mdash; the character's center."
+      ],
+      "code": {
+        "label": "Measuring from the center",
+        "body": "ellipse(pos.x, pos.y, 60, 60);           // body: right at the center\nellipse(pos.x - 12, pos.y - 8, 16, 16);  // left eye:  12 left, 8 up\nellipse(pos.x + 12, pos.y - 8, 16, 16);  // right eye: 12 right, 8 up"
+      },
+      "bullets": [
+        "**Minus x** moves a shape left. **Plus x** moves it right.",
+        "**Minus y** moves a shape up. **Plus y** moves it down. (Yes, up is minus. Screens are strange that way.)"
+      ]
+    },
+    {
+      "h": "Order matters when you draw",
+      "p": [
+        "Shapes stack. Whatever you draw **later** sits on top of what you drew earlier. Draw the body first, then the eyes, then the pupils inside the eyes. If your eyes vanish, you probably drew the body last and painted right over them."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Open your sketch from Lesson 1 (or start a new one and save it as `MyCharacter`).",
+    "Make a new tab: click the small **arrow at the far right of the tab bar** and choose **New Tab**. Name it `MyCharacter` &mdash; no `.pde` on the end, Processing adds that for you.",
+    "Paste the `MyCharacter.pde` code below into that new tab.",
+    "Go back to your first tab and paste in the main sketch code below.",
+    "Press **&#9654; Run**. You should see a friendly blue face in the middle of the window.",
+    "Now start changing it. Change the body color first &mdash; find `fill(100, 180, 255)` above the body `ellipse` and put in your own numbers.",
+    "Move an eye. Change `pos.x - 12` to `pos.x - 20` and run. Watch it slide.",
+    "Add one new shape of your own &mdash; a hat, an ear, an antenna, a nose. Remember: measure it from `pos.x` and `pos.y`.",
+    "If your character ends up much bigger or smaller than the starter, change the `30` in the `super(...)` line to match."
+  ],
+
+  "code": [
+    {
+      "label": "New tab — MyCharacter.pde",
+      "body": "/**\n * MyCharacter - this is YOUR character. Change everything!\n */\nclass MyCharacter extends Blob {\n\n  /**\n   * The constructor: called once when you create the character.\n   * \"super\" connects your character to the Blob it's built on.\n   * The radius (30) is the invisible collision circle - make it match your art.\n   */\n  MyCharacter(PApplet p, float x, float y) {\n    super(p, x, y, 30, color(100, 180, 255));\n  }\n\n  /**\n   * drawSprite: called every frame to draw your character on screen.\n   * Use pos.x and pos.y as the center - all other shapes are measured from there.\n   */\n  void drawSprite() {\n    // Body\n    fill(100, 180, 255);\n    noStroke();\n    ellipse(pos.x, pos.y, 60, 60);\n\n    // Eyes\n    fill(255);\n    ellipse(pos.x - 12, pos.y - 8, 16, 16);\n    ellipse(pos.x + 12, pos.y - 8, 16, 16);\n    fill(30);\n    ellipse(pos.x - 12, pos.y - 8, 8, 8);\n    ellipse(pos.x + 12, pos.y - 8, 8, 8);\n\n    // Smile\n    stroke(30);\n    strokeWeight(2);\n    noFill();\n    arc(pos.x, pos.y + 5, 24, 18, 0, PI);\n  }\n}"
+    },
+    {
+      "label": "Main sketch tab",
+      "body": "// Lesson 2 - Draw Your Character\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n}\n\nvoid draw() {\n  background(240);\n  player.drawSprite();\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Change the **body shape**. `rect()`, `triangle()`, or several overlapping `ellipse()` calls all work.",
+    "Add hair, a hat, wings, antennae, a tail, ears, a beak, horns &mdash; anything.",
+    "Change every color using **Tools &rarr; Color Selector**.",
+    "Add detail: eyebrows (they change the whole mood), freckles, a nose, a mouth with teeth.",
+    "Give it an expression. Angry eyebrows are two short `line()` calls and they change everything."
+  ],
+  "challenge": "Make a **second** character class in another new tab &mdash; a sidekick, a pet, a rival. Same pattern, different art.",
+
+  "flintHint": "Good things to ask: \"my new tab will not compile\", \"how do I draw a triangle in Processing?\", or \"how do I put a hat on top of my character?\" Tell it you are on Lesson 2 and paste in your `drawSprite()`.",
+
+  "wrapup": "Show a neighbor your character and describe one shape you drew and how you positioned it.",
+
+  "assignmentTask": "Build a character that is yours. This is the character you will use for the rest of the unit, so make it one you actually want to look at for nine lessons.",
+  "assignmentDo": [
+    "Create a `MyCharacter` tab with `class MyCharacter extends Blob`.",
+    "Override `drawSprite()` and build your character out of shapes.",
+    "Anchor **every** shape to `pos.x` and `pos.y`. This matters &mdash; next lesson your character starts moving, and hard-coded numbers will leave your face behind.",
+    "Make it recognizably yours. Not the starter blob with a different color."
+  ],
+  "submit": [
+    "Your sketch folder, zipped (both tabs).",
+    "A screenshot of your character.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Make a new tab and write `class MyCharacter extends Blob`.",
+    "Override `drawSprite()` with my own shapes.",
+    "Use `pos.x` and `pos.y` to place every shape from my character's center.",
+    "Say in one sentence what `extends` gives my character."
+  ],
+
+  "standard": "Create a custom `extends Blob` class and override `drawSprite()` to draw a character anchored at `pos.x`/`pos.y`.",
+  "stages": [
+    { "name": "Getting Started", "text": "My new tab will not compile, or nothing draws. **Next step:** check that the class line reads `class MyCharacter extends Blob`, and that the `super(...)` line is copied exactly &mdash; that is the handshake that connects your character to the library." },
+    { "name": "Got It Working", "text": "A character of my own appears on screen, built from a few shapes anchored to `pos.x`/`pos.y`." },
+    { "name": "Made It Mine", "text": "&hellip;and my character is clearly **mine** &mdash; I added or changed shapes, colors, and details (hair, hat, eyes, ears&hellip;) so it is recognizably my creation, not the starter blob." },
+    { "name": "Went Beyond", "text": "&hellip;and I pushed the art further &mdash; layered or overlapping shapes, a non-circular body &mdash; or I made a second character class (a sidekick) in another tab." }
+  ],
+  "thinking": "In one or two sentences: which shape was trickiest to place, and how did you figure out its offset from `pos.x`/`pos.y`?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Making a new tab",
+        "p": [
+          "Do this on the projector. The **arrow at the top-right of the tab bar &rarr; New Tab**. Name it `MyCharacter` with no extension.",
+          "Students miss this arrow constantly. It is small and it is at the far right edge. Point at it twice."
+        ]
+      },
+      {
+        "h": "Frame extends in exactly one sentence",
+        "p": [
+          "\"Your character is built on top of Blob. It already knows how to move, wrap around the screen, and detect collisions. All you add is what it looks like.\"",
+          "Do **not** use the word *inheritance*. Do not explain `abstract`. Do not go deeper than that sentence, even if a student pushes."
+        ]
+      },
+      {
+        "h": "The super() line",
+        "p": [
+          "\"`super` is the handshake line. Copy it exactly, and just fill in a radius that feels right for your character's size. The color there is a backup &mdash; you are going to draw over it anyway.\"",
+          "If a student asks what `super` actually means, that sentence is the whole answer. Say it and move on."
+        ]
+      },
+      {
+        "h": "pos.x and pos.y &mdash; the belly button",
+        "p": [
+          "\"Think of `pos.x`, `pos.y` as your character's belly button. Every shape you draw is measured from there.\"",
+          "This is the single most important idea in the lesson. A character drawn at hard-coded coordinates looks identical today and breaks completely in Lesson 3. Catch it now."
+        ]
+      },
+      {
+        "h": "Demonstrate the payoff",
+        "p": [
+          "Build a simple face live: body circle at `pos.x, pos.y`, then eyes offset from there. Then manually change the position where the character is constructed and re-run &mdash; the whole face moves together.",
+          "That moment is what sells the belly-button rule. Worth the 60 seconds."
+        ]
+      }
+    ],
+    "guided": [
+      "Everyone creates the `MyCharacter` tab together. Wait for every student before moving on &mdash; this is the step that strands people.",
+      "Paste in the class shell and the main sketch. Run it. Everyone should see the blue face.",
+      "As a class, change one thing: the body `fill`. Everyone runs again.",
+      "As a class, move one eye by changing its offset. Name out loud what minus and plus do on each axis.",
+      "Now branch off. Students personalize; you circulate. Expect this to take the rest of the period and then some.",
+      "Five minutes before the end, have students who changed the size update the radius in `super(...)`."
+    ],
+    "pitfalls": [
+      "**Drawing at hard-coded coordinates** instead of `pos.x`/`pos.y`. Looks fine today, breaks in Lesson 3. This is the one to hunt for while circulating.",
+      "Modifying the `super(...)` line beyond the radius, or deleting it. The class will not compile.",
+      "Naming the tab `MyCharacter.pde` &mdash; Processing adds the extension, so they end up with `MyCharacter.pde.pde`.",
+      "Drawing the body **last**, painting over the face. Good teachable moment about draw order (which returns in Lesson 8).",
+      "Forgetting `noFill()` before `arc()`, which fills the smile into a solid blob.",
+      "A radius in `super()` wildly different from the visible art. It does not matter today; it matters a lot in Lesson 7."
+    ],
+    "wrapupAnswer": "Students should be able to name a shape and say roughly where it sits relative to the center &mdash; \"the hat is 25 above `pos.y`.\" You are listening for the offset idea, not precision.",
+    "notes": [
+      "This lesson **is** the make-it-yours. Budget most of the period for personalization, not instruction.",
+      "Students will want elaborate characters. Encourage it, but tell them they can keep adding detail in every future lesson &mdash; today's goal is just to get *something* on screen.",
+      "The radius in `super()` becomes the collision hitbox in Lesson 7. Remind them to keep it roughly the size of their character's body.",
+      "Fast finishers: a second character class in another tab. It reinforces the pattern without adding a new concept.",
+      "This character carries the whole rest of the unit. A student who is proud of it now will be more invested in Lesson 9."
+    ]
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "id": "05",
+  "num": "5",
+  "kind": "core",
+  "slug": "lesson-05-a-world-of-objects",
+  "title": "A World of Objects",
+  "tagline": "One character is lonely. Time to fill the screen.",
+  "whenToUse": null,
+  "timing": "One period (~50 min)",
+  "newIdea": "Lists and loops &mdash; handling many things at once",
+  "builtOn": "Lesson 4 &mdash; your controllable character. Everything from Lessons 1&ndash;4 stays.",
+
+  "goals": [
+    "Store many objects in an `ArrayList`",
+    "Use a **counting** `for` loop to create a lot of things at once",
+    "Use a **for-each** loop to visit every thing in a list",
+    "Use `random()` to give a world variety"
+  ],
+
+  "vocab": [
+    { "term": "`ArrayList`", "def": "a list that holds many objects of the same type. It grows as you add more" },
+    { "term": "counting `for` loop", "def": "repeats a block a set number of times. Used to **create** things" },
+    { "term": "for-each loop", "def": "visits every item already in a list, one at a time. Used to **visit** things" },
+    { "term": "index", "def": "an item's position in a list. Lists start counting at **0**, not 1" }
+  ],
+
+  "warmup": "How do you make your character move toward the mouse? Where exactly does that call go, and why there?",
+
+  "howItWorks": [
+    {
+      "h": "Why you need a list",
+      "p": [
+        "Say you want twelve coins. You could write twelve variables: `coin1`, `coin2`, `coin3`&hellip; and then twelve `new Blob(...)` lines, and twelve `move()` calls, and twelve `drawSprite()` calls. That is thirty-six lines to manage, and if you want a thirteenth coin you write three more.",
+        "A list fixes that. Think of it as a **bag** &mdash; you keep stuffing things in, and the bag does not care how many."
+      ],
+      "code": {
+        "label": "Three things you do with a list",
+        "body": "ArrayList<Blob> coins;                 // 1. declare it (what kind of bag)\ncoins = new ArrayList<Blob>();        // 2. create it (get an empty bag)\ncoins.add(new Blob(...));             // 3. add to it (put something in)"
+      }
+    },
+    {
+      "h": "Two loops that both say \"for\"",
+      "p": [
+        "Java uses the same word, `for`, for two loops that feel completely different. Keeping them straight is the real skill in this lesson."
+      ]
+    },
+    {
+      "h": "The counting loop &mdash; for CREATING",
+      "p": [
+        "This one counts. `i` starts at 0, and the loop repeats until `i` reaches 12. You use it in `setup()` to build your world."
+      ],
+      "code": {
+        "label": "\"Do this 12 times\"",
+        "body": "for (int i = 0; i < 12; i++) {\n  coins.add(new Blob(this, random(width), random(height), 12, color(255, 220, 50)));\n}"
+      },
+      "bullets": [
+        "`int i = 0` &mdash; start counting at zero",
+        "`i < 12` &mdash; keep going while i is under 12",
+        "`i++` &mdash; add one to i each time around"
+      ]
+    },
+    {
+      "h": "The for-each loop &mdash; for VISITING",
+      "p": [
+        "This one does not count. It just walks the list and hands you one item at a time. You use it in `draw()` to move and draw everything."
+      ],
+      "code": {
+        "label": "\"For each coin c in the list, do this\"",
+        "body": "for (Blob c : coins) {\n  c.move();\n  c.drawSprite();\n}"
+      }
+    },
+    {
+      "h": "You cannot call a method on the whole bag",
+      "p": [
+        "This is the mistake almost everyone makes at least once:"
+      ],
+      "code": {
+        "label": "Wrong, then right",
+        "body": "coins.drawSprite();     // WRONG - the list itself doesn't know how to draw\n\nfor (Blob c : coins) {  // RIGHT - draw each coin inside the list\n  c.drawSprite();\n}"
+      },
+      "bullets": [
+        "The bag is not a coin. You cannot ask the bag to draw itself &mdash; you have to reach in and ask each coin."
+      ]
+    },
+    {
+      "h": "Draw order decides what is on top",
+      "p": [
+        "Whatever you draw **last** appears in front. That is why the player is drawn after the coins in the starter code &mdash; so your character is never hidden behind a coin.",
+        "This becomes a big deal in Lesson 8."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Open your Lesson 4 sketch. Your `MyCharacter` tab still does not change.",
+    "At the top of the sketch, next to `MyCharacter player;`, declare the list: `ArrayList<Blob> coins;`",
+    "In `setup()`, create the empty list: `coins = new ArrayList<Blob>();`",
+    "Below that, add the counting loop from the starter code. Run it. Nothing shows up yet &mdash; you made the coins but never drew them.",
+    "In `draw()`, **above** your player lines, add the for-each loop that moves and draws each coin. Run again. Now the world is full.",
+    "Change the `12` in the counting loop to `40`. Run. Then try `3`. How many feels right?",
+    "Change the coin color to something that fits your character's world.",
+    "Move the player lines **above** the coin loop and run. Your character disappears behind the coins. Move them back. That is draw order.",
+    "Add a `mousePressed()` that spawns a new coin wherever you click: `coins.add(new Blob(this, mouseX, mouseY, 12, color(255, 220, 50)));`"
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab",
+      "body": "// Lesson 5 - A World of Objects\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\n\nvoid setup() {\n  size(800, 600);\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coins = new ArrayList<Blob>();\n\n  // Counting loop: add 12 coins at random positions\n  for (int i = 0; i < 12; i++) {\n    coins.add(new Blob(\n      this,\n      random(width),             // random x\n      random(height),            // random y\n      random(8, 20),             // random radius\n      random(-2, 2),             // random horizontal speed\n      random(-2, 2),             // random vertical speed\n      color(255, 220, 50)        // gold\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  // For-each loop: visit every coin - move it and draw it\n  for (Blob c : coins) {\n    c.move();\n    c.drawSprite();\n  }\n\n  player.followMouse();\n  player.drawSprite();  // draw player last so it appears on top\n}"
+    },
+    {
+      "label": "Optional new tab — Cloud.pde",
+      "body": "// A simple cloud sprite - draws itself as a cluster of white circles.\n// Feel free to redesign this completely!\nclass Cloud extends Blob {\n\n  Cloud(PApplet p, float x, float y, float speed) {\n    super(p, x, y, 40, color(255));  // radius 40, white\n    setVelocity(speed, 0);           // drift horizontally\n  }\n\n  void drawSprite() {\n    noStroke();\n    fill(250, 250, 255);\n    ellipse(pos.x,      pos.y,      70, 45);\n    ellipse(pos.x - 30, pos.y + 12, 50, 32);\n    ellipse(pos.x + 32, pos.y + 12, 55, 32);\n    fill(235, 238, 248);\n    ellipse(pos.x - 12, pos.y - 16, 52, 38);\n    ellipse(pos.x + 16, pos.y - 10, 44, 32);\n  }\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Change the number of things in your world, their speed, and their size.",
+    "Change their color and shape so they belong in **your** world &mdash; gems, fish, stars, bubbles, asteroids, hearts.",
+    "Add a **second** `ArrayList` of a different kind of thing. Enemies? Stars in the background? Two lists means two loops in `draw()`.",
+    "Add a `mousePressed()` that spawns a new object wherever you click.",
+    "Make one list slow and drifting and another fast and darting &mdash; it makes the world feel layered."
+  ],
+  "challenge": "Write your own environment sprite class in a new tab &mdash; a `Cloud`, a `Tree`, a `Star`. It is the same `extends Blob` pattern from Lesson 2. Then make an `ArrayList` of those and fill your world with them. There is a `Cloud` example above to start from.",
+
+  "flintHint": "Good things to ask: \"what is the difference between a counting for loop and a for-each loop?\", \"my coins are not showing up\", or \"how do I make a second list of a different color?\" Paste in your `setup()` if something will not run.",
+
+  "wrapup": "What is the difference between the counting `for` loop and the for-each loop? When would you use each one?",
+
+  "assignmentTask": "Fill your character's world with things &mdash; created with a counting loop, drawn with a for-each loop.",
+  "assignmentDo": [
+    "Declare an `ArrayList`, create it in `setup()`, and fill it with a **counting** loop.",
+    "Move and draw everything in it with a **for-each** loop in `draw()`.",
+    "Use `random()` so the objects are not all identical.",
+    "Make the world yours &mdash; the count, the colors, the sizes, and the speeds should say something about the game you are building.",
+    "Draw your player **last** so it appears on top."
+  ],
+  "submit": [
+    "Your sketch folder, zipped.",
+    "A screenshot or short recording of your populated world.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Declare and create an `ArrayList`.",
+    "Use a **counting** `for` loop to make many objects.",
+    "Use a **for-each** loop to move and draw each one.",
+    "Explain the difference between the two loops."
+  ],
+
+  "standard": "Store many objects in an `ArrayList` and process them with both loop styles; use `random()` for variety.",
+  "stages": [
+    { "name": "Getting Started", "text": "My list of objects is not appearing. **Next step:** **create** things with a counting loop in `setup()` (`for (int i ...)`) and **draw** them with a for-each loop in `draw()` (`for (Blob c : coins)`). Check that you call `drawSprite()` on each item `c`, not on the whole list." },
+    { "name": "Got It Working", "text": "Many objects appear and move &mdash; created in a counting loop, drawn in a for-each loop." },
+    { "name": "Made It Mine", "text": "&hellip;and I tuned the world: changed the count, size, or speed, added a second list of a different kind (enemies, stars, bubbles), or spawned objects on click." },
+    { "name": "Went Beyond", "text": "&hellip;and I wrote my own environment sprite class (like a `Cloud`) in a new tab and filled the world with it." }
+  ],
+  "thinking": "In your own words, in one or two sentences: when do you use a **counting** loop versus a **for-each** loop?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Motivate the list before you show it",
+        "p": [
+          "Start by writing `coin1`, `coin2`, `coin3` on the board and asking what happens at twelve. Let the tedium land before you offer the fix.",
+          "This is the Lesson 5 slot in the arc precisely because students can now *feel* the pain of managing many things. Do not skip straight to the syntax."
+        ]
+      },
+      {
+        "h": "ArrayList in three moves",
+        "p": [
+          "\"A list is like a bag &mdash; you can keep stuffing things in.\"",
+          "Declare, create, add. Show all three on the projector as three separate lines before combining them."
+        ]
+      },
+      {
+        "h": "The two for loops &mdash; make this distinction explicit",
+        "p": [
+          "This is the developer note on this lesson and it is the thing to get right.",
+          "**Counting loop** (in `setup()`, to CREATE): `for (int i = 0; i < 10; i++)`. \"`i` counts from 0 to 9 &mdash; we use it to repeat the add 10 times.\"",
+          "**For-each loop** (in `draw()`, to VISIT): `for (Blob c : coins)`. \"For each coin `c` in the list, move it and draw it.\"",
+          "Both use the word `for`, and in a broad sense both are count-controlled, but they *feel* different: **one counts, one visits.** Students mix them up constantly. Say the distinction out loud more than once, and use the words \"create\" and \"visit\" consistently."
+        ]
+      },
+      {
+        "h": "Show the classic mistake on purpose",
+        "p": [
+          "Write `coins.drawSprite();` on the projector and run it. It will not compile.",
+          "\"The bag is not a coin. You cannot ask the bag to draw itself.\" Then fix it with the loop. Seeing the error once beats a warning."
+        ]
+      },
+      {
+        "h": "Custom sprite tab (optional, for motivated students)",
+        "p": [
+          "Show the `Cloud` class &mdash; there is a working version in `SceneExample/Cloud.pde` in the examples folder.",
+          "\"It is just like `MyCharacter`, but it draws cloud shapes instead.\" Same pattern from Lesson 2, no new concept. Students who want a richer world can write their own environment sprites."
+        ]
+      }
+    ],
+    "guided": [
+      "Put `coin1`, `coin2`, `coin3` on the board. Ask what happens at twelve. Wait for the groan.",
+      "Declare and create the list together. Run &mdash; nothing changes, because the list is empty. Name that.",
+      "Add the counting loop in `setup()` together. Run &mdash; still nothing on screen. Ask why. (They exist, but nothing draws them.)",
+      "Add the for-each loop in `draw()`. Run. The world appears. That two-step reveal is worth the extra minute.",
+      "As a class, change `12` to `40`, then to `3`. Let them see the loop's power immediately.",
+      "Deliberately move the player lines above the coin loop and run. Character vanishes. Move them back. That is draw order, and it sets up Lesson 8.",
+      "Release for personalization: colors, counts, a second list, a `mousePressed()` spawner."
+    ],
+    "pitfalls": [
+      "**`coins.drawSprite()`** &mdash; calling a method on the whole list. The single most common error in this lesson.",
+      "**Creating the list but never looping over it in `draw()`.** The objects exist and are invisible. Students think the `add` failed.",
+      "**Forgetting `coins = new ArrayList<Blob>();`** &mdash; a null pointer exception the moment they call `.add()`.",
+      "Mixing the two loop forms: `for (int i = 0; i < coins; i++)` or `for (Blob c : 12)`. Both come from not having the create/visit distinction yet.",
+      "Drawing the player **before** the coins, so the character is hidden.",
+      "Putting the counting loop in `draw()` &mdash; it adds 12 new coins every frame and the sketch grinds to a halt. Dramatic, and a good demo if it happens."
+    ],
+    "wrapupAnswer": "Counting loop: repeat something a set number of times &mdash; used to create. For-each loop: visit every item already in a list &mdash; used to move and draw. Accept any wording that separates \"create\" from \"visit.\"",
+    "notes": [
+      "Use the word \"visit\" for the for-each loop all period. It gives students language for a distinction they can otherwise only feel.",
+      "The `Cloud` class uses `extends Blob`, not `extends Sprite`, so it inherits `collidesWith()`. If students want clouds to be interactive obstacles in Lesson 7, this matters. Do not let a motivated student write `extends Sprite`.",
+      "Draw order gets a proper lesson in Lesson 8. Today just plant it.",
+      "Fast finishers should write a custom environment sprite rather than adding a third list of plain blobs &mdash; it reinforces Lesson 2 and pays off in Lesson 8.",
+      "Do not explain generics (`<Blob>`). It is \"what kind of bag this is.\" That is enough."
+    ]
+  }
+}

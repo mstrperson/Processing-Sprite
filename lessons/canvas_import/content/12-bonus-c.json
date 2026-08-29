@@ -1,0 +1,242 @@
+{
+  "id": "12-bonus-c",
+  "num": "C",
+  "kind": "bonus",
+  "slug": "bonus-c-animate-your-character",
+  "title": "Animate Your Character",
+  "tagline": "Stop sliding a frozen drawing around. Make it move.",
+  "whenToUse": "Any time after Lesson 2 (you need a character to animate). It shines most **during Lesson 9**, when students want their character to feel alive. Pairs naturally with Bonus Lesson A &mdash; image frames animate the same way. One period.",
+  "timing": "One period (~50 min)",
+  "newIdea": "A flipbook of poses &mdash; `AnimatedSprite`",
+  "builtOn": "Lesson 2 &mdash; your `MyCharacter` drawing. You will reuse it directly.",
+
+  "goals": [
+    "Understand animation as a flipbook: several still pictures shown fast, one after another",
+    "Draw your character in two to four slightly different **poses**",
+    "Use `AnimatedSprite` to hold those poses and flip between them automatically",
+    "Control the speed with `setFrameRate()`"
+  ],
+
+  "vocab": [
+    { "term": "animation frame", "def": "one still picture in the flipbook &mdash; one **pose** of your character" },
+    { "term": "pose", "def": "one version of your character's drawing. Mouth open vs. closed, legs together vs. apart" },
+    { "term": "`AnimatedSprite`", "def": "a library object that holds several frame sprites and draws one at a time" },
+    { "term": "frame rate (animation)", "def": "how many **game** frames each picture stays on screen. `8` means \"hold each pose for 8 game frames.\" Smaller is faster" }
+  ],
+
+  "warmup": "Have you ever made a flipbook in the corner of a notebook? How does a cartoon make a character walk? It is just drawings, shown fast. And remember from Lesson 1 &mdash; `draw()` is already a flipbook, drawing a new picture about 60 times a second.",
+
+  "howItWorks": [
+    {
+      "h": "Two different things are both called a frame",
+      "p": [
+        "This is worth getting straight before anything else, because the word does double duty.",
+        "A **game frame** is one run of `draw()` &mdash; about 60 of them every second. You have known this since Lesson 1.",
+        "An **animation frame** is one picture in your flipbook &mdash; one pose of your character.",
+        "`setFrameRate(8)` is what connects them: hold each animation frame for 8 game frames."
+      ]
+    },
+    {
+      "h": "A frame is just a drawing you already know how to make",
+      "p": [
+        "A frame class is your Lesson 2 character with one addition: a `pose` number. The same class draws several slightly different versions depending on that number."
+      ],
+      "code": {
+        "label": "One class, several poses",
+        "body": "class MyCharacterFrame extends Blob {\n\n  int pose;   // which version to draw: 0, 1, 2, ...\n\n  MyCharacterFrame(PApplet p, float x, float y, int pose) {\n    super(p, x, y, 30, color(100, 180, 255));   // the same handshake line\n    this.pose = pose;\n  }\n\n  void drawSprite() {\n    // ... body and eyes: IDENTICAL in every pose ...\n\n    if (pose == 0) {\n      arc(pos.x, pos.y + 6, 24, 18, 0, PI);   // open smile\n    } else if (pose == 1) {\n      arc(pos.x, pos.y + 6, 24, 8, 0, PI);    // smaller smile\n    } else {\n      ellipse(pos.x, pos.y + 10, 12, 12);     // round talking mouth\n    }\n  }\n}"
+      },
+      "bullets": [
+        "**Only change what should move.** Keep everything else identical between poses, or it looks like flickering instead of animation."
+      ]
+    },
+    {
+      "h": "Building the flipbook",
+      "p": [
+        "This is the one genuinely new line in the lesson. You chain the calls together to build up the flipbook."
+      ],
+      "code": {
+        "label": "Three poses into one animated sprite",
+        "body": "player = AnimatedSprite.FromSprite(new MyCharacterFrame(this, width/2, height/2, 0))\n    .AddFrameSprite(new MyCharacterFrame(this, width/2, height/2, 1))\n    .AddFrameSprite(new MyCharacterFrame(this, width/2, height/2, 2))\n    .setFrameRate(8);"
+      },
+      "bullets": [
+        "`FromSprite(...)` starts the flipbook with the first page.",
+        "`AddFrameSprite(...)` adds another page. Add as many as you like.",
+        "`setFrameRate(8)` sets how long each page stays up.",
+        "**Create every frame at the SAME x and y.** If you do not, your character visibly jumps every time the page turns."
+      ]
+    },
+    {
+      "h": "Frame rate is backwards from what you would guess",
+      "p": [
+        "`setFrameRate()` is **game frames per picture** &mdash; how long to hold each pose. So a **smaller** number means a **faster** animation.",
+        "`setFrameRate(4)` is fast and frantic. `setFrameRate(20)` is slow and calm. The smallest allowed is 1, and the default is 8 if you never call it."
+      ]
+    },
+    {
+      "h": "Everything else works exactly as before",
+      "p": [
+        "An `AnimatedSprite` is still a sprite. `move()`, `followMouse()`, `keyboardControl()` &mdash; all the same as Lessons 3 and 4.",
+        "`drawSprite()` draws the current pose **and** turns the page for you. You do not have to manage any of it."
+      ]
+    },
+    {
+      "h": "One honest catch, if you are using this in Lesson 9",
+      "p": [
+        "An `AnimatedSprite` is **not** a `Blob`, so `collidesWith()` is not available on it. That is the trade for getting animation.",
+        "Use `distanceTo()` instead. It works between any two sprites:"
+      ],
+      "code": {
+        "label": "Collision without collidesWith",
+        "body": "if (player.distanceTo(coin) < 40) {   // 40 = how close counts as \"touching\"\n  collectibles.remove(i);\n  score = score + 1;\n}"
+      },
+      "bullets": [
+        "Pick a number that matches your character's size. Bigger is more forgiving, exactly like the radius was."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Make a new tab called `MyCharacterFrame`.",
+    "Copy your **whole character drawing** from your Lesson 2 `MyCharacter` tab into it, then rename the class and constructor to `MyCharacterFrame`.",
+    "Add the `int pose;` field and the `this.pose = pose;` line in the constructor, matching the starter code below.",
+    "Pick **one** thing on your character to animate &mdash; the mouth is easiest. Legs, arms, wings, or ears also work well.",
+    "Wrap just that part in an `if (pose == 0) { ... } else if (pose == 1) { ... }`. Make the difference small.",
+    "In your main sketch, build the `AnimatedSprite` from two frames. **Both at the same x and y.**",
+    "Run it. Your character should be flipping between two poses on its own.",
+    "Add a third pose. Then try `setFrameRate(4)` and `setFrameRate(20)` and see which speed suits your character.",
+    "Move it: add `player.followMouse()` or arrow-key control, exactly like Lesson 4. Animation and motion work together with no extra effort.",
+    "If your character jumps or twitches when the pose changes, two things to check: are all frames at the same x and y, and are the non-moving parts truly identical between poses?"
+  ],
+
+  "code": [
+    {
+      "label": "New tab — MyCharacterFrame.pde",
+      "body": "// MyCharacterFrame - ONE POSE of your character.\n// It's just like your MyCharacter from Lesson 2, but the \"pose\" number lets you\n// draw a few slightly different versions. AnimatedSprite flips between them.\nclass MyCharacterFrame extends Blob {\n\n  int pose;  // which version to draw: 0, 1, 2, ...\n\n  MyCharacterFrame(PApplet p, float x, float y, int pose) {\n    super(p, x, y, 30, color(100, 180, 255));  // same handshake line as MyCharacter\n    this.pose = pose;\n  }\n\n  void drawSprite() {\n    // --- Body (same in every pose) ---\n    fill(100, 180, 255);\n    noStroke();\n    ellipse(pos.x, pos.y, 60, 60);\n\n    // --- Eyes (same in every pose) ---\n    fill(255);\n    ellipse(pos.x - 12, pos.y - 8, 16, 16);\n    ellipse(pos.x + 12, pos.y - 8, 16, 16);\n    fill(30);\n    ellipse(pos.x - 12, pos.y - 8, 8, 8);\n    ellipse(pos.x + 12, pos.y - 8, 8, 8);\n\n    // --- Mouth: CHANGES with the pose - this is what makes it animate! ---\n    stroke(30);\n    strokeWeight(2);\n    noFill();\n    if (pose == 0) {\n      arc(pos.x, pos.y + 6, 24, 18, 0, PI);   // open smile\n    } else if (pose == 1) {\n      arc(pos.x, pos.y + 6, 24, 8, 0, PI);    // smaller smile\n    } else {\n      fill(30);\n      ellipse(pos.x, pos.y + 10, 12, 12);     // round \"talking\" mouth\n    }\n  }\n}"
+    },
+    {
+      "label": "Main sketch tab",
+      "body": "// Bonus Lesson C - Animate Your Character\nimport coxprogramming.processing.sprites.*;\n\nAnimatedSprite player;\n\nvoid setup() {\n  size(800, 600);\n\n  // Build the flipbook from several poses - all at the SAME spot so it doesn't jump.\n  // AnimatedSprite shows one pose at a time and flips between them for you.\n  player = AnimatedSprite.FromSprite(new MyCharacterFrame(this, width/2, height/2, 0))\n      .AddFrameSprite(new MyCharacterFrame(this, width/2, height/2, 1))\n      .AddFrameSprite(new MyCharacterFrame(this, width/2, height/2, 2))\n      .setFrameRate(8);   // hold each pose for 8 game frames; smaller = faster\n\n  player.setVelocity(4, 0);  // gives followMouse() a speed to move at\n}\n\nvoid draw() {\n  background(240);\n\n  // --- Option A: follow the mouse ---\n  player.followMouse();\n  player.drawSprite();   // draws the current pose, then turns the page for you\n\n  // --- Option B: arrow-key control ---\n  // (comment out Option A above, uncomment these two lines, keep keyPressed below)\n  // player.move();\n  // player.drawSprite();\n}\n\n// Used with Option B (arrow keys)\nvoid keyPressed() {\n  player.keyboardControl();\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Add a fourth pose. Try animating **legs or arms** instead of the mouth &mdash; make it walk.",
+    "Change `setFrameRate()`. Try `4` (fast and frantic) and `20` (slow and calm). Which one is your character?",
+    "Add more frames for smoother motion. More pages means a smoother flipbook.",
+    "Make a second animated creature &mdash; a pet? &mdash; with its own `setVelocity()` drifting across the scene.",
+    "**Plug it into your Lesson 9 game.** Remember: use `distanceTo()` instead of `collidesWith()`, because an `AnimatedSprite` is not a `Blob`."
+  ],
+  "challenge": "Take manual control of the flipbook. Instead of letting it auto-advance, call `nextFrame()` or `setFrameNumber(n)` on a key press to trigger a specific pose &mdash; a jump, an attack, a blink. That is how real games do special moves.",
+
+  "flintHint": "Good things to ask: \"my character jumps around when it animates\", \"my animation is too fast\", or \"how do I use an AnimatedSprite in my Lesson 9 game with collisions?\" Paste in your frame class if the poses look wrong.",
+
+  "wrapup": "What is the difference between a game frame and an animation frame? What does `setFrameRate(4)` do compared to `setFrameRate(20)`?",
+
+  "assignmentTask": "Bring your character to life with at least two poses flipping automatically.",
+  "assignmentDo": [
+    "Make a `MyCharacterFrame` class with a `pose` number, based on your Lesson 2 character.",
+    "Draw at least two poses that differ in **one** thing. Keep everything else identical.",
+    "Build an `AnimatedSprite` with `FromSprite(...).AddFrameSprite(...)`, creating every frame at the same x and y.",
+    "Set a frame rate that suits the motion you are going for.",
+    "Move it in `draw()` &mdash; `followMouse()` or arrow keys, your choice."
+  ],
+  "submit": [
+    "Your sketch folder, zipped (all tabs).",
+    "A short screen recording &mdash; a screenshot cannot show an animation, so this one really needs to be a recording.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Draw my character in two or more slightly different poses (frames).",
+    "Build an `AnimatedSprite` with `FromSprite(...).AddFrameSprite(...)`.",
+    "Set the animation speed with `setFrameRate()`.",
+    "Move and draw my animated character in `draw()`."
+  ],
+
+  "standard": "Build a multi-frame animated character with `AnimatedSprite` and control its animation speed.",
+  "stages": [
+    { "name": "Getting Started", "text": "My character does not animate, or does not show up. **Next step:** build the `AnimatedSprite` with `FromSprite(...).AddFrameSprite(...)`, create **every** frame at the same `x, y`, and call `player.drawSprite()` in `draw()`." },
+    { "name": "Got It Working", "text": "My character appears and flips between poses on its own." },
+    { "name": "Made It Mine", "text": "&hellip;and the animation is my own &mdash; my poses, my character, and a frame rate that looks right for the motion I want." },
+    { "name": "Went Beyond", "text": "&hellip;and I took it further &mdash; wired the animation into my Lesson 9 game with `distanceTo()`, animated a second creature, hand-controlled a pose on a key press, or animated image frames." }
+  ],
+  "thinking": "In one or two sentences: what part of your character did you make move, and what frame rate looked right for it?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "The flipbook idea &mdash; connect it to Lesson 1",
+        "p": [
+          "Animation is a few still pictures, shown quickly in order, looping. Every student already understands this from notebook flipbooks.",
+          "Make the connection explicit: **`draw()` is the flipbook engine** they have had since Lesson 1. `AnimatedSprite` is the flipbook the engine flips through. Nothing new is happening underneath &mdash; they are just adding pages."
+        ]
+      },
+      {
+        "h": "Name the two meanings of \"frame\" up front",
+        "p": [
+          "A **game frame** is one run of `draw()` (~60/sec, from Lesson 3). An **animation frame** is one picture in the flipbook.",
+          "Say both out loud before showing `setFrameRate()`, or the number will make no sense to anyone."
+        ]
+      },
+      {
+        "h": "The frame class &mdash; it is their Lesson 2 character",
+        "p": [
+          "A frame is just a drawing, exactly like `MyCharacter`. The only addition is a `pose` number so the same class can draw a few variations.",
+          "Demonstrate: keep the body and eyes identical, change **only** the mouth between poses.",
+          "\"Only change what should move &mdash; keep everything else identical, or it looks jittery.\" This is the single most important piece of art advice in the lesson."
+        ]
+      },
+      {
+        "h": "Building the AnimatedSprite",
+        "p": [
+          "`AnimatedSprite.FromSprite(first).AddFrameSprite(next).AddFrameSprite(next).setFrameRate(8)`",
+          "\"`FromSprite` starts the flipbook, `AddFrameSprite` adds another page, `setFrameRate` sets the speed.\" Do not explain method chaining as a concept &mdash; just read it left to right.",
+          "**CRUCIAL: create every frame at the SAME x, y**, or the character visibly jumps when the page turns. Say this while you type it."
+        ]
+      },
+      {
+        "h": "setFrameRate is a ratio, and it is backwards",
+        "p": [
+          "It is game-frames-**per-picture**, not pictures-per-second. **Smaller is faster.** Minimum is 1. Default is 8 if never called.",
+          "Demo `setFrameRate(4)` and then `setFrameRate(20)` back to back on the projector. The direction only lands once they see it."
+        ]
+      },
+      {
+        "h": "The Lesson 9 caveat &mdash; say it clearly",
+        "p": [
+          "`AnimatedSprite` extends `CompoundSprite`, **not** `Blob`, so it has **no `collidesWith()`**. This is the one thing that will trip up a student who brings animation into their capstone.",
+          "The fix is `distanceTo(otherSprite) < threshold`. `distanceTo()` is inherited from `Sprite` and works between any two sprites.",
+          "Do not hide this. A student who discovers it mid-capstone with no warning loses a whole period."
+        ]
+      }
+    ],
+    "guided": [
+      "New tab `MyCharacterFrame`. Students paste in their **own** Lesson 2 character drawing, then rename the class and constructor.",
+      "Add the `int pose` field and `this.pose = pose;` together.",
+      "Make pose 0 and pose 1 differ in exactly **one** thing &mdash; the mouth. Do this as a class so everyone sees how small the difference should be.",
+      "In the main tab, build the `AnimatedSprite` from two frames and run it. Watch it talk. This is the payoff moment.",
+      "As a class, try `setFrameRate(4)`, then `setFrameRate(20)`. Ask which suits their character.",
+      "Add a third pose together.",
+      "Release to personalize: more poses, animating legs or arms, a second creature.",
+      "If students are mid-capstone, spend the last ten minutes on the `distanceTo()` swap so they can actually use this in their game."
+    ],
+    "pitfalls": [
+      "**Frames created at different x, y.** The character teleports on every page turn. The most common and most confusing bug in this lesson.",
+      "**Poses that differ too much.** It reads as flickering, not animation. Push them to change one thing.",
+      "**Expecting a bigger `setFrameRate()` to mean faster.** It is the opposite.",
+      "**Calling `collidesWith()` on an `AnimatedSprite`.** It will not compile. Use `distanceTo()`.",
+      "Forgetting `this.pose = pose;` in the constructor, so every frame draws pose 0 and nothing appears to animate.",
+      "Forgetting to rename the constructor when copying from `MyCharacter` &mdash; a constructor whose name does not match its class becomes a method that never runs.",
+      "Not calling `drawSprite()` in `draw()`, so the flipbook never advances."
+    ],
+    "wrapupAnswer": "A game frame is one run of `draw()` (~60/sec). An animation frame is one picture in the flipbook. `setFrameRate(4)` holds each picture for 4 game frames (fast); `setFrameRate(20)` holds it for 20 (slow).",
+    "notes": [
+      "Only the current frame is drawn, so the Blob's plain circle never appears &mdash; `drawSprite()` is overridden in `MyCharacterFrame`. The radius and color in `super()` are just carried along.",
+      "**This lesson lands best during Lesson 9**, when students are already looking at their character and wishing it felt alive.",
+      "Ties into Bonus A: a frame can be an `ImageSprite`, so a sprite sheet animates with exactly the same pattern &mdash; `AnimatedSprite.FromSprite(new ImageSprite(this, x, y, \"walk0.png\")).AddFrameSprite(...)`.",
+      "Show the **AnimatedSceneExample** (File &rarr; Examples &rarr; Contributed Libraries &rarr; SpriteGame). Its clouds and sun are built with exactly this `FromSprite`/`AddFrameSprite` pattern, and seeing it in a finished scene is motivating.",
+      "Fast finishers: control the frame by hand instead of auto-advancing &mdash; `nextFrame()` or `setFrameNumber(n)` on a key press for a jump or attack pose.",
+      "Two poses is genuinely enough for a good result. Do not let students get stuck trying to draw eight."
+    ]
+  }
+}

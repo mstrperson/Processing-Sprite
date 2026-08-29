@@ -1,0 +1,228 @@
+{
+  "id": "09",
+  "num": "9",
+  "kind": "core",
+  "slug": "lesson-09-build-your-game",
+  "title": "Build Your Game",
+  "tagline": "Everything you have learned, in one game that is yours. This is the one you show people.",
+  "whenToUse": null,
+  "timing": "Two periods works best: one to build, one to play-test and present.",
+  "newIdea": "Restarting &mdash; and putting all nine lessons together",
+  "builtOn": "Everything. Lessons 1 through 8, all at once.",
+
+  "goals": [
+    "Combine everything you have learned into a complete, playable game with your character in it",
+    "Add a restart so the game can be played again without closing it",
+    "Make your own design decisions about difficulty, theme, rules, and how it ends",
+    "Go through the real cycle: build, test, adjust, test again"
+  ],
+
+  "vocab": [
+    { "term": "game loop", "def": "`draw()` running over and over is the engine of every game you have ever played" },
+    { "term": "win / lose condition", "def": "the rules that decide when the game ends, and how" },
+    { "term": "restart", "def": "resetting every variable and list back to its starting state so the game can be played again" },
+    { "term": "play-testing", "def": "actually playing your own game to find out whether it is fun, then changing it" }
+  ],
+
+  "warmup": "Write one sentence describing your game. Who is your character? What are they collecting, and what are they avoiding? Two minutes, before any code.",
+
+  "howItWorks": [
+    {
+      "h": "You already know all of this",
+      "p": [
+        "Look at the starter code below. There is exactly **one** thing in it you have not seen before. Everything else you have already built:"
+      ],
+      "bullets": [
+        "`setup()` and `draw()` &mdash; Lesson 1",
+        "`MyCharacter extends Blob` &mdash; Lesson 2",
+        "`setVelocity()` and `move()` &mdash; Lesson 3",
+        "`followMouse()` and `keyboardControl()` &mdash; Lesson 4",
+        "`ArrayList` and loops &mdash; Lesson 5",
+        "`if`, `score`, `gameOver` &mdash; Lesson 6",
+        "`collidesWith()` and the backwards loop &mdash; Lesson 7",
+        "`Block` and draw order &mdash; Lesson 8"
+      ]
+    },
+    {
+      "h": "The one new idea: restartGame()",
+      "p": [
+        "To restart a game, you might think you need to undo everything that happened. You do not. That is much harder and it never quite works.",
+        "Instead, you just **run the setup steps again**: make a new player, empty the lists and refill them, set the score back to 0, and set the flags back to false."
+      ],
+      "code": {
+        "label": "Reset by rebuilding",
+        "body": "void restartGame() {\n  score = 0;\n  gameOver = false;\n  playerWon = false;\n\n  player = new MyCharacter(this, width/2, height - 120);\n  player.setVelocity(4, 0);\n\n  collectibles = new ArrayList<Blob>();   // a brand-new empty list\n  for (int i = 0; i < 10; i++) {\n    collectibles.add(new Blob(...));\n  }\n}"
+      },
+      "bullets": [
+        "Notice that `setup()` now just calls `restartGame()`. Starting the game and restarting it are **the same thing**, so they should be the same code.",
+        "That is a genuinely important programming idea, and it is worth noticing that it made your code shorter, not longer."
+      ]
+    },
+    {
+      "h": "Three states now, not two",
+      "p": [
+        "Lesson 6 had two states: playing and game over. A real game usually has three &mdash; because winning and losing should not look the same."
+      ],
+      "code": {
+        "label": "Picking which screen to show",
+        "body": "if (!gameOver && !playerWon) {\n  playGame();\n} else if (playerWon) {\n  showWin();\n} else {\n  showGameOver();\n}"
+      },
+      "bullets": [
+        "`&&` means **AND**. So `!gameOver && !playerWon` reads: \"not lost, and not won\" &mdash; in other words, still playing."
+      ]
+    },
+    {
+      "h": "Clicking to play again",
+      "p": [
+        "`mousePressed()` from Lesson 4 is an event function. Put the restart inside it, but guard it with an `if` so a click during play does not wipe your game."
+      ],
+      "code": {
+        "label": "Only restart when it is over",
+        "body": "void mousePressed() {\n  if (gameOver || playerWon) {\n    restartGame();\n  }\n}"
+      },
+      "bullets": [
+        "`||` means **OR**. \"If we lost or we won, start over.\""
+      ]
+    },
+    {
+      "h": "The starter code is a skeleton, not an answer",
+      "p": [
+        "The plain colored blobs in the starter are **placeholders**. They are there so the code runs, not because they are what your game should look like.",
+        "Replace them with things that make sense in your world. That is not extra credit &mdash; that is the assignment."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Write your one-sentence game description first. What is it about? Do this before touching code.",
+    "Start from your Lesson 8 sketch, or paste in the starter below &mdash; whichever is closer to what you want.",
+    "Run it and find each piece: `setup`, `draw`, `playGame`, `showWin`, `showGameOver`, `restartGame`, `mousePressed`. Say out loud what each one does.",
+    "Play it until you lose, then click to restart. Make sure that works before you change anything.",
+    "**Get one full loop working first.** Player, collectibles, and one win or lose condition. Do not add anything else until that plays properly.",
+    "Now replace the placeholders. Your character, your collectibles, your hazards, your world from Lesson 8.",
+    "Rewrite the win and lose screens in your own words. \"YOU WIN!\" is the starter's voice, not yours.",
+    "Tune the difficulty. Play it. Too easy? More hazards, or faster ones. Too hard? Fewer, or slower, or make your hitbox bigger.",
+    "Add one thing the lesson did not ask for. A second mechanic, an ability, lives, a level. Something that is your idea.",
+    "Play-test with a neighbor. Watch them play without helping them. Whatever confuses them is a real problem &mdash; go fix it."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab (builds on everything from Lessons 2–8)",
+      "body": "// Lesson 9 - Build Your Game\n// Replace EVERYTHING marked CHANGE with your own choices!\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> collectibles;  // things to collect for points\nArrayList<Blob> hazards;       // things to avoid\nBlock ground;\nint score = 0;\nboolean gameOver = false;\nboolean playerWon = false;\n\nvoid setup() {\n  size(800, 600);\n  restartGame();\n}\n\nvoid draw() {\n  background(135, 206, 235);  // CHANGE: your sky/background color\n\n  ground.drawSprite();\n\n  if (!gameOver && !playerWon) {\n    playGame();\n  } else if (playerWon) {\n    showWin();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  // --- Collectibles ---\n  for (int i = collectibles.size() - 1; i >= 0; i--) {\n    Blob c = collectibles.get(i);\n    c.move();\n    c.drawSprite();\n    if (player.collidesWith(c)) {\n      collectibles.remove(i);\n      score = score + 1;\n    }\n  }\n\n  // --- Hazards ---\n  for (Blob h : hazards) {\n    h.move();\n    h.drawSprite();\n    if (player.collidesWith(h)) {\n      gameOver = true;\n    }\n  }\n\n  // --- Player ---\n  player.followMouse();  // or keyboardControl() in keyPressed()\n  player.drawSprite();\n\n  // --- Win condition ---\n  if (collectibles.size() == 0) {\n    playerWon = true;\n  }\n\n  // --- HUD ---\n  fill(50);\n  textSize(22);\n  text(\"Score: \" + score, 20, 32);\n}\n\nvoid showWin() {\n  textAlign(CENTER, CENTER);\n  fill(80, 200, 100);\n  textSize(54);\n  text(\"YOU WIN!\", width/2, height/2 - 30);\n  fill(50);\n  textSize(22);\n  text(\"Score: \" + score, width/2, height/2 + 18);\n  text(\"Click to play again\", width/2, height/2 + 52);\n  textAlign(LEFT, TOP);\n}\n\nvoid showGameOver() {\n  textAlign(CENTER, CENTER);\n  fill(220, 60, 60);\n  textSize(54);\n  text(\"GAME OVER\", width/2, height/2 - 30);\n  fill(50);\n  textSize(22);\n  text(\"Score: \" + score, width/2, height/2 + 18);\n  text(\"Click to play again\", width/2, height/2 + 52);\n  textAlign(LEFT, TOP);\n}\n\nvoid mousePressed() {\n  if (gameOver || playerWon) {\n    restartGame();\n  }\n}\n\nvoid restartGame() {\n  score = 0;\n  gameOver = false;\n  playerWon = false;\n\n  // CHANGE: move player to your preferred starting position\n  player = new MyCharacter(this, width/2, height - 120);\n  player.setVelocity(4, 0);\n\n  // Ground\n  ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));\n\n  // Collectibles - CHANGE: color, size, count, speed\n  collectibles = new ArrayList<Blob>();\n  for (int i = 0; i < 10; i++) {\n    collectibles.add(new Blob(\n      this, random(width), random(100, height - 120),\n      random(10, 18), random(-2, 2), random(-1, 1),\n      color(255, 220, 50)\n    ));\n  }\n\n  // Hazards - CHANGE: color, count, speed (make them faster each wave if you want!)\n  hazards = new ArrayList<Blob>();\n  for (int i = 0; i < 5; i++) {\n    hazards.add(new Blob(\n      this, random(width), random(100, height - 120),\n      random(15, 28), random(-3, 3), random(-3, 3),\n      color(220, 60, 60)\n    ));\n  }\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "**Theme it.** Replace every placeholder color, name, and shape with your world &mdash; space, ocean, forest, city, dream, whatever it is.",
+    "**Difficulty.** Make hazards faster over time. Add more when a wave is cleared. Give the player 3 lives instead of instant death.",
+    "**A second mechanic.** A `keyPressed()` special ability &mdash; a speed burst, a shield, a projectile, a teleport.",
+    "**Polish.** A title screen before the game starts. Better draw order. Animated decorations. A high score that survives a restart.",
+    "**A custom hazard.** Write a new `extends Blob` tab for an enemy that behaves differently &mdash; one that chases the player using `followMouse()`-style logic is genuinely scary."
+  ],
+  "challenge": "Add a second level. When the player wins, instead of stopping, rebuild the world harder &mdash; more hazards, faster, a different background &mdash; and keep the score. That is `restartGame()` with a difficulty number, and it turns a demo into a game people want to keep playing.",
+
+  "flintHint": "Good things to ask: \"my restart is not resetting everything\", \"how do I add 3 lives?\", \"how do I make an enemy chase the player?\", or \"my game is too easy, what should I change?\" Describe your game first so it can give you advice that fits.",
+
+  "wrapup": "Play a neighbor's game. Tell them one thing you liked and one thing you would add.",
+
+  "assignmentTask": "Build a complete, playable game starring your character. This is the capstone &mdash; the goal is a finished thing you are proud of, not a perfect one.",
+  "assignmentDo": [
+    "Combine movement, control, lists, collisions, state, and your world into one game.",
+    "Write **both** a win condition and a lose condition. They should look different when they happen.",
+    "Make restart work, using `restartGame()` to reset by re-running your setup steps.",
+    "Replace every placeholder with something that belongs in your world.",
+    "Add at least one thing the lesson did not ask for &mdash; a rule, a mechanic, an ability that is your own idea.",
+    "Play-test it. Then change something because of what you learned. That last step is the one people skip."
+  ],
+  "submit": [
+    "Your sketch folder, zipped (all tabs).",
+    "A screen recording of you playing your game, including winning **or** losing and then restarting.",
+    "Your one-sentence game description.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Combine movement, control, lists, collisions, state, and world into one game.",
+    "Write win **and** lose conditions.",
+    "Reset the game with `restartGame()`.",
+    "Make and defend my own design decisions."
+  ],
+
+  "standard": "Combine all prior skills into a complete, playable, replayable mini-game with win/lose conditions and independent design decisions.",
+  "stages": [
+    { "name": "Getting Started", "text": "The pieces are not coming together into something playable yet. **Next step:** get **one** full loop working first &mdash; player, collectibles, and a win or lose check &mdash; then build outward. Use `restartGame()` to reset by **re-running** your setup steps, not by undoing changes." },
+    { "name": "Got It Working", "text": "A playable game with my character: collectibles, a win and/or lose condition, a score, and a working restart." },
+    { "name": "Made It Mine", "text": "&hellip;and the game is unmistakably **mine** &mdash; themed world, my own rules and difficulty, my character at the center &mdash; with design decisions I made on purpose about how it plays." },
+    { "name": "Went Beyond", "text": "&hellip;and I pushed the game past the assignment in a direction **I** chose &mdash; a second mechanic that genuinely deepens play (lives, an ability, levels, a smart enemy), a rule nobody handed me, something I invented. The mark of this level is a design call that is mine, not cosmetics." }
+  ],
+  "thinking": "In two or three sentences: what is your game about? What design decision are you proudest of, and what would you add with another week?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Walk the structure &mdash; every piece should be familiar",
+        "p": [
+          "Put the starter on the projector and name each function and where it came from. `setup()`, `draw()`, `playGame()`, `showWin()`, `showGameOver()`, `restartGame()`, `mousePressed()`.",
+          "The point of this walkthrough is confidence: they have written all of this before. There is exactly one new function today."
+        ]
+      },
+      {
+        "h": "restartGame() &mdash; the real lesson here",
+        "p": [
+          "\"To restart, we just run the same setup steps again &mdash; create a new player, clear the lists and fill them back up, reset score and gameOver to their starting values.\"",
+          "Point out that `setup()` is now just a call to `restartGame()`. Starting and restarting are the same operation, so they are the same code.",
+          "**This is the most important structural idea in the capstone**: reset state by re-running the initialization logic, not by trying to undo individual changes. It is a real software engineering principle and they can absolutely feel why it is better."
+        ]
+      },
+      {
+        "h": "Three states and the new operators",
+        "p": [
+          "`playerWon` joins `gameOver`, so `draw()` now picks between three screens.",
+          "`&&` (AND) and `||` (OR) show up here for the first time. Introduce them in plain language when you hit them, not as a separate topic: \"not lost AND not won means still playing.\""
+        ]
+      },
+      {
+        "h": "Say plainly that the starter is a skeleton",
+        "p": [
+          "Emphasise this hard: **students SHOULD change everything.** The blob obstacles are placeholders. Replacing them with something that makes sense in their world is the assignment, not a bonus.",
+          "Some students will treat the starter as sacred and only change colors. Head that off in the first five minutes."
+        ]
+      },
+      {
+        "h": "Frame the build order",
+        "p": [
+          "Tell them explicitly: get **one full loop** working first &mdash; player, collectibles, one end condition &mdash; and only then build outward.",
+          "The students who struggle in this capstone are almost always the ones who tried to add five features before the first one played correctly."
+        ]
+      }
+    ],
+    "guided": [
+      "Two minutes of writing: a one-sentence game description. Do this before any code. Students who can say what their game is build much better games.",
+      "Run the starter together and identify each piece out loud.",
+      "Play until you lose, then click to restart, as a class. Confirm the loop works before anyone changes anything.",
+      "Everyone replaces the placeholder collectible with something themed. One quick win, immediately.",
+      "Release to build. Circulate constantly. The main intervention you will make all period is \"get one thing working before you add the next thing.\"",
+      "**Mid-way, stop everyone for five minutes of play-testing with a neighbor.** Watching someone else play your game without helping them is the fastest way to find out what is broken.",
+      "Final period: demo day. Every student plays a neighbor's game and names one thing they would add."
+    ],
+    "pitfalls": [
+      "**Adding features before the core loop works.** The number one cause of a frustrated capstone. Intervene early and often.",
+      "**`restartGame()` that misses a variable** &mdash; score resets but hazards do not, or the player stays dead. Have them check every global against the reset function, one at a time.",
+      "**Rebuilding `ground` inside `restartGame()`** is fine, but rebuilding it inside `draw()` is not. Watch for creation code drifting into the wrong function.",
+      "Hazards looped **backwards** unnecessarily &mdash; harmless, but a sign they are copying rather than choosing.",
+      "**`keyboardControl()` coasting**: velocity stays set after key release, so the player drifts. If they want it to stop, `keyReleased()` with `setVelocity(0, 0)`. Fine to introduce if they ask.",
+      "Difficulty tuned by the person who built it, who is therefore excellent at it. Almost every student game is too hard. Play-testing with a neighbor fixes this."
+    ],
+    "wrapupAnswer": "For the final share-out you want each student to be able to name their game in a sentence and point at one decision they made on purpose. That is the real evidence of the capstone.",
+    "notes": [
+      "**The goal is ownership and completion, not polish or correctness.** A finished janky game beats an unfinished elegant one, every time.",
+      "**Consider splitting into two periods:** period 1 to build, period 2 to play-test and present. The presentation is not optional filler &mdash; an audience changes how much students care.",
+      "Students who finish early should be pushed toward a **second mechanic** (lives, a power-up, a level 2), not more cosmetics. The extra complexity is where the real learning is.",
+      "The `restartGame()` pattern is the structural takeaway. If a student remembers one thing from this lesson in a year, that is the one worth remembering.",
+      "Bonus Lesson C (Animation) drops in beautifully here &mdash; students often want their character to feel alive rather than sliding around as one frozen drawing. Note that an `AnimatedSprite` is not a `Blob`, so it uses `distanceTo()` instead of `collidesWith()`.",
+      "Bonus Lessons A (Images) and B (Sounds) also land well during this capstone for students who want polish.",
+      "Watch for students who will not change the starter. Sit with them and ask what their game is *about* &mdash; usually they have an idea and did not realize they were allowed to build it."
+    ]
+  }
+}

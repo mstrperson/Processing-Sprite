@@ -1,0 +1,230 @@
+{
+  "id": "11-bonus-b",
+  "num": "B",
+  "kind": "bonus",
+  "slug": "bonus-b-sounds",
+  "title": "Sounds",
+  "tagline": "Add the click, the ding, and the music. It changes everything.",
+  "whenToUse": "Any time after Lesson 4. It pairs well with Bonus Lesson A (Images) as a two-part \"make it real\" session, or works on its own. Teach it whenever students ask \"can we add sound?\" &mdash; which they will.",
+  "timing": "One period (~50 min), plus library install time if it is not already done",
+  "newIdea": "Playing audio on game events",
+  "builtOn": "Lesson 7 &mdash; collisions, so there is an event worth putting a sound on.",
+
+  "goals": [
+    "Install the Processing Sound library",
+    "Load a sound file from the `data/` folder with `SoundFile`",
+    "Play a one-shot sound effect when something happens in your game",
+    "Loop background music underneath the whole sketch"
+  ],
+
+  "vocab": [
+    { "term": "library", "def": "extra tools you add to Processing. You already use one: the SpriteGame library" },
+    { "term": "`SoundFile`", "def": "a variable that holds a loaded sound. You call `.play()` or `.loop()` on it" },
+    { "term": "`.play()`", "def": "plays the sound once, from the beginning" },
+    { "term": "`.loop()`", "def": "plays the sound over and over, restarting when it reaches the end" },
+    { "term": "`.stop()`", "def": "stops a sound that is playing" },
+    { "term": "`.amp(n)`", "def": "sets the volume. `0.0` is silent, `1.0` is full" }
+  ],
+
+  "warmup": "What sounds do your favorite games use? Background music? Sound effects? Pick one sound and say what it tells the player.",
+
+  "howItWorks": [
+    {
+      "h": "First, install the Sound library",
+      "p": [
+        "This is a one-time setup, and it is the step most likely to eat your time.",
+        "**Sketch &rarr; Import Library &rarr; Add Library.** Search for \"Sound\" and pick the one by **The Processing Foundation**. Install it, then **restart Processing**."
+      ],
+      "code": {
+        "label": "Then add this import at the top, next to the sprite one",
+        "body": "import coxprogramming.processing.sprites.*;\nimport processing.sound.*;"
+      }
+    },
+    {
+      "h": "Sound files go in data/, same as images",
+      "p": [
+        "**Sketch &rarr; Show Sketch Folder**, then drag your audio into the `data` folder. Exactly like Bonus Lesson A.",
+        "MP3, WAV, OGG, and AIFF all work. **WAV is the most reliable**, especially for short effects.",
+        "Free sound: freesound.org, opengameart.org, zapsplat.com."
+      ]
+    },
+    {
+      "h": "Three steps: declare, load, play",
+      "p": [
+        "Same shape as everything else you have made. Declare it at the top, create it in `setup()`, use it when you need it."
+      ],
+      "code": {
+        "label": "The whole pattern",
+        "body": "SoundFile collectSound;                                // 1. declare at the top\n\nvoid setup() {\n  collectSound = new SoundFile(this, \"collect.wav\");   // 2. load in setup\n}\n\n// 3. play it exactly where the event happens\nif (player.collidesWith(c)) {\n  coins.remove(i);\n  score = score + 1;\n  collectSound.play();\n}"
+      }
+    },
+    {
+      "h": "play() versus loop()",
+      "bullets": [
+        "`.play()` starts the sound once. Calling it again while it is still going restarts it from the beginning. **This is what you want for effects.**",
+        "`.loop()` keeps the sound going forever until you call `.stop()`. **This is what you want for music.**",
+        "Music goes in `setup()` (start it once). Effects go wherever the event happens."
+      ]
+    },
+    {
+      "h": "Where to put the sound is the real skill",
+      "p": [
+        "The code for playing a sound is one line. Deciding **where** that line goes is the actual thinking, and it is the thing your teacher will ask you about.",
+        "A sound belongs at the exact moment the event occurs &mdash; inside the `if` that detects it, right next to the score change."
+      ],
+      "bullets": [
+        "Collected something? Inside the `if (player.collidesWith(...))` block.",
+        "Game over? Right where you set `gameOver = true;`.",
+        "Background music? Once, in `setup()`, with `.loop()`."
+      ]
+    },
+    {
+      "h": "Balancing the volume",
+      "p": [
+        "Music at full volume drowns out your effects and the game becomes noise. Turn it down:"
+      ],
+      "code": {
+        "label": "Music quieter than effects",
+        "body": "bgMusic.amp(0.3);   // 30% volume\nbgMusic.loop();"
+      }
+    }
+  ],
+
+  "steps": [
+    "Install the Sound library: **Sketch &rarr; Import Library &rarr; Add Library**, search \"Sound\", choose the one by The Processing Foundation, install, then **restart Processing**.",
+    "Find two sound files: one short effect (a ding, pop, coin, or beep &mdash; WAV is best) and optionally a music loop of about 30 seconds.",
+    "**Sketch &rarr; Show Sketch Folder** and drag both into the `data` folder.",
+    "Add `import processing.sound.*;` at the top of your sketch, under the sprites import.",
+    "Declare `SoundFile collectSound;` at the top with your other variables.",
+    "In `setup()`, load it: `collectSound = new SoundFile(this, \"collect.wav\");` &mdash; using **your** filename.",
+    "Find the `if (player.collidesWith(c))` block in your `playGame()`. Add `collectSound.play();` right after the score line.",
+    "Run it and collect something. If you get a null pointer error, the file was not found &mdash; check the name and the folder.",
+    "Add a second sound for game over, right where you set `gameOver = true;`",
+    "Add background music: declare it, load it, then `bgMusic.amp(0.3);` and `bgMusic.loop();` in `setup()`. Play it and adjust the volume until the balance feels right."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab",
+      "body": "// Bonus Lesson B - Sounds\n// Requires: Sketch -> Import Library -> Add Library -> \"Sound\" (The Processing Foundation)\n// Sound files go in your sketch's data/ folder (same place as images).\n// Replace \"collect.wav\", \"gameover.wav\", and \"music.mp3\" with your own file names.\n\nimport coxprogramming.processing.sprites.*;\nimport processing.sound.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\nint score = 0;\nboolean gameOver = false;\n\nSoundFile collectSound;   // plays when a coin is collected\nSoundFile gameOverSound;  // plays when the game ends\nSoundFile bgMusic;        // loops continuously in the background\n\nvoid setup() {\n  size(800, 600);\n\n  // Load sounds from the data/ folder\n  collectSound  = new SoundFile(this, \"collect.wav\");\n  gameOverSound = new SoundFile(this, \"gameover.wav\");\n  bgMusic       = new SoundFile(this, \"music.mp3\");\n\n  bgMusic.loop();  // start background music immediately\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coins = new ArrayList<Blob>();\n  for (int i = 0; i < 10; i++) {\n    coins.add(new Blob(\n      this, random(width), random(height),\n      random(8, 18), random(-2, 2), random(-2, 2),\n      color(255, 220, 50)\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  for (int i = coins.size() - 1; i >= 0; i--) {\n    Blob c = coins.get(i);\n    c.move();\n    c.drawSprite();\n\n    if (player.collidesWith(c)) {\n      coins.remove(i);\n      score = score + 1;\n      collectSound.play();  // <- sound on collection\n    }\n  }\n\n  player.followMouse();\n  player.drawSprite();\n\n  if (coins.size() == 0) {\n    gameOver = true;\n    bgMusic.stop();          // <- stop music\n    gameOverSound.play();    // <- sound on game over\n  }\n\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  textAlign(CENTER, CENTER);\n  fill(80, 180, 80);\n  textSize(52);\n  text(\"You Win!\", width/2, height/2 - 20);\n  textSize(22);\n  fill(50);\n  text(\"Score: \" + score, width/2, height/2 + 26);\n  textAlign(LEFT, TOP);\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Add a sound for hitting a hazard &mdash; a hurt, a crash, a buzz.",
+    "Add a sound when you click or press a key.",
+    "Balance the music volume with `bgMusic.amp(0.3);` &mdash; `0.0` is silent, `1.0` is full.",
+    "Add a sound that plays at a score milestone: `if (score == 10) { levelUpSound.play(); }`",
+    "Choose sounds that actually fit your world. A cartoon boing in a space game is a choice &mdash; make sure it is one you meant."
+  ],
+  "challenge": "Fix the machine-gun problem. When collisions happen fast, `.play()` restarts constantly and it stutters. Guard it: `if (!collectSound.isPlaying()) collectSound.play();` Then decide which version you actually prefer &mdash; sometimes the stutter is the right choice.",
+
+  "flintHint": "Good things to ask: \"I get a NullPointerException on my SoundFile\", \"my sound will not play\", or \"how do I make the music quieter than the sound effects?\" Tell it your filenames and where you put them.",
+
+  "wrapup": "Where in your game did you put the sound call, and why there and not somewhere else?",
+
+  "assignmentTask": "Give your game a voice. At minimum one sound effect, wired to the right moment in your code.",
+  "assignmentDo": [
+    "Install the Sound library and add `import processing.sound.*;`",
+    "Load at least one `SoundFile` in `setup()` from your `data/` folder.",
+    "Play it with `.play()` at the exact spot the event happens &mdash; inside the `if` that detects it.",
+    "If you add music, loop it in `setup()` and turn the volume down so effects can be heard over it.",
+    "Choose sounds that fit your game. This is a design decision, not a technical one."
+  ],
+  "submit": [
+    "Your sketch folder, zipped &mdash; **including the `data/` folder** with your sound files, or nothing will run.",
+    "A screen recording **with audio** so the sounds are actually audible.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Install and import the Sound library.",
+    "Load a `SoundFile` in `setup()`.",
+    "Play a one-shot effect on an event with `.play()`.",
+    "Loop music with `.loop()` and stop it with `.stop()`."
+  ],
+
+  "standard": "Install the Sound library, load a `SoundFile` from `data/`, play one-shot effects on game events, and loop background music.",
+  "stages": [
+    { "name": "Getting Started", "text": "No sound plays, or I get a null-pointer error on a `SoundFile`. **Next step:** install the Sound library (Sketch &rarr; Import Library &rarr; Add Library &rarr; \"Sound\"), and check the file is in `data/` with an **exact** name &mdash; a null pointer means the file was not found." },
+    { "name": "Got It Working", "text": "A sound effect plays on a game event (like collecting), triggered from the right spot in the code." },
+    { "name": "Made It Mine", "text": "&hellip;and I chose sounds that fit my game and wired them to my events &mdash; a collect sound, a hazard or crash sound, or looping background music." },
+    { "name": "Went Beyond", "text": "&hellip;and I layered audio thoughtfully &mdash; music looping under one-shot effects with balanced volume (`amp`), milestone sounds, or guarded playback so rapid hits do not stutter." }
+  ],
+  "thinking": "In one or two sentences: where in your code did you put your sound call, and why there and not somewhere else?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Install the library BEFORE class if at all possible",
+        "p": [
+          "**Sketch &rarr; Import Library &rarr; Add Library**, search \"Sound\", select **Sound by The Processing Foundation**, install, restart Processing.",
+          "Doing this live with a full class costs ten to fifteen minutes and a certain number of failures. If you can push it to the machines ahead of time, do.",
+          "The import line is `import processing.sound.*;` &mdash; a second import alongside the sprites one."
+        ]
+      },
+      {
+        "h": "Sound files in data/",
+        "p": [
+          "Same `data/` folder as images: **Sketch &rarr; Show Sketch Folder**, drag files in.",
+          "MP3, WAV, OGG, AIFF are supported. **WAV is the most reliable**; MP3 works but occasionally misbehaves on some systems.",
+          "Royalty-free sources: freesound.org (free account required to download), opengameart.org, zapsplat.com."
+        ]
+      },
+      {
+        "h": "Loading and playing",
+        "p": [
+          "Declare at the top: `SoundFile collectSound;`",
+          "Load in `setup()`: `collectSound = new SoundFile(this, \"collect.wav\");`",
+          "Play on the event: `collectSound.play();`",
+          "Background music: `bgMusic.loop();` once in `setup()` and it runs forever."
+        ]
+      },
+      {
+        "h": "Where to trigger &mdash; this is the actual lesson",
+        "p": [
+          "The one-line API is trivial. The thinking is about **placement**, and that is what the wrap-up question is about.",
+          "On collision: inside the `if (player.collidesWith(...))` block. On game over: exactly where `gameOver` is set to `true`. Music: once in `setup()`.",
+          "Frame it as: \"a sound goes where the *event* happens.\" That connects straight back to the continuous-versus-event idea from Lesson 4."
+        ]
+      },
+      {
+        "h": "play() versus loop()",
+        "p": [
+          "`.play()` starts the sound once; calling it again while it is playing restarts it from the beginning.",
+          "`.loop()` keeps going forever until `.stop()`.",
+          "For collision effects, `.play()` is perfect. For music, `.loop()` is what you want. Say both out loud &mdash; students reach for `.loop()` on effects and then cannot work out why it will not stop."
+        ]
+      }
+    ],
+    "guided": [
+      "Verify the Sound library is installed on every machine, or install it as a class. Budget real time for this.",
+      "Each student finds two files: a short effect (WAV strongly preferred) and optionally a ~30-second music loop.",
+      "Everyone drops them into `data/` and reads their filenames out loud, exactly.",
+      "Add the import, the declaration, and the `setup()` load together. Run &mdash; nothing audible yet, because nothing calls `.play()`. Name that.",
+      "Add `collectSound.play()` inside the collision `if`. Run. Collect something. The room will react.",
+      "Debug null pointers as a group. It is always the filename or the folder.",
+      "Add music with `.loop()`, then immediately add `.amp(0.3)` when the room gets too loud &mdash; which it will, and that is a good live demonstration of why volume balance matters.",
+      "Release for personalization: hazard sounds, milestone sounds, key-press sounds."
+    ],
+    "pitfalls": [
+      "**Library not installed**, or Processing not restarted after installing. `import processing.sound.*;` fails to resolve.",
+      "**NullPointerException on a `SoundFile`** &mdash; this always means the file was not found. Check the `data/` folder and the exact filename first, every time.",
+      "**Filename typos**, including extension and capitalisation.",
+      "**`.loop()` used for a collision sound** &mdash; it never stops and the student cannot work out why.",
+      "**`.play()` called every frame** because it was put in `draw()` instead of inside the `if`. Machine-gun stutter. A great teachable moment about event versus continuous.",
+      "**Music at full volume** drowning out effects. `amp(0.3)` fixes it.",
+      "**Zipping the sketch without `data/`** at submission time, so no sounds ship.",
+      "Very long MP3s (a full 4-minute song) bloat the sketch folder. Ask for short loops."
+    ],
+    "wrapupAnswer": "Inside the `if` block that detects the event &mdash; because that is the exact moment the thing happens, and it only runs then. Students who put it in `draw()` will have heard the machine-gun effect and will explain it well.",
+    "notes": [
+      "Sourcing sounds can absorb the entire period. Having a small pre-vetted folder of effects ready is worth the prep.",
+      "This is enrichment. Nothing in the capstone needs it, but it is the single change that most makes a student's game feel *finished*.",
+      "The placement question &mdash; *where* does the sound call go &mdash; is the transferable idea. The API is three methods.",
+      "Fast finishers: guarded playback with `isPlaying()`, milestone sounds, or a sound tied to a key press.",
+      "Headphones, if you have them, will preserve your sanity during work time.",
+      "Pairs naturally with Bonus Lesson A as a two-part \"make it real\" session, since both use the `data/` folder."
+    ]
+  }
+}
