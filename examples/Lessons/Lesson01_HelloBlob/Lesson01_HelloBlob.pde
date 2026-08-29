@@ -22,7 +22,7 @@ Blob myBlob;
 void setup() {
   size(800, 600);
   // new Blob(this, x, y, radius, color)
-  myBlob = new Blob(this, 400, 300, 40, color(255, 80, 80));
+  myBlob = new Blob(this, 400, 300, 40, color(255, 80, 80);
 }
 
 /**

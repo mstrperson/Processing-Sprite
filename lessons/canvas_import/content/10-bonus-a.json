@@ -1,0 +1,210 @@
+{
+  "id": "10-bonus-a",
+  "num": "A",
+  "kind": "bonus",
+  "slug": "bonus-a-images",
+  "title": "Images",
+  "tagline": "Swap your shapes for actual pictures.",
+  "whenToUse": "Any time after Lesson 4. It works well between Lessons 4 and 5, or between 7 and 8 when you are starting to make your world look polished. One period, standalone.",
+  "timing": "One period (~50 min)",
+  "newIdea": "Loading and drawing image files",
+  "builtOn": "Lesson 2 (`extends Blob`) and Lesson 4 (control). Nothing after this depends on it.",
+
+  "goals": [
+    "Add image files to a sketch using the `data/` folder",
+    "Show an image as a sprite using `ImageSprite`",
+    "Put a `PImage` inside your own `extends Blob` character so collisions still work",
+    "Explain the difference between `ImageSprite` (for decoration) and an image inside a Blob (for the player)"
+  ],
+
+  "vocab": [
+    { "term": "`data/` folder", "def": "a special folder inside your sketch folder where Processing looks for images and sounds" },
+    { "term": "`ImageSprite`", "def": "a sprite from the library that shows an image file instead of a shape" },
+    { "term": "`PImage`", "def": "Processing's type for a loaded image. Think of it as a variable that holds a picture" },
+    { "term": "`loadImage(\"file.png\")`", "def": "the command that reads an image file out of the `data/` folder" },
+    { "term": "transparency", "def": "the see-through part of a PNG. Without it your character comes with a rectangle stuck to it" }
+  ],
+
+  "warmup": "Have you played a game where the characters are pictures instead of shapes? Which one? Do you think that is hard to make happen?",
+
+  "howItWorks": [
+    {
+      "h": "The data folder is where Processing looks",
+      "p": [
+        "Processing will not find your image unless it is in exactly the right place: a folder called `data` inside your sketch folder.",
+        "**Sketch &rarr; Show Sketch Folder.** Make a folder called `data` (exactly that, lowercase). Drag your image in. Done &mdash; Processing finds it automatically.",
+        "PNG, JPG, and GIF all work. **PNG is the one you want**, because it can have a transparent background."
+      ]
+    },
+    {
+      "h": "ImageSprite &mdash; for scenery",
+      "p": [
+        "`ImageSprite` shows a picture and has all the sprite methods you already know: `move()`, `setVelocity()`, `followMouse()`, `drawSprite()`."
+      ],
+      "code": {
+        "label": "Three ways to size an ImageSprite",
+        "body": "new ImageSprite(this, x, y, \"tree.png\")            // 100 x 100 pixels\nnew ImageSprite(this, x, y, \"tree.png\", 80)        // 80 x 80 square\nnew ImageSprite(this, x, y, \"tree.png\", 120, 80)   // 120 wide, 80 tall"
+      },
+      "bullets": [
+        "**But it has no `collidesWith()`.** `ImageSprite` is not a `Blob`, so it cannot collide. Use it for scenery, not for things the player has to touch."
+      ]
+    },
+    {
+      "h": "For your player, put the image inside a Blob",
+      "p": [
+        "Your player needs collisions. So instead of using `ImageSprite`, you keep `extends Blob` &mdash; exactly what you wrote in Lesson 2 &mdash; and just change `drawSprite()` to draw a picture instead of shapes."
+      ],
+      "code": {
+        "label": "Same class, different drawing",
+        "body": "class MyImageCharacter extends Blob {\n\n  PImage img;                        // a variable that holds the picture\n\n  MyImageCharacter(PApplet p, float x, float y, String fileName) {\n    super(p, x, y, 30, color(0));    // the usual handshake line\n    img = p.loadImage(fileName);     // load the picture once, at creation\n  }\n\n  void drawSprite() {\n    parent.pushStyle();\n    parent.imageMode(CENTER);                    // measure from the middle\n    parent.image(img, pos.x, pos.y, 60, 60);     // draw at the sprite's position\n    parent.popStyle();\n  }\n}"
+      },
+      "bullets": [
+        "`imageMode(CENTER)` makes the image measure from its middle, matching how `pos.x`/`pos.y` work. Without it, your art sits down and to the right of your hitbox.",
+        "`pushStyle()` and `popStyle()` save and restore Processing's settings so `imageMode` does not leak out and affect everything else you draw.",
+        "The radius in `super(...)` is **still** your hitbox. The picture does not change that."
+      ]
+    },
+    {
+      "h": "The two rules, side by side",
+      "bullets": [
+        "Needs to **collide** (player, collectibles, hazards)? &rarr; `extends Blob` with a `PImage` inside.",
+        "Just needs to **look nice** (trees, background, clouds)? &rarr; `ImageSprite`."
+      ]
+    },
+    {
+      "h": "Why your image has a white box around it",
+      "p": [
+        "Because the PNG was saved without transparency. The image really is a rectangle &mdash; the background just happens to be white.",
+        "Fix it by finding or making a PNG that has a transparent background. Free tools like remove.bg will strip a background for you."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Find or draw a small PNG image for your character. A transparent background looks best. Free art: opengameart.org. Or draw a 32&times;32 character in any paint program.",
+    "Open your sketch and choose **Sketch &rarr; Show Sketch Folder**.",
+    "Make a new folder in there called `data` &mdash; exactly that, all lowercase.",
+    "Drag your image file into `data/`. Note the file name exactly, including capitals and the extension.",
+    "**Start with the easy one.** In your main sketch, add an `ImageSprite` decoration and draw it in `draw()`. Run it.",
+    "If you get a blank or colored box: the file name does not match, the file is not in `data/`, or the PNG has no transparency.",
+    "Adjust the size numbers until the proportions look right for your art.",
+    "**Now do your character.** Make a new tab called `MyImageCharacter` and paste in the class below.",
+    "In your main sketch, create a `MyImageCharacter` instead of a `MyCharacter`. Run it and move it around.",
+    "Tune the radius in `super(...)` so the collisions feel fair &mdash; slightly smaller than the picture usually feels best."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab",
+      "body": "// Bonus Lesson A - Images\n// You need image files in your sketch's data/ folder.\n// Sketch -> Show Sketch Folder, then drag PNG/JPG files into the data/ folder.\n\nimport coxprogramming.processing.sprites.*;\n\nMyImageCharacter player;\nArrayList<ImageSprite> decorations;\n\nvoid setup() {\n  size(800, 600);\n\n  // Player: your character using an image file (see MyImageCharacter tab)\n  // Replace \"hero.png\" with your own file name.\n  player = new MyImageCharacter(this, width/2, height/2, \"hero.png\");\n  player.setVelocity(4, 0);\n\n  // Decorations: ImageSprites placed around the scene\n  // Replace \"tree.png\" with your own file name.\n  decorations = new ArrayList<ImageSprite>();\n  decorations.add(new ImageSprite(this, 150, 420, \"tree.png\", 60, 100));\n  decorations.add(new ImageSprite(this, 400, 430, \"tree.png\", 60, 100));\n  decorations.add(new ImageSprite(this, 650, 415, \"tree.png\", 60, 100));\n}\n\nvoid draw() {\n  background(135, 206, 235);\n\n  // Decorations drawn first (behind player)\n  for (ImageSprite d : decorations) {\n    d.drawSprite();\n  }\n\n  // Player drawn last (in front)\n  player.followMouse();\n  player.drawSprite();\n}"
+    },
+    {
+      "label": "New tab — MyImageCharacter.pde",
+      "body": "// MyImageCharacter - like MyCharacter, but draws a picture instead of shapes.\n// extends Blob means it still has collidesWith() for collision detection.\nclass MyImageCharacter extends Blob {\n\n  PImage img;\n\n  MyImageCharacter(PApplet p, float x, float y, String fileName) {\n    super(p, x, y, 30, color(0));  // radius 30 - the invisible collision circle\n    img = p.loadImage(fileName);\n  }\n\n  void drawSprite() {\n    parent.pushStyle();\n    parent.imageMode(CENTER);\n    parent.image(img, pos.x, pos.y, 60, 60);  // drawn centered on the sprite's position\n    parent.popStyle();\n  }\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Find or draw your own character image. A PNG with a transparent background looks best by a mile.",
+    "Add a **background image**: `ImageSprite bg = new ImageSprite(this, width/2, height/2, \"background.png\", width, height);` drawn first in `draw()`.",
+    "Adjust the display size (the `60, 60` in `image()`) so it matches your art's real proportions &mdash; a tall character squashed into a square looks wrong.",
+    "Give an `ImageSprite` decoration a velocity so it drifts across the scene.",
+    "Replace your collectibles with image sprites too &mdash; but remember they need `extends Blob` if the player has to collect them."
+  ],
+  "challenge": "Fake an animation: load **two** `PImage` fields and swap between them based on a frame counter. That is the whole idea behind Bonus Lesson C, and you will have discovered it yourself.",
+
+  "flintHint": "Good things to ask: \"my image shows up as a white box\", \"Processing says it cannot load my image\", or \"how do I make my picture the right size?\" Tell it your file name and where you put it.",
+
+  "wrapup": "Why can't you use `collidesWith()` on an `ImageSprite`? What do you do instead if you want an image character with collision detection?",
+
+  "assignmentTask": "Put your own art into your sketch &mdash; as decoration, as your character, or both.",
+  "assignmentDo": [
+    "Get at least one image file loading from your `data/` folder.",
+    "Use `ImageSprite` for something decorative.",
+    "If you want your character to be an image, put a `PImage` inside an `extends Blob` class so collisions still work.",
+    "Size everything so it looks intentional, not stretched."
+  ],
+  "submit": [
+    "Your sketch folder, zipped &mdash; **including the `data/` folder**, or your images will be missing and nothing will run.",
+    "A screenshot of your sketch with your art in it.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Put image files in the sketch's `data/` folder.",
+    "Show an image with `ImageSprite`.",
+    "Put a `PImage` inside an `extends Blob` character.",
+    "Explain why an `ImageSprite` cannot collide, and what to do instead."
+  ],
+
+  "standard": "Add images via the `data/` folder, display decorations with `ImageSprite`, and use a `PImage` inside an `extends Blob` character so collisions still work.",
+  "stages": [
+    { "name": "Getting Started", "text": "My image draws as a blank or colored box, or not at all. **Next step:** make sure the file is in the sketch's `data/` folder (Sketch &rarr; Show Sketch Folder) and the filename matches **exactly**. A white box usually means the PNG has no transparency." },
+    { "name": "Got It Working", "text": "My own image appears in the sketch &mdash; as an `ImageSprite` decoration and/or as my character." },
+    { "name": "Made It Mine", "text": "&hellip;and I themed the look with my own art &mdash; a character image plus decorations (or a background image), sized to fit." },
+    { "name": "Went Beyond", "text": "&hellip;and I used an image **inside** an `extends Blob` character so collisions still work, added drifting image decorations, or swapped between two images to fake animation." }
+  ],
+  "thinking": "In one or two sentences: why does a picture-character still need to `extends Blob`?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "The data/ folder &mdash; do this together, slowly",
+        "p": [
+          "**Sketch &rarr; Show Sketch Folder**, create a folder named `data`, drag an image in. Processing finds it automatically when the sketch runs.",
+          "This is the number one setup hurdle in the lesson. Walk through it on the projector and then wait until every student has actually done it before moving on.",
+          "Supported: PNG, JPG, GIF. Recommend PNG for the transparency."
+        ]
+      },
+      {
+        "h": "ImageSprite for decorations",
+        "p": [
+          "Three constructor forms: default 100&times;100, one number for a square, two numbers for width and height.",
+          "It has all the familiar methods: `move()`, `setVelocity()`, `followMouse()`, `drawSprite()`.",
+          "**It does not have `collidesWith()`.** Scenery only. Say this now, because it is the whole point of the second half of the lesson."
+        ]
+      },
+      {
+        "h": "Image inside an extends Blob character",
+        "p": [
+          "Store a `PImage` field, load it in the constructor with `p.loadImage(fileName)`, and in `drawSprite()` use `pushStyle()` / `imageMode(CENTER)` / `image()` / `popStyle()`.",
+          "The Blob's radius is still the invisible collision circle. The picture is only what you see.",
+          "This is the right approach whenever a thing needs **both** a picture and collisions &mdash; which is every player, collectible, and hazard."
+        ]
+      },
+      {
+        "h": "Transparency",
+        "p": [
+          "PNG files can have transparent backgrounds, but only if they were saved that way. A PNG without transparency draws a white or colored rectangle behind the art, and this surprises students every time.",
+          "remove.bg is a free tool that strips backgrounds if a student is stuck with a bad file."
+        ]
+      }
+    ],
+    "guided": [
+      "Before class if possible: have students find or draw a small PNG. Options: a free sprite from opengameart.org, or a 32&times;32 character drawn in any paint program. Drawing their own is better if you have the time.",
+      "Everyone opens **Sketch &rarr; Show Sketch Folder** and creates the `data` folder together. Wait for everyone.",
+      "Everyone drags in their image and reads the filename out loud, exactly, including capitals.",
+      "**Do the `ImageSprite` decoration first.** It is the simpler pattern and it gets a picture on screen within minutes, which is the motivating moment.",
+      "Debug the inevitable white boxes and not-found errors as a group &mdash; the two causes are filename mismatch and missing transparency.",
+      "Then introduce the image-inside-a-Blob pattern for their character, so collisions still work.",
+      "Release for personalization: background images, more decorations, sizing."
+    ],
+    "pitfalls": [
+      "**No `data/` folder, or it is misnamed** (`Data`, `datas`, or created in the wrong directory). The single biggest time sink.",
+      "**Filename typos**, including the extension and capitalisation. `Hero.PNG` is not `hero.png`.",
+      "**PNG without transparency** &rarr; a white rectangle around the character. Looks like a code bug; is not.",
+      "**Forgetting `imageMode(CENTER)`** &rarr; art offset down and right from the hitbox, so collisions feel broken.",
+      "Trying `collidesWith()` on an `ImageSprite`. It will not compile, and the error will not explain why.",
+      "**Zipping the sketch without the `data/` folder** when submitting, so nothing runs. Say this out loud at collection time.",
+      "Huge source images (2000&times;2000) scaled to 60&times;60 &mdash; works, but slow and blurry. Small source art is better."
+    ],
+    "wrapupAnswer": "`ImageSprite` is not a `Blob`, so it has no `collidesWith()`. For a character that needs both a picture and collisions, put a `PImage` inside a class that `extends Blob`.",
+    "notes": [
+      "This is enrichment. Nothing in the capstone requires it, and a student who skips it is not blocked.",
+      "The radius in `super()` is the hitbox and does not need to match the image exactly. A radius **slightly smaller** than the visible art feels fairer to play.",
+      "`ImageSprite` also has `setRotation(angle)` and `rotate(amount)` in radians &mdash; great for spinning decorations. Mention only if asked.",
+      "Fast finishers: two `PImage` fields toggled on a frame counter to fake animation. That is a natural bridge into Bonus Lesson C.",
+      "Sourcing art can eat the whole period. Have a small folder of ready-to-use PNGs available for students who cannot decide."
+    ]
+  }
+}
