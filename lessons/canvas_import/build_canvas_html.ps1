@@ -353,6 +353,104 @@ function Build-Teacher($lesson, $th) {
   return Shell (FileComment $lesson 'TEACHER COPY - DO NOT PUBLISH') $sb.ToString()
 }
 
+# ------------------------------------------------------ front page writer ---
+
+# Placeholder token for a course link the teacher wires up inside Canvas.
+#   core  lesson 3 -> LINK_LESSON_03_PAGE / LINK_LESSON_03_ASSIGNMENT
+#   bonus lesson A -> LINK_BONUS_A_PAGE   / LINK_BONUS_A_ASSIGNMENT
+function LinkToken($lesson, [string]$kind) {
+  if ($lesson.kind -eq 'bonus') { return 'LINK_BONUS_' + $lesson.num + '_' + $kind }
+  return 'LINK_LESSON_' + $lesson.num.PadLeft(2, '0') + '_' + $kind
+}
+
+function IndexTable($lessons, $th) {
+  $a = $th.accent
+  $sb = New-Object System.Text.StringBuilder
+  [void]$sb.Append('<div style="overflow-x:auto;"><table style="border-collapse:collapse;width:100%;min-width:520px;' + $FONT + 'font-size:15px;">')
+  foreach ($l in $lessons) {
+    [void]$sb.Append('<tr>' +
+      '<td style="border:1px solid ' + $RULE + ';border-left:5px solid ' + $a + ';background:#ffffff;padding:14px 10px;vertical-align:top;width:44px;text-align:center;">' +
+        '<span style="display:inline-block;background:' + $th.soft + ';color:' + $a + ';font-weight:700;font-size:15px;border-radius:50%;width:30px;height:30px;line-height:30px;">' + (Esc $l.num) + '</span></td>' +
+      '<td style="border:1px solid ' + $RULE + ';border-left:none;border-right:none;background:#ffffff;padding:14px 12px;vertical-align:top;">' +
+        '<a href="' + (LinkToken $l 'PAGE') + '" style="color:' + $a + ';font-weight:700;font-size:16px;text-decoration:none;">' + (Esc $l.title) + '</a>' +
+        '<div style="margin-top:3px;color:' + $MUTED + ';font-size:14px;">' + (Inline $l.tagline) + '</div></td>' +
+      '<td style="border:1px solid ' + $RULE + ';border-left:none;background:#ffffff;padding:14px 14px;vertical-align:top;text-align:right;width:130px;">' +
+        '<a href="' + (LinkToken $l 'ASSIGNMENT') + '" style="color:' + $MUTED + ';font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;">Assignment &rarr;</a></td></tr>')
+  }
+  [void]$sb.Append('</table></div>')
+  return $sb.ToString()
+}
+
+function StageLadder($course) {
+  $sb = New-Object System.Text.StringBuilder
+  [void]$sb.Append((P $course.stagesIntro))
+  [void]$sb.Append('<div style="overflow-x:auto;"><table style="border-collapse:collapse;width:100%;min-width:520px;' + $FONT + 'font-size:15px;">')
+  foreach ($s in $course.stages) {
+    $st = $STAGE_STYLE[$s.name]
+    $star = ''
+    if ($s.name -eq 'Made It Mine') { $star = ' <span style="font-size:16px;">&#11088;</span>' }
+    [void]$sb.Append('<tr>' +
+      '<td style="background:' + $st.bg + ';border:1px solid ' + $st.edge + ';border-left:5px solid ' + $st.bar + ';padding:12px 14px;vertical-align:top;width:32%;">' +
+      '<strong style="color:' + $st.bar + ';">' + (Esc $s.name) + '</strong>' + $star + '</td>' +
+      '<td style="background:' + $st.bg + ';border:1px solid ' + $st.edge + ';border-left:none;padding:12px 14px;vertical-align:top;">' + (Inline $s.text) + '</td></tr>')
+  }
+  [void]$sb.Append('</table></div>')
+  [void]$sb.Append('<p style="margin:12px 0 0;font-size:14px;color:' + $MUTED + ';">' + (Inline $course.stagesOutro) + '</p>')
+  return $sb.ToString()
+}
+
+function Build-FrontPage($course, $lessons) {
+  $th = $THEME['core']
+  $bt = $THEME['bonus']
+  $a = $th.accent
+  $sb = New-Object System.Text.StringBuilder
+
+  [void]$sb.Append('<div style="background:' + $a + ';border-radius:10px;padding:30px 30px 32px;margin:0 0 8px;">' +
+    '<p style="margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#dbe7f5;">' + (Esc $course.kicker) + '</p>' +
+    '<h1 style="margin:0;' + $FONT + 'font-size:38px;line-height:1.15;font-weight:700;color:#ffffff;">' + (Esc $course.title) + '</h1>' +
+    '<p style="margin:12px 0 0;font-size:17px;color:#eaf2fb;">' + (Inline $course.subtitle) + '</p></div>')
+
+  [void]$sb.Append('<div style="background:' + $th.soft + ';border:1px solid ' + $th.edge + ';border-radius:0 0 8px 8px;border-top:none;padding:13px 20px;margin:0 0 8px;font-size:14px;color:' + $MUTED + ';text-align:center;">' +
+    (Inline $course.factStrip) + '</div>')
+
+  [void]$sb.Append((H2 'What this is' $a))
+  foreach ($p in $course.overview) { [void]$sb.Append((P $p)) }
+
+  [void]$sb.Append((H2 'What you will be able to do by the end' $a))
+  [void]$sb.Append((Bullets $course.goals))
+
+  [void]$sb.Append((H2 'The lessons' $a))
+  [void]$sb.Append((P 'Work through these in order. Each one builds directly on the one before it.'))
+  [void]$sb.Append((IndexTable ($lessons | Where-Object { $_.kind -eq 'core' }) $th))
+
+  $bonus = @($lessons | Where-Object { $_.kind -eq 'bonus' })
+  if ($bonus.Count -gt 0) {
+    [void]$sb.Append((H2 'Bonus lessons' $bt.accent))
+    [void]$sb.Append((P $course.bonusNote))
+    [void]$sb.Append((IndexTable $bonus $bt))
+  }
+
+  [void]$sb.Append((H2 'How this course works' $a))
+  foreach ($sec in $course.howItWorks) {
+    [void]$sb.Append((H3 $sec.h))
+    foreach ($p in $sec.p) { [void]$sb.Append((P $p)) }
+  }
+
+  [void]$sb.Append((H2 'How your work is looked at' $a))
+  [void]$sb.Append((StageLadder $course))
+
+  [void]$sb.Append((H2 'What you need' $a))
+  [void]$sb.Append((Bullets $course.needList))
+
+  $comment = '<!-- ==========================================================' + "`n" +
+  '     ' + $course.title + '  |  CANVAS FRONT PAGE (student-facing)' + "`n" +
+  '     Generated by build_canvas_html.ps1 - do not edit by hand.' + "`n" +
+  '     Source: lessons/canvas_import/course.json' + "`n" +
+  '     Every LINK_* href is a placeholder - point it at the Canvas item.' + "`n" +
+  '     ========================================================== -->'
+  return Shell $comment $sb.ToString()
+}
+
 # ------------------------------------------------------------------ main ---
 function Write-Utf8NoBom([string]$path, [string]$text) {
   $enc = New-Object System.Text.UTF8Encoding($false)
@@ -390,12 +488,15 @@ $index.Add('that lesson''s Flint chat URL. There are **two per lesson** - one on
 $index.Add('')
 $index.Add('Teacher files open with a red banner. Keep them in an **unpublished** module.')
 $index.Add('')
+$index.Add('`front-page.html` additionally has `LINK_*` placeholder hrefs - see the table at the bottom.')
+$index.Add('')
 $index.Add('## Files')
 $index.Add('')
 $index.Add('| # | Lesson | Page | Assignment | Teacher |')
 $index.Add('|---|--------|------|------------|---------|')
 
 $count = 0
+$all = New-Object System.Collections.Generic.List[object]
 foreach ($f in $files) {
   $lesson = Get-Content -Raw -Encoding UTF8 $f.FullName | ConvertFrom-Json
   $th = $THEME[$lesson.kind]
@@ -406,11 +507,33 @@ foreach ($f in $files) {
   Write-Utf8NoBom (Join-Path $outDir "assignments\$name") (Build-Assignment $lesson $th)
   Write-Utf8NoBom (Join-Path $outDir "teacher\$name")     (Build-Teacher    $lesson $th)
 
+  $all.Add($lesson)
   $index.Add('| ' + $lesson.num + ' | ' + $lesson.title + ' | [page](pages/' + $name + ') | [assignment](assignments/' + $name + ') | [teacher](teacher/' + $name + ') |')
   $count++
   Write-Host ("  built  " + ($lesson.num + '').PadRight(4) + $lesson.title)
 }
 
+# --- front page ---
+$coursePath = Join-Path $root 'course.json'
+if (-not (Test-Path $coursePath)) { throw "Missing course.json at $coursePath" }
+$course = Get-Content -Raw -Encoding UTF8 $coursePath | ConvertFrom-Json
+Write-Utf8NoBom (Join-Path $outDir 'front-page.html') (Build-FrontPage $course $all)
+Write-Host ("  built  home  " + $course.title + '  (front-page.html)')
+
+# --- link-token checklist appended to the generated index ---
+$index.Add('')
+$index.Add('## Front page link tokens')
+$index.Add('')
+$index.Add('[`front-page.html`](front-page.html) is the course home page: overview, goals, the four')
+$index.Add('stages, and an index of every lesson. Its links are placeholders - in the Canvas editor,')
+$index.Add('click each link and re-point it at the real Page or Assignment (or find/replace the token).')
+$index.Add('')
+$index.Add('| Lesson | Page link | Assignment link |')
+$index.Add('|--------|-----------|-----------------|')
+foreach ($l in $all) {
+  $index.Add('| ' + $l.title + ' | `' + (LinkToken $l 'PAGE') + '` | `' + (LinkToken $l 'ASSIGNMENT') + '` |')
+}
+
 Write-Utf8NoBom (Join-Path $outDir 'README.md') (($index -join "`n") + "`n")
 Write-Host ''
-Write-Host ("Done. $count lessons -> " + ($count * 3) + ' HTML files in html\')
+Write-Host ("Done. $count lessons -> " + ($count * 3 + 1) + ' HTML files in html\')

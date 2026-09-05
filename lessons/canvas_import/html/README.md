@@ -20,6 +20,8 @@ that lesson's Flint chat URL. There are **two per lesson** - one on the Page, on
 
 Teacher files open with a red banner. Keep them in an **unpublished** module.
 
+`front-page.html` additionally has `LINK_*` placeholder hrefs - see the table at the bottom.
+
 ## Files
 
 | # | Lesson | Page | Assignment | Teacher |
@@ -36,3 +38,24 @@ Teacher files open with a red banner. Keep them in an **unpublished** module.
 | A | Images | [page](pages/bonus-a-images.html) | [assignment](assignments/bonus-a-images.html) | [teacher](teacher/bonus-a-images.html) |
 | B | Sounds | [page](pages/bonus-b-sounds.html) | [assignment](assignments/bonus-b-sounds.html) | [teacher](teacher/bonus-b-sounds.html) |
 | C | Animate Your Character | [page](pages/bonus-c-animate-your-character.html) | [assignment](assignments/bonus-c-animate-your-character.html) | [teacher](teacher/bonus-c-animate-your-character.html) |
+
+## Front page link tokens
+
+[`front-page.html`](front-page.html) is the course home page: overview, goals, the four
+stages, and an index of every lesson. Its links are placeholders - in the Canvas editor,
+click each link and re-point it at the real Page or Assignment (or find/replace the token).
+
+| Lesson | Page link | Assignment link |
+|--------|-----------|-----------------|
+| Hello, Blob! | `LINK_LESSON_01_PAGE` | `LINK_LESSON_01_ASSIGNMENT` |
+| Draw Your Character | `LINK_LESSON_02_PAGE` | `LINK_LESSON_02_ASSIGNMENT` |
+| Bring It to Life | `LINK_LESSON_03_PAGE` | `LINK_LESSON_03_ASSIGNMENT` |
+| You're in Control | `LINK_LESSON_04_PAGE` | `LINK_LESSON_04_ASSIGNMENT` |
+| A World of Objects | `LINK_LESSON_05_PAGE` | `LINK_LESSON_05_ASSIGNMENT` |
+| If This, Then That | `LINK_LESSON_06_PAGE` | `LINK_LESSON_06_ASSIGNMENT` |
+| Collisions! | `LINK_LESSON_07_PAGE` | `LINK_LESSON_07_ASSIGNMENT` |
+| Build Your Game World | `LINK_LESSON_08_PAGE` | `LINK_LESSON_08_ASSIGNMENT` |
+| Build Your Game | `LINK_LESSON_09_PAGE` | `LINK_LESSON_09_ASSIGNMENT` |
+| Images | `LINK_BONUS_A_PAGE` | `LINK_BONUS_A_ASSIGNMENT` |
+| Sounds | `LINK_BONUS_B_PAGE` | `LINK_BONUS_B_ASSIGNMENT` |
+| Animate Your Character | `LINK_BONUS_C_PAGE` | `LINK_BONUS_C_ASSIGNMENT` |
