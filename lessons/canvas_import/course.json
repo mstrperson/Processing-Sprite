@@ -1,0 +1,63 @@
+{
+  "_comment": "Course-level content for the Canvas front page. Edit the title here and re-run build_canvas_html.ps1.",
+
+  "kicker": "Course home",
+  "title": "Make Your Own Game",
+  "subtitle": "Programming with Processing and the SpriteGame library",
+  "factStrip": "9 lessons + 3 bonus lessons &nbsp;&middot;&nbsp; No prior coding experience needed &nbsp;&middot;&nbsp; No points, no grades",
+
+  "overview": [
+    "In this course you build a video game. Not a worksheet about video games &mdash; an actual game, with a character you draw yourself, that you can hand to somebody else and watch them play.",
+    "You start on the first day by putting something on the screen. In Lesson 2 you draw your character. After that, every single lesson gives that character something new: it moves, then you control it, then it gets a world to live in, then rules, then enemies. By Lesson 9 the game is **yours** &mdash; your character, your world, your rules.",
+    "You do not need any programming experience. Nothing here assumes you have ever seen code before."
+  ],
+
+  "goals": [
+    "Write and run a Processing sketch from nothing",
+    "Create your own objects and tell them how to look and behave",
+    "Use variables, lists, loops, and `if` statements &mdash; because your game needed them, not because a test asked",
+    "Detect when things collide, and make the game react",
+    "Design a world with layers, terrain, and a look that is yours",
+    "Build a complete, playable game with win and lose conditions that somebody else can pick up and play"
+  ],
+
+  "howItWorks": [
+    {
+      "h": "Every lesson has two parts",
+      "p": [
+        "A **Lesson Page** &mdash; read it, follow the steps, get the code running. It has the new words, an explanation of how the new idea works, the starter code, and things to try.",
+        "An **Assignment** &mdash; where you turn your work in, check yourself against the stages, and write a sentence or two about what you did."
+      ]
+    },
+    {
+      "h": "Every lesson ends with Make It Yours",
+      "p": [
+        "This is the part that matters most, and it is not extra credit. The starter code is a starting point, not an answer. Changing it is the assignment."
+      ]
+    },
+    {
+      "h": "Stuck? There is a helper",
+      "p": [
+        "Every lesson page and every assignment has a button that opens an AI helper for that lesson. It asks you questions and nudges you in the right direction &mdash; it will not just hand you the answer, because then you would not have learned anything.",
+        "Also: ask the person next to you, and ask your teacher. Both of those are allowed and both of them work."
+      ]
+    }
+  ],
+
+  "stagesIntro": "There are no points in this course, and no grades on your work. Instead, every assignment has the same four stages. They are a **map** of where you are and what to try next &mdash; not a score, and not a ranking.",
+  "stages": [
+    { "name": "Getting Started", "text": "It is not running yet. Every lesson tells you the single most likely reason and exactly what to try next." },
+    { "name": "Got It Working", "text": "The thing the lesson was about actually happens on your screen." },
+    { "name": "Made It Mine", "text": "&hellip;and you changed it on purpose, so it is yours. **This is the goal for everyone, every lesson.**" },
+    { "name": "Went Beyond", "text": "&hellip;and you took it somewhere the lesson never asked for. There is no fixed list for this one &mdash; that is the whole point of it." }
+  ],
+  "stagesOutro": "You can always go back, revise, and run it again. Nothing here is a one-shot test.",
+
+  "needList": [
+    "**Processing** &mdash; free, from processing.org",
+    "**The SpriteGame library** &mdash; your teacher will help you install it if it is not already there",
+    "That is genuinely it. No account, no purchase, nothing to sign up for."
+  ],
+
+  "bonusNote": "These three are extras. You can do them any time after the lesson listed, and skipping them will never block you &mdash; but each one makes your game noticeably more yours."
+}
