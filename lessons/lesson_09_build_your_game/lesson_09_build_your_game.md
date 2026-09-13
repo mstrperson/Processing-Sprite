@@ -192,9 +192,9 @@ Push further in any of these directions:
 
 ## Teacher Notes
 
-<!-- This is a capstone — the goal is ownership and completion, not polish or correctness -->
-<!-- Students who finish early should be pushed toward a second mechanic (lives, powerup, level 2) -->
-<!-- not just cosmetics — the extra complexity is where the real learning happens -->
+<!-- Help students finish a playable game they have made their own. -->
+<!-- Ask students who finish early to choose something to develop further: a mechanic, the art, or the sound. -->
+<!-- Have them explain the change and test what it adds to the game. -->
 <!-- Consider splitting into two periods: period 1 = build, period 2 = play-test and present -->
 <!-- The restartGame() pattern is the most important structural lesson here: resetting state -->
 <!-- by re-running the initialization logic, not by trying to undo individual changes -->
@@ -206,7 +206,7 @@ Push further in any of these directions:
 
 ## Rubric — Build Your Game (Capstone)
 
-*This isn't a test — it's a map of where you are and what to try next. The goal here is ownership and a game you're proud of — you can keep revising it.*
+*Use this rubric to see where you are and choose what to try next.  The goal here is ownership and a game you're proud of — you can keep revising it.*
 
 **✅ Check yourself first — I can…**
 - [ ] Combine movement, control, lists, collisions, state, and world into one game.
@@ -221,10 +221,10 @@ Push further in any of these directions:
 | **Getting Started** | The pieces aren't coming together into something playable yet. **Next step:** get *one* full loop working first — player + collectibles + a win or lose check — then build outward. Use `restartGame()` to reset by *re-running* your setup steps, not by undoing changes. |
 | **Got It Working** | A playable game with my character: collectibles, a win and/or lose condition, a score, and a working restart. |
 | **Made It Mine** ⭐ | …and the game is unmistakably *mine* — themed world, my own rules and difficulty, my character at the center — with design decisions I made on purpose about how it plays. |
-| **Went Beyond** | …and I pushed the game past the assignment in a direction *I* chose — a second mechanic that genuinely deepens play (lives, an ability, levels, a smart enemy…), a rule nobody handed me, something I invented. The mark of this level is a design call that's mine, not cosmetics. |
+| **Went Beyond** | …and I developed the game further in a direction *I* chose:  a new mechanic, original art or animation, sound that helps the player, or another idea of my own.  I can explain what my choices add to the game. |
 
 ⭐ **Made It Mine** is the goal for everyone this capstone.
 
-*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+*"Went Beyond" means taking the project further in a direction you choose.  The examples are starting points.*
 
 **✍️ Show your thinking (2–3 sentences):** What's your game about? What design decision are you proudest of, and what would you add with another week?

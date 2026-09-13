@@ -30,7 +30,7 @@
     {
       "h": "Block is a rectangle that stays put",
       "p": [
-        "`Block` is the library's rectangle sprite. Unlike `Blob`, it has no velocity &mdash; it is built to sit still and be scenery."
+        "`Block` is the library's rectangle sprite.  It starts with zero velocity, and we use it as stationary scenery in this lesson.  It also inherits `setVelocity()` and `move()`.  Making a wall stop the player takes additional collision and movement logic."
       ],
       "code": {
         "label": "A strip of ground along the bottom",
@@ -89,7 +89,7 @@
     "Change `background(240)` to a color that fits your world &mdash; sky blue, deep space black, ocean teal, lava red.",
     "**Experiment with draw order:** move `ground.drawSprite()` to the very last line of `draw()` and run. Your player is now buried under the ground. Move it back and say out loud what happened.",
     "Add background decorations: an `ArrayList<Blob>` created with a counting loop in `setup()`, drawn **first** in `draw()`. Give them a slow drift and use a fourth alpha number in their color.",
-    "Add a second `Block` &mdash; a wall, a platform, a ceiling. Put it somewhere that changes how the game feels to play.",
+    "Add a second `Block` as scenery:  a wall, a platform, or a ceiling.  Choose where it belongs in your scene.",
     "Restyle your coins and hazards so they belong in this world. Gold coins in a space game look wrong. Make them asteroids, or stars, or fish.",
     "Play it. Does it look like a place? Keep going until it does."
   ],
@@ -104,7 +104,7 @@
   "makeItYours": [
     "Replace the sky-blue background with **your** theme. Space? Underwater? Lava? A cave? A candy world?",
     "Write a new decoration sprite class in a tab &mdash; a `Tree`, a `Star`, a `Fish`, a `Rock`. Same `extends Blob` pattern as Lesson 2.",
-    "Add multiple `Block`s to make platforms, walls, or a border that shapes how the game plays.",
+    "Add multiple `Block`s to draw platforms, walls, or a border around your scene.",
     "Change your coins and hazards to match the theme &mdash; gems, fish, stars, hearts, asteroids.",
     "Use transparency (`color(r, g, b, alpha)`) on your background layer so it recedes.",
     "Give background decorations a much slower speed than foreground objects. That difference alone reads as depth."
@@ -141,7 +141,7 @@
     { "name": "Getting Started", "text": "My world pieces overlap wrong, or the ground hides my player. **Next step:** things drawn **later** appear on top &mdash; background first, player last. And `Block`'s `x, y` is the **top-left corner**, not the center." },
     { "name": "Got It Working", "text": "My scene has a background, ground or terrain made with `Block`, and at least one decoration, layered in a sensible order." },
     { "name": "Made It Mine", "text": "&hellip;and I designed a world with a clear theme &mdash; themed colors, multiple blocks, restyled coins &mdash; that reads as a **place**, not placeholders." },
-    { "name": "Went Beyond", "text": "&hellip;and I wrote a new decoration sprite class (Tree, Star, Fish, Rock) in a tab, used transparency and layering, or built platforms or borders that shape how the game plays." }
+    { "name": "Went Beyond", "text": "&hellip;and I wrote a new decoration sprite class (Tree, Star, Fish, Rock) in a tab, used transparency and layering, or arranged platforms or borders to develop my scene." }
   ],
   "thinking": "In one or two sentences: name one draw-order decision you made, and what it changed.",
 
@@ -152,7 +152,7 @@
         "p": [
           "`new Block(this, x, y, width, height, color)`.",
           "**`x, y` is the top-left corner**, not the center. This is genuinely confusing after seven lessons of Blob, where it was the center. Say it, write it on the board, and expect to say it again individually.",
-          "`Block` is always stationary &mdash; there is no velocity parameter.",
+          "`Block` starts with zero velocity.  It inherits `setVelocity()` and `move()`, so it can move.  Its inherited collision check uses a circle of radius 0 at its top-left corner; it does not test the rectangle's width and height.  Solid platforms require additional collision and movement logic.",
           "A ground strip is the canonical example: `new Block(this, 0, height-80, width, 80, color(80, 160, 60))`. Walk through why each number is what it is."
         ]
       },

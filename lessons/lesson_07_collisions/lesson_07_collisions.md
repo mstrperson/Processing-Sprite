@@ -147,7 +147,7 @@ void showGameOver() {
 
 ## Rubric — Collisions!
 
-*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+*Use this rubric to see where you are and choose what to try next.  You can always revise and run it again.*
 
 **✅ Check yourself first — I can…**
 - [ ] Use `collidesWith()` inside an `if`.
@@ -166,6 +166,6 @@ void showGameOver() {
 
 ⭐ **Made It Mine** is the goal for everyone this lesson.
 
-*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+*"Went Beyond" means taking the project further in a direction you choose.  The examples are starting points.*
 
 **✍️ Show your thinking (1–2 sentences):** What happens in your game when the player touches something — and why did you loop backwards?

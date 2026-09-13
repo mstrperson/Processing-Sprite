@@ -21,7 +21,7 @@
     { "term": "input", "def": "information coming into the program from you &mdash; the mouse, the keyboard" },
     { "term": "event function", "def": "a function Processing calls automatically when something happens once, like a click or a key press" },
     { "term": "`mousePressed()`", "def": "runs once, each time you click the mouse" },
-    { "term": "`keyPressed()`", "def": "runs once, each time you press a key down" },
+    { "term": "`keyPressed()`", "def": "runs when a key is pressed; holding a key may trigger repeated calls" },
     { "term": "continuous input", "def": "something checked every single frame, inside `draw()` &mdash; like \"where is the mouse right now?\"" }
   ],
 
@@ -33,7 +33,7 @@
       "p": [
         "This is the real idea of the lesson, and it is worth slowing down for.",
         "Some questions have an answer **all the time**: \"where is the mouse right now?\" You can ask that on every frame. That is **continuous** input, and it belongs in `draw()`.",
-        "Other things happen at a single **moment**: \"the player just pressed the left arrow.\" There is no answer 59 frames out of 60 &mdash; there is just the instant it happened. That is an **event**, and it belongs in an event function like `keyPressed()`."
+        "A key press is an **event**.  Processing calls `keyPressed()` when it receives that event.  Holding a key may generate repeated key-press events."
       ]
     },
     {
@@ -54,7 +54,7 @@
       "h": "Option B: keyboardControl()",
       "p": [
         "`keyboardControl()` reads the arrow keys and sets your character's velocity to match. It goes **inside `keyPressed()`**, not `draw()`.",
-        "Why? Because `draw()` runs 60 times a second whether or not you touched a key. `keyPressed()` only fires at the exact moment a key goes down &mdash; which is the only moment there is anything to read."
+        "This makes a key press change the velocity.  Then `move()` in `draw()` applies that velocity each frame."
       ],
       "code": {
         "label": "Arrow-key control",
@@ -112,7 +112,7 @@
 
   "flintHint": "Good things to ask: \"my character will not follow the mouse\", \"why do the arrow keys do nothing?\", or \"how do I make my character stop when I let go of the key?\" Tell it which control style you picked.",
 
-  "wrapup": "Why can't you put `keyboardControl()` inside `draw()` instead of `keyPressed()`?",
+  "wrapup": "What does `keyboardControl()` change when a key is pressed, and what does `move()` do each frame?",
 
   "assignmentTask": "Take control of your character. Try both styles, then commit to one and tune it until it feels good.",
   "assignmentDo": [
@@ -129,7 +129,7 @@
   "checklist": [
     "Drive my character with `followMouse()` (in `draw`) **or** `keyboardControl()` (in `keyPressed`).",
     "Set a speed so `followMouse()` actually moves.",
-    "Explain why `keyboardControl()` goes in `keyPressed()`, not `draw()`.",
+    "Explain how a key press changes velocity and `move()` applies it each frame.",
     "Tell the difference between continuous input and an event."
   ],
 
@@ -156,7 +156,7 @@
         "h": "keyboardControl() &mdash; and where it goes",
         "p": [
           "It goes **inside `keyPressed()`**. Not `draw()`.",
-          "In `draw()` it does nothing useful, because `keyCode` is 0 on the ~59 frames out of 60 where no key went down. The failure is silent, which makes it a nasty bug for a beginner to find.",
+          "`keyboardControl()` reads `keyCode` and sets velocity.  Calling it in `draw()` reapplies that setting each frame and can overwrite other velocity changes.  Use `keyPressed()` here so velocity changes in response to a key event.",
           "After `keyPressed()` sets the velocity, `move()` in `draw()` applies it each frame. So the `draw()` loop still looks exactly like Lesson 3."
         ]
       },
@@ -196,12 +196,12 @@
     "pitfalls": [
       "**`followMouse()` with no velocity set.** Moves zero pixels. Looks broken, is not. Check `setup()` first every time.",
       "**Calling both `followMouse()` and `move()`.** The motion fights itself and looks jittery.",
-      "**`keyboardControl()` inside `draw()`.** Silent failure &mdash; nothing happens and there is no error message.",
+      "**`keyboardControl()` inside `draw()`.** It reapplies velocity each frame and can overwrite a stop set in `keyReleased()`.  Keep it in `keyPressed()` for this lesson's event-driven pattern.",
       "**Window not focused.** Keyboard input goes nowhere until they click inside the sketch window. Costs students five minutes each if you do not warn them.",
       "Deleting `move()` when switching to keyboard control. The velocity gets set and then never applied.",
       "Expecting the character to stop on key release. It coasts. This is state, not a bug."
     ],
-    "wrapupAnswer": "`draw()` runs ~60 times a second whether or not a key was pressed, so there is usually nothing to read &mdash; `keyPressed()` fires only at the instant a key actually goes down. Accept anything that captures \"draw runs all the time, keyPressed only when it happens.\"",
+    "wrapupAnswer": "`keyboardControl()` sets velocity from the key code; `move()` applies that velocity each frame.  Releasing a key leaves velocity unchanged in this starter.  Holding a key may generate repeated `keyPressed()` calls.",
     "notes": [
       "Have students try **both** styles before choosing. The choice is more meaningful if they have felt the alternative, and it is their first real design decision in the unit.",
       "`followMouse()` is easier and more forgiving; `keyboardControl()` feels more like a real game. Both are fine choices for Lesson 9.",
