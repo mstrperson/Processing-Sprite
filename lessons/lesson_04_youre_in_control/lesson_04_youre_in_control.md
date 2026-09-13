@@ -87,8 +87,8 @@ void keyPressed() {
 
 ## Wrap-Up  (~5 min)
 
-<!-- Pair discussion: "Why can't you put keyboardControl() inside draw() instead of keyPressed()?" -->
-<!-- (Answer: draw() runs ~60 times/sec regardless of key presses — keyPressed() only fires when a key actually goes down) -->
+<!-- Pair discussion: "What does keyboardControl() change when a key is pressed, and what does move() do each frame?" -->
+<!-- Answer: keyboardControl() sets velocity; move() applies it each frame.  Holding a key may generate repeated keyPressed() calls. -->
 
 ## Teacher Notes
 
@@ -97,13 +97,13 @@ void keyPressed() {
 <!-- keyboardControl coasting: the character keeps moving after the key is released because -->
 <!-- velocity stays set. Students expect it to stop — this is a useful discussion about state -->
 <!-- Make sure students are clicked inside the sketch window for keyboard input to register -->
-<!-- Common mistake: putting keyboardControl() inside draw() — nothing will happen (keyCode is 0) -->
+<!-- Calling keyboardControl() in draw() reapplies velocity each frame and can overwrite a stop set in keyReleased().  Use keyPressed() for this lesson's event-driven pattern. -->
 
 ---
 
 ## Rubric — You're in Control
 
-*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+*Use this rubric to see where you are and choose what to try next.  You can always revise and run it again.*
 
 **✅ Check yourself first — I can…**
 - [ ] Drive my character with `followMouse()` (in `draw`) *or* `keyboardControl()` (in `keyPressed`).
@@ -122,6 +122,6 @@ void keyPressed() {
 
 ⭐ **Made It Mine** is the goal for everyone this lesson.
 
-*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+*"Went Beyond" means taking the project further in a direction you choose.  The examples are starting points.*
 
 **✍️ Show your thinking (1–2 sentences):** Which control style did you choose for your game, and what made it the right fit?

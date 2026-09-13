@@ -183,7 +183,7 @@ function StageTable($standard, $stages) {
       '<td style="background:' + $st.bg + ';border:1px solid ' + $st.edge + ';border-left:none;padding:12px 14px;vertical-align:top;">' + (Inline $s.text) + '</td></tr>')
   }
   [void]$sb.Append('</table></div>')
-  [void]$sb.Append('<p style="margin:12px 0 0;font-size:14px;color:' + $MUTED + ';"><strong style="color:#1d7a44;">&#11088; Made It Mine is the goal for everyone.</strong> &ldquo;Went Beyond&rdquo; has no fixed list &mdash; the examples are only starting points. Going somewhere the lesson did not ask for is the whole idea.</p>')
+  [void]$sb.Append('<p style="margin:12px 0 0;font-size:14px;color:' + $MUTED + ';"><strong style="color:#1d7a44;">&#11088; Made It Mine is the goal for everyone.</strong> &ldquo;Went Beyond&rdquo; means taking the project further in a direction you choose.&nbsp; The examples are starting points.</p>')
   return $sb.ToString()
 }
 

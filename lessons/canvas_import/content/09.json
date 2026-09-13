@@ -154,7 +154,7 @@
     { "name": "Getting Started", "text": "The pieces are not coming together into something playable yet. **Next step:** get **one** full loop working first &mdash; player, collectibles, and a win or lose check &mdash; then build outward. Use `restartGame()` to reset by **re-running** your setup steps, not by undoing changes." },
     { "name": "Got It Working", "text": "A playable game with my character: collectibles, a win and/or lose condition, a score, and a working restart." },
     { "name": "Made It Mine", "text": "&hellip;and the game is unmistakably **mine** &mdash; themed world, my own rules and difficulty, my character at the center &mdash; with design decisions I made on purpose about how it plays." },
-    { "name": "Went Beyond", "text": "&hellip;and I pushed the game past the assignment in a direction **I** chose &mdash; a second mechanic that genuinely deepens play (lives, an ability, levels, a smart enemy), a rule nobody handed me, something I invented. The mark of this level is a design call that is mine, not cosmetics." }
+    { "name": "Went Beyond", "text": "&hellip;and I developed the game further in a direction **I** chose:  a new mechanic, original art or animation, sound that helps the player, or another idea of my own.  I can explain what my choices add to the game." }
   ],
   "thinking": "In two or three sentences: what is your game about? What design decision are you proudest of, and what would you add with another week?",
 
@@ -216,9 +216,9 @@
     ],
     "wrapupAnswer": "For the final share-out you want each student to be able to name their game in a sentence and point at one decision they made on purpose. That is the real evidence of the capstone.",
     "notes": [
-      "**The goal is ownership and completion, not polish or correctness.** A finished janky game beats an unfinished elegant one, every time.",
+      "**Help students finish a playable game they have made their own.**  Get the core game working, then use the remaining time to develop it further.",
       "**Consider splitting into two periods:** period 1 to build, period 2 to play-test and present. The presentation is not optional filler &mdash; an audience changes how much students care.",
-      "Students who finish early should be pushed toward a **second mechanic** (lives, a power-up, a level 2), not more cosmetics. The extra complexity is where the real learning is.",
+      "Ask students who finish early to choose something to develop further:  a mechanic, the art, or the sound.  Have them explain the change and test what it adds to the game.",
       "The `restartGame()` pattern is the structural takeaway. If a student remembers one thing from this lesson in a year, that is the one worth remembering.",
       "Bonus Lesson C (Animation) drops in beautifully here &mdash; students often want their character to feel alive rather than sliding around as one frozen drawing. Note that an `AnimatedSprite` is not a `Blob`, so it uses `distanceTo()` instead of `collidesWith()`.",
       "Bonus Lessons A (Images) and B (Sounds) also land well during this capstone for students who want polish.",

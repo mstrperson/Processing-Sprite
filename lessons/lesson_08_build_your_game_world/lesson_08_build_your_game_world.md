@@ -23,7 +23,7 @@ Key things to demonstrate:
 
 Block constructor: new Block(this, x, y, width, height, color)
   - x, y is the top-left corner (unlike Blob where it's the center)
-  - Block is always stationary — there is no velocity parameter
+  - Block starts with zero velocity.  It inherits setVelocity() and move(), so it can move.
   - A ground strip: new Block(this, 0, height-80, width, 80, color(80, 160, 60))
 
 Draw order:
@@ -155,6 +155,7 @@ This lesson is mostly creative work — students should spend most of it designi
 ## Teacher Notes
 
 <!-- Block x,y is the TOP-LEFT corner, not the center — common confusion after working with Blob -->
+<!-- Blocks are scenery here.  The inherited collision check uses radius 0 at the top-left corner, not the rectangle's width and height.  Solid platforms need additional collision and movement logic. -->
 <!-- The color() function supports a fourth argument for transparency (alpha): color(r, g, b, alpha) -->
 <!-- where alpha 0 = invisible and 255 = fully opaque. Semi-transparent decorations look nice. -->
 <!-- Students who want more complex shapes should be encouraged to write a new extends Blob class -->
@@ -165,7 +166,7 @@ This lesson is mostly creative work — students should spend most of it designi
 
 ## Rubric — Build Your Game World
 
-*This isn't a test — it's a map of where you are and what to try next. You can always revise and run it again.*
+*Use this rubric to see where you are and choose what to try next.  You can always revise and run it again.*
 
 **✅ Check yourself first — I can…**
 - [ ] Create terrain with `Block` (remember: `x, y` is the top-left corner).
@@ -180,10 +181,10 @@ This lesson is mostly creative work — students should spend most of it designi
 | **Getting Started** | My world pieces overlap wrong, or the ground hides my player. **Next step:** things drawn *later* appear on top — background first, player last. And `Block`'s `x, y` is the *top-left corner*, not the center. |
 | **Got It Working** | My scene has a background, ground/terrain made with `Block`, and at least one decoration, layered in a sensible order. |
 | **Made It Mine** ⭐ | …and I designed a world with a clear theme — themed colors, multiple blocks, restyled coins — that reads as a *place*, not placeholders. |
-| **Went Beyond** | …and I wrote a new decoration sprite class (Tree/Star/Fish/Rock) in a tab, used transparency/layering, or built platforms or borders that shape how the game plays. |
+| **Went Beyond** | …and I wrote a new decoration sprite class (Tree/Star/Fish/Rock) in a tab, used transparency/layering, or arranged platforms or borders to develop my scene. |
 
 ⭐ **Made It Mine** is the goal for everyone this lesson.
 
-*"Went Beyond" has no fixed list. The examples are just starting points; going somewhere the lesson did not ask for is the whole idea.*
+*"Went Beyond" means taking the project further in a direction you choose.  The examples are starting points.*
 
 **✍️ Show your thinking (1–2 sentences):** Name one draw-order decision you made, and what it changed.
