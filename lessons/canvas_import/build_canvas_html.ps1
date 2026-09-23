@@ -47,7 +47,8 @@ $CODE_INLINE = 'background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;pa
 
 # ------------------------------------------------------------- formatting ---
 # Escapes for HTML, but deliberately leaves already-valid character references
-# (&mdash;  &rarr;  &#9654;  &#x2b50;) alone so content JSON can use them directly.
+# (&rarr;  &#9654;  &#x2b50;) alone so content JSON can use them directly.
+# Dashes are written as a plain -- in the JSON, never &mdash;.
 function Esc([string]$s) {
   if ([string]::IsNullOrEmpty($s)) { return '' }
   $t = [regex]::Replace($s, '&(?!(#[0-9]+|#x[0-9a-fA-F]+|[a-zA-Z][a-zA-Z0-9]*);)', '&amp;')
@@ -56,10 +57,14 @@ function Esc([string]$s) {
 
 # Escapes, then applies the tiny inline vocabulary used in the JSON content:
 #   `code`  ->  <code>      **bold**  ->  <strong>
+# The JSON puts two spaces after . ? ! and : -- HTML collapses them, so the
+# second one goes out as &nbsp; (an accessibility requirement, see
+# meta/WRITING_COMMON_ERRORS.md entry 2).
 function Inline([string]$s) {
   $t = Esc $s
   $t = [regex]::Replace($t, '`([^`]+)`', ('<code style="' + $CODE_INLINE + '">$1</code>'))
   $t = [regex]::Replace($t, '\*\*([^*]+)\*\*', '<strong>$1</strong>')
+  $t = [regex]::Replace($t, '([.?!:](?:</strong>|</code>|&rdquo;|"|\)|'')*)  (?=\S)', '$1&nbsp; ')
   return $t
 }
 
@@ -134,7 +139,7 @@ function VocabList($vocab, [string]$accent, [string]$soft) {
   $sb = New-Object System.Text.StringBuilder
   foreach ($v in $vocab) {
     [void]$sb.Append('<div style="background:' + $soft + ';border-left:4px solid ' + $accent + ';border-radius:0 5px 5px 0;padding:10px 14px;margin:0 0 8px;">' +
-      '<span style="font-weight:700;color:' + $accent + ';">' + (Inline $v.term) + '</span> &mdash; ' + (Inline $v.def) + '</div>')
+      '<span style="font-weight:700;color:' + $accent + ';">' + (Inline $v.term) + '</span> -- ' + (Inline $v.def) + '</div>')
   }
   return $sb.ToString()
 }
@@ -149,10 +154,10 @@ function CodeBlock($block) {
 function FlintBox([string]$numLabel, [string]$hint) {
   return '<!-- FLINT-LINK: swap the placeholder href below for the Flint AI chat URL for this lesson -->' +
   '<div style="background:#f0fdfa;border:2px solid #14b8a6;border-radius:10px;padding:16px 20px;margin:20px 0;">' +
-  '<p style="margin:0 0 4px;font-size:17px;font-weight:700;color:#0f766e;">&#129302; Stuck? Ask the ' + (Esc $numLabel) + ' helper</p>' +
+  '<p style="margin:0 0 4px;font-size:17px;font-weight:700;color:#0f766e;">&#129302; Stuck?&nbsp; Ask the ' + (Esc $numLabel) + ' helper</p>' +
   '<p style="margin:0 0 14px;color:#31625d;">' + (Inline $hint) + '</p>' +
   '<a href="PASTE_FLINT_URL_HERE" target="_blank" rel="noopener" style="display:inline-block;background:#0f766e;color:#ffffff;text-decoration:none;' + $FONT + 'font-size:15px;font-weight:700;padding:11px 22px;border-radius:6px;">Open the AI Helper &rarr;</a>' +
-  '<p style="margin:12px 0 0;font-size:13px;color:#4b7c77;">The helper asks you questions and nudges you &mdash; it will not just hand you the answer. That is the point.</p></div>'
+  '<p style="margin:12px 0 0;font-size:13px;color:#4b7c77;">The helper asks you questions and nudges you toward the answer.&nbsp; You get to do the figuring out!</p></div>'
 }
 
 function ChecklistBox($items, [string]$accent) {
@@ -183,14 +188,14 @@ function StageTable($standard, $stages) {
       '<td style="background:' + $st.bg + ';border:1px solid ' + $st.edge + ';border-left:none;padding:12px 14px;vertical-align:top;">' + (Inline $s.text) + '</td></tr>')
   }
   [void]$sb.Append('</table></div>')
-  [void]$sb.Append('<p style="margin:12px 0 0;font-size:14px;color:' + $MUTED + ';"><strong style="color:#1d7a44;">&#11088; Made It Mine is the goal for everyone.</strong> &ldquo;Went Beyond&rdquo; means taking the project further in a direction you choose.&nbsp; The examples are starting points.</p>')
+  [void]$sb.Append('<p style="margin:12px 0 0;font-size:14px;color:' + $MUTED + ';"><strong style="color:#1d7a44;">&#11088; Made It Mine is the goal for everyone.</strong>&nbsp; &ldquo;Went Beyond&rdquo; means taking the project further in a direction you choose.&nbsp; The examples are starting points.</p>')
   return $sb.ToString()
 }
 
 function Banner($lesson, $th, [string]$kicker) {
   $when = ''
   if ($lesson.whenToUse) {
-    $when = '<p style="margin:13px 0 0;padding-top:12px;border-top:1px solid #7fa8d4;font-size:14px;color:#eaf2fb;"><strong>When to use this:</strong> ' + (Inline $lesson.whenToUse) + '</p>'
+    $when = '<p style="margin:13px 0 0;padding-top:12px;border-top:1px solid #7fa8d4;font-size:14px;color:#eaf2fb;"><strong>When to use this:</strong>&nbsp; ' + (Inline $lesson.whenToUse) + '</p>'
   }
   return '<div style="background:' + $th.accent + ';border-radius:10px;padding:24px 26px;margin:0 0 8px;">' +
   '<p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#dbe7f5;">' + (Esc $kicker) + '</p>' +
@@ -219,8 +224,8 @@ function Build-Page($lesson, $th) {
   [void]$sb.Append((Banner $lesson $th ($th.label + ' ' + $lesson.num + '  &middot;  Processing Sprite')))
 
   [void]$sb.Append('<div style="background:' + $th.soft + ';border:1px solid ' + $th.edge + ';border-radius:0 0 8px 8px;border-top:none;padding:12px 20px;margin:0 0 8px;font-size:14px;color:' + $MUTED + ';">' +
-    '<strong style="color:' + $a + ';">New idea:</strong> ' + (Inline $lesson.newIdea) + ' &nbsp;&nbsp;|&nbsp;&nbsp; ' +
-    '<strong style="color:' + $a + ';">Builds on:</strong> ' + (Inline $lesson.builtOn) + '</div>')
+    '<strong style="color:' + $a + ';">New idea:</strong>&nbsp; ' + (Inline $lesson.newIdea) + ' &nbsp;&nbsp;|&nbsp;&nbsp; ' +
+    '<strong style="color:' + $a + ';">Builds on:</strong>&nbsp; ' + (Inline $lesson.builtOn) + '</div>')
 
   [void]$sb.Append((H2 'What you will be able to do' $a))
   [void]$sb.Append((Bullets $lesson.goals))
@@ -243,15 +248,15 @@ function Build-Page($lesson, $th) {
   [void]$sb.Append((Numbered $lesson.steps))
 
   [void]$sb.Append((H2 'Starter code' $a))
-  [void]$sb.Append((P 'This code runs exactly as it is. Get it running first, then start changing it.'))
+  [void]$sb.Append((P 'This code runs exactly as it is.  Get it running first, then start changing it.'))
   foreach ($c in $lesson.code) { [void]$sb.Append((CodeBlock $c)) }
 
   [void]$sb.Append((H2 'Make it yours' $a))
   [void]$sb.Append('<div style="background:#f1fbf5;border:1px solid #c2e6d1;border-left:5px solid #1d7a44;border-radius:6px;padding:16px 20px;margin:14px 0;">')
-  [void]$sb.Append('<p style="margin:0 0 12px;color:#1d7a44;font-weight:700;">&#11088; This is the part that matters most. Pick at least one and make it yours.</p>')
+  [void]$sb.Append('<p style="margin:0 0 12px;color:#1d7a44;font-weight:700;">&#11088; This is the part that matters most.&nbsp; Pick at least one and make it yours.</p>')
   [void]$sb.Append((Bullets $lesson.makeItYours))
   if ($lesson.challenge) {
-    [void]$sb.Append('<p style="margin:10px 0 0;padding-top:11px;border-top:1px solid #c2e6d1;"><strong style="color:#1d7a44;">Finished early?</strong> ' + (Inline $lesson.challenge) + '</p>')
+    [void]$sb.Append('<p style="margin:10px 0 0;padding-top:11px;border-top:1px solid #c2e6d1;"><strong style="color:#1d7a44;">Finished early?</strong>&nbsp; ' + (Inline $lesson.challenge) + '</p>')
   }
   [void]$sb.Append('</div>')
 
@@ -261,7 +266,7 @@ function Build-Page($lesson, $th) {
   [void]$sb.Append((Callout '&#128172;' 'Be ready to answer' $lesson.wrapup '#c2761c' '#fffaf0' '#f0dcbc'))
 
   [void]$sb.Append('<p style="margin:26px 0 0;padding:14px 18px;background:' + $th.soft + ';border:1px dashed ' + $th.edge + ';border-radius:6px;font-size:15px;color:' + $MUTED + ';">' +
-    '<strong style="color:' + $a + ';">Next:</strong> open <strong>' + (Esc ($th.label + ' ' + $lesson.num + ' Assignment - ' + $lesson.title)) + '</strong> to check yourself and turn in your work.</p>')
+    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc ($th.label + ' ' + $lesson.num + ' Assignment - ' + $lesson.title)) + '</strong> to check yourself and turn in your work.</p>')
 
   return Shell (FileComment $lesson 'CANVAS PAGE (student-facing)') $sb.ToString()
 }
@@ -273,7 +278,7 @@ function Build-Assignment($lesson, $th) {
   [void]$sb.Append((Banner $lesson $th ($th.label + ' ' + $lesson.num + ' Assignment  &middot;  Processing Sprite')))
 
   [void]$sb.Append('<div style="background:' + $th.soft + ';border:1px solid ' + $th.edge + ';border-radius:0 0 8px 8px;border-top:none;padding:12px 20px;margin:0 0 8px;font-size:14px;color:' + $MUTED + ';">' +
-    'This assignment is <strong>not scored</strong>. The stages below are a map of where you are and what to try next &mdash; you can revise and re-submit any time.</div>')
+    'This assignment is <strong>not scored</strong>.&nbsp; The stages below are a map of where you are and what to try next -- you can revise and re-submit any time.</div>')
 
   [void]$sb.Append((FlintBox ($th.label + ' ' + $lesson.num) $lesson.flintHint))
 
@@ -284,7 +289,7 @@ function Build-Assignment($lesson, $th) {
   [void]$sb.Append((H2 'What to turn in' $a))
   [void]$sb.Append('<div style="background:#f7fafc;border:1px solid ' + $RULE + ';border-radius:8px;padding:16px 20px 6px;margin:14px 0;">')
   [void]$sb.Append((Numbered $lesson.submit))
-  [void]$sb.Append('<p style="margin:0 0 12px;font-size:14px;color:' + $MUTED + ';">To zip your sketch: <strong>Sketch &rarr; Show Sketch Folder</strong>, go up one level, then right-click the sketch folder and compress it.</p></div>')
+  [void]$sb.Append('<p style="margin:0 0 12px;font-size:14px;color:' + $MUTED + ';">To zip your sketch:&nbsp; <strong>Sketch &rarr; Show Sketch Folder</strong>, go up one level, then right-click the sketch folder and compress it.</p></div>')
 
   [void]$sb.Append((H2 'Check yourself first' $a))
   [void]$sb.Append((ChecklistBox $lesson.checklist $a))
@@ -304,7 +309,7 @@ function Build-Teacher($lesson, $th) {
   $sb = New-Object System.Text.StringBuilder
 
   [void]$sb.Append('<div style="background:#b91c1c;color:#ffffff;border-radius:8px 8px 0 0;padding:10px 20px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">' +
-    '&#9888; Teacher copy &mdash; keep this page unpublished</div>')
+    '&#9888; Teacher copy - keep this page unpublished</div>')
   [void]$sb.Append('<div style="background:#334155;border-radius:0 0 10px 10px;padding:22px 26px;margin:0 0 8px;">' +
     '<p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#cbd5e1;">' + (Esc ($th.label + ' ' + $lesson.num)) + '</p>' +
     '<h1 style="margin:0;' + $FONT + 'font-size:29px;line-height:1.2;font-weight:700;color:#ffffff;">' + (Esc $lesson.title) + '</h1>' +
@@ -341,8 +346,8 @@ function Build-Teacher($lesson, $th) {
   [void]$sb.Append('</div>')
 
   [void]$sb.Append((H2 'Wrap-up (~5 min)' $a))
-  [void]$sb.Append((P ('**Ask:** ' + $lesson.wrapup)))
-  [void]$sb.Append((P ('**Looking for:** ' + $lesson.teacher.wrapupAnswer)))
+  [void]$sb.Append((P ('**Ask:**  ' + $lesson.wrapup)))
+  [void]$sb.Append((P ('**Looking for:**  ' + $lesson.teacher.wrapupAnswer)))
 
   [void]$sb.Append((H2 'Teaching notes' $a))
   [void]$sb.Append((Bullets $lesson.teacher.notes))
@@ -420,7 +425,7 @@ function Build-FrontPage($course, $lessons) {
   [void]$sb.Append((Bullets $course.goals))
 
   [void]$sb.Append((H2 'The lessons' $a))
-  [void]$sb.Append((P 'Work through these in order. Each one builds directly on the one before it.'))
+  [void]$sb.Append((P 'Work through these in order.  Each one builds directly on the one before it.'))
   [void]$sb.Append((IndexTable ($lessons | Where-Object { $_.kind -eq 'core' }) $th))
 
   $bonus = @($lessons | Where-Object { $_.kind -eq 'bonus' })
