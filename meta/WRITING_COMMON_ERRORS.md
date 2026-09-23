@@ -477,7 +477,7 @@ it goes into an argument, and check what the counting tool counts.
 | `It is a trade, not a free win.` | `It is a trade.  Here is what you pay.` |
 | `nothing outside can call it` | `only this file can call it` |
 | `does not compile` | `the compiler rejects it` |
-| `no fixed list` | `the list stays open` |
+| `no fixed list` | `you can add to the list` |
 | `Do not settle it.` | `Leave it open.` |
 
 The ban covers the whole family:  `never`, `nothing`, `nobody`, `neither`,
@@ -493,6 +493,74 @@ negative had.
 words:  a compiler error (`'minValue' cannot be greater than maxValue`), a book
 title (*Consider static factory methods instead of constructors*), or a
 quotation of the text being replaced.
+
+**The positive form has a failure mode of its own.**  Entry 29 has it.
+
+### 29.  "Stays" as the positive rewrite - EXPERIMENTAL
+
+Numbered 29 and placed here, because it is entry 3's own fix going wrong.
+
+**This entry is an experiment, adopted tentatively on 2026-09-23.**  If a fix
+made under it ever reads weird to Jason, suspect this entry first.  Come back
+here, log the case in the table at the bottom, and narrow the rule or retire it.
+[`WRITING_OPEN_THREADS.md`](WRITING_OPEN_THREADS.md) carries it as an open
+thread until it has earned a place.
+
+**The shape.**  An abstract thing "stays" a quality or an owner, as though it
+were keeping itself that way on its own effort:  `the figuring-out part stays
+yours`, `the operation stays explicit`, `middles stay honest`, `the list stays
+open`.  He flagged the first of those on 2026-09-23, in a Flint caption an
+assistant had just written:
+
+> *"the word `stays` there just sounds weird."*
+
+**Where it comes from.**  It is what an assistant reaches for when entry 3 asks
+for a positive form.  The caption had read `it will not just hand you the
+answer`, and one rewrite turned it into `the figuring-out part stays yours`.
+Entry 3's own table taught the move, turning `no fixed list` into `the list
+stays open` until the same day.  So this is entry 8's personified `holds still`
+arriving through a different verb:  a value, a part, or a quality given a will
+to remain as it is.
+
+**The fix:**  put the person or the action back in.  `you keep`, `you get to`,
+plain `is`, or the concrete verb the sentence was avoiding.
+
+| Was | Is |
+|---|---|
+| `The figuring-out part stays yours!` | `You get to do the figuring out!` |
+| `...in the starter so the operation stays explicit.` | `...in the starter, so students can see the operation written out.` |
+| `Everything from Lessons 1-4 stays.` | `You keep everything from Lessons 1-4.` |
+| `All your game logic stays -- you are adding a world around it.` | `Keep all your game logic -- you are adding a world around it.` |
+
+The last two rows are the weakest.  Bare `stays` for code carrying over into a
+new lesson reads clipped more than weird, and those are the likeliest fixes to
+come back.
+
+**The literal sense is fine, and it is most of the uses.**  A thing on screen or
+a value in memory sitting unchanged is exactly what the word means:  `a
+rectangle that stays put`, `each picture stays on screen`, `velocity stays set
+after key release`, `child sprites stay in formation`.  A student can watch
+every one of those happen.  The test is whether you could point at the thing
+while it does it.
+
+**Left alone at adoption.**  This file and its neighbours in `meta/` carry about
+twenty of the abstract shape (`stays settled`, `the family stays out of it`,
+`a comma that helps a first read stays`).  Per the caution at the top, that
+count measures how often the tic survived review.  They were left as written
+while the experiment runs.
+
+```bash
+grep -rniE '\bstay(s|ed|ing)?\b' --include='*.md' --include='*.json' --include='*.ps1' .
+```
+
+Read each hit and ask whether you could point at it.
+
+**The log.**  Fixes made under this entry that Jason later found weird, and
+abstract `stays` turning up in his own writing from outside the repository.
+Either one narrows the rule.
+
+| Date | Text | Outcome |
+|---|---|---|
 
 ---
 
@@ -696,7 +764,7 @@ mark:
 
 | Form | Job | Evidence |
 |---|---|---|
-| `~word~` | fun-emphasis;  the playful cousin of italics | named 2026-09-13 |
+| `~word~`, `~a whole phrase~` | fun-emphasis;  the playful cousin of italics, and it spans a phrase or part of a sentence as readily as a word | named 2026-09-13;  the phrase span 2026-09-23 |
 | `party~` | trailing tone marker, softening the line it ends | `It's gonna be a party~`, `permission slips to their parents~` |
 | `Class III~Class VII` | a range, meaning *through* | his own messages |
 

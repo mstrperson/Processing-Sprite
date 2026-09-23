@@ -105,6 +105,18 @@ pages emit `PASTE_FLINT_URL_HERE` behind a `<!-- FLINT-LINK -->` comment.
 Same for the Canvas front page:  `LINK_BONUS_2b_PAGE` and
 `LINK_BONUS_2b_ASSIGNMENT` need re-pointing once the Canvas items exist.
 
+## 7.  Entry 29, abstract "stays" -- an experiment
+
+Adopted tentatively on 2026-09-23, after Jason flagged `The figuring-out part
+stays yours!` in a Flint caption.  Four fixes went into the Canvas content under
+it.  The `meta/` guides still carry about twenty of the shape, left as written
+while the rule is on trial.
+
+**If a fix ever reads weird, look here first.**  Log the case in entry 29's
+table and narrow the rule.  Once it has survived a few passes without a bad
+fix, promote it out of this file, sweep the guides, and drop the EXPERIMENTAL
+tag from its heading.
+
 ---
 
 ## What got settled on 2026-09-13, so it stays settled
