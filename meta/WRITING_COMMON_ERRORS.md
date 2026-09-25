@@ -885,6 +885,62 @@ won't, we'll see, that's it`, zero on that same sentence spelled out, and zero o
 `the author's argument, the students' work`, so possessives leave the count
 alone.
 
+### 30.  Naming the register right and still manufacturing it
+
+2026-09-23, a low-formality note to the robotics team.  He named the target
+register himself: *"lean just a bit more Cliff Stoll for this one"* -- the same
+reference entry 22 already has on file for this exact audience.  The result still
+came back wrong:  *"I love it but it doesn't sound like me at all."*
+
+**Naming the register correctly does not excuse the sentences from being
+invented.**  The draft added *"extra glory,"* *"independent operators,"* and a
+*"checks notes"* aside -- none drawn from anything he had written, all built to
+perform "whimsical" from the outside.  This is entry 5's failure again, one
+level up:  entry 5 is manufacturing a *voice* from a description of the man;
+this is manufacturing a *bit* from the name of a register.  Both skip the same
+step, which is reading what he actually writes at that setting before adding
+anything to it.
+
+**Then he supplied the real thing**, unedited, and it is worth reading whole
+because it is the calibration sample entry 22 was missing:
+
+> Hey everyone! It's that time again~ Cambridge Science Carnival is **A WEEK
+> FROM SUNDAY**!
+>
+> We need folks to run the booth.  If you're new, our whole deal is we let the
+> little kids running around *drive last year's robot*.  SO!  We need to: a.
+> Make sure Billy is still working...  and b. Get folks to commit to being
+> there on that Sunday.
+
+Measured against the manufactured draft:  no invented asides, no reaching for a
+clever aside about the event itself.  The whimsy is load-bearing and concrete --
+a named robot (`Billy`), a real recurring bit (little kids drive it), a genuine
+excited fragment (`SO!`) -- not decoration draped over the announcement.  The
+caps-for-emphasis, the trailing `~`, and the loose `a.`/`b.` list inline in a
+sentence all match markers entry 22 already had on file;  what was missing was
+that the whimsy has to be *about something true*, not just *in a playful
+shape*.
+
+**He also flagged that the sample is left exactly as sent, mistakes included**,
+because the inconsistency is itself information:  *"it contains information
+about the inconsistency and mistakes that I let slide."*  Do not clean a
+reference sample of this kind before reading it for calibration -- the sloppiness
+is the data.  This is a narrower case than entry 3's general rule against
+silently fixing his text:  here the imperfection is the thing being logged, not
+an incidental error riding along with content that matters more.
+
+**One factual correction that came with it:**  he confirmed `4 October` as a
+genuine date format he uses, not an error to normalize toward `October 4th`.
+Entry 3's caution about silent fixes applies here too -- a date order that looks
+like a slip may be his.  Check before converting one to the other.
+
+**The test going forward.**  Before returning a draft in a named reference
+register, ask what specific, concrete thing in *this* situation the whimsy would
+actually attach to -- a real detail, a real running bit, a real name -- and if
+nothing concrete is available, that is the signal the draft is about to
+manufacture one.  A register can be correctly named and still fail if what fills
+it is invented rather than found.
+
 ### 4.  Inferring the voice from samples
 
 An assistant measured contraction counts in `teaching_philosophy.md`, found two

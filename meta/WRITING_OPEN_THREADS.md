@@ -117,6 +117,30 @@ table and narrow the rule.  Once it has survived a few passes without a bad
 fix, promote it out of this file, sweep the guides, and drop the EXPERIMENTAL
 tag from its heading.
 
+## 8.  The tilde as a range mark
+
+New instance, 2026-09-23, from an unedited robotics-team note (see
+`ClaudeWritingProject/cambridge-science-carnival-2026-10-04/robotics-team-note.md`
+for the source): `The event runs officially from 12~4 on Sunday`.  Entry 22
+already has `~word~` as an emphasis mark; this is a different job for the
+same glyph, standing in for a dash or "to" in a numeric range.
+
+Same sentence also carries the trailing sentence-final `~` already logged
+(`we need to have folks in the booth throughout the day~`), so both uses
+sit side by side in one passage, unforced.
+
+Sample size is **one**.  Open questions, same shape as the other marks:
+
+- does the range use replace a hyphenated range (`12-4`) or an en-dash
+  range (`12–4`) specifically, or is it just "whatever separator is
+  fastest to type"
+- does it survive into a formal register, or is it casual-only like the
+  other marks
+- is it a distinct sense of the glyph, or does it fold into the existing
+  emphasis sense (a compressed way of writing `~12 to 4~`)
+
+Log the next instance here before ruling on any of these.
+
 ---
 
 ## What got settled on 2026-09-13, so it stays settled
