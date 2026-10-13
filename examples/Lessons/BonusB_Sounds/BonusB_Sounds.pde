@@ -1,5 +1,5 @@
 /**
- * Bonus Lesson B — Sounds
+ * Bonus Lesson B - Sounds
  *
  * Requires the Processing Sound library:
  *   Sketch → Import Library → Add Library → search "Sound" → Install
@@ -15,9 +15,9 @@
  * ─────────────────────────────────────────────────────────────────────────
  *
  * Three sounds are used here:
- *   collectSound  — plays once each time a coin is collected
- *   gameOverSound — plays once when all coins are gone
- *   bgMusic       — loops continuously in the background
+ *   collectSound  - plays once each time the coin is collected
+ *   gameOverSound - plays once when the player touches the hazard
+ *   bgMusic       - loops continuously in the background
  *
  * Things to try:
  *   - Change bgMusic.amp(0.4) to adjust the music volume (0.0–1.0)
@@ -29,7 +29,8 @@ import coxprogramming.processing.sprites.*;
 import processing.sound.*;
 
 MyCharacter player;
-ArrayList<Blob> coins;
+Blob coin;
+Blob hazard;
 int score = 0;
 boolean gameOver = false;
 
@@ -39,7 +40,7 @@ SoundFile bgMusic;
 
 /**
  * Creates the window, loads all sound files, starts background music,
- * places the character, and spawns 10 coins.
+ * and places the character, the coin, and the hazard.
  * Runs once when the sketch starts.
  */
 void setup() {
@@ -50,23 +51,19 @@ void setup() {
   bgMusic       = new SoundFile(this, "music.mp3");
 
   bgMusic.amp(0.4);   // lower music volume so effects can be heard clearly
-  bgMusic.loop();     // start background music — runs until stopped
+  bgMusic.loop();     // start background music - runs until stopped
 
   player = new MyCharacter(this, width/2, height/2);
   player.setVelocity(4, 0);
 
-  coins = new ArrayList<Blob>();
-  for (int i = 0; i < 10; i++) {
-    coins.add(new Blob(
-      this, random(width), random(height),
-      random(8, 18), random(-2, 2), random(-2, 2),
-      color(255, 220, 50)
-    ));
-  }
+  coin = new Blob(this, random(width), random(height),
+                  14, random(1, 2.5), random(-1.5, 1.5),
+                  color(255, 220, 50));
+  hazard = new Blob(this, 80, 80, 22, 3, 2, color(220, 60, 60));
 }
 
 /**
- * Clears the screen and routes to the active game or the win screen.
+ * Clears the screen and routes to the active game or the game over screen.
  * Called automatically ~60 times per second.
  */
 void draw() {
@@ -80,27 +77,25 @@ void draw() {
 }
 
 /**
- * Moves and draws every coin, checks for collision, removes collected coins,
- * plays the collect sound on each hit, and triggers the end sequence when
- * all coins are gone. Called from draw() while the game is active.
+ * Moves and draws everything, checks both collisions, and plays a sound
+ * at the moment each one happens.  Called from draw() while playing.
  */
 void playGame() {
-  for (int i = coins.size() - 1; i >= 0; i--) {
-    Blob c = coins.get(i);
-    c.move();
-    c.drawSprite();
-
-    if (player.collidesWith(c)) {
-      coins.remove(i);
-      score = score + 1;
-      collectSound.play();  // one-shot sound effect on collection
-    }
-  }
+  coin.move();
+  coin.drawSprite();
+  hazard.move();
+  hazard.drawSprite();
 
   player.followMouse();
   player.drawSprite();
 
-  if (coins.size() == 0) {
+  if (player.collidesWith(coin)) {
+    score = score + 1;
+    coin.moveTo(random(width), random(height));
+    collectSound.play();   // one-shot sound effect on collection
+  }
+
+  if (player.collidesWith(hazard)) {
     gameOver = true;
     bgMusic.stop();        // stop the music
     gameOverSound.play();  // play the end sound
@@ -112,16 +107,16 @@ void playGame() {
 }
 
 /**
- * Displays the win screen with the final score.
- * Called from draw() after all coins have been collected.
+ * Displays the game over screen with the final score.
+ * Called from draw() after the player touches the hazard.
  */
 void showGameOver() {
   textAlign(CENTER, CENTER);
-  fill(80, 180, 80);
+  fill(220, 60, 60);
   textSize(52);
-  text("You Win!", width/2, height/2 - 20);
+  text("Game Over", width/2, height/2 - 20);
   textSize(22);
   fill(50);
   text("Score: " + score, width/2, height/2 + 26);
-  textAlign(LEFT, TOP);
+  textAlign(LEFT, BASELINE);
 }

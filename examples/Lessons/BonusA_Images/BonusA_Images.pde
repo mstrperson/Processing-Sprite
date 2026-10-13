@@ -28,7 +28,9 @@
 import coxprogramming.processing.sprites.*;
 
 MyImageCharacter player;
-ArrayList<ImageSprite> decorations;
+ImageSprite tree1;
+ImageSprite tree2;
+ImageSprite tree3;
 
 /**
  * Creates the window, loads the character image, and places decoration ImageSprites.
@@ -40,10 +42,9 @@ void setup() {
   player = new MyImageCharacter(this, width/2, height/2, "hero.png");
   player.setVelocity(4, 0);
 
-  decorations = new ArrayList<ImageSprite>();
-  decorations.add(new ImageSprite(this, 150, 430, "tree.png", 60, 100));
-  decorations.add(new ImageSprite(this, 390, 440, "tree.png", 60, 100));
-  decorations.add(new ImageSprite(this, 660, 425, "tree.png", 60, 100));
+  tree1 = new ImageSprite(this, 150, 430, "tree.png", 60, 100);
+  tree2 = new ImageSprite(this, 390, 440, "tree.png", 60, 100);
+  tree3 = new ImageSprite(this, 660, 425, "tree.png", 60, 100);
 }
 
 /**
@@ -54,9 +55,9 @@ void draw() {
   background(135, 206, 235);
 
   // Decorations drawn first — appear behind the player
-  for (ImageSprite d : decorations) {
-    d.drawSprite();
-  }
+  tree1.drawSprite();
+  tree2.drawSprite();
+  tree3.drawSprite();
 
   // Player drawn last — appears in front
   player.followMouse();

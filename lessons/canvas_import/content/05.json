@@ -2,225 +2,248 @@
   "id": "05",
   "num": "5",
   "kind": "core",
-  "slug": "lesson-05-a-world-of-objects",
-  "title": "A World of Objects",
-  "tagline": "One character is lonely.  Time to fill the screen.",
+  "slug": "lesson-05-build-your-world",
+  "title": "Build Your World",
+  "tagline": "Your character needs somewhere to be.  Today you build the place your game happens in.",
   "whenToUse": null,
-  "timing": "One period (~50 min)",
-  "newIdea": "Lists and loops -- handling many things at once",
+  "timing": "One period (~50 min).  It can happily fill a second if students are deep in world-building.",
+  "newIdea": "Draw order -- the order of your lines decides what appears in front",
   "builtOn": "Lesson 4 -- your controllable character.  You keep everything from Lessons 1-4.",
 
   "goals": [
-    "Store many objects in an `ArrayList`",
-    "Use a **counting** `for` loop to create a lot of things at once",
-    "Use a **for-each** loop to visit every thing in a list",
-    "Use `random()` to give a world variety"
+    "Use `Block` to add ground, walls, and platforms to your scene",
+    "Write a second sprite class, like `Cloud`, with the same `extends Blob` pattern as your character",
+    "Explain draw order:  whatever you draw later appears in front",
+    "Design a world with a theme that is yours"
   ],
 
   "vocab": [
-    { "term": "`ArrayList`", "def": "a list that holds many objects of the same type.  It grows as you add more" },
-    { "term": "counting `for` loop", "def": "repeats a block a set number of times.  Used to **create** things" },
-    { "term": "for-each loop", "def": "visits every item already in a list, one at a time.  Used to **visit** things" },
-    { "term": "index", "def": "an item's position in a list.  Lists start counting at **0**, not 1" }
+    { "term": "`Block`", "def": "a rectangle sprite from the library.  Good for ground, walls, and platforms" },
+    { "term": "draw order", "def": "the sequence you draw things in.  Whatever is drawn later appears in front" },
+    { "term": "static sprite", "def": "a sprite with zero velocity.  It sits in one place, and it is still a real sprite object" },
+    { "term": "alpha", "def": "a fourth number in `color()` or `fill()` that sets transparency.  0 is invisible, 255 is solid" }
   ],
 
-  "warmup": "How do you make your character move toward the mouse?  Where exactly does that call go, and why there?",
+  "warmup": "On paper, sketch the world your game takes place in.  What is in the background?  Is there ground?  Sky?  What drifts past?  Three minutes, then show a neighbor.",
 
   "howItWorks": [
     {
-      "h": "Why you need a list",
+      "h": "Block is a rectangle that stays put",
       "p": [
-        "Say you want twelve coins.  You could write twelve variables:  `coin1`, `coin2`, `coin3`&hellip; and then twelve `new Blob(...)` lines, and twelve `move()` calls, and twelve `drawSprite()` calls.  That is thirty-six lines to manage, and if you want a thirteenth coin you write three more.",
-        "A list fixes that.  Think of it as a **bag** -- you keep stuffing things in, and the bag does not care how many."
+        "`Block` is the library's rectangle sprite.  It starts with zero velocity, so it sits exactly where you put it.  That makes it good scenery:  ground, walls, a platform, a ceiling."
       ],
       "code": {
-        "label": "Three things you do with a list",
-        "body": "ArrayList<Blob> coins;                 // 1. declare it (what kind of bag)\ncoins = new ArrayList<Blob>();        // 2. create it (get an empty bag)\ncoins.add(new Blob(...));             // 3. add to it (put something in)"
-      }
-    },
-    {
-      "h": "Two loops that both say \"for\"",
-      "p": [
-        "Java uses the same word, `for`, for two loops that feel completely different.  Keeping them straight is the real skill in this lesson."
-      ]
-    },
-    {
-      "h": "The counting loop - for CREATING",
-      "p": [
-        "This one counts.  `i` starts at 0, and the loop repeats until `i` reaches 12.  You use it in `setup()` to build your world."
-      ],
-      "code": {
-        "label": "\"Do this 12 times\"",
-        "body": "for (int i = 0; i < 12; i++) {\n  coins.add(new Blob(this, random(width), random(height), 12, color(255, 220, 50)));\n}"
+        "label": "A strip of ground along the bottom",
+        "body": "Block ground;\n\n// in setup():\nground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));\n//                       |      |          |      |        |\n//                       |      |          |      |        +-- color\n//                       |      |          |      +----------- height\n//                       |      |          +------------------ width\n//                       |      +----------------------------- y of the TOP-LEFT corner\n//                       +------------------------------------ x of the TOP-LEFT corner"
       },
       "bullets": [
-        "`int i = 0` -- start counting at zero",
-        "`i < 12` -- keep going while i is under 12",
-        "`i++` -- add one to i each time around"
+        "**Watch out:**  for a `Block`, `x` and `y` are the **top-left corner**.  For a `Blob` they were the **center**.  This catches everyone once.",
+        "A `Block` is scenery.  Your character passes straight through it, the same as everything else in your world right now."
       ]
     },
     {
-      "h": "The for-each loop - for VISITING",
+      "h": "A second sprite class:  Cloud",
       "p": [
-        "This one does not count.  It just walks the list and hands you one item at a time.  You use it in `draw()` to move and draw everything."
+        "In Lesson 2 you wrote `class MyCharacter extends Blob` and gave it a `drawSprite()` full of shapes.  A cloud is the same idea.  Open the `Cloud` tab and look:  a class line, a `super(...)` handshake, and a `drawSprite()` that draws white ellipses around `pos.x` and `pos.y`.",
+        "Any decoration you want works the same way -- a `Tree`, a `Star`, a `Fish`, a `Rock`.  New tab, `extends Blob`, draw it."
       ],
-      "code": {
-        "label": "\"For each coin c in the list, do this\"",
-        "body": "for (Blob c : coins) {\n  c.move();\n  c.drawSprite();\n}"
-      }
+      "bullets": [
+        "To make a new tab, click the small arrow to the right of your tabs and choose **New Tab**.  Name it after the class.",
+        "Use `extends Blob`, the same as your character.  That one word means your cloud already knows how to `move()`."
+      ]
     },
     {
-      "h": "You cannot call a method on the whole bag",
+      "h": "One variable for each thing",
       "p": [
-        "This is the mistake almost everyone makes at least once:"
+        "Each cloud is its own variable, and each one goes through the same three steps your character did."
       ],
       "code": {
-        "label": "Wrong, then right",
-        "body": "coins.drawSprite();     // WRONG - the list itself doesn't know how to draw\n\nfor (Blob c : coins) {  // RIGHT - draw each coin inside the list\n  c.drawSprite();\n}"
+        "label": "Declare, create, move and draw",
+        "body": "Cloud cloud1;                              // 1. declare it at the top\n\ncloud1 = new Cloud(this, 150, 90, 0.5);    // 2. create it in setup()\n\ncloud1.move();                             // 3. move and draw it in draw()\ncloud1.drawSprite();"
       },
       "bullets": [
-        "The bag is not a coin.  You cannot ask the bag to draw itself -- you have to reach in and ask each coin."
+        "Want a third cloud?  Declare `cloud3`, create it, move it, draw it.",
+        "If you find yourself wanting fifty of something, ask your teacher about Bonus Lesson D."
       ]
     },
     {
-      "h": "Draw order decides what is on top",
+      "h": "Draw order is the whole lesson",
       "p": [
-        "Whatever you draw **last** appears in front.  That is why the player is drawn after the coins in the starter code -- so your character is never hidden behind a coin.",
-        "This becomes a big deal in Lesson 8."
+        "Processing draws like paint on a canvas.  Whatever you draw **later** covers whatever you drew earlier.  The order of your lines is the only layering tool you need.",
+        "So the order of the calls in `draw()` *is* your layering."
+      ],
+      "code": {
+        "label": "Back to front",
+        "body": "void draw() {\n  background(135, 206, 235);   // 1. sky - furthest back\n\n  cloud1.move();               // 2. clouds drift behind everything\n  cloud1.drawSprite();\n\n  ground.drawSprite();         // 3. ground in front of the sky\n\n  coin.move();                 // 4. things in the world\n  coin.drawSprite();\n\n  player.followMouse();        // 5. player last, always in front\n  player.drawSprite();\n}"
+      },
+      "bullets": [
+        "**Rule of thumb:  background first, player last.**"
       ]
+    },
+    {
+      "h": "background() wipes the slate every frame",
+      "p": [
+        "Remember from Lesson 1 that `background()` erases everything.  That is why it goes at the **top** of `draw()`.",
+        "Everything after it is layered onto a clean canvas, in the order you wrote it.  Call `background()` halfway through `draw()` and you erase everything you already drew that frame."
+      ]
+    },
+    {
+      "h": "Transparency and speed make things look far away",
+      "p": [
+        "`fill()` and `color()` take an optional fourth number:  transparency, called **alpha**.  `0` is completely invisible, `255` is completely solid.  Semi-transparent decorations look soft and distant.",
+        "Speed does the same work.  A world feels deep when the far-away things move slowly and the close things move fast.  Ground sits still.  Clouds drift.  The coin darts.  Your player goes wherever you send it."
+      ],
+      "code": {
+        "label": "A faint cloud -- change the fill() lines inside your Cloud tab",
+        "body": "fill(250, 250, 255, 180);   // white, slightly see-through"
+      }
     }
   ],
 
   "steps": [
-    "Open your Lesson 4 sketch.  Your `MyCharacter` tab still does not change.",
-    "At the top of the sketch, next to `MyCharacter player;`, declare the list:  `ArrayList<Blob> coins;`",
-    "In `setup()`, create the empty list:  `coins = new ArrayList<Blob>();`",
-    "Below that, add the counting loop from the starter code.  Run it.  Nothing shows up yet -- you made the coins but never drew them.",
-    "In `draw()`, **above** your player lines, add the for-each loop that moves and draws each coin.  Run again.  Now the world is full.",
-    "Change the `12` in the counting loop to `40`.  Run.  Then try `3`.  How many feels right?",
-    "Change the coin color to something that fits your character's world.",
-    "Move the player lines **above** the coin loop and run.  Your character disappears behind the coins.  Move them back.  That is draw order.",
-    "Add a `mousePressed()` that spawns a new coin wherever you click:  `coins.add(new Blob(this, mouseX, mouseY, 12, color(255, 220, 50)));`"
+    "Sketch your world on paper first.  Three minutes.",
+    "Open your Lesson 4 sketch.  Keep your `MyCharacter` tab exactly as it is.",
+    "Declare `Block ground;` at the top of your sketch.  In `setup()`, create it:  `ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));`",
+    "In `draw()`, right after `background()`, add `ground.drawSprite();`.  Run it.  You should have a strip of green along the bottom.",
+    "Change `background(240)` to a color that fits your world -- sky blue, deep space black, ocean teal, lava red.",
+    "**Experiment with draw order:**  move `ground.drawSprite()` to the very last line of `draw()` and run.  Walk your player down to the ground.  It disappears underneath.  Move the line back and say out loud what happened.",
+    "Make a new tab called `Cloud` and paste in the `Cloud` code from the starter below.",
+    "Declare `Cloud cloud1;` and `Cloud cloud2;` at the top.  Create them in `setup()`.  In `draw()`, move and draw them **right after** `background()`, before the ground.",
+    "Add a coin:  declare `Blob coin;`, create it in `setup()` with the line from the starter, and move and draw it **after** the ground and **before** the player.  Nothing happens when you touch it yet.  That is Lesson 6.",
+    "Add a second `Block` as scenery:  a platform, a wall, a ceiling.  Choose where it belongs.",
+    "Restyle everything so it belongs together.  A gold coin in a space world looks wrong -- make it a star, or a gem.  Play it.  Does it look like a place?  Keep going until it does."
   ],
 
   "code": [
     {
       "label": "Main sketch tab",
-      "body": "// Lesson 5 - A World of Objects\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\n\nvoid setup() {\n  size(800, 600);\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coins = new ArrayList<Blob>();\n\n  // Counting loop: add 12 coins at random positions\n  for (int i = 0; i < 12; i++) {\n    coins.add(new Blob(\n      this,\n      random(width),             // random x\n      random(height),            // random y\n      random(8, 20),             // random radius\n      random(-2, 2),             // random horizontal speed\n      random(-2, 2),             // random vertical speed\n      color(255, 220, 50)        // gold\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  // For-each loop: visit every coin - move it and draw it\n  for (Blob c : coins) {\n    c.move();\n    c.drawSprite();\n  }\n\n  player.followMouse();\n  player.drawSprite();  // draw player last so it appears on top\n}"
+      "body": "// Lesson 5 - Build Your World\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nCloud cloud1;\nCloud cloud2;\nBlock ground;\nBlob coin;\n\nvoid setup() {\n  size(800, 600);\n\n  // Ground strip along the bottom.  x, y is the TOP-LEFT corner.\n  ground = new Block(this, 0, height - 70, width, 70, color(80, 160, 60));\n\n  // Two clouds, each drifting at its own speed (Cloud is in its own tab)\n  cloud1 = new Cloud(this, 150, 90, 0.5);\n  cloud2 = new Cloud(this, 520, 60, 0.8);\n\n  // A coin drifting through the world.  You collect it in Lesson 6.\n  coin = new Blob(this, random(width), random(100, height - 150),\n                  14, random(1, 2.5), random(-1.5, 1.5),\n                  color(255, 220, 50));\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n}\n\nvoid draw() {\n  background(135, 206, 235);   // 1. sky - furthest back\n\n  cloud1.move();               // 2. clouds drift behind everything\n  cloud1.drawSprite();\n  cloud2.move();\n  cloud2.drawSprite();\n\n  ground.drawSprite();         // 3. ground in front of the sky\n\n  coin.move();                 // 4. things in the world\n  coin.drawSprite();\n\n  player.followMouse();        // 5. player last, so it is always in front\n  player.drawSprite();\n}"
     },
     {
-      "label": "Optional new tab - Cloud.pde",
-      "body": "// A simple cloud sprite - draws itself as a cluster of white circles.\n// Feel free to redesign this completely!\nclass Cloud extends Blob {\n\n  Cloud(PApplet p, float x, float y, float speed) {\n    super(p, x, y, 40, color(255));  // radius 40, white\n    setVelocity(speed, 0);           // drift horizontally\n  }\n\n  void drawSprite() {\n    noStroke();\n    fill(250, 250, 255);\n    ellipse(pos.x,      pos.y,      70, 45);\n    ellipse(pos.x - 30, pos.y + 12, 50, 32);\n    ellipse(pos.x + 32, pos.y + 12, 55, 32);\n    fill(235, 238, 248);\n    ellipse(pos.x - 12, pos.y - 16, 52, 38);\n    ellipse(pos.x + 16, pos.y - 10, 44, 32);\n  }\n}"
+      "label": "New tab - Cloud.pde",
+      "body": "// Cloud - a second sprite class.  Redesign it to fit your world!\nclass Cloud extends Blob {\n\n  Cloud(PApplet p, float x, float y, float speed) {\n    super(p, x, y, 40, color(255));  // radius 40 used for collision if ever needed\n    setVelocity(speed, 0);           // drift slowly to the right; no vertical movement\n  }\n\n  void drawSprite() {\n    noStroke();\n\n    // Bottom puffs - the wide base of the cloud\n    fill(250, 250, 255);\n    ellipse(pos.x,      pos.y,      72, 46);\n    ellipse(pos.x - 31, pos.y + 13, 50, 33);\n    ellipse(pos.x + 33, pos.y + 13, 55, 33);\n\n    // Top puffs - slightly greyer for a sense of depth\n    fill(235, 238, 248);\n    ellipse(pos.x - 13, pos.y - 17, 54, 38);\n    ellipse(pos.x + 17, pos.y - 11, 46, 33);\n  }\n}"
     }
   ],
 
   "makeItYours": [
-    "Change the number of things in your world, their speed, and their size.",
-    "Change their color and shape so they belong in **your** world -- gems, fish, stars, bubbles, asteroids, hearts.",
-    "Add a **second** `ArrayList` of a different kind of thing.  Enemies?  Stars in the background?  Two lists means two loops in `draw()`.",
-    "Add a `mousePressed()` that spawns a new object wherever you click.",
-    "Make one list slow and drifting and another fast and darting -- it makes the world feel layered."
+    "Replace the sky-blue background with **your** theme.  Space?  Underwater?  Lava?  A cave?  A candy world?",
+    "Redesign the `Cloud` tab completely -- a star, a bubble, a bird, a fish.  Rename the class if you like.",
+    "Write a brand-new decoration class in its own tab -- a `Tree`, a `Star`, a `Rock`.  Same `extends Blob` pattern as Lesson 2.",
+    "Add more `Block`s to draw platforms, walls, or a border around your scene.",
+    "Change your coin to match the theme -- a gem, a fish, a star, a heart, an asteroid.",
+    "Give background decorations a much slower speed than the coin.  That difference alone reads as depth."
   ],
-  "challenge": "Write your own environment sprite class in a new tab -- a `Cloud`, a `Tree`, a `Star`.  It is the same `extends Blob` pattern from Lesson 2.  Then make an `ArrayList` of those and fill your world with them.  There is a `Cloud` example above to start from.",
+  "challenge": "Build a real parallax effect:  three clouds at three different speeds, the slowest one faintest and drawn first, the fastest one solid and drawn last.  It is the oldest trick in 2D games and it still works.",
 
-  "flintHint": "Good things to ask:  \"what is the difference between a counting for loop and a for-each loop?\", \"my coins are not showing up\", or \"how do I make a second list of a different color?\"  Paste in your `setup()` if something will not run.",
+  "flintHint": "Good things to ask:  \"my ground is covering my player\", \"why is my Block in the wrong place?\", \"how do I make a new tab?\", or \"how do I make a background that looks like space?\"  Describe the world you are going for and it can help you plan the layers.",
 
-  "wrapup": "What is the difference between the counting `for` loop and the for-each loop?  When would you use each one?",
+  "wrapup": "Name one draw-order decision you made in your world, and what it changed.",
 
-  "assignmentTask": "Fill your character's world with things -- created with a counting loop, drawn with a for-each loop.",
+  "assignmentTask": "Build the place your game happens in.  Most of this lesson is design.  The code is small, and the world is the point.",
   "assignmentDo": [
-    "Declare an `ArrayList`, create it in `setup()`, and fill it with a **counting** loop.",
-    "Move and draw everything in it with a **for-each** loop in `draw()`.",
-    "Use `random()` so the objects are not all identical.",
-    "Make the world yours -- the count, the colors, the sizes, and the speeds should say something about the game you are building.",
-    "Draw your player **last** so it appears on top."
+    "Add terrain with at least one `Block`.  Remember its `x, y` is the top-left corner.",
+    "Add at least one decoration made from a sprite class in its own tab -- the `Cloud`, or one you wrote.",
+    "Order your `draw()` calls on purpose so the layering is right -- background first, player last.",
+    "Give the world a **theme** and carry it through:  background color, terrain, decorations, and your coin.",
+    "Be able to point at one draw-order decision you made on purpose."
   ],
   "submit": [
-    "Your sketch folder, zipped.",
-    "A screenshot or short recording of your populated world.",
+    "Your sketch folder, zipped (all tabs).",
+    "A screenshot of your world -- make it one you would want to show someone.",
     "Your answer to **Show your thinking** below."
   ],
 
   "checklist": [
-    "Declare and create an `ArrayList`.",
-    "Use a **counting** `for` loop to make many objects.",
-    "Use a **for-each** loop to move and draw each one.",
-    "Explain the difference between the two loops."
+    "Create terrain with `Block` (remember:  `x, y` is the top-left corner).",
+    "Use a second sprite class from its own tab.",
+    "Order my `draw()` calls so the right things appear in front.",
+    "Make a draw-order decision on purpose and explain it."
   ],
 
-  "standard": "Store many objects in an `ArrayList` and process them with both loop styles; use `random()` for variety.",
+  "standard": "Use `Block` for terrain and a second sprite class for decoration, and control draw order to layer a themed world.",
   "stages": [
-    { "name": "Getting Started", "text": "My list of objects is not appearing.  **Next step:**  **create** things with a counting loop in `setup()` (`for (int i ...)`) and **draw** them with a for-each loop in `draw()` (`for (Blob c : coins)`).  Check that you call `drawSprite()` on each item `c`, not on the whole list." },
-    { "name": "Got It Working", "text": "Many objects appear and move -- created in a counting loop, drawn in a for-each loop." },
-    { "name": "Made It Mine", "text": "&hellip;and I tuned the world:  changed the count, size, or speed, added a second list of a different kind (enemies, stars, bubbles), or spawned objects on click." },
-    { "name": "Went Beyond", "text": "&hellip;and I wrote my own environment sprite class (like a `Cloud`) in a new tab and filled the world with it." }
+    { "name": "Getting Started", "text": "My world pieces overlap wrong, the ground hides my player, or my `Cloud` tab will not run.  **Next step:**  things drawn **later** appear on top -- background first, player last.  `Block`'s `x, y` is the **top-left corner**.  And check that your class line says `extends Blob`." },
+    { "name": "Got It Working", "text": "My scene has a background, ground made with `Block`, and at least one decoration sprite, layered in a sensible order." },
+    { "name": "Made It Mine", "text": "&hellip;and I designed a world with a clear theme (themed colors, more than one block, a decoration and a coin that belong there) that feels like a real **place**." },
+    { "name": "Went Beyond", "text": "&hellip;and I wrote my own decoration class in a new tab, used transparency and different speeds for depth, or arranged platforms and borders to develop my scene." }
   ],
-  "thinking": "In your own words, in one or two sentences:  when do you use a **counting** loop versus a **for-each** loop?",
+  "thinking": "In one or two sentences:  name one draw-order decision you made, and what it changed.",
 
   "teacher": {
     "di": [
       {
-        "h": "Motivate the list before you show it",
+        "h": "Block, and the corner-versus-center trap",
         "p": [
-          "Start by writing `coin1`, `coin2`, `coin3` on the board and asking what happens at twelve.  Let the tedium land before you offer the fix.",
-          "This is the Lesson 5 slot in the arc precisely because students can now *feel* the pain of managing many things.  Do not skip straight to the syntax."
+          "`new Block(this, x, y, width, height, color)`.",
+          "**`x, y` is the top-left corner**, not the center.  This is genuinely confusing after four lessons of `Blob`, where it was the center.  Say it, write it on the board, and expect to say it again individually.",
+          "`Block` starts with zero velocity.  It inherits `setVelocity()` and `move()`, so it can move.  Its inherited collision check uses a circle of radius 0 at its top-left corner, so it is scenery only.  Solid platforms take collision and movement logic well past this course.",
+          "A ground strip is the canonical example:  `new Block(this, 0, height-70, width, 70, color(80, 160, 60))`.  Walk through why each number is what it is."
         ]
       },
       {
-        "h": "ArrayList in three moves",
+        "h": "Draw order - demonstrate, then state the rule",
         "p": [
-          "\"A list is like a bag -- you can keep stuffing things in.\"",
-          "Declare, create, add.  Show all three on the projector as three separate lines before combining them."
+          "On the projector:  draw a big block, then draw a blob on top.  Fine.  Now **reverse the two lines** and re-run.  The blob vanishes.",
+          "That five-second demo teaches the whole concept.  Then state the rule:  **background first, player last.**"
         ]
       },
       {
-        "h": "The two for loops - make this distinction explicit",
+        "h": "Reconnect background() to Lesson 1",
         "p": [
-          "This is the developer note on this lesson and it is the thing to get right.",
-          "**Counting loop** (in `setup()`, to CREATE):  `for (int i = 0; i < 10; i++)`.  \"`i` counts from 0 to 9 -- we use it to repeat the add 10 times.\"",
-          "**For-each loop** (in `draw()`, to VISIT):  `for (Blob c : coins)`.  \"For each coin `c` in the list, move it and draw it.\"",
-          "Both use the word `for`, and in a broad sense both are count-controlled, but they *feel* different:  **one counts, one visits.**  Students mix them up constantly.  Say the distinction out loud more than once, and use the words \"create\" and \"visit\" consistently."
+          "`background()` in `draw()` erases everything before re-drawing.  It goes at the top.",
+          "The order of calls **after** `background()` determines what ends up on top.  Students have been drawing in some order since Lesson 1 without a name for it; today it gets the name."
         ]
       },
       {
-        "h": "Show the classic mistake on purpose",
+        "h": "The Cloud tab is Lesson 2 again",
         "p": [
-          "Write `coins.drawSprite();` on the projector and run it.  It will not compile.",
-          "\"The bag is not a coin.  You cannot ask the bag to draw itself.\"  Then fix it with the loop.  Seeing the error once beats a warning."
+          "Open the `Cloud` tab on the projector beside a student's `MyCharacter` tab.  Same class line, same `super(...)` handshake, same `drawSprite()` drawing around `pos.x` and `pos.y`.  Name the match out loud:  everything in this tab is something they have already written.",
+          "`Cloud` uses `extends Blob` so it can move today and collide later.  Steer any motivated student who writes `extends Sprite` back to `extends Blob`.",
+          "Push students who want richer scenery toward their own sprite class in a tab.  A pile of raw `ellipse()` and `rect()` calls in the main tab works, and it makes `draw()` unreadable right before the two lessons where they most need to read it."
         ]
       },
       {
-        "h": "Custom sprite tab (optional, for motivated students)",
+        "h": "One variable per thing - and where lists went",
         "p": [
-          "Show the `Cloud` class -- there is a working version in `SceneExample/Cloud.pde` in the examples folder.",
-          "\"It is just like `MyCharacter`, but it draws cloud shapes instead.\"  Same pattern from Lesson 2, no new concept.  Students who want a richer world can write their own environment sprites."
+          "Each cloud is its own variable:  `cloud1`, `cloud2`.  Two or three of something is easy to manage this way, and it uses only what students already know from Lessons 1-4.",
+          "A student who wants fifty stars has a real reason for a list.  That is Bonus Lesson D.  Point that student there, and keep the room on named variables."
+        ]
+      },
+      {
+        "h": "The alpha channel",
+        "p": [
+          "`fill(r, g, b, alpha)` -- alpha 0 is invisible, 255 is fully opaque.  For the `Cloud`, the change goes on the `fill()` lines inside its `drawSprite()`.",
+          "Semi-transparent decorations look genuinely good and cost one number.  Show `fill(250, 250, 255, 180)` next to `fill(250, 250, 255)` on the projector."
         ]
       }
     ],
     "guided": [
-      "Put `coin1`, `coin2`, `coin3` on the board.  Ask what happens at twelve.  Wait for the groan.",
-      "Declare and create the list together.  Run -- nothing changes, because the list is empty.  Name that.",
-      "Add the counting loop in `setup()` together.  Run -- still nothing on screen.  Ask why.  (They exist, but nothing draws them.)",
-      "Add the for-each loop in `draw()`.  Run.  The world appears.  That two-step reveal is worth the extra minute.",
-      "As a class, change `12` to `40`, then to `3`.  Let them see the loop's power immediately.",
-      "Deliberately move the player lines above the coin loop and run.  Character vanishes.  Move them back.  That is draw order, and it sets up Lesson 8.",
-      "Release for personalization:  colors, counts, a second list, a `mousePressed()` spawner."
+      "Start with the paper sketch warm-up.  Three minutes of drawing before any code.  It genuinely improves what they build.",
+      "Everyone adds the ground `Block` together.  Expect the top-left-corner confusion here -- several students will put it off-screen.",
+      "Everyone changes the background color to something themed.  Immediate visible payoff.",
+      "**Deliberately break it as a class:**  move `ground.drawSprite()` to the last line of `draw()`.  Everyone runs and walks their player under the ground.  Move it back.  Nobody forgets draw order after doing it with their own hands.",
+      "Make the `Cloud` tab together.  Declare, create, move, and draw `cloud1` as a class.  Students add `cloud2` on their own.",
+      "Add the coin.  Tell the room plainly that touching it does nothing yet, and that next lesson it will.",
+      "Release for world-building.  This is the bulk of the period and it should be.",
+      "Last five minutes:  quick share-out.  Each student shows their world and names one draw-order decision."
     ],
     "pitfalls": [
-      "**`coins.drawSprite()`** -- calling a method on the whole list.  The single most common error in this lesson.",
-      "**Creating the list but never looping over it in `draw()`.**  The objects exist and are invisible.  Students think the `add` failed.",
-      "**Forgetting `coins = new ArrayList<Blob>();`** -- a null pointer exception the moment they call `.add()`.",
-      "Mixing the two loop forms:  `for (int i = 0; i < coins; i++)` or `for (Blob c : 12)`.  Both come from not having the create/visit distinction yet.",
-      "Drawing the player **before** the coins, so the character is hidden.",
-      "Putting the counting loop in `draw()` -- it adds 12 new coins every frame and the sketch grinds to a halt.  Dramatic, and a good demo if it happens."
+      "**`Block` x, y as center instead of top-left.**  The block lands half off-screen.  The most common problem in this lesson.",
+      "**Drawing the player before the ground**, burying the character.",
+      "**Calling `background()` somewhere other than the top of `draw()`**, erasing everything drawn that frame.",
+      "**Creating a cloud inside `draw()`** -- `cloud1 = new Cloud(...)` runs every frame, so the cloud is rebuilt at its starting spot sixty times a second and appears frozen.  Creation goes in `setup()`.",
+      "Forgetting `.drawSprite()` on the ground or a cloud -- the object exists, nothing appears.",
+      "Pasting the `Cloud` class into the main tab below `draw()`.  Processing accepts it, and the class gets buried where students lose it.  New tab every time.",
+      "Decorations moving at the same speed as the coin, so the depth effect disappears."
     ],
-    "wrapupAnswer": "Counting loop:  repeat something a set number of times -- used to create.  For-each loop:  visit every item already in a list -- used to move and draw.  Accept any wording that separates \"create\" from \"visit.\"",
+    "wrapupAnswer": "Anything specific and deliberate:  \"I drew the clouds before the ground so they look like they are behind the hill,\" or \"I moved the player last so it is always visible.\"  You want intent.  Correctness can come later.",
     "notes": [
-      "Use the word \"visit\" for the for-each loop all period.  It gives students language for a distinction they can otherwise only feel.",
-      "The `Cloud` class uses `extends Blob`, not `extends Sprite`, so it inherits `collidesWith()`.  If students want clouds to be interactive obstacles in Lesson 7, this matters.  Do not let a motivated student write `extends Sprite`.",
-      "Draw order gets a proper lesson in Lesson 8.  Today just plant it.",
-      "Fast finishers should write a custom environment sprite rather than adding a third list of plain blobs -- it reinforces Lesson 2 and pays off in Lesson 8.",
-      "Do not explain generics (`<Blob>`).  It is \"what kind of bag this is.\"  That is enough."
+      "There is very little new code today.  It is a design lesson wearing a programming lesson's clothes.  Let it be that.",
+      "This lesson replaces the old Lesson 5 (A World of Objects) and the old Lesson 8 (Build Your Game World).  The lists and loops from the old Lesson 5 moved to Bonus Lesson D.  The world-building moved up front, so Lessons 6 and 7 happen in a world students already care about.",
+      "The coin is there on purpose.  Touching it does nothing yet, and that is the hook for Lesson 6:  open next class by asking what *should* happen.",
+      "The paper sketch earns its three minutes.  Students who plan on paper build noticeably better scenes.",
+      "The course arc leaves one flex meeting in the eleven.  If the room is deep in world-building, this is a good place to spend it.",
+      "Fast finishers:  their own decoration class in a tab, or the three-layer parallax challenge."
     ]
   }
 }

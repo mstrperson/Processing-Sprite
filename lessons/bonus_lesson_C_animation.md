@@ -1,7 +1,7 @@
 # Bonus Lesson C — Animate Your Character
 
 > **When to use this lesson:** Drop in any time after Lesson 2 (you need a character to
-> animate). It shines most **during Lesson 9**, when students want their character to feel
+> animate). It shines most **during Lesson 7**, when students want their character to feel
 > alive instead of sliding around as a single frozen drawing. Pairs naturally with Bonus
 > Lesson A (Images) — image frames animate the same way. Teachable in one period.
 
@@ -52,7 +52,7 @@ Moving it — it's just a sprite:
   - player.move() / player.followMouse() / player.keyboardControl() all work, same as before
   - player.drawSprite() draws the current pose AND advances the flipbook automatically
 
-One honest caveat (for Lesson 9): an AnimatedSprite is NOT a Blob, so collidesWith() is not
+One honest caveat (for Lesson 7): an AnimatedSprite is NOT a Blob, so collidesWith() is not
 available on it. For collisions in a game, use distanceTo() — shown in Make It Yours.
 -->
 
@@ -156,7 +156,7 @@ void keyPressed() {
 - Change `setFrameRate()` — try `4` (fast and frantic) and `20` (slow and calm)
 - Add more frames for smoother motion (more pages = smoother flipbook)
 - Make a second animated creature (a pet?) with its own `setVelocity()` drifting across the scene
-- **Plug it into your Lesson 9 game:** an `AnimatedSprite` is *not* a `Blob`, so `collidesWith()`
+- **Plug it into your Lesson 7 game:** an `AnimatedSprite` is *not* a `Blob`, so `collidesWith()`
   won't work on it. Use `distanceTo()` instead:
   ```java
   if (player.distanceTo(coin) < 40) {   // 40 = how close counts as "touching"
@@ -173,7 +173,7 @@ void keyPressed() {
 
 ## Teacher Notes
 
-<!-- THE big integration question (Lesson 9): AnimatedSprite extends CompoundSprite, not Blob, -->
+<!-- THE big integration question (Lesson 7): AnimatedSprite extends CompoundSprite, not Blob, -->
 <!-- so it has NO collidesWith(). Use distanceTo(otherSprite) < threshold for collisions. -->
 <!-- distanceTo() is inherited from Sprite and works between any two sprites. -->
 <!-- Frames MUST be created at the same x, y or the character visibly jumps when frames switch. -->
@@ -209,7 +209,7 @@ void keyPressed() {
 | **Getting Started** | My character doesn't animate, or doesn't show up. **Next step:** build the `AnimatedSprite` with `FromSprite(...).AddFrameSprite(...)`, create *every* frame at the same `x, y`, and call `player.drawSprite()` in `draw()`. |
 | **Got It Working** | My character appears and flips between poses on its own. |
 | **Made It Mine** ⭐ | …and the animation is my own — my poses, my character, and a frame rate that looks right for the motion I want. |
-| **Went Beyond** | …and I took it further — wired the animation into my Lesson 9 game with `distanceTo()`, animated a second creature, hand-controlled a pose on a key press, or animated image frames. |
+| **Went Beyond** | …and I took it further — wired the animation into my Lesson 7 game with `distanceTo()`, animated a second creature, hand-controlled a pose on a key press, or animated image frames. |
 
 ⭐ **Made It Mine** is the goal for everyone this lesson.
 

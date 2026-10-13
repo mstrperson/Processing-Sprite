@@ -199,7 +199,7 @@
     "notes": [
       "The hard-coded-coordinates bug from Lesson 2 becomes visible today.  Expect two or three students to hit it, and treat it as a feature:  it is a very clear demonstration of why the belly-button rule exists.",
       "Wrapping is a genuine \"wow\" moment.  Protect it by not spoiling it.",
-      "If a student asks how to make the character bounce off walls instead of wrapping, that is a great question and a great Lesson 9 extension.  Park it.",
+      "If a student asks how to make the character bounce off walls instead of wrapping, that is a great question and a great Lesson 7 extension.  Park it.",
       "Speeds above about 15 make the character hard to watch.  Let them discover that rather than capping it."
     ]
   }

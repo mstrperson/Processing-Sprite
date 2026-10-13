@@ -5,7 +5,7 @@
   "slug": "bonus-a-images",
   "title": "Images",
   "tagline": "Swap your shapes for actual pictures.",
-  "whenToUse": "Any time after Lesson 4.  It works well between Lessons 4 and 5, or between 7 and 8 when you are starting to make your world look polished.  One period, standalone.",
+  "whenToUse": "Any time after Lesson 4.  It works well between Lessons 4 and 5, or during Lesson 7 when you are starting to make your world look polished.  One period, standalone.",
   "timing": "One period (~50 min)",
   "newIdea": "Loading and drawing image files",
   "builtOn": "Lesson 2 (`extends Blob`) and Lesson 4 (control).  Nothing after this depends on it.",
@@ -96,7 +96,7 @@
   "code": [
     {
       "label": "Main sketch tab",
-      "body": "// Bonus Lesson A - Images\n// You need image files in your sketch's data/ folder.\n// Sketch -> Show Sketch Folder, then drag PNG/JPG files into the data/ folder.\n\nimport coxprogramming.processing.sprites.*;\n\nMyImageCharacter player;\nArrayList<ImageSprite> decorations;\n\nvoid setup() {\n  size(800, 600);\n\n  // Player: your character using an image file (see MyImageCharacter tab)\n  // Replace \"hero.png\" with your own file name.\n  player = new MyImageCharacter(this, width/2, height/2, \"hero.png\");\n  player.setVelocity(4, 0);\n\n  // Decorations: ImageSprites placed around the scene\n  // Replace \"tree.png\" with your own file name.\n  decorations = new ArrayList<ImageSprite>();\n  decorations.add(new ImageSprite(this, 150, 420, \"tree.png\", 60, 100));\n  decorations.add(new ImageSprite(this, 400, 430, \"tree.png\", 60, 100));\n  decorations.add(new ImageSprite(this, 650, 415, \"tree.png\", 60, 100));\n}\n\nvoid draw() {\n  background(135, 206, 235);\n\n  // Decorations drawn first (behind player)\n  for (ImageSprite d : decorations) {\n    d.drawSprite();\n  }\n\n  // Player drawn last (in front)\n  player.followMouse();\n  player.drawSprite();\n}"
+      "body": "// Bonus Lesson A - Images\n// You need image files in your sketch's data/ folder.\n// Sketch -> Show Sketch Folder, then drag PNG/JPG files into the data/ folder.\n\nimport coxprogramming.processing.sprites.*;\n\nMyImageCharacter player;\nImageSprite tree1;\nImageSprite tree2;\nImageSprite tree3;\n\nvoid setup() {\n  size(800, 600);\n\n  // Player: your character using an image file (see MyImageCharacter tab)\n  // Replace \"hero.png\" with your own file name.\n  player = new MyImageCharacter(this, width/2, height/2, \"hero.png\");\n  player.setVelocity(4, 0);\n\n  // Decorations: ImageSprites placed around the scene\n  // Replace \"tree.png\" with your own file name.\n  tree1 = new ImageSprite(this, 150, 420, \"tree.png\", 60, 100);\n  tree2 = new ImageSprite(this, 400, 430, \"tree.png\", 60, 100);\n  tree3 = new ImageSprite(this, 650, 415, \"tree.png\", 60, 100);\n}\n\nvoid draw() {\n  background(135, 206, 235);\n\n  // Decorations drawn first (behind player)\n  tree1.drawSprite();\n  tree2.drawSprite();\n  tree3.drawSprite();\n\n  // Player drawn last (in front)\n  player.followMouse();\n  player.drawSprite();\n}"
     },
     {
       "label": "New tab - MyImageCharacter.pde",

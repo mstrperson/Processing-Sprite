@@ -4,18 +4,18 @@
   "kicker": "Course home",
   "title": "Make Your Own Game",
   "subtitle": "Programming with Processing and the SpriteGame library",
-  "factStrip": "9 lessons + 3 bonus lessons &nbsp;&middot;&nbsp; No prior coding experience needed &nbsp;&middot;&nbsp; No points, no grades",
+  "factStrip": "7 lessons + 4 bonus lessons &nbsp;&middot;&nbsp; No prior coding experience needed &nbsp;&middot;&nbsp; No points, no grades",
 
   "overview": [
     "In this course you build a video game.  Not a worksheet about video games -- an actual game, with a character you draw yourself, that you can hand to somebody else and watch them play.",
-    "You start on the first day by putting something on the screen.  In Lesson 2 you draw your character.  After that, every single lesson gives that character something new:  it moves, then you control it, then it gets a world to live in, then rules, then enemies.  By Lesson 9 the game is **yours** -- your character, your world, your rules.",
+    "You start on the first day by putting something on the screen.  In Lesson 2 you draw your character.  After that, every single lesson gives that character something new:  it moves, then you control it, then it gets a world to live in, then things to collect and things to avoid.  By Lesson 7 the game is **yours** -- your character, your world, your rules.",
     "You do not need any programming experience.  Nothing here assumes you have ever seen code before."
   ],
 
   "goals": [
     "Write and run a Processing sketch from nothing",
     "Create your own objects and tell them how to look and behave",
-    "Use variables, lists, loops, and `if` statements -- because your game needed them!",
+    "Use variables and `if` statements -- because your game needed them!",
     "Detect when things collide, and make the game react",
     "Design a world with layers, terrain, and a look that is yours",
     "Build a complete, playable game with win and lose conditions that somebody else can pick up and play"
@@ -59,5 +59,5 @@
     "That is genuinely it.  No account, no purchase, nothing to sign up for."
   ],
 
-  "bonusNote": "These three are extras.  You can do them any time after the lesson listed, and skipping them will never block you -- but each one makes your game noticeably more yours."
+  "bonusNote": "These four are extras.  You can do them any time after the lesson listed, and skipping them will never block you -- but each one makes your game noticeably more yours."
 }

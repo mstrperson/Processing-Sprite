@@ -5,10 +5,10 @@
   "slug": "bonus-b-sounds",
   "title": "Sounds",
   "tagline": "Add the click, the ding, and the music.  It changes everything.",
-  "whenToUse": "Any time after Lesson 4.  It pairs well with Bonus Lesson A (Images) as a two-part \"make it real\" session, or works on its own.  Teach it whenever students ask \"can we add sound?\" -- which they will.",
+  "whenToUse": "Any time after Lesson 6.  It pairs well with Bonus Lesson A (Images) as a two-part \"make it real\" session, or works on its own.  Teach it whenever students ask \"can we add sound?\" -- which they will.",
   "timing": "One period (~50 min), plus library install time if it is not already done",
   "newIdea": "Playing audio on game events",
-  "builtOn": "Lesson 7 -- collisions, so there is an event worth putting a sound on.",
+  "builtOn": "Lesson 6 -- collisions, so there is an event worth putting a sound on.",
 
   "goals": [
     "Install the Processing Sound library",
@@ -55,7 +55,7 @@
       ],
       "code": {
         "label": "The whole pattern",
-        "body": "SoundFile collectSound;                                // 1. declare at the top\n\nvoid setup() {\n  collectSound = new SoundFile(this, \"collect.wav\");   // 2. load in setup\n}\n\n// 3. play it exactly where the event happens\nif (player.collidesWith(c)) {\n  coins.remove(i);\n  score = score + 1;\n  collectSound.play();\n}"
+        "body": "SoundFile collectSound;                                // 1. declare at the top\n\nvoid setup() {\n  collectSound = new SoundFile(this, \"collect.wav\");   // 2. load in setup\n}\n\n// 3. play it exactly where the event happens\nif (player.collidesWith(coin)) {\n  score = score + 1;\n  coin.moveTo(random(width), random(height));\n  collectSound.play();\n}"
       }
     },
     {
@@ -97,7 +97,7 @@
     "Add `import processing.sound.*;` at the top of your sketch, under the sprites import.",
     "Declare `SoundFile collectSound;` at the top with your other variables.",
     "In `setup()`, load it:  `collectSound = new SoundFile(this, \"collect.wav\");` -- using **your** filename.",
-    "Find the `if (player.collidesWith(c))` block in your `playGame()`.  Add `collectSound.play();` right after the score line.",
+    "Find the `if (player.collidesWith(coin))` block in your `playGame()`.  Add `collectSound.play();` right after the score line.",
     "Run it and collect something.  If you get a null pointer error, the file was not found -- check the name and the folder.",
     "Add a second sound for game over, right where you set `gameOver = true;`",
     "Add background music:  declare it, load it, then `bgMusic.amp(0.3);` and `bgMusic.loop();` in `setup()`.  Play it and adjust the volume until the balance feels right."
@@ -106,7 +106,7 @@
   "code": [
     {
       "label": "Main sketch tab",
-      "body": "// Bonus Lesson B - Sounds\n// Requires: Sketch -> Import Library -> Add Library -> \"Sound\" (The Processing Foundation)\n// Sound files go in your sketch's data/ folder (same place as images).\n// Replace \"collect.wav\", \"gameover.wav\", and \"music.mp3\" with your own file names.\n\nimport coxprogramming.processing.sprites.*;\nimport processing.sound.*;\n\nMyCharacter player;\nArrayList<Blob> coins;\nint score = 0;\nboolean gameOver = false;\n\nSoundFile collectSound;   // plays when a coin is collected\nSoundFile gameOverSound;  // plays when the game ends\nSoundFile bgMusic;        // loops continuously in the background\n\nvoid setup() {\n  size(800, 600);\n\n  // Load sounds from the data/ folder\n  collectSound  = new SoundFile(this, \"collect.wav\");\n  gameOverSound = new SoundFile(this, \"gameover.wav\");\n  bgMusic       = new SoundFile(this, \"music.mp3\");\n\n  bgMusic.loop();  // start background music immediately\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coins = new ArrayList<Blob>();\n  for (int i = 0; i < 10; i++) {\n    coins.add(new Blob(\n      this, random(width), random(height),\n      random(8, 18), random(-2, 2), random(-2, 2),\n      color(255, 220, 50)\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  for (int i = coins.size() - 1; i >= 0; i--) {\n    Blob c = coins.get(i);\n    c.move();\n    c.drawSprite();\n\n    if (player.collidesWith(c)) {\n      coins.remove(i);\n      score = score + 1;\n      collectSound.play();  // <- sound on collection\n    }\n  }\n\n  player.followMouse();\n  player.drawSprite();\n\n  if (coins.size() == 0) {\n    gameOver = true;\n    bgMusic.stop();          // <- stop music\n    gameOverSound.play();    // <- sound on game over\n  }\n\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  textAlign(CENTER, CENTER);\n  fill(80, 180, 80);\n  textSize(52);\n  text(\"You Win!\", width/2, height/2 - 20);\n  textSize(22);\n  fill(50);\n  text(\"Score: \" + score, width/2, height/2 + 26);\n  textAlign(LEFT, TOP);\n}"
+      "body": "// Bonus Lesson B - Sounds\n// Requires: Sketch -> Import Library -> Add Library -> \"Sound\" (The Processing Foundation)\n// Sound files go in your sketch's data/ folder (same place as images).\n// Replace \"collect.wav\", \"gameover.wav\", and \"music.mp3\" with your own file names.\n\nimport coxprogramming.processing.sprites.*;\nimport processing.sound.*;\n\nMyCharacter player;\nBlob coin;\nBlob hazard;\nint score = 0;\nboolean gameOver = false;\n\nSoundFile collectSound;\nSoundFile gameOverSound;\nSoundFile bgMusic;\n\nvoid setup() {\n  size(800, 600);\n\n  collectSound  = new SoundFile(this, \"collect.wav\");\n  gameOverSound = new SoundFile(this, \"gameover.wav\");\n  bgMusic       = new SoundFile(this, \"music.mp3\");\n\n  bgMusic.amp(0.4);   // lower music volume so effects can be heard clearly\n  bgMusic.loop();     // start background music - runs until stopped\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  coin = new Blob(this, random(width), random(height),\n                  14, random(1, 2.5), random(-1.5, 1.5),\n                  color(255, 220, 50));\n  hazard = new Blob(this, 80, 80, 22, 3, 2, color(220, 60, 60));\n}\n\nvoid draw() {\n  background(240);\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  coin.move();\n  coin.drawSprite();\n  hazard.move();\n  hazard.drawSprite();\n\n  player.followMouse();\n  player.drawSprite();\n\n  if (player.collidesWith(coin)) {\n    score = score + 1;\n    coin.moveTo(random(width), random(height));\n    collectSound.play();   // one-shot sound effect on collection\n  }\n\n  if (player.collidesWith(hazard)) {\n    gameOver = true;\n    bgMusic.stop();        // stop the music\n    gameOverSound.play();  // play the end sound\n  }\n\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  textAlign(CENTER, CENTER);\n  fill(220, 60, 60);\n  textSize(52);\n  text(\"Game Over\", width/2, height/2 - 20);\n  textSize(22);\n  fill(50);\n  text(\"Score: \" + score, width/2, height/2 + 26);\n  textAlign(LEFT, BASELINE);\n}"
     }
   ],
 

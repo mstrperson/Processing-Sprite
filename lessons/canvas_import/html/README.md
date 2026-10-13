@@ -30,14 +30,13 @@ Teacher files open with a red banner. Keep them in an **unpublished** module.
 | 2 | Draw Your Character | [page](pages/lesson-02-draw-your-character.html) | [assignment](assignments/lesson-02-draw-your-character.html) | [teacher](teacher/lesson-02-draw-your-character.html) |
 | 3 | Bring It to Life | [page](pages/lesson-03-bring-it-to-life.html) | [assignment](assignments/lesson-03-bring-it-to-life.html) | [teacher](teacher/lesson-03-bring-it-to-life.html) |
 | 4 | You're in Control | [page](pages/lesson-04-youre-in-control.html) | [assignment](assignments/lesson-04-youre-in-control.html) | [teacher](teacher/lesson-04-youre-in-control.html) |
-| 5 | A World of Objects | [page](pages/lesson-05-a-world-of-objects.html) | [assignment](assignments/lesson-05-a-world-of-objects.html) | [teacher](teacher/lesson-05-a-world-of-objects.html) |
-| 6 | If This, Then That | [page](pages/lesson-06-if-this-then-that.html) | [assignment](assignments/lesson-06-if-this-then-that.html) | [teacher](teacher/lesson-06-if-this-then-that.html) |
-| 7 | Collisions! | [page](pages/lesson-07-collisions.html) | [assignment](assignments/lesson-07-collisions.html) | [teacher](teacher/lesson-07-collisions.html) |
-| 8 | Build Your Game World | [page](pages/lesson-08-build-your-game-world.html) | [assignment](assignments/lesson-08-build-your-game-world.html) | [teacher](teacher/lesson-08-build-your-game-world.html) |
-| 9 | Build Your Game | [page](pages/lesson-09-build-your-game.html) | [assignment](assignments/lesson-09-build-your-game.html) | [teacher](teacher/lesson-09-build-your-game.html) |
+| 5 | Build Your World | [page](pages/lesson-05-build-your-world.html) | [assignment](assignments/lesson-05-build-your-world.html) | [teacher](teacher/lesson-05-build-your-world.html) |
+| 6 | Collisions:  If This, Then That | [page](pages/lesson-06-collisions.html) | [assignment](assignments/lesson-06-collisions.html) | [teacher](teacher/lesson-06-collisions.html) |
+| 7 | Build Your Game | [page](pages/lesson-07-build-your-game.html) | [assignment](assignments/lesson-07-build-your-game.html) | [teacher](teacher/lesson-07-build-your-game.html) |
 | A | Images | [page](pages/bonus-a-images.html) | [assignment](assignments/bonus-a-images.html) | [teacher](teacher/bonus-a-images.html) |
 | B | Sounds | [page](pages/bonus-b-sounds.html) | [assignment](assignments/bonus-b-sounds.html) | [teacher](teacher/bonus-b-sounds.html) |
 | C | Animate Your Character | [page](pages/bonus-c-animate-your-character.html) | [assignment](assignments/bonus-c-animate-your-character.html) | [teacher](teacher/bonus-c-animate-your-character.html) |
+| D | Lists and Loops | [page](pages/bonus-d-lists-and-loops.html) | [assignment](assignments/bonus-d-lists-and-loops.html) | [teacher](teacher/bonus-d-lists-and-loops.html) |
 
 ## Front page link tokens
 
@@ -51,11 +50,10 @@ click each link and re-point it at the real Page or Assignment (or find/replace 
 | Draw Your Character | `LINK_LESSON_02_PAGE` | `LINK_LESSON_02_ASSIGNMENT` |
 | Bring It to Life | `LINK_LESSON_03_PAGE` | `LINK_LESSON_03_ASSIGNMENT` |
 | You're in Control | `LINK_LESSON_04_PAGE` | `LINK_LESSON_04_ASSIGNMENT` |
-| A World of Objects | `LINK_LESSON_05_PAGE` | `LINK_LESSON_05_ASSIGNMENT` |
-| If This, Then That | `LINK_LESSON_06_PAGE` | `LINK_LESSON_06_ASSIGNMENT` |
-| Collisions! | `LINK_LESSON_07_PAGE` | `LINK_LESSON_07_ASSIGNMENT` |
-| Build Your Game World | `LINK_LESSON_08_PAGE` | `LINK_LESSON_08_ASSIGNMENT` |
-| Build Your Game | `LINK_LESSON_09_PAGE` | `LINK_LESSON_09_ASSIGNMENT` |
+| Build Your World | `LINK_LESSON_05_PAGE` | `LINK_LESSON_05_ASSIGNMENT` |
+| Collisions:  If This, Then That | `LINK_LESSON_06_PAGE` | `LINK_LESSON_06_ASSIGNMENT` |
+| Build Your Game | `LINK_LESSON_07_PAGE` | `LINK_LESSON_07_ASSIGNMENT` |
 | Images | `LINK_BONUS_A_PAGE` | `LINK_BONUS_A_ASSIGNMENT` |
 | Sounds | `LINK_BONUS_B_PAGE` | `LINK_BONUS_B_ASSIGNMENT` |
 | Animate Your Character | `LINK_BONUS_C_PAGE` | `LINK_BONUS_C_ASSIGNMENT` |
+| Lists and Loops | `LINK_BONUS_D_PAGE` | `LINK_BONUS_D_ASSIGNMENT` |

@@ -32,7 +32,7 @@ exercise.
 
 > **Processing-Sprite:** Starting in Lesson 2, students draw a custom
 > character. Every lesson from that point builds it — motion, control, a
-> world, a game. By Lesson 9 the game *is* their character.
+> world, a game. By Lesson 7 the game *is* their character.
 
 ## 3. Visible output before abstract explanation
 
@@ -88,9 +88,11 @@ lesson should be review or a small, safe extension of something already
 seen. If a lesson feels like it needs two new ideas, split it into two
 lessons.
 
-> **Processing-Sprite:** Each of the nine lessons maps to exactly one new
+> **Processing-Sprite:** Each of the seven lessons maps to exactly one new
 > concept in the arc table (`setup()`/`draw()`, `extends`, `setVelocity()`,
-> event handlers, `ArrayList`, `if`, collisions, layering, synthesis).
+> event handlers, draw order, `if`, restarting).  The first version had nine,
+> and Lesson 5 carried `ArrayList` and two kinds of `for` loop at once.  That
+> was too much for sixth graders, and lists became a bonus lesson.
 
 ## 8. Establish the program's control skeleton early, and reuse it explicitly
 

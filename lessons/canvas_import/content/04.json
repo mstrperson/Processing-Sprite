@@ -204,7 +204,7 @@
     "wrapupAnswer": "`keyboardControl()` sets velocity from the key code; `move()` applies that velocity each frame.  Releasing a key leaves velocity unchanged in this starter.  Holding a key may generate repeated `keyPressed()` calls.",
     "notes": [
       "Have students try **both** styles before choosing.  The choice is more meaningful if they have felt the alternative, and it is their first real design decision in the unit.",
-      "`followMouse()` is easier and more forgiving; `keyboardControl()` feels more like a real game.  Both are fine choices for Lesson 9.",
+      "`followMouse()` is easier and more forgiving; `keyboardControl()` feels more like a real game.  Both are fine choices for Lesson 7.",
       "Fast finishers:  `keyReleased()` with `setVelocity(0, 0)`, or a `mousePressed()` ability.  Both are one-liners with a big feel change.",
       "Whatever they choose today, they can change later.  Say that out loud so nobody agonizes."
     ]

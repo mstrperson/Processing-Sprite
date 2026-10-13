@@ -59,9 +59,17 @@ that makes it feel *necessary*, not arbitrary.
 Students learn best when a concept is introduced to *solve a problem they
 already feel*, not as an abstract prerequisite.
 
-> **Example from Processing-Sprite:**  `ArrayList` was introduced in Lesson 5
-> because by that point students had 10 items to manage and could feel the
-> pain of 10 separate variables.
+> **Example from Processing-Sprite:**  The first version put `ArrayList` in
+> Lesson 5, on the theory that students managing ten coins would feel the pain
+> of ten variables.  It was too much for sixth graders, so lists moved to a
+> bonus lesson.  The students who take it now arrive with three copy-pasted
+> coins in their own capstone, which is the pain Lesson 5 was trying to
+> manufacture.
+>
+> The same redesign fixed `if`.  It used to have a lesson of its own, where the
+> starter tracked a score that nothing could change.  Now it arrives with
+> collisions, and the first condition a student writes is "is my character
+> touching the coin?"
 
 ---
 
@@ -98,7 +106,7 @@ Properties of a good narrative thread:
 
 > **Processing-Sprite thread:** The student's custom character (`MyCharacter`).
 > Created in Lesson 2, it moves in Lesson 3, responds to input in Lesson 4,
-> lives in a world in Lesson 8, and is the hero of a full game in Lesson 9.
+> lives in a world in Lesson 5, and is the hero of a full game in Lesson 7.
 
 If no single thread is obvious, look for an artifact that:
 - Can be *created* in Lesson 2
@@ -161,8 +169,11 @@ without disrupting the arc.  These should:
 - Be self-contained (a student who skips them is not blocked)
 - Address a common "what if I want to..." question students will ask naturally
 
-> **Processing-Sprite bonuses:** Images (Bonus A) and Sound (Bonus B) —
-> neither is needed for the final game, but both make the game more personal.
+> **Processing-Sprite bonuses:** Images (Bonus A), Sound (Bonus B), and
+> Animation (Bonus C) make the game more personal.  Lists and Loops (Bonus D)
+> is the one that started life in the main arc.  It moved out when it proved
+> too much for sixth graders, and it is now the answer to "what if I want
+> thirty coins?"
 
 ---
 
@@ -301,6 +312,6 @@ there.
 | Completed arc table | `lessons/GUIDING_PRINCIPLES.md` — Lesson Arc section |
 | Lesson template in use | Any `lessons/lesson_0N_*.md` file |
 | Starter code | `examples/Lessons/Lesson0N_*/` |
-| Narrative thread lifecycle | `MyCharacter.pde` appears in Lessons 2–9 |
-| Bonus lessons | `lessons/bonus_lesson_A_images.md`, `bonus_lesson_B_sounds.md` |
+| Narrative thread lifecycle | `MyCharacter.pde` appears in Lessons 2–7 |
+| Bonus lessons | `lessons/bonus_lesson_*` (A Images, B Sounds, C Animation, D Lists) |
 | Guardrails in practice | `lessons/GUIDING_PRINCIPLES.md` — Guiding Principles section |
