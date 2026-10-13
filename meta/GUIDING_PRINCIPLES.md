@@ -22,7 +22,7 @@ is a tool students reach for when they need it.
 ### 2. The Character Thread
 Starting in Lesson 2, students draw a custom character in a separate tab. Every lesson
 from that point forward builds that character: giving it motion, player control, a world
-to live in, and finally a game to play. By Lesson 9 the game *is* their character.
+to live in, and finally a game to play. By Lesson 7 the game *is* their character.
 Students are more motivated to understand velocity when it is their own creature moving.
 
 ### 3. Visual feedback first
@@ -82,7 +82,7 @@ ends. This transforms exercises into mini-projects and builds ownership.
 | `.followMouse()` | Move toward the mouse cursor each frame (requires velocity > 0) |
 | `.keyboardControl()` | Set velocity with arrow keys; call in `keyPressed()` |
 | `.collidesWith(blob)` | Returns true when this Blob overlaps another Blob |
-| `ArrayList<T>` | A growable list of objects |
+| `ArrayList<T>` | A growable list of objects (Bonus Lesson D only) |
 
 **Important:** `collidesWith()` is on `Blob`, not on the base `Sprite`. Students' custom
 characters should use `class MyCharacter extends Blob` (not `extends Sprite`) so that
@@ -98,11 +98,19 @@ collision detection works automatically against other Blobs in the world.
 | 2 | Draw Your Character | `extends Blob`, separate tab, `drawSprite()` with shapes | Character exists |
 | 3 | Bring It to Life | `setVelocity()`, `.move()`, screen wrapping | Character moves |
 | 4 | You're in Control | `.followMouse()`, `.keyboardControl()`, event functions | Character is the player |
-| 5 | A World of Objects | `ArrayList`, `for` loop, `random()`, custom world sprites | Character has a world |
-| 6 | If This, Then That | `if` statements, variables that change, `text()` | Character reacts |
-| 7 | Collisions! | `.collidesWith()`, score, removing sprites | Character interacts |
-| 8 | Build Your Game World | Draw order, `Block` for terrain, layering, scene design | World takes shape |
-| 9 | Build Your Game | Capstone — combine everything into a playable mini-game | The full game |
+| 5 | Build Your World | Draw order, `Block` for terrain, a second sprite class | Character has a world |
+| 6 | Collisions:  If This, Then That (2 periods) | `if` with `.collidesWith()`, `int score`, `boolean gameOver`, `text()` | Character interacts |
+| 7 | Build Your Game (3 periods) | Capstone -- `restartGame()`, combine everything into a playable mini-game | The full game |
+
+Eleven class meetings:  Lessons 1-5 take one each, Lesson 6 takes two, Lesson 7 takes
+three, and one is left as a flex day.
+
+| Bonus | Title | Concept | Best taken |
+|---|---|---|---|
+| A | Images | `ImageSprite`, `PImage` inside a character | After Lesson 4 |
+| B | Sounds | `SoundFile`, sound on game events | After Lesson 6 |
+| C | Animate Your Character | `AnimatedSprite` frames | During Lesson 7 |
+| D | Lists and Loops | `ArrayList`, counting and for-each loops, safe removal | During Lesson 7 |
 
 ---
 

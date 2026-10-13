@@ -117,14 +117,24 @@ function Bullets($items) {
   return $sb.ToString()
 }
 
+# An item that starts with '### ' is a subheading, not a step:  it closes the
+# list, prints an H3, and starts a fresh list.  A two-day lesson uses this to
+# split its steps into Day 1 and Day 2.
 function Numbered($items) {
   if (-not $items) { return '' }
+  $open = '<ol style="margin:0 0 14px;padding-left:24px;">'
   $sb = New-Object System.Text.StringBuilder
-  [void]$sb.Append('<ol style="margin:0 0 14px;padding-left:24px;">')
+  $inList = $false
   foreach ($i in $items) {
+    if ($i.StartsWith('### ')) {
+      if ($inList) { [void]$sb.Append('</ol>'); $inList = $false }
+      [void]$sb.Append((H3 $i.Substring(4)))
+      continue
+    }
+    if (-not $inList) { [void]$sb.Append($open); $inList = $true }
     [void]$sb.Append('<li style="margin:0 0 10px;">' + (Inline $i) + '</li>')
   }
-  [void]$sb.Append('</ol>')
+  if ($inList) { [void]$sb.Append('</ol>') }
   return $sb.ToString()
 }
 

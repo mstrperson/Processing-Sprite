@@ -120,7 +120,7 @@
 
   "wrapup": "Show a neighbor your character and describe one shape you drew and how you positioned it.",
 
-  "assignmentTask": "Build a character that is yours.  This is the character you will use for the rest of the unit, so make it one you actually want to look at for nine lessons.",
+  "assignmentTask": "Build a character that is yours.  This is the character you will use for the rest of the unit, so make it one you actually want to look at for six more lessons.",
   "assignmentDo": [
     "Create a `MyCharacter` tab with `class MyCharacter extends Blob`.",
     "Override `drawSprite()` and build your character out of shapes.",
@@ -199,17 +199,17 @@
       "**Drawing at hard-coded coordinates** instead of `pos.x`/`pos.y`.  Looks fine today, breaks in Lesson 3.  This is the one to hunt for while circulating.",
       "Modifying the `super(...)` line beyond the radius, or deleting it.  The class will not compile.",
       "Naming the tab `MyCharacter.pde` -- Processing adds the extension, so they end up with `MyCharacter.pde.pde`.",
-      "Drawing the body **last**, painting over the face.  Good teachable moment about draw order (which returns in Lesson 8).",
+      "Drawing the body **last**, painting over the face.  Good teachable moment about draw order (which returns in Lesson 5).",
       "Forgetting `noFill()` before `arc()`, which fills the smile into a solid blob.",
-      "A radius in `super()` wildly different from the visible art.  It does not matter today; it matters a lot in Lesson 7."
+      "A radius in `super()` wildly different from the visible art.  It does not matter today; it matters a lot in Lesson 6."
     ],
     "wrapupAnswer": "Students should be able to name a shape and say roughly where it sits relative to the center -- \"the hat is 25 above `pos.y`.\"  You are listening for the offset idea.  Rough numbers are fine.",
     "notes": [
       "This lesson **is** the make-it-yours.  Budget most of the period for personalization and keep the instruction short.",
       "Students will want elaborate characters.  Encourage it, but tell them they can keep adding detail in every future lesson -- today's goal is just to get *something* on screen.",
-      "The radius in `super()` becomes the collision hitbox in Lesson 7.  Remind them to keep it roughly the size of their character's body.",
+      "The radius in `super()` becomes the collision hitbox in Lesson 6.  Remind them to keep it roughly the size of their character's body.",
       "Fast finishers:  a second character class in another tab.  It reinforces the pattern without adding a new concept.",
-      "This character carries the whole rest of the unit.  A student who is proud of it now will be more invested in Lesson 9."
+      "This character carries the whole rest of the unit.  A student who is proud of it now will be more invested in Lesson 7."
     ]
   }
 }

@@ -1,7 +1,7 @@
 # Bonus Lesson A — Images
 
 > **When to use this lesson:** Drop in any time after Lesson 4. It works well between Lesson 4
-> and 5, or between Lesson 7 and 8 when students are starting to think about making their
+> and 5, or during Lesson 7 when students are starting to think about making their
 > world look polished. It can be taught in one period as a standalone enrichment lesson.
 
 ## Learning Goals
@@ -75,7 +75,9 @@ Suggested flow:
 import coxprogramming.processing.sprites.*;
 
 MyImageCharacter player;
-ArrayList<ImageSprite> decorations;
+ImageSprite tree1;
+ImageSprite tree2;
+ImageSprite tree3;
 
 void setup() {
   size(800, 600);
@@ -87,19 +89,18 @@ void setup() {
 
   // Decorations: ImageSprites placed around the scene
   // Replace "tree.png" with your own file name.
-  decorations = new ArrayList<ImageSprite>();
-  decorations.add(new ImageSprite(this, 150, 420, "tree.png", 60, 100));
-  decorations.add(new ImageSprite(this, 400, 430, "tree.png", 60, 100));
-  decorations.add(new ImageSprite(this, 650, 415, "tree.png", 60, 100));
+  tree1 = new ImageSprite(this, 150, 420, "tree.png", 60, 100);
+  tree2 = new ImageSprite(this, 400, 430, "tree.png", 60, 100);
+  tree3 = new ImageSprite(this, 650, 415, "tree.png", 60, 100);
 }
 
 void draw() {
   background(135, 206, 235);
 
   // Decorations drawn first (behind player)
-  for (ImageSprite d : decorations) {
-    d.drawSprite();
-  }
+  tree1.drawSprite();
+  tree2.drawSprite();
+  tree3.drawSprite();
 
   // Player drawn last (in front)
   player.followMouse();

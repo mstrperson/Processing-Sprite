@@ -5,7 +5,7 @@
   "slug": "bonus-c-animate-your-character",
   "title": "Animate Your Character",
   "tagline": "Stop sliding a frozen drawing around.  Make it move.",
-  "whenToUse": "Any time after Lesson 2 (you need a character to animate).  It shines most **during Lesson 9**, when students want their character to feel alive.  Pairs naturally with Bonus Lesson A -- image frames animate the same way.  One period.",
+  "whenToUse": "Any time after Lesson 2 (you need a character to animate).  It shines most **during Lesson 7**, when students want their character to feel alive.  Pairs naturally with Bonus Lesson A -- image frames animate the same way.  One period.",
   "timing": "One period (~50 min)",
   "newIdea": "A flipbook of poses -- `AnimatedSprite`",
   "builtOn": "Lesson 2 -- your `MyCharacter` drawing.  You will reuse it directly.",
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "h": "One honest catch, if you are using this in Lesson 9",
+      "h": "One honest catch, if you are using this in Lesson 7",
       "p": [
         "An `AnimatedSprite` is **not** a `Blob`, so `collidesWith()` is not available on it.  That is the trade for getting animation.",
         "Use `distanceTo()` instead.  It works between any two sprites:"
@@ -124,11 +124,11 @@
     "Change `setFrameRate()`.  Try `4` (fast and frantic) and `20` (slow and calm).  Which one is your character?",
     "Add more frames for smoother motion.  More pages means a smoother flipbook.",
     "Make a second animated creature (a pet?) with its own `setVelocity()` drifting across the scene.",
-    "**Plug it into your Lesson 9 game.**  Remember:  use `distanceTo()` instead of `collidesWith()`, because an `AnimatedSprite` is not a `Blob`."
+    "**Plug it into your Lesson 7 game.**  Remember:  use `distanceTo()` instead of `collidesWith()`, because an `AnimatedSprite` is not a `Blob`."
   ],
   "challenge": "Take manual control of the flipbook.  Instead of letting it auto-advance, call `nextFrame()` or `setFrameNumber(n)` on a key press to trigger a specific pose -- a jump, an attack, a blink.  That is how real games do special moves.",
 
-  "flintHint": "Good things to ask:  \"my character jumps around when it animates\", \"my animation is too fast\", or \"how do I use an AnimatedSprite in my Lesson 9 game with collisions?\"  Paste in your frame class if the poses look wrong.",
+  "flintHint": "Good things to ask:  \"my character jumps around when it animates\", \"my animation is too fast\", or \"how do I use an AnimatedSprite in my Lesson 7 game with collisions?\"  Paste in your frame class if the poses look wrong.",
 
   "wrapup": "What is the difference between a game frame and an animation frame?  What does `setFrameRate(4)` do compared to `setFrameRate(20)`?",
 
@@ -158,7 +158,7 @@
     { "name": "Getting Started", "text": "My character does not animate, or does not show up.  **Next step:**  build the `AnimatedSprite` with `FromSprite(...).AddFrameSprite(...)`, create **every** frame at the same `x, y`, and call `player.drawSprite()` in `draw()`." },
     { "name": "Got It Working", "text": "My character appears and flips between poses on its own." },
     { "name": "Made It Mine", "text": "&hellip;and the animation is my own -- my poses, my character, and a frame rate that looks right for the motion I want." },
-    { "name": "Went Beyond", "text": "&hellip;and I took it further -- wired the animation into my Lesson 9 game with `distanceTo()`, animated a second creature, hand-controlled a pose on a key press, or animated image frames." }
+    { "name": "Went Beyond", "text": "&hellip;and I took it further -- wired the animation into my Lesson 7 game with `distanceTo()`, animated a second creature, hand-controlled a pose on a key press, or animated image frames." }
   ],
   "thinking": "In one or two sentences:  what part of your character did you make move, and what frame rate looked right for it?",
 
@@ -202,7 +202,7 @@
         ]
       },
       {
-        "h": "The Lesson 9 caveat - say it clearly",
+        "h": "The Lesson 7 caveat - say it clearly",
         "p": [
           "`AnimatedSprite` extends `CompoundSprite`, **not** `Blob`, so it has **no `collidesWith()`**.  This is the one thing that will trip up a student who brings animation into their capstone.",
           "The fix is `distanceTo(otherSprite) < threshold`.  `distanceTo()` is inherited from `Sprite` and works between any two sprites.",
@@ -232,7 +232,7 @@
     "wrapupAnswer": "A game frame is one run of `draw()` (~60/sec).  An animation frame is one picture in the flipbook.  `setFrameRate(4)` holds each picture for 4 game frames (fast); `setFrameRate(20)` holds it for 20 (slow).",
     "notes": [
       "Only the current frame is drawn, so the Blob's plain circle never appears -- `drawSprite()` is overridden in `MyCharacterFrame`.  The radius and color in `super()` are just carried along.",
-      "**This lesson lands best during Lesson 9**, when students are already looking at their character and wishing it felt alive.",
+      "**This lesson lands best during Lesson 7**, when students are already looking at their character and wishing it felt alive.",
       "Ties into Bonus A:  a frame can be an `ImageSprite`, so a sprite sheet animates with exactly the same pattern -- `AnimatedSprite.FromSprite(new ImageSprite(this, x, y, \"walk0.png\")).AddFrameSprite(...)`.",
       "Show the **AnimatedSceneExample** (File &rarr; Examples &rarr; Contributed Libraries &rarr; SpriteGame).  Its clouds and sun are built with exactly this `FromSprite`/`AddFrameSprite` pattern, and seeing it in a finished scene is motivating.",
       "Fast finishers:  control the frame by hand instead of auto-advancing -- `nextFrame()` or `setFrameNumber(n)` on a key press for a jump or attack pose.",

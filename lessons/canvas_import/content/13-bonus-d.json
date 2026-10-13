@@ -1,0 +1,265 @@
+{
+  "id": "13-bonus-d",
+  "num": "D",
+  "kind": "bonus",
+  "slug": "bonus-d-lists-and-loops",
+  "title": "Lists and Loops",
+  "tagline": "One coin is a variable.  Fifty coins is a list.",
+  "whenToUse": "Any time after Lesson 6.  It lands best during Lesson 7, for the student who has three copy-pasted coins and wants thirty.  One period, standalone.  The main lessons are complete without it.",
+  "timing": "One period (~50 min), for students who are ready for it",
+  "newIdea": "Lists and loops -- handling many things at once",
+  "builtOn": "Lesson 6 -- collisions, a score, and `gameOver`.",
+
+  "goals": [
+    "Store many objects in an `ArrayList`",
+    "Use a **counting** `for` loop to create a lot of things at once",
+    "Use a **for-each** loop to visit every thing in a list",
+    "Remove things from a list safely with the **backwards** loop"
+  ],
+
+  "vocab": [
+    { "term": "`ArrayList`", "def": "a list that holds many objects of the same type.  It grows as you add more" },
+    { "term": "counting `for` loop", "def": "repeats a block a set number of times.  Used to **create** things" },
+    { "term": "for-each loop", "def": "visits every item already in a list, one at a time.  Used to **visit** things" },
+    { "term": "index", "def": "an item's position in a list.  Lists start counting at **0**, so the first item is at index 0" },
+    { "term": "`size()`", "def": "how many items are in the list right now" }
+  ],
+
+  "warmup": "Look at your Lesson 6 or Lesson 7 sketch.  Adding one more coin the way you have been doing it takes how many lines?  Now multiply by twenty.",
+
+  "howItWorks": [
+    {
+      "h": "Why you need a list",
+      "p": [
+        "You already know the long way.  Each coin is a variable, a `new Blob(...)` line, a `move()`, a `drawSprite()`, and an `if`.  Twenty coins is a hundred lines, and every one of them is a chance to type `coin13` where you meant `coin14`.",
+        "A list fixes that.  Think of it as a **bag** -- you keep stuffing things in, and it holds as many as you give it."
+      ],
+      "code": {
+        "label": "Three things you do with a list",
+        "body": "ArrayList<Blob> coins;                 // 1. declare it (what kind of bag)\ncoins = new ArrayList<Blob>();         // 2. create it (get an empty bag)\ncoins.add(new Blob(...));              // 3. add to it (put something in)"
+      }
+    },
+    {
+      "h": "Two loops that both say \"for\"",
+      "p": [
+        "Java uses the same word, `for`, for two loops that feel completely different.  Keeping them straight is the real skill in this lesson."
+      ]
+    },
+    {
+      "h": "The counting loop - for CREATING",
+      "p": [
+        "This one counts.  `i` starts at 0, and the loop repeats until `i` reaches 12.  You use it in `setup()` to fill the bag."
+      ],
+      "code": {
+        "label": "\"Do this 12 times\"",
+        "body": "for (int i = 0; i < 12; i++) {\n  coins.add(new Blob(this, random(width), random(height), 12, color(255, 220, 50)));\n}"
+      },
+      "bullets": [
+        "`int i = 0` -- start counting at zero",
+        "`i < 12` -- keep going while i is under 12",
+        "`i++` -- add one to i each time around"
+      ]
+    },
+    {
+      "h": "The for-each loop - for VISITING",
+      "p": [
+        "This one walks the list and hands you one item at a time.  You use it in `draw()` to move and draw everything."
+      ],
+      "code": {
+        "label": "\"For each coin c in the list, do this\"",
+        "body": "for (Blob c : coins) {\n  c.move();\n  c.drawSprite();\n}"
+      }
+    },
+    {
+      "h": "You cannot call a method on the whole bag",
+      "p": [
+        "This is the mistake almost everyone makes at least once:"
+      ],
+      "code": {
+        "label": "Wrong, then right",
+        "body": "coins.drawSprite();     // WRONG - the list itself doesn't know how to draw\n\nfor (Blob c : coins) {  // RIGHT - draw each coin inside the list\n  c.drawSprite();\n}"
+      },
+      "bullets": [
+        "The bag is a bag.  You have to reach in and ask each coin to draw itself."
+      ]
+    },
+    {
+      "h": "The problem with removing things while looping",
+      "p": [
+        "With a list, collecting a coin means taking it **out** of the list.  But removing something from a list *while you are walking through that list* causes a real problem.",
+        "Picture five coins in a row.  You are standing on coin 2 and you remove it.  Every coin after it shifts back one place to fill the gap.  Then the loop moves you forward to position 3&hellip; but the coin that *was* at 3 is now at 2, behind you.  **You just skipped it.**"
+      ]
+    },
+    {
+      "h": "The fix:  walk backwards",
+      "p": [
+        "If you walk from the **end** toward the front, removing something only shifts items you have already passed.  Every coin gets its turn.",
+        "You do not need to memorize why.  Recognize it as \"the safe way to remove things while looping\" and copy it when you need it."
+      ],
+      "code": {
+        "label": "The safe removal loop",
+        "body": "for (int i = coins.size() - 1; i >= 0; i--) {\n  Blob c = coins.get(i);      // grab the coin at position i\n  c.move();\n  c.drawSprite();\n\n  if (player.collidesWith(c)) {\n    coins.remove(i);          // take it out of the list\n    score = score + 1;        // and score a point\n  }\n}"
+      },
+      "bullets": [
+        "`coins.size()` is how many are in the list.  `- 1` because the last index is one less than the count.",
+        "`i--` counts **down** instead of up.",
+        "`coins.get(i)` reaches into the list and hands you the item at that position."
+      ]
+    },
+    {
+      "h": "When the list runs out",
+      "p": [
+        "`coins.size()` shrinks every time you collect one.  When it hits zero the board is clear, and you get to decide what that means.  The starter sends a new wave:"
+      ],
+      "code": {
+        "label": "An empty list means you got them all",
+        "body": "if (coins.size() == 0) {\n  for (int i = 0; i < 12; i++) {\n    coins.add(new Blob(...));   // a fresh wave\n  }\n}"
+      },
+      "bullets": [
+        "Or set `playerWon = true;` and end the game.  Your call."
+      ]
+    }
+  ],
+
+  "steps": [
+    "Open your Lesson 6 sketch.  (Working on your Lesson 7 game?  Save a copy first, then do this lesson on the copy.)",
+    "At the top, replace `Blob coin;` with `ArrayList<Blob> coins;`",
+    "In `setup()`, replace the line that creates your coin with `coins = new ArrayList<Blob>();` and the counting loop from the starter.  Run it.  Nothing new shows up yet -- you made the coins and nothing draws them.",
+    "Where you used to move and draw your coin, add a **for-each** loop that moves and draws each coin.  Delete your old coin's collision `if` for now.  Run it.  Now the world is full.",
+    "Change the `12` in the counting loop to `40`.  Run.  Then try `3`.  How many feels right?",
+    "Now **replace** the for-each loop with the backwards loop from the starter, with no collision check yet.  Run it.  Nothing should look different -- the two loops are equivalent until you remove something.",
+    "Inside the backwards loop, add the `if (player.collidesWith(c))` check with `coins.remove(i);` and `score = score + 1;` inside it.  Run it and collect a few.",
+    "Add the `if (coins.size() == 0)` check that sends a new wave.  Clear the board and watch it refill.",
+    "Add a `mousePressed()` that adds a coin wherever you click.",
+    "Try a second list:  `ArrayList<Blob> hazards;`, filled with a counting loop and visited with a **for-each** loop.  You are not removing hazards, so the backwards loop is unnecessary here."
+  ],
+
+  "code": [
+    {
+      "label": "Main sketch tab (keep your MyCharacter tab)",
+      "body": "// Bonus Lesson D - Lists and Loops\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\nArrayList<Blob> coins;      // a list that holds Blobs\nBlob hazard;\nint score = 0;\nboolean gameOver = false;\n\nvoid setup() {\n  size(800, 600);\n\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);\n\n  hazard = new Blob(this, 80, 80, 22, 3, 2, color(220, 60, 60));\n\n  coins = new ArrayList<Blob>();   // an empty list\n\n  // Counting loop - runs 12 times to create 12 coins\n  for (int i = 0; i < 12; i++) {\n    coins.add(new Blob(\n      this,\n      random(width),          // random x position\n      random(height),         // random y position\n      random(8, 18),          // random radius\n      random(-2, 2),          // random horizontal speed\n      random(-2, 2),          // random vertical speed\n      color(255, 220, 50)     // gold\n    ));\n  }\n}\n\nvoid draw() {\n  background(240);\n\n  if (!gameOver) {\n    playGame();\n  } else {\n    showGameOver();\n  }\n}\n\nvoid playGame() {\n  // Backwards loop - the safe way to remove things while looping\n  for (int i = coins.size() - 1; i >= 0; i--) {\n    Blob c = coins.get(i);       // grab the coin at position i\n    c.move();\n    c.drawSprite();\n\n    if (player.collidesWith(c)) {\n      coins.remove(i);           // take it out of the list\n      score = score + 1;\n    }\n  }\n\n  // An empty list means the board is clear:  send a new wave\n  if (coins.size() == 0) {\n    for (int i = 0; i < 12; i++) {\n      coins.add(new Blob(this, random(width), random(height),\n                         random(8, 18), random(-2, 2), random(-2, 2),\n                         color(255, 220, 50)));\n    }\n  }\n\n  hazard.move();\n  hazard.drawSprite();\n  if (player.collidesWith(hazard)) {\n    gameOver = true;\n  }\n\n  player.followMouse();\n  player.drawSprite();\n\n  fill(50);\n  textSize(24);\n  text(\"Score: \" + score, 20, 36);\n}\n\nvoid showGameOver() {\n  textAlign(CENTER, CENTER);\n  fill(220, 60, 60);\n  textSize(52);\n  text(\"Game Over\", width/2, height/2 - 20);\n  fill(50);\n  textSize(22);\n  text(\"Final score: \" + score, width/2, height/2 + 26);\n  textAlign(LEFT, BASELINE);\n}\n\nvoid mousePressed() {\n  coins.add(new Blob(this, mouseX, mouseY,\n                     random(8, 18), random(-2, 2), random(-2, 2),\n                     color(255, 220, 50)));\n}"
+    }
+  ],
+
+  "makeItYours": [
+    "Change how many coins are in a wave, how big they are, and how fast.",
+    "Make each wave bigger than the last -- a variable that counts waves, used in the counting loop.",
+    "Turn your hazards into a list, and add one more hazard every time a wave clears.",
+    "Put lists into your Lesson 7 game.  Convert your coins and keep the rest as it is.",
+    "Make collected coins **split** into two smaller coins added to the list."
+  ],
+  "challenge": "Use lists in your capstone's `restartGame()`:  `coins = new ArrayList<Blob>();` followed by the counting loop gives you a fresh, full board every restart.  Then make the hazards a list too, and let the number of hazards grow with the score.",
+
+  "flintHint": "Good things to ask:  \"what is the difference between a counting for loop and a for-each loop?\", \"my sketch crashes when I collect a coin\", \"why do we loop backwards?\", or \"how do I put a list into my Lesson 7 game?\"  Paste in your `setup()` or `playGame()` if something will not run.",
+
+  "wrapup": "What is the difference between the counting `for` loop and the for-each loop?  And why do we loop backwards when we remove things?",
+
+  "assignmentTask": "Replace one-coin-at-a-time with a list.  Create many things with a counting loop, visit them with a loop, and collect them safely.",
+  "assignmentDo": [
+    "Declare an `ArrayList`, create it in `setup()`, and fill it with a **counting** loop.",
+    "Move and draw everything in it with a loop in `draw()` or `playGame()`.",
+    "Collect items with `collidesWith()`, removing them with the **backwards** loop.",
+    "Decide what happens when the list is empty -- a new wave, a win, something of your own."
+  ],
+  "submit": [
+    "Your sketch folder, zipped (all tabs).",
+    "A short screen recording of the board filling, getting cleared, and what happens next.",
+    "Your answer to **Show your thinking** below."
+  ],
+
+  "checklist": [
+    "Declare and create an `ArrayList`.",
+    "Use a **counting** `for` loop to make many objects.",
+    "Use a **for-each** loop to visit each one.",
+    "Remove items from a list with the backwards loop, and explain why it walks backwards."
+  ],
+
+  "standard": "Store many objects in an `ArrayList`, create them with a counting loop, visit them with a for-each loop, and remove them safely with the backwards loop.",
+  "stages": [
+    { "name": "Getting Started", "text": "My list of coins is not appearing, or collecting one crashes the sketch.  **Next step:**  **create** things with a counting loop in `setup()` and **draw** them with a loop in `draw()`, calling `drawSprite()` on each item `c` and leaving the list itself alone.  If collecting crashes, switch to the backwards loop (`for (int i = coins.size()-1; i >= 0; i--)`)." },
+    { "name": "Got It Working", "text": "Many coins appear and move.  Collecting one removes it from the list without errors, and something happens when the list is empty." },
+    { "name": "Made It Mine", "text": "&hellip;and I tuned it -- bigger waves, a second list of hazards, coins spawned on click, or a list working inside my Lesson 7 game." },
+    { "name": "Went Beyond", "text": "&hellip;and I used lists to make the game change as it goes:  waves that grow, hazards that multiply, coins that split, or another idea of my own." }
+  ],
+  "thinking": "In one or two sentences:  when do you use a **counting** loop and when do you use a **for-each** loop -- and why does the removal loop walk backwards?",
+
+  "teacher": {
+    "di": [
+      {
+        "h": "Why this is a bonus lesson now",
+        "p": [
+          "`ArrayList` used to be the main-thread Lesson 5, with the backwards removal loop in Lesson 7.  It was too much for most sixth graders:  a generic type, two loop forms that share a keyword, and a removal pattern they could only copy.  It moved here so the students who take it have already felt the need.",
+          "Students arrive at this lesson with three copy-pasted coins in their own game.  That is the motivation.  Use it."
+        ]
+      },
+      {
+        "h": "Motivate the list with their own code",
+        "p": [
+          "Put a student's capstone on the projector (with permission) and point at `coin1`, `coin2`, `coin3`.  Ask what twenty would take.  Let the tedium land before you offer the fix."
+        ]
+      },
+      {
+        "h": "ArrayList in three moves",
+        "p": [
+          "\"A list is like a bag -- you can keep stuffing things in.\"",
+          "Declare, create, add.  Show all three on the projector as three separate lines before combining them.",
+          "Skip generics.  `<Blob>` is \"what kind of bag this is.\"  That is enough."
+        ]
+      },
+      {
+        "h": "The two for loops - make this distinction explicit",
+        "p": [
+          "**Counting loop** (in `setup()`, to CREATE):  `for (int i = 0; i < 12; i++)`.  \"`i` counts from 0 to 11 -- we use it to repeat the add 12 times.\"",
+          "**For-each loop** (in `draw()`, to VISIT):  `for (Blob c : coins)`.  \"For each coin `c` in the list, move it and draw it.\"",
+          "Both use the word `for`, and in a broad sense both are count-controlled, but they *feel* different:  **one counts, one visits.**  Students mix them up constantly.  Say the distinction out loud more than once, and use the words \"create\" and \"visit\" consistently."
+        ]
+      },
+      {
+        "h": "Show the classic mistake on purpose",
+        "p": [
+          "Write `coins.drawSprite();` on the projector and run it.  The compiler rejects it.",
+          "\"The bag is a bag.  You have to ask each coin.\"  Then fix it with the loop.  Seeing the error once beats a warning."
+        ]
+      },
+      {
+        "h": "Show the removal bug before the fix",
+        "p": [
+          "Run a **forward** loop with a `remove()` inside it on the projector.  Collect coins and let students watch items get skipped.",
+          "Once students have watched coins get skipped, the backwards loop is the answer to a problem they saw happen.  Students do **not** need to derive it.  Teach it as \"the safe loop for removing things\" -- a pattern they can recognize and copy."
+        ],
+        "code": {
+          "label": "The pattern to copy",
+          "body": "for (int i = coins.size() - 1; i >= 0; i--) {\n  Blob c = coins.get(i);\n  if (player.collidesWith(c)) {\n    coins.remove(i);\n    score = score + 1;\n  }\n}"
+        }
+      }
+    ],
+    "guided": [
+      "Put `coin1`, `coin2`, `coin3` on the board.  Ask what happens at twenty.  Wait for the groan.",
+      "Declare and create the list together.  Run -- nothing changes, because the list is empty.  Name that.",
+      "Add the counting loop in `setup()` together.  Run -- still nothing on screen.  Ask why.  (They exist, and nothing draws them.)",
+      "Add the for-each loop.  Run.  The world fills.  That two-step reveal is worth the extra minute.",
+      "As a class, change `12` to `40`, then to `3`.",
+      "Swap the for-each for the backwards loop with no collision.  Run.  Nothing changes.",
+      "Show the forward-loop removal bug on the projector, then add the backwards loop's collision check.  Everyone collects.",
+      "Add the empty-list wave.  Release for personalization, or for converting their capstone."
+    ],
+    "pitfalls": [
+      "**`coins.drawSprite()`** -- calling a method on the whole list.  The single most common error in this lesson.",
+      "**Creating the list but never looping over it in `draw()`.**  The objects exist and are invisible.  Students think the `add` failed.",
+      "**Forgetting `coins = new ArrayList<Blob>();`** -- a null pointer exception the moment they call `.add()`.",
+      "**`ConcurrentModificationException`** -- removing inside a for-each loop.  The crash message is intimidating and means nothing to a sixth grader.  Translate it:  \"you changed the list while walking through it.\"  The backwards loop is the fix.",
+      "**Off-by-one:**  writing `coins.size()` instead of `coins.size() - 1`, which throws an index-out-of-bounds on the first pass.",
+      "**`i++` instead of `i--`** in the backwards loop -- the index runs off the end of the list and the sketch crashes.",
+      "**Putting the counting loop in `draw()`** -- it adds 12 new coins every frame and the sketch grinds to a halt.  Dramatic, and a good demo if it happens.",
+      "Mixing the two loop forms:  `for (int i = 0; i < coins; i++)` or `for (Blob c : 12)`.  Both come from missing the create/visit distinction."
+    ],
+    "wrapupAnswer": "Counting loop:  repeat something a set number of times -- used to create.  For-each loop:  visit every item already in a list -- used to move and draw.  Backwards:  removing an item shifts everything after it back one, so a forward loop skips the next item, and walking backwards only shifts items you already passed.",
+    "notes": [
+      "Use the word \"visit\" for the for-each loop all period.  It gives students language for a distinction they can otherwise only feel.",
+      "The backwards loop is a copy-and-use pattern.  Leave it off any check for understanding, and keep it from becoming the hard part of the lesson.",
+      "In a capstone, a student can convert only their coins to a list and keep named hazards.  A half-converted game is a fine place to stop.",
+      "In `restartGame()`, a list resets with `coins = new ArrayList<Blob>();` followed by the counting loop.  It is the same rebuild-from-scratch idea as the rest of `restartGame()`.",
+      "Fast finishers:  growing waves, a list of hazards that grows with the score, coins that split into smaller coins."
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # Bonus Lesson B — Sounds
 
-> **When to use this lesson:** Drop in any time after Lesson 4. It pairs well with
+> **When to use this lesson:** Drop in any time after Lesson 6. It pairs well with
 > Bonus Lesson A (Images) as a two-part "make it real" session, or works on its own.
 > Teach it any time students ask "can we add sound?" — which they will.
 
@@ -72,8 +72,8 @@ Suggested flow:
 ## Starter Code
 
 ```java
-// Bonus Lesson B — Sounds
-// Requires: Sketch → Import Library → Add Library → "Sound" (The Processing Foundation)
+// Bonus Lesson B - Sounds
+// Requires: Sketch -> Import Library -> Add Library -> "Sound" (The Processing Foundation)
 // Sound files go in your sketch's data/ folder (same place as images).
 // Replace "collect.wav", "gameover.wav", and "music.mp3" with your own file names.
 
@@ -81,35 +81,32 @@ import coxprogramming.processing.sprites.*;
 import processing.sound.*;
 
 MyCharacter player;
-ArrayList<Blob> coins;
+Blob coin;
+Blob hazard;
 int score = 0;
 boolean gameOver = false;
 
-SoundFile collectSound;   // plays when a coin is collected
-SoundFile gameOverSound;  // plays when the game ends
-SoundFile bgMusic;        // loops continuously in the background
+SoundFile collectSound;
+SoundFile gameOverSound;
+SoundFile bgMusic;
 
 void setup() {
   size(800, 600);
 
-  // Load sounds from the data/ folder
   collectSound  = new SoundFile(this, "collect.wav");
   gameOverSound = new SoundFile(this, "gameover.wav");
   bgMusic       = new SoundFile(this, "music.mp3");
 
-  bgMusic.loop();  // start background music immediately
+  bgMusic.amp(0.4);   // lower music volume so effects can be heard clearly
+  bgMusic.loop();     // start background music - runs until stopped
 
   player = new MyCharacter(this, width/2, height/2);
   player.setVelocity(4, 0);
 
-  coins = new ArrayList<Blob>();
-  for (int i = 0; i < 10; i++) {
-    coins.add(new Blob(
-      this, random(width), random(height),
-      random(8, 18), random(-2, 2), random(-2, 2),
-      color(255, 220, 50)
-    ));
-  }
+  coin = new Blob(this, random(width), random(height),
+                  14, random(1, 2.5), random(-1.5, 1.5),
+                  color(255, 220, 50));
+  hazard = new Blob(this, 80, 80, 22, 3, 2, color(220, 60, 60));
 }
 
 void draw() {
@@ -123,25 +120,24 @@ void draw() {
 }
 
 void playGame() {
-  for (int i = coins.size() - 1; i >= 0; i--) {
-    Blob c = coins.get(i);
-    c.move();
-    c.drawSprite();
-
-    if (player.collidesWith(c)) {
-      coins.remove(i);
-      score = score + 1;
-      collectSound.play();  // ← sound on collection
-    }
-  }
+  coin.move();
+  coin.drawSprite();
+  hazard.move();
+  hazard.drawSprite();
 
   player.followMouse();
   player.drawSprite();
 
-  if (coins.size() == 0) {
+  if (player.collidesWith(coin)) {
+    score = score + 1;
+    coin.moveTo(random(width), random(height));
+    collectSound.play();   // one-shot sound effect on collection
+  }
+
+  if (player.collidesWith(hazard)) {
     gameOver = true;
-    bgMusic.stop();          // ← stop music
-    gameOverSound.play();    // ← sound on game over
+    bgMusic.stop();        // stop the music
+    gameOverSound.play();  // play the end sound
   }
 
   fill(50);
@@ -151,13 +147,13 @@ void playGame() {
 
 void showGameOver() {
   textAlign(CENTER, CENTER);
-  fill(80, 180, 80);
+  fill(220, 60, 60);
   textSize(52);
-  text("You Win!", width/2, height/2 - 20);
+  text("Game Over", width/2, height/2 - 20);
   textSize(22);
   fill(50);
   text("Score: " + score, width/2, height/2 + 26);
-  textAlign(LEFT, TOP);
+  textAlign(LEFT, BASELINE);
 }
 ```
 

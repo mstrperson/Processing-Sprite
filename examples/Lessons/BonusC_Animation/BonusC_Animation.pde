@@ -21,7 +21,7 @@
  *   - Animate legs or arms instead of the mouth to make it walk
  *   - Switch to arrow keys: use player.move() in draw() (instead of followMouse)
  *       and add:  void keyPressed() { player.keyboardControl(); }
- *   - In a Lesson 9 game, an AnimatedSprite is NOT a Blob, so use distanceTo()
+ *   - In a Lesson 7 game, an AnimatedSprite is NOT a Blob, so use distanceTo()
  *       for collisions:  if (player.distanceTo(coin) < 40) { ...collect... }
  */
 

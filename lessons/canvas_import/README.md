@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File build_canvas_html.ps1
 
 Reads every `content/*.json` and writes 3 files per lesson into `html/` — a student-facing
 Page, a student-facing Assignment, and a teacher copy — plus `front-page.html` from
-`course.json`. 12 lessons → 37 files.
+`course.json`. 11 lessons → 34 files.
 
 Each output file is a **body fragment**: copy the whole file and paste it into the Canvas
 HTML editor (the `</>` button in the Rich Content Editor). There are no `<style>` or
@@ -30,8 +30,8 @@ chat URL for that lesson — two per lesson, one on the Page and one on the Assi
 
 **The front page** (`html/front-page.html`) is a Canvas Page you then set as the course home
 (Pages → ⋮ → *Use as Front Page*, then Home → *Choose Home Page* → *Pages Front Page*). It
-carries the course overview, the goals, the four stages, and an index of all 12 lessons. Its
-24 links are `LINK_*` placeholders — build the lessons first, then click each link in the
+carries the course overview, the goals, the four stages, and an index of all 11 lessons. Its
+22 links are `LINK_*` placeholders — build the lessons first, then click each link in the
 Canvas editor and re-point it at the real item. The full token list is in
 [`html/README.md`](html/README.md).
 
@@ -73,7 +73,7 @@ checklist. Going somewhere the lesson didn't anticipate is the whole point.
 
 ## File — `canvas_rubrics.csv`
 
-One row per lesson (1–9 plus the two bonus lessons), with the standard and the four stage
+One row per lesson (1–7 plus Bonus Lessons A, B, and D), with the standard and the four stage
 descriptions. No point columns.
 
 **To use it in Canvas as a no-points rubric:**
