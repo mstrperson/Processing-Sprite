@@ -1,12 +1,12 @@
 /**
- * Bonus Lesson A — Images
+ * Bonus Lesson A - Images
  *
  * Two patterns for using images in your sketch:
  *
- *   1. ImageSprite — for background decorations. Can move, wrap, and draw
+ *   1. ImageSprite -- for background decorations. Can move, wrap, and draw
  *      a picture, but does NOT have collidesWith().
  *
- *   2. MyImageCharacter (see its tab) — an extends Blob character whose
+ *   2. MyImageCharacter (see its tab) -- an extends Blob character whose
  *      drawSprite() draws a picture instead of shapes. Has full collision
  *      detection because it is still a Blob underneath.
  *
@@ -54,12 +54,12 @@ void setup() {
 void draw() {
   background(135, 206, 235);
 
-  // Decorations drawn first — appear behind the player
+  // Decorations drawn first -- appear behind the player
   tree1.drawSprite();
   tree2.drawSprite();
   tree3.drawSprite();
 
-  // Player drawn last — appears in front
+  // Player drawn last -- appears in front
   player.followMouse();
   player.drawSprite();
 }

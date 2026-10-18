@@ -1,5 +1,5 @@
 /**
- * MyCharacter — this is YOUR character. Change everything!
+ * MyCharacter - this is YOUR character. Change everything!
  *
  * {@code extends Blob} means your character is built on top of Blob.
  * It already knows how to move, wrap around the screen, and detect collisions.
@@ -9,10 +9,10 @@ class MyCharacter extends Blob {
 
   /**
    * Creates a new MyCharacter at position (x, y).
-   * The radius (30) is the invisible collision circle — adjust it if your
+   * The radius (30) is the invisible collision circle -- adjust it if your
    * character grows much larger or smaller.
    *
-   * @param p  the Processing sketch — always pass {@code this}
+   * @param p  the Processing sketch -- always pass {@code this}
    * @param x  starting x position (center of the character)
    * @param y  starting y position (center of the character)
    */
@@ -24,7 +24,7 @@ class MyCharacter extends Blob {
    * Draws your character on screen. Called automatically every frame.
    *
    * Use {@code pos.x} and {@code pos.y} as your character's center.
-   * Every other shape is placed relative to that point — think of it
+   * Every other shape is placed relative to that point -- think of it
    * as your character's belly button.
    */
   void drawSprite() {

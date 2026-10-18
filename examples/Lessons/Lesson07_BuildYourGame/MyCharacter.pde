@@ -1,5 +1,5 @@
 /**
- * MyCharacter — paste YOUR character from Lesson 2 here!
+ * MyCharacter - paste YOUR character from Lesson 2 here!
  * This placeholder keeps the sketch runnable until you do.
  *
  * {@code extends Blob} means your character already knows how to move,
@@ -10,7 +10,7 @@ class MyCharacter extends Blob {
   /**
    * Creates a new MyCharacter at position (x, y).
    *
-   * @param p  the Processing sketch — always pass {@code this}
+   * @param p  the Processing sketch -- always pass {@code this}
    * @param x  starting x position (center of the character)
    * @param y  starting y position (center of the character)
    */

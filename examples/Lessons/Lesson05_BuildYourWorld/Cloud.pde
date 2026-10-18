@@ -1,8 +1,8 @@
 /**
- * Cloud — a drifting background decoration.
+ * Cloud - a drifting background decoration.
  *
  * This is an example of how to build your own sprite class.
- * {@code extends Blob} means Cloud already knows how to move and wrap —
+ * {@code extends Blob} means Cloud already knows how to move and wrap --
  * all we add here is what a cloud looks like inside {@code drawSprite()}.
  *
  * Try redesigning this completely to fit your game world
@@ -14,7 +14,7 @@ class Cloud extends Blob {
    * Creates a cloud at (x, y) that drifts to the right at the given speed.
    * A speed of 1.0 moves the cloud 1 pixel to the right each frame.
    *
-   * @param p      the Processing sketch — always pass {@code this}
+   * @param p      the Processing sketch -- always pass {@code this}
    * @param x      starting x position (center of the cloud)
    * @param y      starting y position (center of the cloud)
    * @param speed  horizontal speed in pixels per frame
