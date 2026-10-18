@@ -1,12 +1,12 @@
 /**
- * Lesson 3 — Bring It to Life
+ * Lesson 3 - Bring It to Life
  *
  * setVelocity() gives your character a speed and direction.
  * move() advances the position by that velocity every frame.
  * The library wraps the character automatically when it reaches a screen edge.
  *
  * Things to try:
- *   - Change the two numbers in setVelocity() — try big, tiny, and negative values
+ *   - Change the two numbers in setVelocity() -- try big, tiny, and negative values
  *   - Use random(-5, 5) for both numbers to get a different direction every run
  *   - Make it move perfectly diagonally (set vx == vy)
  *   - Change the background color to set a mood
@@ -36,6 +36,6 @@ void setup() {
  */
 void draw() {
   background(240);
-  player.move();        // update position — always before drawSprite()
+  player.move();        // update position -- always before drawSprite()
   player.drawSprite();  // draw at new position
 }

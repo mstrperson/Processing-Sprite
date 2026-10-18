@@ -20,7 +20,7 @@
  *   bgMusic       - loops continuously in the background
  *
  * Things to try:
- *   - Change bgMusic.amp(0.4) to adjust the music volume (0.0–1.0)
+ *   - Change bgMusic.amp(0.4) to adjust the music volume (0.0 to 1.0)
  *   - Add a sound for when the player clicks or presses a key
  *   - Guard rapid sounds: if (!collectSound.isPlaying()) collectSound.play();
  */

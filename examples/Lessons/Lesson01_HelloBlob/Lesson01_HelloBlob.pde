@@ -1,5 +1,5 @@
 /**
- * Lesson 1 — Hello, Blob!
+ * Lesson 1 - Hello, Blob!
  *
  * Your first sketch with the SpriteGame library.
  * Run it, then try changing the color, position, and size.
@@ -30,6 +30,6 @@ void setup() {
  * Everything you want to appear on screen must be drawn here.
  */
 void draw() {
-  background(255);        // white background — erases the previous frame
+  background(255);        // white background -- erases the previous frame
   myBlob.drawSprite();    // draw the blob at its position
 }

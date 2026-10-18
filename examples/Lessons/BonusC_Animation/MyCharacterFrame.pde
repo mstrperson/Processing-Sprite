@@ -1,5 +1,5 @@
 /**
- * MyCharacterFrame — ONE POSE of your character.
+ * MyCharacterFrame - ONE POSE of your character.
  *
  * It is just like MyCharacter from Lesson 2, but with a "pose" number so the
  * same class can draw a few slightly different versions. AnimatedSprite flips
@@ -16,7 +16,7 @@ class MyCharacterFrame extends Blob {
   /**
    * Creates one pose of the character at position (x, y).
    *
-   * @param p     the Processing sketch — always pass {@code this}
+   * @param p     the Processing sketch -- always pass {@code this}
    * @param x     starting x position (center of the character)
    * @param y     starting y position (center of the character)
    * @param pose  which version to draw (0, 1, 2, ...)
@@ -45,7 +45,7 @@ class MyCharacterFrame extends Blob {
     ellipse(pos.x - 12, pos.y - 8, 8, 8);
     ellipse(pos.x + 12, pos.y - 8, 8, 8);
 
-    // --- Mouth: CHANGES with the pose — this is what makes it animate! ---
+    // --- Mouth: CHANGES with the pose -- this is what makes it animate! ---
     stroke(30);
     strokeWeight(2);
     noFill();

@@ -1,5 +1,5 @@
 /**
- * Bonus Lesson C — Animate Your Character
+ * Bonus Lesson C - Animate Your Character
  *
  * Animation is a flipbook: a few still pictures (frames) shown fast, in a loop.
  * AnimatedSprite holds the frames and draws one at a time for you.
@@ -8,16 +8,16 @@
  * (see the MyCharacterFrame tab). Each pose is the same character with a
  * slightly different mouth, so the character looks like it is talking.
  *
- *   FromSprite(firstFrame)   — starts the flipbook with the first page
- *   .AddFrameSprite(next)    — adds another page
- *   .setFrameRate(8)         — holds each page for 8 game frames (smaller = faster)
+ *   FromSprite(firstFrame)   -- starts the flipbook with the first page
+ *   .AddFrameSprite(next)    -- adds another page
+ *   .setFrameRate(8)         -- holds each page for 8 game frames (smaller = faster)
  *
  * Every frame is created at the SAME x, y so the character does not jump when
  * the page turns.
  *
  * Things to try:
  *   - Add a 4th pose in MyCharacterFrame, then AddFrameSprite() it here
- *   - Change setFrameRate(8) — try 4 (fast) and 20 (slow)
+ *   - Change setFrameRate(8) -- try 4 (fast) and 20 (slow)
  *   - Animate legs or arms instead of the mouth to make it walk
  *   - Switch to arrow keys: use player.move() in draw() (instead of followMouse)
  *       and add:  void keyPressed() { player.keyboardControl(); }
@@ -36,7 +36,7 @@ AnimatedSprite player;
 void setup() {
   size(800, 600);
 
-  // Build the flipbook — all frames at the SAME spot so it doesn't jump.
+  // Build the flipbook -- all frames at the SAME spot so it doesn't jump.
   // AnimatedSprite shows one pose at a time and flips between them for you.
   player = AnimatedSprite.FromSprite(new MyCharacterFrame(this, width/2, height/2, 0))
       .AddFrameSprite(new MyCharacterFrame(this, width/2, height/2, 1))

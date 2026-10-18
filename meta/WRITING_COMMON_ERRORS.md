@@ -494,6 +494,17 @@ words:  a compiler error (`'minValue' cannot be greater than maxValue`), a book
 title (*Consider static factory methods instead of constructors*), or a
 quotation of the text being replaced.
 
+**Deadpan keeps its negation too.**  A line that parodies a stock sign or phrase
+is quoting it, and the joke lives in the quotation.  The museum opening in the
+compiled book reads *"The museum of bad dice is open.  Please don't roll the
+exhibits."*  He kept it on 2026-10-12:
+
+> *"that /does/ sound like something I would say [and I would say it totally
+> deadpan]"*
+
+So the test is whether the reader can hear the original:  `Please don't touch
+the exhibits` is under that line, and the positive form would lose it.
+
 **The positive form has a failure mode of its own.**  Entry 29 has it.
 
 ### 29.  "Stays" as the positive rewrite - EXPERIMENTAL
@@ -1069,6 +1080,358 @@ is the failure mode.
 wants emphasis tends to arrive third rather than second.  Where a passage has
 said a thing twice and is reaching for the close, three is the shape it is
 reaching for.
+
+**The malignant form, caught 2026-10-11.**  The postscript's first draft
+described this very file as *"one numbered entry per mistake, each one caught
+in real work"*.  The sentence had already said what the file is, and the two
+trailing phrases were added to finish a rhythm.  He flagged it, then said *"It's
+not the only example,"* and a reread found the same thing all through the draft.
+He drew the line himself:  *"Three beats alone doesn't mean something is wrong,
+but you've correctly identified the malignant pattern."*
+
+So the count is never the problem.  The problem is a beat that exists **to
+complete the shape**.  It turns up in four forms:
+
+- **The stacked tail:**  a sentence that was finished, with one or two
+  descriptive phrases bolted on after a comma.
+- **The filler member:**  a list's third item that restates the first two, or
+  was invented to fill the slot.
+- **Bent parallels:**  matched clauses (`X says what...  Y says where...  Z holds
+  what...`) whose content got shaped to fit the pattern.
+- **The vouching beat:**  a sentence after the point that tells the reader the
+  point mattered (`That turned out to be the right order.`, `That's the whole
+  economy of the thing.`), which is entry 36 arriving as rhythm.
+
+**The test:**  delete the beat and reread.  If the sentence lost a fact, keep it.
+If it lost only its cadence, the beat was filling the shape.
+
+**Knowing the rule did not prevent it.**  The drafter had read this entry, and
+the draft still broke it, in a paragraph about the rules.  So treat this as a
+check that runs on every draft, after drafting, beat by beat.
+
+### 31.  Spelling gets corrected, every time
+
+Jason is dyslexic, and asked for this plainly on 2026-10-06:
+
+> *"please do correct my spelling unless I explicitly say I spell a word
+> incorrectly on purpose ... I have dyslexia, so spelling sucks"*
+
+So a misspelling is never voice.  Fix it in anything drafted from his raw
+material, without asking and without a list of corrections.  Look hardest for
+real-word swaps, since a spell-checker passes them:  `axels` for `axles`,
+`recal` for `recall`, `infact` for `in fact`, `lions share` for `lion's share`.
+Titles and brand names get checked too:  `The Machinery Handbook` is
+*Machinery's Handbook*.
+
+**The exceptions are the ones he names, and only those.**  Keep this table
+current:
+
+| His spelling | Not | Since |
+|---|---|---|
+| `grey` | `gray` | 2026-10-06 |
+
+This is different from entry 26 and entry 22.  Prefix hyphens and the
+plain-text marks are deliberate even when they look like mistakes.  A
+misspelled word is not, unless it is in the table above.
+
+### 32.  "Even" lands on the capper
+
+Found 2026-10-06 in raw notes for a nomination, and confirmed by Jason the
+same day:  *"I didn't even realized that I use 'even' that way, but you're
+right."*
+
+> we now have 7th and 8th graders, and **even** some 6th graders who come to
+> meetings sometimes just because they're really excited to be there
+
+> And then we **even** referenced The Machinery Handbook
+
+> She's **even** willing to do sports workouts in sports she isn't a part of.
+
+Each time, `even` sits on the last and biggest item, the one that tops what
+came before.  It is entry 27 working at the scale of a single word:  the
+escalation arrives at the end of a run, and `even` announces it.
+
+Two more the same day, in one short story about a deadline:  *"worked long
+hours (**even** staying at school later than they're supposed to)"* and
+*"They **even** showed up to school and got security to let them in on a day
+that school was closed."*  Same job both times.
+
+**When drafting in his voice:**  where a list or a run of examples builds to a
+capper, `even` is his word for the turn.  Do not spend it on an item that does
+not top the others.  Confirmed for the casual register, writing to a trusted
+reader.
+
+### 33.  The plain truth rides in the parenthesis
+
+Same notes, same confirmation:
+
+> Winsor is already well known as an Academically rigorous (sometimes
+> unhealthily so) place.
+
+> She isn't a student who wants to get the highest grade at the expense of her
+> class mates (those students do exist).
+
+> (sorry, I can't recal the specifics of any of these events)
+
+The main sentence stays fair and the frank part comes in a lower voice beside
+it:  a criticism, an admission, a limit on the evidence.  This is a job for
+`(...)` that entry 25's table does not yet name.
+
+**For an editor:**  the parenthesis is often the most honest line in the
+passage.  Do not cut it as an aside.  When the audience needs it softened,
+change the wording and keep the point.  Entry 34 covers how he flags that.
+
+### 34.  "Hard to say politically correctly" hands the wording over
+
+> It's hard to say politically correctly, but that spirit also translates into
+> how she approaches her academic work in this hyper-competitive environment.
+
+This sentence states the point in full, to a trusted reader, and asks for help
+fitting it to the real audience.  It is not a retreat from the point.  The
+right response keeps the claim and finds the words.  In the nomination, it
+became *"At a demanding school where grades can feel like a contest, Lucy
+competes without stepping on anyone."*
+
+The failure is reading it as permission to drop the point.  Confirmed
+2026-10-06.
+
+### 35.  Numbers come as honest ranges
+
+> 5 or 6 kids ... between 10 and 15 teams ... hundreds of small children (like
+> 5~10 years old)
+
+He gives a number exactly as precise as what he knows, and no more.  Carry the
+range into the draft as written.  Turning `5 or 6` into `six` or `10 to 15`
+into `a dozen` invents a fact (see the style guide on never inventing
+evidence).  Confirmed 2026-10-06.
+
+### 36.  The commentary line
+
+Found 2026-10-06, when Jason bolded five lines in a nomination draft as
+sounding off without knowing why.  Every one was the assistant's sentence, and
+every one told the reader what to make of the evidence instead of adding any:
+
+| Bolded | What it was doing |
+|---|---|
+| `Her kindness is real, and under it is a fierce competitor.` | Vouching against a doubt nobody raised.  Also inverted syntax no one says aloud. |
+| `That is Inclusion and Teamwork as daily practice.` | Labeling the paragraph's evidence at the close (entry 12). |
+| `Our alumni come back, and my only fellow mentor is a former team member.` | The one sentence in the box where the subject was not the student.  It left the judge to supply the logic linking it to her. |
+| `A small team lives or dies on who shows up, and Lucy brought them.` | A stock phrase on the load-bearing sentence (entry 11), then a manufactured landing. |
+| `Younger students know her story.` | Reporting what is in other people's heads, as a trailer for the next sentence. |
+
+**Why the ear catches it:**  in a document built from facts, every sentence
+but these says something that happened.  The commentary line is the
+drafter's voice cutting in, and it is the only line a skeptical reader can
+argue with.  In a nomination it is also the only line the student cannot
+back up in an interview.
+
+**The fix:**  delete it and read the paragraph again.  Usually the evidence
+already lands.  Where the line was carrying a real connection, as with the
+alumni sentence, write the connection out plainly.  Where it drifted from his
+raw words, go back to them:  *"Her kind demeanor and gentle nature are
+innate, and sometimes hide how competitive she actually is"* became `She is
+kind and gentle by nature, and that sometimes hides how competitive she is.`
+
+**A second check while you are there:**  one of these lines also overclaimed.
+His notes said the core of the team was *"primarily friends she has
+recruited,"* and the commentary version made it all of them.  A summarizing
+sentence drops qualifiers, so compare it against the source.
+
+### 37.  "Landed," meaning it got through
+
+2026-10-11.  A prologue draft said the cards are *"where you find out whether
+it landed,"* meaning whether the idea got across.  He flagged it the same day:
+
+> *"I found a sentence where you used "landed" in the script-kiddy way (which I
+> abhor)."*
+
+**The shape.**  `land` for an idea, a point, a joke, or a lesson reaching its
+audience:  `did that land?`, `the point lands`, `find out if it landed`.  It is
+borrowed slang, and it reads as borrowed.
+
+**The literal sense is fine, and in this course it is most of the uses.**  A
+die lands on a number, a card lands between two others, a roll lands out of
+range, a value lands in the wrong field.  The test is entry 29's:  could you
+watch it land?
+
+**The fix:**  say what happened.  `whether you can do it alone`, `whether they
+understood`, `it worked`, or the concrete verb the sentence was avoiding.
+
+**This file has the shape too, and so does the style guide**, applied to
+prose:  `end a passage when its thought has landed`, `a closing has to land`,
+`the evidence already lands`.  That is the same borrowed sense, with a sentence
+as its subject.  Left as written, pending his ruling on whether a sentence can
+land.  Per the caution at the top, the count measures how often it survived
+review.  `Course/README.md` has one as well (*"this is where you find out if it
+landed"*), which is probably where the prologue draft picked it up.
+
+```bash
+grep -rniE '\bland(s|ed|ing)?\b' --include='*.md' .
+```
+
+Read each hit and ask whether you could watch it land.
+
+### 38.  "Dice" and "data" are singular and plural
+
+2026-10-11.  He settled it plainly:
+
+> *"Dice is like fish.  it is both Singular and Plural.  Just use it that way
+> with zero acknowledgement and zero explanation.  It is correct."*
+
+> *"(The same is true for Data ... Data is both singular and plural, and people
+> need to just fukkin accept that we don't speak classical latin)"*
+
+So:  `a dice`, `one dice`, `the dice is sealed`, `the data is fixed`.  Never
+`die` for one of them.  And never a gloss, footnote, or aside explaining the
+choice, because an explanation concedes the pedant's point and is the error
+too.
+
+**Code and quoted output keep their own text.**  A comment in the repository
+that says `each die`, or program output that prints `one die`, is a citation
+under entry 3's exception, and it stays as written.
+
+**The general rule behind it.**  Where a plural is a pedant's argument,
+usually a Latin or Greek plural, he takes the everyday English side.  He also
+said he might not know a word is contested:
+
+> *"if there are other rules that I haven't though about where it is utterly
+> pedantic to argue about the plural of a word, assume I'm going to land on
+> that same side of the fence, but it is worth asking cause... I might not even
+> know it's contraversial"*
+
+So default to the everyday side, ask him once when a new word comes up, and
+log his answer in the table.
+
+| Word | Use | Never | Since |
+|---|---|---|---|
+| dice | singular and plural, for the thing you roll | `die` (which is the forming tool) | 2026-10-11 |
+| data | singular and plural (`the data is`) | `datum` | 2026-10-11 |
+| indexes | the plural, for arrays and lists | `indices` | 2026-10-11 |
+| schemas | the plural | `schemata` | 2026-10-11 |
+| formulas | the plural | `formulae` | 2026-10-11 |
+| media | singular (`social media is`) | | 2026-10-11 |
+| criteria, phenomena | singular as well as plural (`a criteria`) | | 2026-10-11 |
+| they | singular (`each player rolls their own dice`) | | 2026-10-11 |
+| dwarfs, dwarves | either, interchangeably.  The adjective is `Dwarven` | `Dwarfen` | 2026-10-11 |
+| staffs, staves | two different words.  `Staffs` are walking sticks or wizards' staffs.  A `stave` is a building material, a strip of wood like a barrel's.  He pronounces them differently. | `staves` for more than one staff | 2026-10-11 |
+
+**Asked and left standard:**  `less` with countable nouns.  He didn't take that
+one, so `fewer cards` it is.
+
+```bash
+grep -rnwE 'die|datum' --include='*.md' .
+```
+
+Read each hit.  Skip code fences and quoted output, and leave the verb alone
+(`die` in a game is fine).
+
+**`Die` is a real noun of his, for a different thing.**  In metalwork and
+injection molding, a die is the tool that forms the part, and that is the only
+noun sense he uses it for.  So a die in a forming process stays `die`.  Its plural goes both ways, and
+he drops the `s` about as often as he keeps it:  `a pair of die` and `a pair of
+dies` are both his.  Vary it in a draft, the way entry 26 varies prefix
+hyphens, and leave either one alone when editing.  A single `die` can also
+mean the whole tool, both mated halves together, so `the die` and `a pair of
+die` may name the same object.  Read which one from context, and leave it.
+**The one plural that is
+wrong for the tool is `dice`.**  The rule above is about the thing you roll.
+
+His own test case, and his correction of the assistant's version of it:
+
+> *"a single pair of die are used to cast a single dice ;)"*
+
+**A tooling note from the same day.**  The first sweep for this rule ran in
+Windows PowerShell 5.1 and used the `` `u{0} `` escape to mask inline code.
+5.1 lacks that escape, so the mask and the restore pattern both went wrong:
+22 lines lost their digits (`+5` became `+`, `d20` became `d`) and gained
+junk around every code span.  The lines were restored from a grep taken just
+before the sweep.  Two of the files had no git history.  For edits like this,
+build the mask with `[char]0` or do the work in pandoc's Lua, and take a copy
+of every file first.
+
+### 39.  The giant asterisk, for the monster under the facade
+
+2026-10-12.  When he introduces a topic with something enormous underneath it,
+he marks it, and says so in the room:
+
+> *"I will often, almost always, draw attention to that with a giant asterix (I
+> will even vocally say \asterisk\ that's how I pronounce it and draw it in the
+> air with my hands)."*
+
+> *"I generally don't explain the asterix in the moment"*
+
+> *"it is a queue to students that I'm oversimplifying a complex topic for
+> their understanding level"*
+
+**What it means.**  *There is a monster under this, and today you get the
+facade.*  In his words, from the correction below:  *"the asterix is for
+letting students know that a lovecraftian monster is hiding under the fascade
+i'm introducing."*  His examples are the kind to look for:  storing a variable
+"in memory" while leaving stack and heap allocation out of the room, and a
+blanket statement that introduces a topic while it ignores important
+exceptions to the rule.
+
+**It's rare, and it's for the arcane.**  He named what warrants it:
+
+> *"Talking about memory allocation, reference types as pointers, looking at a
+> "Stack Trace"on an exception and talking about it as if it were "The Stack".
+> It's mostly reserved for the arcane language that students will encounter if
+> they pursue the topics more deeply on their own or in the future."*
+
+So the monster is machinery a student will meet later, under its own technical
+names:  memory, addresses and pointers, the stack and the heap.  In this book
+that's four places so far.  Chapter 1 has two:  **objects have properties
+and behaviors**, which he marks himself the first time he says it, and
+**reference type**, where a variable holds *where the dice are*.  The third is
+*the call stack* in Chapter 2's exception aside, met through a stack trace.
+The fourth is **monads** in Chapter 5, named once, as the family that result
+types and option types belong to.  It's never something to go looking for
+places to add.
+
+**Demystifying it later doesn't retire it.**  He expects a later chapter to
+take on value types against reference types:
+
+> *"eventually we may talk about Value types vs. Reference Types, and will
+> demystify a bit, but it will still be an * worthy topic."*
+
+A chapter that lifts part of the facade still stops short of the machinery, so
+the topic keeps its asterisk there too.
+
+**A sentence that needs one, and isn't fundamental, is a bad sentence.**
+Rewrite it until it's accurate at the level it's pitched.  Usually that means
+scoping it:  `The compiler picks which method runs` became `For an extension,
+the compiler picks which method runs`.
+
+**The shape.**  One oversized asterisk, right after the facade, and nothing
+else.  A footnote, a `more on this later`, or a gloss would be explaining it in
+the moment, so leave all three out.  Like the rest of his conventions, the book
+never explains it.
+
+**In the source.**  A span right after the word, with no space:
+`**reference type**[*]{.iceberg}`.  The build sets it large and in the heading
+color, in Word and on Canvas.  A plain `*` would be read as emphasis.
+
+**The first pass got this backwards, 2026-10-12.**  Given the habit, an
+assistant read all six chapters for "well, actually" sentences and placed
+seventeen asterisks.  The first one he read was after *"That's the whole of
+what `record` decides"*:
+
+> *"If you need to put an asterix on a sentence like that, it's a bad
+> sentence.  Don't look for places to insert an asterix.  Avoid sentences that
+> would need one unless it is fundamental to the topic at hand."*
+
+One survived, on **reference type** in Chapter 1:  the box picture there is
+exactly the "in memory" facade.  Five inaccurate sentences were rewritten, and
+the rest came out.  The pull to complete a set is entry 27's, and here it ran
+as a search:  told what a mark is for, the assistant went to fill every slot
+the mark could take.
+
+```bash
+grep -rn '{.iceberg}' --include='*.md' Course
+```
+
+Expect a handful in the whole book.  For each hit, name the monster.  If you
+can't, rewrite the sentence and take the asterisk out.
 
 ### 6.  The writer goes missing
 
