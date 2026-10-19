@@ -215,6 +215,10 @@ pandoc lua lessons/chapters/tools/build_chapter.lua book
 powershell -ExecutionPolicy Bypass -File lessons/chapters/tools/finish_book.ps1
 ```
 
+On a Mac, the last line is `osascript lessons/chapters/tools/finish_book.applescript`
+instead.  It does the same steps in Word for Mac, in about two and a half
+minutes.  Leave Word alone while it runs.
+
 The tools, all in `tools/`:
 
 | Tool | What it does |
@@ -222,10 +226,12 @@ The tools, all in `tools/`:
 | `verify.sh` | `prep`, `build`, and `shot` a scratch copy of a sketch, with `PRE` and crops |
 | `canvas_sketch.ps1` | writes a lesson's Canvas code into a sketch, with the last lesson's tabs carried in.  Use its parameter names. |
 | `make_test_art.ps1` | stand-in pictures for Bonus A and Bonus C |
+| `make_art/` | a Processing sketch that draws the book's cover, each chapter's title-page picture, and the spot pictures, into `build/book` |
 | `check_prose.sh` | step 8's mechanical checks, on any chapter |
 | `verify_all.sh` | reruns every `planning/verify_*.sh`, and compares the new pictures with the book's |
 | `build_chapter.lua` | Word files, Canvas pages, and the book |
 | `finish_book.ps1` | lays out the book in Word, exports the PDF, and cuts each meeting's PDF from it |
+| `finish_book.applescript` | the same, in Word for Mac.  Its header says where it differs. |
 
 If `finish_book.ps1` stops partway, Word is left running as an `/Automation`
 process.  Stop that one, and only that one, before running it again.
@@ -238,7 +244,10 @@ above it:  upload the PNG to the course's Files and point the `src` at it.
 
 The second and third make the printed book, `build/book/Book_Draft.pdf`, and
 cut each meeting's PDF out of it into `build/pdf`, so a handout and the book
-agree page for page.  Each chapter's title page takes its opening from
+agree page for page.  The cover, each chapter's title-page picture, and the
+spot pictures `finish_book.ps1` puts in large gaps come from `tools/make_art`,
+a Processing sketch:  `Processing cli --sketch=lessons/chapters/tools/make_art
+--run`, then build the book again.  Each chapter's title page takes its opening from
 `book/opening_NN.md`:  one mildly amusing line of prose, then a moment quoted
 from the chapter, where its problem first shows.  The opening prints unlabeled.
 
