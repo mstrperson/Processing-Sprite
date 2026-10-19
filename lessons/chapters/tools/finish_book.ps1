@@ -18,8 +18,7 @@
 #   3. A large gap at the foot of a page, 4 inches or more, gets one of the
 #      spot pictures in build/book/art, sized to fit the gap.  Sparingly:
 #      each picture once, in the largest gaps and at least 15 pages apart.
-#      Most gaps stay white.  This book has no spot pictures yet, so the
-#      list below is empty and every gap stays white.
+#      Most gaps stay white.  tools/make_art draws them.
 #      a. Chapters open on a right-hand page, and a unit page sits on the
 #         left, facing its first chapter.  A blank page goes in where needed.
 #   4. Word fills in the contents.  The file is saved over itself and exported
@@ -39,7 +38,16 @@ $art = Join-Path $dir 'art'
 $GAP_POINTS = 288          # 4 inches
 $PAGE_BOTTOM = 720         # 11 inches less the 1-inch bottom margin, in points
 # Spot pictures, as @{ file = 'spot_name.png'; left = 1 }, files in build/book/art.
-$spots = @()
+$spots = @(
+  @{ file = 'spot_coin.png';      left = 1 },
+  @{ file = 'spot_cloud.png';     left = 1 },
+  @{ file = 'spot_mouse.png';     left = 1 },
+  @{ file = 'spot_keys.png';      left = 1 },
+  @{ file = 'spot_notes.png';     left = 1 },
+  @{ file = 'spot_blob.png';      left = 1 },
+  @{ file = 'spot_tree.png';      left = 1 },
+  @{ file = 'spot_flipbook.png';  left = 1 }
+)
 
 $word = New-Object -ComObject Word.Application
 $word.Visible = $false

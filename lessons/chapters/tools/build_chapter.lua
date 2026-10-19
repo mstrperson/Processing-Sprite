@@ -640,9 +640,15 @@ end
 -- Every picture gets a thin border, in the tables' edge color.  A sketch with
 -- a white background is a white rectangle, and on a white page it vanishes.
 -- pandoc already writes each picture an outline with no fill, so this fills it.
+-- The book's line art, on the cover and each chapter's title page (paragraphs
+-- in the Book Cover style), is drawn on a transparent background and goes
+-- unframed.
 local function frame_pictures(xml)
-  return (xml:gsub('<a:ln w="9525">%s*<a:noFill%s*/>',
-    '<a:ln w="9525"><a:solidFill><a:srgbClr val="C9D8E8" /></a:solidFill>'))
+  return (xml:gsub("(<w:p[ >].-</w:p>)", function(para)
+    if para:find('w:val="BookCover"', 1, true) then return para end
+    return (para:gsub('<a:ln w="9525">%s*<a:noFill%s*/>',
+      '<a:ln w="9525"><a:solidFill><a:srgbClr val="C9D8E8" /></a:solidFill>'))
+  end))
 end
 
 local function finish_docx(bytes)
