@@ -25,7 +25,7 @@ overwrites them, chapter-reference.docx included.
 
 local HERE = pandoc.path.directory(arg[0])
 local DRAFTS = pandoc.path.directory(HERE)
-local SERIES = "Make Your Own Game"
+local SERIES = "Objects First with Processing"
 
 -- One entry per chapter.  Each meeting starts at a line of the Markdown;  the
 -- first starts at the top.  `note` is the subtitle for a meeting whose piece
@@ -873,7 +873,7 @@ local BOOK = {
   { unit = "For Teachers", about = "What's inside the toolbox." },
   "R",
 }
-local BOOK_TITLE = "Make Your Own Game"      -- the course's title, from canvas_import/course.json
+local BOOK_TITLE = "Objects First with Processing"   -- Jason's, 2026-10-20
 local BOOK_TAGLINE = "Your character, your world, your rules."
 
 local function styled(style, inlines)

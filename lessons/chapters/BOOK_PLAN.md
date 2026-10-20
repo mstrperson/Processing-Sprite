@@ -1,4 +1,4 @@
-# Book Plan - Make Your Own Game
+# Book Plan - Objects First with Processing
 
 The decisions behind the whole book, made once, before the chapters, so that
 eleven chapters don't each make them separately.  Written 2026-10-18 by Claude,
@@ -416,3 +416,4 @@ The chapters were drafted with a default for each.  A yes or no settles most.
 13. **The book's title.**  *Make Your Own Game*, from the Canvas front page, with
     its own line *"your character, your world, your rules"* as the tagline?
     > Defer this and leave your suggestion for now, it's not a good title, but I need to think about that one more... lol.
+    > Settled 2026-10-20:  *Objects First with Processing*.  The tagline stays.
