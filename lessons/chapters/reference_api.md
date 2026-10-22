@@ -161,17 +161,20 @@ frame 50:  pos = (600.0, 300.0)
 frame 51:  pos = (NaN, NaN)
 ```
 
-It sounds rare, and it isn't.  The mouse's position is a whole number.  A sprite
-starting at a whole-number spot, level with the mouse and a multiple of its speed
-away, lands on it exactly.  This book's own screenshots hit it while being made, in
-Chapter 5, with the mouse 200 pixels straight right of a player moving at 4.  The
-fix is in Part Five.
+In a classroom it's exceedingly rare.  The sprite has to land on the mouse
+exactly:  level with it, a whole number of steps away, with the mouse held
+perfectly still the whole way.  A hand on a real mouse doesn't do that.  A test
+script can, and this book's screenshots hit it once that way, in Chapter 5, with
+a scripted mouse parked 200 pixels straight right of a player moving at 4.  It's
+here so that a vanished sprite has an explanation, if you ever see one.  The fix
+is in Part Five.
 
-Calling `followMouse()` and `move()` together doesn't jitter, whatever the Lesson 4
-Canvas page says.  `followMouse()` pulls the sprite 4 toward the mouse, and `move()`
-pushes it `vel`, which is still `(4, 0)`.  The two cancel where *toward the mouse*
-points straight left, so the sprite parks on the mouse's row, just to its right,
-and stays perfectly still.  Chapter 4 shows it.
+Calling `followMouse()` and `move()` together doesn't jitter.  `followMouse()`
+pulls the sprite 4 toward the mouse, and `move()` pushes it `vel`, which is still
+`(4, 0)`.  The two cancel where *toward the mouse* points straight left, so the
+sprite parks on the mouse's row, just to its right, and stays perfectly still.
+Chapter 4 shows it, and the Lesson 4 Mouse Group page has students try it on
+purpose.
 
 ## R.7  The vectors it hands out
 

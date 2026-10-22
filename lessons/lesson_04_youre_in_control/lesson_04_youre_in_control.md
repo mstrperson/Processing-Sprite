@@ -40,14 +40,39 @@ Then switch: comment out followMouse, uncomment keyboardControl in keyPressed()
 
 ## Guided Activity  (~20 min)
 
-<!-- Step-by-step instructions go here -->
-<!-- Students try BOTH control styles before picking their favorite for the rest of the unit -->
+<!--
+Split the class.  Running both control styles in turn, with everyone, was too much
+for one period.  So half the class does keyboard control and half does mouse
+following, then they share at their tables.
+
+Canvas has two parallel student Pages for this (one Assignment, one teacher copy):
+  - Mouse Group:  followMouse(), setVelocity() as the chase speed, and followMouse()
+    plus move() tried on purpose (the character parks next to the mouse)
+  - Keys Group:   keyboardControl() in keyPressed(), move() still in draw(), the
+    coasting, and the brake (every non-arrow key stops it)
+
+  1. Split each table down the middle, so every table has both groups.
+  2. Each group works its own Page, up to "Table share".  (~12 min)
+  3. Table share (~8 min):  each student shows their sketch running and hands over
+     the controls, then drives the other group's sketch.
+  4. Each table answers together:  which input is asked about every frame, and
+     which happens once?  Take two or three tables' answers to the whole class.
+  5. Students pick their control style for the rest of the unit.  Anyone who
+     switches follows the other group's Page.
+
+Students still feel BOTH control styles before picking:  one by building it, the
+other in a classmate's sketch.
+-->
 
 ## Starter Code
 
-**Main sketch tab:**
+Two starters, one per group.  Both keep the `MyCharacter` tab from Lesson 3.
+The full sketches are `examples/Lessons/Lesson04_YoureInControl_Mouse` and
+`examples/Lessons/Lesson04_YoureInControl_Keys`.
+
+**Mouse Group, main sketch tab:**
 ```java
-// Lesson 4 — You're in Control
+// Lesson 4 — You're in Control (Mouse Group)
 import coxprogramming.processing.sprites.*;
 
 MyCharacter player;
@@ -55,23 +80,36 @@ MyCharacter player;
 void setup() {
   size(800, 600);
   player = new MyCharacter(this, width/2, height/2);
-  player.setVelocity(4, 0);  // sets the speed used by followMouse()
+  player.setVelocity(4, 0);  // the speed followMouse() chases at
 }
 
 void draw() {
   background(240);
-
-  // --- Option A: follow the mouse ---
   player.followMouse();
   player.drawSprite();
+}
+```
 
-  // --- Option B: arrow-key control ---
-  // (comment out Option A and uncomment these two lines)
-  // player.move();
-  // player.drawSprite();
+**Keys Group, main sketch tab:**
+```java
+// Lesson 4 — You're in Control (Keys Group)
+import coxprogramming.processing.sprites.*;
+
+MyCharacter player;
+
+void setup() {
+  size(800, 600);
+  player = new MyCharacter(this, width/2, height/2);
+  player.setVelocity(4, 0);  // the drift before your first key
 }
 
-// Arrow keys control the character (used with Option B)
+void draw() {
+  background(240);
+  player.move();        // still needed - applies the velocity each frame
+  player.drawSprite();
+}
+
+// Arrow keys change the velocity
 void keyPressed() {
   player.keyboardControl();
 }

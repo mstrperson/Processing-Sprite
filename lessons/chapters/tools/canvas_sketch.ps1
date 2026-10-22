@@ -14,11 +14,21 @@
 # Canvas pages say "keep your MyCharacter and Cloud tabs", so a lesson's sketch
 # starts with the last lesson's tabs, and the main tab is replaced.
 # Kept ASCII, for PowerShell 5.1.
-param([string]$Lesson, [string]$Folder, [int]$MainBlock = -1, [string]$CarryFrom = '')
+# [track] picks one group's Page in a split lesson, like Lesson 4's mouse and
+# keys:  its code is used in place of the lesson's.
+param([string]$Lesson, [string]$Folder, [int]$MainBlock = -1, [string]$CarryFrom = '', [string]$Track = '')
 
 $utf8 = New-Object System.Text.UTF8Encoding $false
 $json = Join-Path $PSScriptRoot "..\..\canvas_import\content\$Lesson.json"
 $page = [IO.File]::ReadAllText((Resolve-Path $json).Path, $utf8) | ConvertFrom-Json
+$code = $page.code
+if ($Track) {
+  $t = $page.tracks | Where-Object { $_.slug -eq $Track }
+  if (-not $t) { throw "Lesson $Lesson has no track '$Track'" }
+  $code = $t.code
+} elseif ($page.tracks) {
+  throw "Lesson $Lesson is split;  pass -Track (" + (($page.tracks | ForEach-Object { $_.slug }) -join ', ') + ')'
+}
 $name = Split-Path $Folder -Leaf
 
 if (Test-Path $Folder) { Remove-Item -Recurse -Force $Folder }
@@ -30,7 +40,7 @@ if ($CarryFrom) {
 }
 
 $i = 0
-foreach ($block in $page.code) {
+foreach ($block in $code) {
   $body = ($block.body -replace "`r?`n", "`n") + "`n"
   if ($block.label -match 'New tab - (\w+)\.pde') {
     [IO.File]::WriteAllText((Join-Path $Folder "$($Matches[1]).pde"), $body, $utf8)

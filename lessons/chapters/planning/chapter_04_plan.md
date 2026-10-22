@@ -13,7 +13,7 @@ feedback is most useful.
 - `lessons/canvas_import/content/04.json`, teacher section and all.  *"This is
   the real idea of the lesson"*:  continuous input against events.  The two
   options, the coasting conversation, the focus warning, and the pitfalls.
-- `examples/Lessons/Lesson04_YoureInControl`.
+- `examples/Lessons/Lesson04_YoureInControl_Mouse` and `_Keys` (split from one starter on 2026-10-22, after the run).
 - `Sprite.java`:  `followMouse()`, `keyboardControl()`, `moveTo()`.
 - Chapter 3, and Lesson 5's plan and Canvas page, for the hand-off.
 

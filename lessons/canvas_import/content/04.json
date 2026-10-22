@@ -6,16 +6,9 @@
   "title": "You're in Control",
   "tagline": "Your character stops doing its own thing and starts doing what you tell it.",
   "whenToUse": null,
-  "timing": "One period (~50 min)",
+  "timing": "One period (~50 min).  The class splits in two:  half the **Mouse Group**, half the **Keys Group**, then they teach each other at their tables.",
   "newIdea": "Input -- the program reacting to you",
   "builtOn": "Lesson 3 -- `setVelocity()` and `move()`.",
-
-  "goals": [
-    "Use `followMouse()` to make your character chase the cursor",
-    "Use `keyboardControl()` to drive your character with the arrow keys",
-    "Explain the difference between **continuous** input and an **event**",
-    "Use `mousePressed()` to make something happen once per click"
-  ],
 
   "vocab": [
     { "term": "input", "def": "information coming into the program from you -- the mouse, the keyboard" },
@@ -27,96 +20,189 @@
 
   "warmup": "What does `move()` do, and where does it go?  What happens if you leave it out?",
 
-  "howItWorks": [
+  "tracks": [
     {
-      "h": "Two very different kinds of input",
-      "p": [
-        "This is the real idea of the lesson, and it is worth slowing down for.",
-        "Some questions have an answer **all the time**:  \"where is the mouse right now?\"  You can ask that on every frame.  That is **continuous** input, and it belongs in `draw()`.",
-        "A key press is an **event**.  Processing calls `keyPressed()` when it receives that event.  Holding a key may generate repeated key-press events."
-      ]
-    },
-    {
-      "h": "Option A:  followMouse()",
-      "p": [
-        "`followMouse()` pulls your character toward the cursor a little bit, every frame.  So it goes **inside `draw()`**."
+      "slug": "mouse",
+      "group": "Mouse Group",
+      "title": "You're in Control -- Mouse Group",
+      "tagline": "Your character stops doing its own thing and starts chasing your mouse.",
+
+      "goals": [
+        "Use `followMouse()` to make your character chase the cursor",
+        "Explain why `followMouse()` goes inside `draw()`",
+        "Teach your table how the mouse control works, and try the arrow keys on a Keys Group sketch",
+        "Pick the control style you want for your game"
       ],
-      "code": {
-        "label": "Following the mouse",
-        "body": "void setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);   // REQUIRED - this is the speed it chases at\n}\n\nvoid draw() {\n  background(240);\n  player.followMouse();\n  player.drawSprite();\n}"
-      },
-      "bullets": [
-        "**You must set a velocity first.**  `followMouse()` uses the size of your velocity as its chase speed.  If the velocity is zero, your character will not move an inch and it will look broken.",
-        "When you use `followMouse()`, do **not** also call `move()`.  `followMouse()` moves the position itself.  Calling both fights over the same character."
-      ]
-    },
-    {
-      "h": "Option B:  keyboardControl()",
-      "p": [
-        "`keyboardControl()` reads the arrow keys and sets your character's velocity to match.  It goes **inside `keyPressed()`**, not `draw()`.",
-        "This makes a key press change the velocity.  Then `move()` in `draw()` applies that velocity each frame."
+
+      "howItWorks": [
+        {
+          "h": "Today the class splits in two",
+          "p": [
+            "Half the class is learning to steer with the **mouse**.  That's you.  The other half is learning the **arrow keys**.",
+            "In about fifteen minutes you meet up at your table and teach each other.  So as you work, notice what surprises you.  That's what you'll share."
+          ]
+        },
+        {
+          "h": "Two very different kinds of input",
+          "p": [
+            "Some questions have an answer **all the time**:  \"where is the mouse right now?\"  You can ask that on every frame.  That is **continuous** input, and it belongs in `draw()`.",
+            "Your group uses that kind.  The Keys Group uses the other kind, an **event**:  a key press happens once, and Processing comes and tells the program.  You'll see it at your table."
+          ]
+        },
+        {
+          "h": "followMouse()",
+          "p": [
+            "`followMouse()` pulls your character toward the cursor a little bit, every frame.  So it goes **inside `draw()`**."
+          ],
+          "code": {
+            "label": "Following the mouse",
+            "body": "void setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);   // REQUIRED - this is the speed it chases at\n}\n\nvoid draw() {\n  background(240);\n  player.followMouse();\n  player.drawSprite();\n}"
+          },
+          "bullets": [
+            "**You must set a velocity first.**  `followMouse()` uses the size of your velocity as its chase speed.  If the velocity is zero, your character will not move an inch and it will look broken.",
+            "Use `followMouse()` **or** `move()`, one or the other.  `followMouse()` moves the position itself."
+          ]
+        },
+        {
+          "h": "mousePressed() - once per click",
+          "p": [
+            "`mousePressed()` is an event function, the same kind the Keys Group is using.  Whatever you put inside it happens exactly once, each time you click."
+          ],
+          "code": {
+            "label": "Snap to the mouse on click",
+            "body": "void mousePressed() {\n  player.moveTo(mouseX, mouseY);   // teleport to wherever you clicked\n}"
+          }
+        }
       ],
-      "code": {
-        "label": "Arrow-key control",
-        "body": "void draw() {\n  background(240);\n  player.move();        // still needed - applies the velocity each frame\n  player.drawSprite();\n}\n\nvoid keyPressed() {\n  player.keyboardControl();   // arrow keys change the velocity\n}"
-      }
-    },
-    {
-      "h": "Your character coasts, and that is not a bug",
-      "p": [
-        "Press an arrow key and let go.  Your character keeps going.",
-        "That is correct.  `keyboardControl()` **sets** the velocity, and nothing ever un-sets it.  Releasing the key does not tell the character to stop -- nobody asked it to.",
-        "It feels like ice skating.  Some games want exactly that.  If yours does not, that is a great thing to fix later."
-      ]
-    },
-    {
-      "h": "mousePressed() - once per click",
-      "p": [
-        "`mousePressed()` is another event function.  Whatever you put inside it happens exactly once, each time you click."
+
+      "steps": [
+        "Open your Lesson 3 sketch.  The `MyCharacter` tab still does not change.",
+        "Make sure `player.setVelocity(4, 0);` is in `setup()`.  Without it, nothing will move.",
+        "In `draw()`, replace `player.move();` with `player.followMouse();`",
+        "Press **&#9654; Run** and move your mouse around.  Your character should chase the cursor.  Hold the mouse still, and watch it slide straight there.",
+        "Change the `4` in `setVelocity` to `1`, then to `12`.  Slow and stalky, or fast and twitchy?",
+        "Try `setVelocity(0, 5)`, and then `setVelocity(5, 0)`.  Is one faster?  `followMouse()` only cares how **big** the velocity is, and ignores which way it points.",
+        "Put `player.move();` back in `draw()`, right under `followMouse()`, and run it.  Your character never quite reaches the mouse.  It parks next to it, on the side its velocity points.  Take `move()` back out.",
+        "Write down one thing that surprised you, to tell your table.",
+        "### Table share",
+        "Meet up with the Keys Group at your table.  Show your sketch running, and let them drive it with the mouse.",
+        "Now drive theirs with the arrow keys.  **Click inside their sketch window first.**  Ask them:  what happens when you let go of a key?  What does the space bar do?",
+        "Together, answer this:  which group's input is asked about **every frame**, and which one **happens once**?",
+        "Pick the control style you want for your game.  If you pick the keys, the **Keys Group** page has the steps."
       ],
-      "code": {
-        "label": "Snap to the mouse on click",
-        "body": "void mousePressed() {\n  player.moveTo(mouseX, mouseY);   // teleport to wherever you clicked\n}"
-      }
+
+      "code": [
+        {
+          "label": "Main sketch tab",
+          "body": "// Lesson 4 - You're in Control (Mouse Group)\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);  // the speed followMouse() chases at\n}\n\nvoid draw() {\n  background(240);\n  player.followMouse();\n  player.drawSprite();\n}"
+        }
+      ],
+
+      "makeItYours": [
+        "Tune the speed in `setVelocity()` until the chase feels right for your character.",
+        "Add a `mousePressed()` that does something fun -- try `player.moveTo(mouseX, mouseY);` to teleport.",
+        "Add a second, non-player blob that moves on its own (copy the pattern from Lesson 3) so the screen is not empty."
+      ],
+      "challenge": "Make a click speed your character up.  Put `player.setVelocity(12, 0);` inside `mousePressed()`.  Then add a `keyPressed()` with `player.setVelocity(4, 0);` inside it, so any key slows it back down.  That's two event functions, both changing the chase speed.",
+
+      "flintHint": "Good things to ask:  \"my character will not follow the mouse\", \"why does my character stop next to the mouse instead of on it?\", or \"what does setVelocity do with followMouse?\"  Tell it you're in the Mouse Group."
+    },
+    {
+      "slug": "keys",
+      "group": "Keys Group",
+      "title": "You're in Control -- Keys Group",
+      "tagline": "Your character stops doing its own thing and starts going where the arrow keys send it.",
+
+      "goals": [
+        "Use `keyboardControl()` to drive your character with the arrow keys",
+        "Explain why `keyboardControl()` goes inside `keyPressed()`, and why `move()` stays in `draw()`",
+        "Teach your table how the keys work, and try the mouse on a Mouse Group sketch",
+        "Pick the control style you want for your game"
+      ],
+
+      "howItWorks": [
+        {
+          "h": "Today the class splits in two",
+          "p": [
+            "Half the class is learning to steer with the **arrow keys**.  That's you.  The other half is learning the **mouse**.",
+            "In about fifteen minutes you meet up at your table and teach each other.  So as you work, notice what surprises you.  That's what you'll share."
+          ]
+        },
+        {
+          "h": "Two very different kinds of input",
+          "p": [
+            "A key press is an **event**.  It happens once, at one instant, so Processing comes and tells the program by calling `keyPressed()`.  Holding a key may generate repeated key-press events.",
+            "The Mouse Group uses the other kind, **continuous** input:  \"where is the mouse right now?\" has an answer every frame, so it gets asked in `draw()`.  You'll see it at your table."
+          ]
+        },
+        {
+          "h": "keyboardControl()",
+          "p": [
+            "`keyboardControl()` reads the arrow keys and sets your character's velocity to match.  It goes **inside `keyPressed()`**, not `draw()`.",
+            "So a key press **changes** the velocity, once.  Then `move()` in `draw()` **uses** that velocity, every frame."
+          ],
+          "code": {
+            "label": "Arrow-key control",
+            "body": "void draw() {\n  background(240);\n  player.move();        // still needed - applies the velocity each frame\n  player.drawSprite();\n}\n\nvoid keyPressed() {\n  player.keyboardControl();   // arrow keys change the velocity\n}"
+          },
+          "bullets": [
+            "**Click inside the sketch window first.**  Until you do, the keys go to the code editor.",
+            "Keep `move()` in `draw()`.  Without it, every key press sets a velocity and nothing ever takes the step."
+          ]
+        },
+        {
+          "h": "Your character coasts, and that is not a bug",
+          "p": [
+            "Press an arrow key and let go.  Your character keeps going.",
+            "That is correct.  `keyboardControl()` **sets** the velocity, and letting go of the key leaves it just as it was.  It feels like ice skating.  Some games want exactly that.",
+            "An arrow sets a speed of 5 in that direction.  Any other key sets the velocity to zero, so every key that isn't an arrow is a brake."
+          ]
+        }
+      ],
+
+      "steps": [
+        "Open your Lesson 3 sketch.  The `MyCharacter` tab still does not change.",
+        "Make sure `player.setVelocity(4, 0);` is in `setup()`, and `player.move();` is still in `draw()`.",
+        "At the very bottom of your sketch, after the closing brace of `draw()`, add a `keyPressed()` function with `player.keyboardControl();` inside it.",
+        "Press **&#9654; Run**, and wait a second before you touch anything.  Your character drifts slowly right.  That's the `setVelocity(4, 0)`, and `move()` using it, the same as Lesson 3.",
+        "**Click inside the sketch window**, then use the arrow keys.  Each arrow sends your character that way.",
+        "Press an arrow and let go.  Notice it keeps going.  That is the coasting.",
+        "Press the space bar.  Then try a letter key.  What do they do?",
+        "Change the numbers in `setVelocity()` and run again.  What changes?  (Look before and after your first key press.)",
+        "Write down one thing that surprised you, to tell your table.",
+        "### Table share",
+        "Meet up with the Mouse Group at your table.  Show your sketch running, and let them drive it with the arrow keys.  Remind them to click in the window first.",
+        "Now drive theirs with the mouse.  Ask them:  what happens if the velocity is `(0, 0)`?  Why does it go in `draw()`?",
+        "Together, answer this:  which group's input is asked about **every frame**, and which one **happens once**?",
+        "Pick the control style you want for your game.  If you pick the mouse, the **Mouse Group** page has the steps."
+      ],
+
+      "code": [
+        {
+          "label": "Main sketch tab",
+          "body": "// Lesson 4 - You're in Control (Keys Group)\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);  // the drift before your first key\n}\n\nvoid draw() {\n  background(240);\n  player.move();        // still needed - applies the velocity each frame\n  player.drawSprite();\n}\n\n// Arrow keys change the velocity\nvoid keyPressed() {\n  player.keyboardControl();\n}"
+        }
+      ],
+
+      "makeItYours": [
+        "Decide how you feel about the coasting.  Ice skating, or a problem?  (The challenge below fixes it.)",
+        "Add a `mousePressed()` that does something fun -- try `player.moveTo(mouseX, mouseY);` to teleport.",
+        "Combine them:  arrow keys to drive, plus a click ability.",
+        "Add a second, non-player blob that moves on its own (copy the pattern from Lesson 3) so the screen is not empty."
+      ],
+      "challenge": "Make the character stop when you release the key.  Add a `keyReleased()` function with `player.setVelocity(0, 0);` inside it.  Now compare the two feels -- which one suits your character?",
+
+      "flintHint": "Good things to ask:  \"why do the arrow keys do nothing?\", \"why does my character keep going after I let go?\", or \"how do I make my character stop when I let go of the key?\"  Tell it you're in the Keys Group."
     }
   ],
-
-  "steps": [
-    "Open your Lesson 3 sketch.  The `MyCharacter` tab still does not change.",
-    "**Try Option A first.**  In `draw()`, replace `player.move();` with `player.followMouse();`",
-    "Make sure `player.setVelocity(4, 0);` is still in `setup()`.  Without it, nothing will move.",
-    "Press **&#9654; Run** and move your mouse around.  Your character should chase the cursor.",
-    "Change the `4` in `setVelocity` to `1`, then to `12`.  Slow and stalky, or fast and twitchy?",
-    "**Now try Option B.**  Comment out the `followMouse()` line and put `player.move();` back.",
-    "Add a `keyPressed()` function at the bottom of your sketch with `player.keyboardControl();` inside it.",
-    "Run it.  **Click inside the sketch window first** -- the keyboard is ignored until the window has focus.  Now use the arrow keys.",
-    "Press an arrow and let go.  Notice it keeps going.  That is the coasting.",
-    "Pick the control style you want to use for the rest of the unit, and delete or comment out the other one."
-  ],
-
-  "code": [
-    {
-      "label": "Main sketch tab",
-      "body": "// Lesson 4 - You're in Control\nimport coxprogramming.processing.sprites.*;\n\nMyCharacter player;\n\nvoid setup() {\n  size(800, 600);\n  player = new MyCharacter(this, width/2, height/2);\n  player.setVelocity(4, 0);  // sets the speed used by followMouse()\n}\n\nvoid draw() {\n  background(240);\n\n  // --- Option A: follow the mouse ---\n  player.followMouse();\n  player.drawSprite();\n\n  // --- Option B: arrow-key control ---\n  // (comment out Option A and uncomment these two lines)\n  // player.move();\n  // player.drawSprite();\n}\n\n// Arrow keys control the character (used with Option B)\nvoid keyPressed() {\n  player.keyboardControl();\n}"
-    }
-  ],
-
-  "makeItYours": [
-    "Try **both** control modes, then pick the one you want for the rest of the unit.",
-    "If you chose `followMouse()`:  tune the speed in `setVelocity()` until the chase feels right.",
-    "Add a second, non-player blob that moves on its own (copy the pattern from Lesson 3) so the screen is not empty.",
-    "If you chose `keyboardControl()`:  add a `mousePressed()` that does something fun -- try `player.moveTo(mouseX, mouseY);` to teleport.",
-    "Combine them:  arrow keys to drive, plus a click ability."
-  ],
-  "challenge": "Make the character stop when you release the key.  Add a `keyReleased()` function with `player.setVelocity(0, 0);` inside it.  Now compare the two feels -- which one suits your character?",
 
   "flintHint": "Good things to ask:  \"my character will not follow the mouse\", \"why do the arrow keys do nothing?\", or \"how do I make my character stop when I let go of the key?\"  Tell it which control style you picked.",
 
   "wrapup": "What does `keyboardControl()` change when a key is pressed, and what does `move()` do each frame?",
 
-  "assignmentTask": "Take control of your character.  Try both styles, then commit to one and tune it until it feels good.",
+  "assignmentTask": "Take control of your character.  Get your group's style working, try the other group's at your table, then commit to one and tune it until it feels good.",
   "assignmentDo": [
-    "Get **both** control styles working, at least briefly.  You need to feel the difference to choose well.",
+    "Get your group's control style working, and drive the other group's sketch at your table.  You need to feel the difference to choose well.",
     "Pick the one that fits the game you want to build, and tune it -- the chase speed, or how it handles the coasting.",
     "Add one extra piece of input if you can:  a `mousePressed()` ability, or a second blob moving on its own."
   ],
@@ -145,34 +231,34 @@
   "teacher": {
     "di": [
       {
+        "h": "The split",
+        "p": [
+          "There are two student Pages this lesson:  **Mouse Group** and **Keys Group**.  Split each table down the middle, so every table has both groups and the share at the end has someone to teach.",
+          "Each student builds one control style all the way through, then feels the other one in a classmate's hands.  The choice still comes after they've felt both, and the lesson fits in one period."
+        ]
+      },
+      {
         "h": "followMouse() - and the speed requirement",
         "p": [
           "It goes **inside `draw()`** and runs every frame, pulling the character toward the cursor.",
-          "It uses `vel.mag()` as the chase speed.  If the velocity is `(0, 0)`, `followMouse()` moves the character exactly zero pixels and looks completely broken.  Call `player.setVelocity(4, 0)` in `setup()`.",
-          "Also:  when using `followMouse()`, do **not** call `move()`.  `followMouse()` writes the position directly, and calling both makes the motion fight itself."
+          "It uses `vel.mag()` as the chase speed, and ignores the velocity's direction.  If the velocity is `(0, 0)`, `followMouse()` moves the character exactly zero pixels and looks completely broken.  Call `player.setVelocity(4, 0)` in `setup()`.",
+          "Also:  when using `followMouse()`, do **not** call `move()`.  With both, the pull toward the mouse and the push of the velocity cancel, and the character parks next to the mouse, on the side its velocity points, and never reaches it.  The Mouse Group page has them try this on purpose."
         ]
       },
       {
         "h": "keyboardControl() - and where it goes",
         "p": [
           "It goes **inside `keyPressed()`**.  Not `draw()`.",
-          "`keyboardControl()` reads `keyCode` and sets velocity.  Calling it in `draw()` reapplies that setting each frame and can overwrite other velocity changes.  Use `keyPressed()` here so velocity changes in response to a key event.",
+          "`keyboardControl()` reads `keyCode` and sets velocity:  an arrow sets a speed of 5 that way, whatever `setVelocity()` said, and any other key sets it to zero.  So the `setVelocity(4, 0)` in `setup()` only shows as a drift to the right before the first key.",
           "After `keyPressed()` sets the velocity, `move()` in `draw()` applies it each frame.  So the `draw()` loop still looks exactly like Lesson 3."
         ]
       },
       {
         "h": "The continuous vs. event distinction",
         "p": [
-          "This is the transferable idea in the lesson, and it is worth more than either method.",
+          "This is the transferable idea in the lesson, and it is worth more than either method.  With the split, it's the question each table answers together, so the students supply it.",
           "\"Where is the mouse?\" always has an answer, so you can ask every frame.  \"Did the player just press a key?\" only has an answer at one instant, so the system has to come tell you.",
           "Frame it as a question they could answer about any program.  It's bigger than these two functions."
-        ]
-      },
-      {
-        "h": "Demo the switch live",
-        "p": [
-          "Put `followMouse()` in `draw()` and run -- instant, obvious.  Then comment it out, uncomment `move()`, add `keyPressed()`, and run again.",
-          "Doing both on the projector in ninety seconds makes the choice concrete before you ask them to pick one."
         ]
       },
       {
@@ -180,32 +266,31 @@
         "p": [
           "With `keyboardControl()`, releasing the key leaves the velocity unchanged, so the character coasts.  Students expect it to stop.",
           "This is a genuinely good discussion about **state**:  the character is not \"being pushed,\" it *has* a velocity, and nothing has changed it back.  Nobody told it to stop.",
-          "If they want it to stop, `keyReleased()` with `setVelocity(0, 0)` does it.  Offer it only if they ask."
+          "The Keys Group will bring this to their tables.  `keyReleased()` with `setVelocity(0, 0)` stops it, and it's their page's challenge."
         ]
       }
     ],
     "guided": [
-      "Everyone opens Lesson 3's sketch.  Confirm `setVelocity()` is in `setup()`.",
-      "Swap `move()` for `followMouse()` together.  Run.  Everyone chases the cursor for a minute -- let them play, it is fun and it costs nothing.",
-      "As a class, change the speed to `1`, then to `12`.  Ask which feels better and why.  There is no right answer; the point is that they have an opinion.",
-      "Switch to Option B together:  comment out `followMouse()`, restore `move()`, add `keyPressed()` at the bottom.",
-      "**Remind everyone to click inside the sketch window** before using the keyboard.  This will strand people otherwise.",
-      "Have everyone press an arrow and release.  Ask what happened.  Run the coasting discussion here.",
-      "Students choose their control style and tune it.  Circulate."
+      "Split each table down the middle.  Half open the **Mouse Group** page, half the **Keys Group** page.",
+      "Everyone opens their Lesson 3 sketch and works their group's steps, up to the **Table share** heading.  About 12 minutes.",
+      "Circulate.  Mouse Group:  check `setVelocity()` first, every time.  Keys Group:  remind them to click inside the sketch window.  This will strand people otherwise.",
+      "Call time for the table share, about 8 minutes.  Each student shows their sketch running and hands over the controls, then drives the other group's sketch.",
+      "Each table answers together:  which group's input is asked about every frame, and which happens once?  Take two or three tables' answers to the whole class.",
+      "Students choose their control style and tune it.  Anyone who switches follows the other group's page.  Circulate."
     ],
     "pitfalls": [
       "**`followMouse()` with no velocity set.**  Moves zero pixels.  Looks broken, is not.  Check `setup()` first every time.",
-      "**Calling both `followMouse()` and `move()`.**  The motion fights itself and looks jittery.",
+      "**Calling both `followMouse()` and `move()`.**  The character parks next to the mouse and never reaches it.  It looks like a chase that gives up.",
       "**`keyboardControl()` inside `draw()`.**  It reapplies velocity each frame and can overwrite a stop set in `keyReleased()`.  Keep it in `keyPressed()` for this lesson's event-driven pattern.",
-      "**Window not focused.**  Keyboard input goes nowhere until they click inside the sketch window.  Costs students five minutes each if you do not warn them.",
-      "Deleting `move()` when switching to keyboard control.  The velocity gets set and then never applied.",
+      "**Window not focused.**  Keyboard input goes nowhere until they click inside the sketch window.  Costs students five minutes each if you do not warn them.  At the table share it catches the Mouse Group too.",
+      "**Switching from mouse to keys after the share, and forgetting `move()`.**  The velocity gets set and then never applied.  Point them at the Keys Group page.",
       "Expecting the character to stop on key release.  It coasts.  That is state at work, and the code is doing exactly what it was told."
     ],
     "wrapupAnswer": "`keyboardControl()` sets velocity from the key code; `move()` applies that velocity each frame.  Releasing a key leaves velocity unchanged in this starter.  Holding a key may generate repeated `keyPressed()` calls.",
     "notes": [
-      "Have students try **both** styles before choosing.  The choice is more meaningful if they have felt the alternative, and it is their first real design decision in the unit.",
+      "This lesson used to run as one sequence, with everyone doing both styles in turn.  That was a lot for one period.  The split gives each student one style in depth, and the table share is where they feel the other one.",
       "`followMouse()` is easier and more forgiving; `keyboardControl()` feels more like a real game.  Both are fine choices for Lesson 7.",
-      "Fast finishers:  `keyReleased()` with `setVelocity(0, 0)`, or a `mousePressed()` ability.  Both are one-liners with a big feel change.",
+      "Fast finishers:  each page has its own challenge.  The Mouse Group's uses two event functions to change the chase speed;  the Keys Group's is `keyReleased()` with `setVelocity(0, 0)`.",
       "Whatever they choose today, they can change later.  Say that out loud so nobody agonizes."
     ]
   }

@@ -18,7 +18,8 @@ powershell -ExecutionPolicy Bypass -File build_canvas_html.ps1
 
 Reads every `content/*.json` and writes 3 files per lesson into `html/` — a student-facing
 Page, a student-facing Assignment, and a teacher copy — plus `front-page.html` from
-`course.json`. 11 lessons → 34 files.
+`course.json`. 11 lessons → 35 files:  Lesson 4 splits the class, so it has two
+Pages (Mouse Group and Keys Group) sharing one Assignment and one teacher copy.
 
 Each output file is a **body fragment**: copy the whole file and paste it into the Canvas
 HTML editor (the `</>` button in the Rich Content Editor). There are no `<style>` or

@@ -231,7 +231,9 @@ function FileComment($lesson, [string]$kind) {
 function Build-Page($lesson, $th) {
   $a = $th.accent
   $sb = New-Object System.Text.StringBuilder
-  [void]$sb.Append((Banner $lesson $th ($th.label + ' ' + $lesson.num + '  &middot;  Processing Sprite')))
+  $kicker = $th.label + ' ' + $lesson.num
+  if ($lesson.group) { $kicker += '  &middot;  ' + $lesson.group }
+  [void]$sb.Append((Banner $lesson $th ($kicker + '  &middot;  Processing Sprite')))
 
   [void]$sb.Append('<div style="background:' + $th.soft + ';border:1px solid ' + $th.edge + ';border-radius:0 0 8px 8px;border-top:none;padding:12px 20px;margin:0 0 8px;font-size:14px;color:' + $MUTED + ';">' +
     '<strong style="color:' + $a + ';">New idea:</strong>&nbsp; ' + (Inline $lesson.newIdea) + ' &nbsp;&nbsp;|&nbsp;&nbsp; ' +
@@ -275,10 +277,28 @@ function Build-Page($lesson, $th) {
   [void]$sb.Append((H2 'Wrap-up' $a))
   [void]$sb.Append((Callout '&#128172;' 'Be ready to answer' $lesson.wrapup '#c2761c' '#fffaf0' '#f0dcbc'))
 
+  $assignmentTitle = $lesson.title
+  if ($lesson.lessonTitle) { $assignmentTitle = $lesson.lessonTitle }
   [void]$sb.Append('<p style="margin:26px 0 0;padding:14px 18px;background:' + $th.soft + ';border:1px dashed ' + $th.edge + ';border-radius:6px;font-size:15px;color:' + $MUTED + ';">' +
-    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc ($th.label + ' ' + $lesson.num + ' Assignment - ' + $lesson.title)) + '</strong> to check yourself and turn in your work.</p>')
+    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc ($th.label + ' ' + $lesson.num + ' Assignment - ' + $assignmentTitle)) + '</strong> to check yourself and turn in your work.</p>')
 
-  return Shell (FileComment $lesson 'CANVAS PAGE (student-facing)') $sb.ToString()
+  $kind = 'CANVAS PAGE (student-facing)'
+  if ($lesson.group) { $kind = 'CANVAS PAGE (student-facing, ' + $lesson.group + ')' }
+  return Shell (FileComment $lesson $kind) $sb.ToString()
+}
+
+# A lesson with "tracks" splits the class:  each track gets its own Page, and
+# the Assignment and teacher copy stay shared.  A track's fields replace the
+# lesson's for that Page;  everything it leaves out comes from the lesson.
+function Merge-Track($lesson, $track) {
+  $m = $lesson.PSObject.Copy()
+  $m | Add-Member -Force -NotePropertyName lessonTitle -NotePropertyValue $lesson.title
+  foreach ($p in $track.PSObject.Properties) {
+    if ($p.Name -eq 'slug') { continue }
+    $m | Add-Member -Force -NotePropertyName $p.Name -NotePropertyValue $p.Value
+  }
+  $m | Add-Member -Force -NotePropertyName slug -NotePropertyValue ($lesson.slug + '-' + $track.slug)
+  return $m
 }
 
 # ------------------------------------------------------ assignment writer ---
@@ -373,9 +393,30 @@ function Build-Teacher($lesson, $th) {
 # Placeholder token for a course link the teacher wires up inside Canvas.
 #   core  lesson 3 -> LINK_LESSON_03_PAGE / LINK_LESSON_03_ASSIGNMENT
 #   bonus lesson A -> LINK_BONUS_A_PAGE   / LINK_BONUS_A_ASSIGNMENT
+#   a track's page  -> LINK_LESSON_04_MOUSE_PAGE
 function LinkToken($lesson, [string]$kind) {
   if ($lesson.kind -eq 'bonus') { return 'LINK_BONUS_' + $lesson.num + '_' + $kind }
   return 'LINK_LESSON_' + $lesson.num.PadLeft(2, '0') + '_' + $kind
+}
+
+function TrackToken($lesson, $track) {
+  return LinkToken $lesson ($track.slug.ToUpper() + '_PAGE')
+}
+
+# The title cell of an index row.  A split lesson's title isn't a link;  a line
+# under its tagline links each group's Page instead.
+function IndexTitle($l, [string]$a) {
+  if (-not $l.tracks) {
+    return '<a href="' + (LinkToken $l 'PAGE') + '" style="color:' + $a + ';font-weight:700;font-size:16px;text-decoration:none;">' + (Esc $l.title) + '</a>' +
+      '<div style="margin-top:3px;color:' + $MUTED + ';font-size:14px;">' + (Inline $l.tagline) + '</div>'
+  }
+  $links = @()
+  foreach ($t in $l.tracks) {
+    $links += '<a href="' + (TrackToken $l $t) + '" style="color:' + $a + ';font-weight:700;text-decoration:none;white-space:nowrap;">' + (Esc $t.group) + ' &rarr;</a>'
+  }
+  return '<span style="color:' + $a + ';font-weight:700;font-size:16px;">' + (Esc $l.title) + '</span>' +
+    '<div style="margin-top:3px;color:' + $MUTED + ';font-size:14px;">' + (Inline $l.tagline) + '</div>' +
+    '<div style="margin-top:6px;font-size:14px;">The class splits in two.&nbsp; Open your group''s page:&nbsp; ' + ($links -join ' &nbsp;&middot;&nbsp; ') + '</div>'
 }
 
 function IndexTable($lessons, $th) {
@@ -387,8 +428,7 @@ function IndexTable($lessons, $th) {
       '<td style="border:1px solid ' + $RULE + ';border-left:5px solid ' + $a + ';background:#ffffff;padding:14px 10px;vertical-align:top;width:44px;text-align:center;">' +
         '<span style="display:inline-block;background:' + $th.soft + ';color:' + $a + ';font-weight:700;font-size:15px;border-radius:50%;width:30px;height:30px;line-height:30px;">' + (Esc $l.num) + '</span></td>' +
       '<td style="border:1px solid ' + $RULE + ';border-left:none;border-right:none;background:#ffffff;padding:14px 12px;vertical-align:top;">' +
-        '<a href="' + (LinkToken $l 'PAGE') + '" style="color:' + $a + ';font-weight:700;font-size:16px;text-decoration:none;">' + (Esc $l.title) + '</a>' +
-        '<div style="margin-top:3px;color:' + $MUTED + ';font-size:14px;">' + (Inline $l.tagline) + '</div></td>' +
+        (IndexTitle $l $a) + '</td>' +
       '<td style="border:1px solid ' + $RULE + ';border-left:none;background:#ffffff;padding:14px 14px;vertical-align:top;text-align:right;width:130px;">' +
         '<a href="' + (LinkToken $l 'ASSIGNMENT') + '" style="color:' + $MUTED + ';font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;">Assignment &rarr;</a></td></tr>')
   }
@@ -500,6 +540,7 @@ $index.Add('``')
 $index.Add('')
 $index.Add('Search each file for `PASTE_FLINT_URL_HERE` (flagged by a `<!-- FLINT-LINK -->` comment) and swap in')
 $index.Add('that lesson''s Flint chat URL. There are **two per lesson** - one on the Page, one on the Assignment.')
+$index.Add('A split lesson has one Page per group, so it has one more.')
 $index.Add('')
 $index.Add('Teacher files open with a red banner. Keep them in an **unpublished** module.')
 $index.Add('')
@@ -511,6 +552,7 @@ $index.Add('| # | Lesson | Page | Assignment | Teacher |')
 $index.Add('|---|--------|------|------------|---------|')
 
 $count = 0
+$fileCount = 1   # the front page
 $all = New-Object System.Collections.Generic.List[object]
 foreach ($f in $files) {
   $lesson = Get-Content -Raw -Encoding UTF8 $f.FullName | ConvertFrom-Json
@@ -518,12 +560,26 @@ foreach ($f in $files) {
   if (-not $th) { throw "Unknown kind '$($lesson.kind)' in $($f.Name)" }
 
   $name = $lesson.slug + '.html'
-  Write-Utf8NoBom (Join-Path $outDir "pages\$name")       (Build-Page       $lesson $th)
+  $pageLinks = @()
+  if ($lesson.tracks) {
+    foreach ($t in $lesson.tracks) {
+      $tl = Merge-Track $lesson $t
+      $tname = $tl.slug + '.html'
+      Write-Utf8NoBom (Join-Path $outDir "pages\$tname") (Build-Page $tl $th)
+      $pageLinks += '[' + $t.slug + ' page](pages/' + $tname + ')'
+      $fileCount++
+    }
+  } else {
+    Write-Utf8NoBom (Join-Path $outDir "pages\$name") (Build-Page $lesson $th)
+    $pageLinks += '[page](pages/' + $name + ')'
+    $fileCount++
+  }
   Write-Utf8NoBom (Join-Path $outDir "assignments\$name") (Build-Assignment $lesson $th)
   Write-Utf8NoBom (Join-Path $outDir "teacher\$name")     (Build-Teacher    $lesson $th)
+  $fileCount += 2
 
   $all.Add($lesson)
-  $index.Add('| ' + $lesson.num + ' | ' + $lesson.title + ' | [page](pages/' + $name + ') | [assignment](assignments/' + $name + ') | [teacher](teacher/' + $name + ') |')
+  $index.Add('| ' + $lesson.num + ' | ' + $lesson.title + ' | ' + ($pageLinks -join ', ') + ' | [assignment](assignments/' + $name + ') | [teacher](teacher/' + $name + ') |')
   $count++
   Write-Host ("  built  " + ($lesson.num + '').PadRight(4) + $lesson.title)
 }
@@ -546,9 +602,13 @@ $index.Add('')
 $index.Add('| Lesson | Page link | Assignment link |')
 $index.Add('|--------|-----------|-----------------|')
 foreach ($l in $all) {
-  $index.Add('| ' + $l.title + ' | `' + (LinkToken $l 'PAGE') + '` | `' + (LinkToken $l 'ASSIGNMENT') + '` |')
+  $pageTokens = '`' + (LinkToken $l 'PAGE') + '`'
+  if ($l.tracks) {
+    $pageTokens = (@($l.tracks | ForEach-Object { '`' + (TrackToken $l $_) + '`' }) -join ', ')
+  }
+  $index.Add('| ' + $l.title + ' | ' + $pageTokens + ' | `' + (LinkToken $l 'ASSIGNMENT') + '` |')
 }
 
 Write-Utf8NoBom (Join-Path $outDir 'README.md') (($index -join "`n") + "`n")
 Write-Host ''
-Write-Host ("Done. $count lessons -> " + ($count * 3 + 1) + ' HTML files in html\')
+Write-Host ("Done. $count lessons -> $fileCount HTML files in html\")

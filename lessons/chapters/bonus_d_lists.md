@@ -6,8 +6,12 @@
 
 Look at your game from Chapter 6 or 7.  Each coin is a variable, a
 `new Blob(...)` line, a `move()`, a `drawSprite()`, and an `if`.  Adding one more
-coin takes five pieces in four places.  Twenty coins is about a hundred lines,
-and every one of them is a chance to type `coin13` where you meant `coin14`.
+coin takes five pieces in four places.  Twenty coins is about a hundred lines.
+
+A hundred coins is about five hundred.  `coin1`, `coin2`, `coin3`, typed one at
+a time, all the way up to `coin100`, until your fingers file a complaint.  And
+somewhere in those five hundred lines is a `coin73` where you meant `coin74`.
+Good luck finding it.
 
 This chapter fixes that with a **list**:  one variable that holds as many coins
 as you give it, and loops that do the same thing to every one of them.

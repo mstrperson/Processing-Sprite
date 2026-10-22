@@ -415,6 +415,10 @@ Want twenty coins?  That's what Bonus D is for.
 
 It changes every sprite in your game at once.  That's why the clouds bounce too.
 
+> **Argue it.**  Play your game with bouncing on, then with it off.  It's the
+> same code, and a different game.  Which one is better?  Write down which one
+> you kept, and why.
+
 - **A bonus chapter.**  Pictures for your character (Bonus A), sounds (Bonus B),
   an animated character (Bonus C), or lots of coins (Bonus D).  They're at the
   back of the book.

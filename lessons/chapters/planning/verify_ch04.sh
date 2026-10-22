@@ -7,7 +7,8 @@
 # the mouse by setting mouseX and mouseY, presses a key by setting keyCode and
 # calling keyPressed(), and clicks by calling mousePressed().  Everything else
 # is the sketch as the Canvas pages give it:  the Lesson 2 MyCharacter tab, and
-# the Lesson 4 main tab.
+# a Lesson 4 main tab.  Lesson 4 is split, so there are two:  the Mouse Group's
+# for Part Two, and the Keys Group's for Part Three on.
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
 V=lessons/chapters/tools/verify.sh
@@ -15,8 +16,9 @@ CS="powershell -NoProfile -ExecutionPolicy Bypass -File lessons/chapters/tools/c
 S="$1"; OUT="$(pwd)/lessons/chapters/screenshots"
 mkdir -p "$S" "$OUT"
 $CS -Lesson 02 -Folder "$S/L2" > /dev/null
-$CS -Lesson 04 -Folder "$S/L4" -CarryFrom "$S/L2" > /dev/null
-SRC="$S/L4"
+$CS -Lesson 04 -Track mouse -Folder "$S/L4M" -CarryFrom "$S/L2" > /dev/null
+$CS -Lesson 04 -Track keys -Folder "$S/L4K" -CarryFrom "$S/L2" > /dev/null
+SRC="$S/L4M"
 
 variant() {
   $V prep "$SRC" "$S/$1" > /dev/null
@@ -24,13 +26,11 @@ variant() {
   return 0
 }
 TRAIL='s|^  background(240);|  //background(240);|'
-# Option B:  comment out Option A's two lines, uncomment Option B's.
-OPTB='s|^  // player.move();|  player.move();|; s|^  // player.drawSprite();$|  player.drawSprite();|; /--- Option A/,/--- Option B/ { s|^  player.followMouse();|  // player.followMouse();|; s|^  player.drawSprite();|  // player.drawSprite();|; }'
 MOUSE='mouseX = 650; mouseY = 450;'
 
-echo "== the starter builds"
-variant Starter
-$V build "$S/Starter"
+echo "== both starters build"
+variant Starter; SRC="$S/L4K"; variant StarterKeys; SRC="$S/L4M"
+$V build "$S/Starter"; $V build "$S/StarterKeys"
 
 echo "== Step 1  followMouse(), mouse parked at (650, 450), with a trail, frame 45"
 variant Follow "$TRAIL"
@@ -66,30 +66,31 @@ variant Both3 "s|^  player.followMouse();|  player.followMouse();\n  player.move
 PRE="$MOUSE" $V shot "$S/Both3" "$S/Both240.png" 240 > /dev/null
 cmp "$S/Both200.png" "$S/Both240.png" && echo "both:  parked, frame 200 = frame 240"
 
+SRC="$S/L4K"
 echo "== Step 4  Option B, no key pressed yet:  the (4, 0) drift, frame 60"
-variant KeysIdle "$OPTB"
+variant KeysIdle
 sed -n '/void draw/,/^}/p' "$S/KeysIdle/KeysIdle.pde"
 $V shot "$S/KeysIdle" "$OUT/ch04_Drift.png" 60
 
 echo "== Step 5  UP at frame 10, LEFT at frame 50, trail, frame 110"
-variant Drive "$OPTB; $TRAIL"
+variant Drive "$TRAIL"
 PRE='if (frameCount == 10) { keyCode = UP; keyPressed(); } if (frameCount == 50) { keyCode = LEFT; keyPressed(); }' \
   $V shot "$S/Drive" "$OUT/ch04_Drive.png" 110
 
 echo "== Step 6  UP at frame 10, then the space bar at frame 40, trail, frame 110"
-variant Brake "$OPTB; $TRAIL"
+variant Brake "$TRAIL"
 PRE='if (frameCount == 10) { keyCode = UP; keyPressed(); } if (frameCount == 40) { key = '"' '"'; keyCode = 32; keyPressed(); }' \
   $V shot "$S/Brake" "$OUT/ch04_Brake.png" 110
 
 echo "== Step 6  the speed is always 5:  RIGHT with setVelocity(12, 0) vs (1, 0), frame 30"
-variant Fast12 "$OPTB; s|setVelocity(4, 0)|setVelocity(12, 0)|"
-variant Slow1 "$OPTB; s|setVelocity(4, 0)|setVelocity(1, 0)|"
+variant Fast12 "s|setVelocity(4, 0)|setVelocity(12, 0)|"
+variant Slow1 "s|setVelocity(4, 0)|setVelocity(1, 0)|"
 PRE='if (frameCount == 1) { keyCode = RIGHT; keyPressed(); }' $V shot "$S/Fast12" "$S/Fast12.png" 30 > /dev/null
 PRE='if (frameCount == 1) { keyCode = RIGHT; keyPressed(); }' $V shot "$S/Slow1" "$S/Slow1.png" 30 > /dev/null
 cmp "$S/Fast12.png" "$S/Slow1.png" && echo "keys:  speed 5 whatever setVelocity said"
 
 echo "== 4.6  mousePressed() with moveTo(), click at (150, 120) on frame 10, frame 20"
-variant Click "$OPTB; \$a\\
+variant Click "\$a\\
 \\
 void mousePressed() {\\
   player.moveTo(mouseX, mouseY);   // teleport to wherever you clicked\\
@@ -98,7 +99,7 @@ tail -5 "$S/Click/Click.pde"
 PRE='if (frameCount == 10) { mouseX = 150; mouseY = 120; mousePressed(); }' $V shot "$S/Click" "$OUT/ch04_Click.png" 20
 
 echo "== 4.6  keyReleased() with setVelocity(0, 0):  RIGHT at 5, release at 20, trail, frame 60"
-variant Release "$OPTB; $TRAIL; \$a\\
+variant Release "$TRAIL; \$a\\
 \\
 void keyReleased() {\\
   player.setVelocity(0, 0);\\
@@ -107,7 +108,7 @@ PRE='if (frameCount == 5) { keyCode = RIGHT; keyPressed(); } if (frameCount == 2
   $V shot "$S/Release" "$OUT/ch04_Release.png" 60
 
 echo "== Watch out  Option B with move() deleted:  frozen"
-variant NoMove "$OPTB; s|^  player.move();||"
+variant NoMove "s|^  player.move();||"
 PRE='if (frameCount == 5) { keyCode = RIGHT; keyPressed(); }' $V shot "$S/NoMove" "$S/NoMove60.png" 60 > /dev/null
 PRE='if (frameCount == 5) { keyCode = RIGHT; keyPressed(); }' $V shot "$S/NoMove" "$S/NoMove10.png" 10 > /dev/null
 cmp "$S/NoMove60.png" "$S/NoMove10.png" && echo "no move():  frozen, frame 10 = frame 60"
