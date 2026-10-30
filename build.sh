@@ -191,4 +191,7 @@ echo "Building $LIB_DIR/$JAR_NAME"
 echo "Built $LIB_DIR/$JAR_NAME"
 
 # ── Deploy to local Processing libraries directory ───────────────────────────
-bash "$SCRIPT_DIR/deploy.sh"
+# Set SKIP_DEPLOY=1 to build only (the Jamf installer deploys per user itself).
+if [ "${SKIP_DEPLOY:-0}" != "1" ]; then
+  bash "$SCRIPT_DIR/deploy.sh"
+fi

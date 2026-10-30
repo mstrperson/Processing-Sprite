@@ -1,0 +1,81 @@
+#!/bin/bash
+#
+# postinstall — build SpriteGame and deploy it into every local user's
+# Processing sketchbook.
+#
+# This one script serves three jobs:
+#   1. The postinstall script inside the SpriteGame .pkg (Composer or
+#      make_pkg.sh puts it there).
+#   2. A Jamf Pro policy script, run after the package installs.
+#   3. A Jamf Pro login-trigger script, so accounts created after the
+#      install still get the library.
+#
+# It takes no positional arguments on purpose: a pkg postinstall and a Jamf
+# script both receive $1–$3, but they mean different things in each.
+#
+# The package installs the library source to INSTALL_DIR. Jamf runs as root,
+# so build.sh runs as root (output stays in INSTALL_DIR), and deploy.sh runs
+# once as each user, so the files land in their sketchbook and they own them.
+
+INSTALL_DIR="/Library/Application Support/SpriteGame"
+LOG="/var/log/spritegame_install.log"
+
+exec > >(tee -a "$LOG") 2>&1
+echo "── SpriteGame install $(date '+%Y-%m-%d %H:%M:%S') ──"
+
+[ -f "$INSTALL_DIR/build.sh" ] || {
+  echo "ERROR: $INSTALL_DIR/build.sh not found — is the package installed?"
+  exit 1
+}
+
+# ── 1. Build ─────────────────────────────────────────────────────────────────
+# If Processing.app is not installed yet, the build fails, but the package
+# ships a prebuilt library/SpriteGame.jar, so we deploy that instead.
+if SKIP_DEPLOY=1 /bin/bash "$INSTALL_DIR/build.sh"; then
+  echo "Build succeeded."
+else
+  echo "WARNING: build failed; deploying the prebuilt SpriteGame.jar instead."
+  [ -f "$INSTALL_DIR/library/SpriteGame.jar" ] || {
+    echo "ERROR: no prebuilt jar either. Nothing to deploy."
+    exit 1
+  }
+fi
+
+# ── 2. Deploy for each local user ────────────────────────────────────────────
+# Processing 4 stores a custom sketchbook location in preferences.txt; fall
+# back to ~/Documents/Processing, which is also deploy.sh's default.
+sketchbook_for() {
+  local home="$1" prefs path
+  prefs="$home/Library/Processing/preferences.txt"
+  if [ -f "$prefs" ]; then
+    path="$(grep -m 1 '^sketchbook.path.four=' "$prefs" | cut -d= -f2-)"
+  fi
+  printf '%s\n' "${path:-$home/Documents/Processing}"
+}
+
+failures=0
+
+# Real (non-system) accounts have a UID of 500 or more and a home in /Users.
+while read -r user uid; do
+  [ "$uid" -ge 500 ] 2>/dev/null || continue
+  home="$(dscl . -read "/Users/$user" NFSHomeDirectory 2>/dev/null | awk '{print $2}')"
+  case "$home" in /Users/*) ;; *) continue ;; esac
+  [ -d "$home" ] || continue
+
+  sketchbook="$(sketchbook_for "$home")"
+  echo "Deploying for $user → $sketchbook"
+
+  if ! sudo -u "$user" -H env PROCESSING_SKETCHBOOK="$sketchbook" \
+       /bin/bash "$INSTALL_DIR/deploy.sh"; then
+    echo "WARNING: deploy failed for $user."
+    failures=$((failures + 1))
+  fi
+done < <(dscl . -list /Users UniqueID)
+
+if [ "$failures" -gt 0 ]; then
+  echo "Finished with $failures failed deploy(s)."
+  exit 1
+fi
+
+echo "SpriteGame installed for all users."
+exit 0

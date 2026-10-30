@@ -74,10 +74,14 @@ do_deploy() {
   echo "Deployed to $DEPLOY_DIR"
 }
 
-if ! do_deploy 2>/tmp/spritegame_deploy_err; then
+ERR_LOG="$(mktemp -t spritegame_deploy_err)"
+trap 'rm -f "$ERR_LOG"' EXIT
+
+if ! do_deploy 2>"$ERR_LOG"; then
   echo ""
   echo "WARNING: Deploy failed — Processing may have the library open."
   echo "  Close Processing and run 'bash deploy.sh' again."
   echo "  (The JAR is ready at $LIB_DIR/$JAR_NAME)"
-  cat /tmp/spritegame_deploy_err >&2
+  cat "$ERR_LOG" >&2
+  exit 1
 fi
