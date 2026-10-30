@@ -544,8 +544,8 @@ function ManifestItem([string]$type, [string]$file, [string]$title, [string]$tok
   return $item
 }
 
-# PowerShell 5.1's ConvertTo-Json escapes ' < > & as \u00XX.  That is valid
-# JSON, but the manifest is meant to be read by people too.
+# PowerShell 5.1's ConvertTo-Json escapes ' < > & as backslash-u escapes.
+# That is valid JSON, but these files are meant to be read by people too.
 function Write-Manifest([string]$path, $manifest) {
   $json = $manifest | ConvertTo-Json -Depth 10
   # The pattern is built from [char]92 (a backslash) so this file never holds a
@@ -553,6 +553,70 @@ function Write-Manifest([string]$path, $manifest) {
   $bs = [string][char]92
   $json = [regex]::Replace($json, ($bs + $bs + 'u00(27|3c|3e|26)'), { param($m) [string][char][Convert]::ToInt32($m.Groups[1].Value, 16) })
   Write-Utf8NoBom $path ($json + "`n")
+}
+
+# ------------------------------------------------------ plan book sequence ---
+# html/planbook-sequence.json is the core lessons as one plan book entry per
+# class meeting, in teaching order.  The WinsorForms.Core CLI command
+# planbook-import-sequence lays it onto a section's real meetings;  the schema
+# is documented in that repository at docs/planbook-sequence.md.
+#
+# It is an outline, not the lesson plan:  the plan book shows plain text with
+# no links, so each entry is the lesson (and day), the day's focus, the new
+# idea, and the goals.  The full plan stays in the teacher copy in Canvas.
+
+# The plan book stores varchar and shows text unformatted, so this strips the
+# inline markup, decodes entities, and maps typographic characters to ASCII.
+# Anything still outside ASCII is an error, not a silent "?" in the database.
+$ASCII_MAP = @{
+  0x2192 = '->'; 0x2190 = '<-'; 0x2026 = '...'; 0x00B7 = '-'; 0x2014 = '--'; 0x2013 = '-'
+  0x2018 = "'";  0x2019 = "'";  0x201C = '"';   0x201D = '"'; 0x00A0 = ' ';  0x00D7 = 'x'
+}
+function PlainText([string]$s) {
+  if ([string]::IsNullOrEmpty($s)) { return '' }
+  $t = [regex]::Replace($s, '\*\*([^*]+)\*\*', '$1')
+  $t = [regex]::Replace($t, '`([^`]+)`', '$1')
+  $t = [System.Net.WebUtility]::HtmlDecode($t)
+  foreach ($code in $ASCII_MAP.Keys) { $t = $t.Replace([string][char]$code, $ASCII_MAP[$code]) }
+  $bad = [regex]::Match($t, '[^\x00-\x7F]')
+  if ($bad.Success) { throw ('Plan book text has a character with no ASCII mapping (U+{0:X4}) in: {1}' -f [int][char]$bad.Value, $t) }
+  return $t
+}
+
+# The meetings a lesson takes, as one label per meeting ($null = no label).
+# An explicit "days" array in the lesson JSON wins;  otherwise a step list split
+# by "### Day N - focus" headings gives one meeting per heading;  otherwise one.
+function LessonDays($lesson) {
+  if ($lesson.days) { return , @($lesson.days) }
+  $heads = @($lesson.steps | Where-Object { $_ -like '### Day *' } | ForEach-Object { $_.Substring(4) -replace '^Day \d+\s*-+\s*', '' })
+  if ($heads.Count -gt 0) { return , $heads }
+  return , @($null)
+}
+
+function PlanBookMeetings($lesson, $th) {
+  $days = LessonDays $lesson
+  $heading = $th.label + ' ' + $lesson.num + ': ' + (PlainText $lesson.title)
+  $out = @()
+  for ($i = 0; $i -lt $days.Count; $i++) {
+    $scope = $heading
+    if ($days.Count -gt 1) { $scope += ' (day ' + ($i + 1) + ' of ' + $days.Count + ')' }
+    $lines = New-Object System.Collections.Generic.List[string]
+    if ($days[$i]) { $lines.Add('Today: ' + (PlainText $days[$i])) }
+    if ($i -eq 0) {
+      $lines.Add('New idea: ' + (PlainText $lesson.newIdea))
+      if ($lesson.tracks) { $lines.Add('The class splits: ' + (@($lesson.tracks | ForEach-Object { $_.group }) -join ' / ')) }
+      if ($lesson.goals) {
+        $lines.Add('Goals:')
+        foreach ($g in $lesson.goals) { $lines.Add('- ' + (PlainText $g)) }
+      }
+    } else {
+      $lines.Add('Continues from day ' + $i + '.')
+    }
+    $notes = $lines -join "`n"
+    if ($scope.Length -gt 2000 -or $notes.Length -gt 2000) { throw "Plan book text over 2000 characters for $scope" }
+    $out += [ordered]@{ scopeAndSequence = $scope; planNotes = $notes }
+  }
+  return , $out
 }
 
 # ------------------------------------------------------------------ main ---
@@ -605,6 +669,7 @@ $fileCount = 1   # the front page
 $all = New-Object System.Collections.Generic.List[object]
 $modules = New-Object System.Collections.Generic.List[object]
 $teacherItems = New-Object System.Collections.Generic.List[object]
+$planMeetings = @()
 foreach ($f in $files) {
   $lesson = Get-Content -Raw -Encoding UTF8 $f.FullName | ConvertFrom-Json
   $th = $THEME[$lesson.kind]
@@ -636,6 +701,7 @@ foreach ($f in $files) {
   $items.Add((ManifestItem 'assignment' "assignments/$name" (AssignmentTitle $lesson $th) (LinkToken $lesson 'ASSIGNMENT') 'student' $flint))
   $modules.Add([ordered]@{ name = ($heading + $lesson.title); audience = 'student'; items = $items.ToArray() })
   $teacherItems.Add((ManifestItem 'page' "teacher/$name" ('Teacher Copy - ' + $heading + $lesson.title) $null 'teacher' $null))
+  if ($lesson.kind -eq 'core') { $planMeetings += PlanBookMeetings $lesson $th }
 
   $all.Add($lesson)
   $index.Add('| ' + $lesson.num + ' | ' + $lesson.title + ' | ' + ($pageLinks -join ', ') + ' | [assignment](assignments/' + $name + ') | [teacher](teacher/' + $name + ') |')
@@ -685,5 +751,14 @@ Write-Manifest (Join-Path $outDir 'canvas-manifest.json') ([ordered]@{
   modules          = $modules.ToArray()
 })
 Write-Host '  built  canvas-manifest.json'
+
+# --- plan book sequence:  core lessons only, one entry per class meeting ---
+Write-Manifest (Join-Path $outDir 'planbook-sequence.json') ([ordered]@{
+  sequenceVersion = 1
+  generatedBy     = 'lessons/canvas_import/build_canvas_html.ps1'
+  title           = (PlainText $course.title) + ' -- core lessons'
+  meetings        = $planMeetings
+})
+Write-Host ('  built  planbook-sequence.json  (' + $planMeetings.Count + ' meetings)')
 Write-Host ''
 Write-Host ("Done. $count lessons -> $fileCount HTML files in html\")
