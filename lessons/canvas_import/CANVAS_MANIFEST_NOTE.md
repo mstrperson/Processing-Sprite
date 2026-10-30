@@ -53,3 +53,26 @@ unpublished; this was an experiment.
 5. **Don't change the manifest's shape without bumping `manifestVersion`.** The importer refuses
    any version it doesn't know. Adding an optional field doesn't need a bump. Renaming or
    repurposing a field does, and needs a matching change in WinsorForms.Core.
+
+## Added 2026-10-30: `planbook-sequence.json` (branch `planbook-sequence`)
+
+The build also writes **`html/planbook-sequence.json`**: the **core** lessons as one plan book
+entry per class meeting, in teaching order. The WinsorForms.Core command
+`planbook-import-sequence <file> <sectionId> [--start date] [--apply]` lays it onto a section's real
+meetings. Its schema is in WinsorForms.Core at `docs/planbook-sequence.md`.
+
+**Where it's used:** on 2026-10-30, the 10 entries were written to a Q2 section behind that Canvas
+course. The section's last two meetings were left empty on purpose.
+
+- **An entry is an outline, not the lesson plan.** The plan book app shows plain text and can't
+  render links yet, so each entry has the lesson and day, that day's focus, the new idea, and the
+  goals (`PlanBookMeetings()`). Keep it short.
+- **A lesson's meeting count comes from its JSON.** An explicit `"days"` array is used if present
+  (Lesson 7: Build, Build, Play-test and present). Otherwise each `### Day N - focus` step heading
+  is one meeting (Lesson 6). Otherwise the lesson takes one meeting. **Changing a lesson's day count
+  shifts every later lesson onto different dates.** The importer never overwrites an existing plan
+  book entry, so after such a change the existing entries must be moved or deleted in the plan book
+  before re-importing. Tell Jason.
+- **The text must be ASCII.** The plan book columns are `varchar`. `PlainText()` strips markup,
+  decodes entities, and maps the typographic characters it knows. A new character it doesn't know
+  fails the build with its code point, and the fix is to add it to `$ASCII_MAP`.
