@@ -31,20 +31,36 @@ Every Canvas Page and Assignment has an AI-helper button with
 Make one Flint helper from each file in `helpers/`, and point that lesson's
 buttons at it.
 
-| Flint helper | Prompt | Canvas buttons |
-|---|---|---|
-| Lesson 1 | `lesson_01_hello_blob.md` | Lesson 1 Page and Assignment |
-| Lesson 2 | `lesson_02_draw_your_character.md` | Lesson 2 Page and Assignment |
-| Lesson 3 | `lesson_03_bring_it_to_life.md` | Lesson 3 Page and Assignment |
-| Lesson 4 | `lesson_04_youre_in_control.md` | both Lesson 4 Pages (Mouse and Keys) and the Assignment |
-| Lesson 5 | `lesson_05_build_your_world.md` | Lesson 5 Page and Assignment |
-| Lesson 6 | `lesson_06_collisions.md` | Lesson 6 Page and Assignment |
-| Lesson 7 | `lesson_07_build_your_game.md` | Lesson 7 Page and Assignment |
-| Bonus A | `bonus_a_images.md` | Bonus A Page and Assignment |
-| Bonus B | `bonus_b_sounds.md` | Bonus B Page and Assignment |
-| Bonus C | `bonus_c_animation.md` | Bonus C Page and Assignment |
-| Bonus D | `bonus_d_lists.md` | Bonus D Page and Assignment |
-| Any lesson | `code_helper.md` | the course front page, or wherever you want a general helper |
+| Flint helper | Prompt | Canvas buttons | Key |
+|---|---|---|---|
+| Lesson 1 | `lesson_01_hello_blob.md` | Lesson 1 Page and Assignment | `flint:lesson-01` |
+| Lesson 2 | `lesson_02_draw_your_character.md` | Lesson 2 Page and Assignment | `flint:lesson-02` |
+| Lesson 3 | `lesson_03_bring_it_to_life.md` | Lesson 3 Page and Assignment | `flint:lesson-03` |
+| Lesson 4 | `lesson_04_youre_in_control.md` | both Lesson 4 Pages (Mouse and Keys) and the Assignment | `flint:lesson-04` |
+| Lesson 5 | `lesson_05_build_your_world.md` | Lesson 5 Page and Assignment | `flint:lesson-05` |
+| Lesson 6 | `lesson_06_collisions.md` | Lesson 6 Page and Assignment | `flint:lesson-06` |
+| Lesson 7 | `lesson_07_build_your_game.md` | Lesson 7 Page and Assignment | `flint:lesson-07` |
+| Bonus A | `bonus_a_images.md` | Bonus A Page and Assignment | `flint:bonus-a` |
+| Bonus B | `bonus_b_sounds.md` | Bonus B Page and Assignment | `flint:bonus-b` |
+| Bonus C | `bonus_c_animation.md` | Bonus C Page and Assignment | `flint:bonus-c` |
+| Bonus D | `bonus_d_lists.md` | Bonus D Page and Assignment | `flint:bonus-d` |
+| Any lesson | `code_helper.md` | the course front page, or wherever you want a general helper | none |
+
+**You don't have to paste the links by hand.**  The Canvas importer in
+WinsorForms.Core fills them in (see
+[`../canvas_import/CANVAS_MANIFEST_NOTE.md`](../canvas_import/CANVAS_MANIFEST_NOTE.md)).
+Once each Flint helper exists, copy its chat URL into a JSON file under its key:
+
+```json
+{
+  "flint:lesson-01": "https://...",
+  "flint:lesson-02": "https://..."
+}
+```
+
+Then pass that file to the import with `--values flint.json`.  Keep the file out
+of this repo if the URLs are private:  the repo is public.  The any-lesson
+helper has no key, because no generated page links to it.
 
 The book's chapters are built as Word files for Flint too
 (`../chapters/build/word`, see [`../chapters/PROCESS.md`](../chapters/PROCESS.md)
