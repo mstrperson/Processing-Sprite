@@ -81,6 +81,18 @@ And it can do the math for you.  If you want a hat sitting right on top of your
 character's head, Sparky can work out the numbers, and you get back to
 building.
 
+Sparky usually hands you code with a few blanks in it.  You fill them in, type
+the code yourself, and run it.  The first students to take this course said
+that was the help that worked best, so it's how every Sparky works now.  If
+you're still stuck, ask again, and Sparky shows you the whole thing.
+
+Sparky works best when you tell it which chapter you're on and paste in your
+code.  Ask for one step at a time.  For a shape, describe it in plain words:
+where it starts, where it ends, and which way it curves.  Before you paste in a
+big change, save a copy with **File → Save As** and a number on the end of the
+name, so your old version is still there if something breaks.  And if Sparky
+gets something wrong twice, or says it isn't sure, take it to your teacher.
+
 ### Your character
 
 From Chapter 2 on, there's one tab in your sketch that belongs entirely to you:

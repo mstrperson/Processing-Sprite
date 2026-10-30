@@ -261,8 +261,11 @@ makes it two pixels thick.  `noFill()` means the next shape is only an outline.
 >
 > `arc()` draws part of an oval.  The first four numbers are the same as an
 > `ellipse`.  The last two say where to start and where to stop, measured so that
-> `PI` is half a turn.  `0` to `PI` is the bottom half of the oval, which is a
-> smile.
+> `PI` is half a turn.  The turn starts at the right side of the oval and goes
+> down first.  `0` to `PI` is the bottom half of the oval, which is a smile.
+>
+> `PI` to `TWO_PI` is the top half.  It curves the other way:  a frown, a
+> rainbow, or a raised eyebrow.  `TWO_PI` is a whole turn.
 
 ---
 
@@ -482,7 +485,7 @@ looks the way you drew it.
 | `super(...)` | 2.3 |
 | `void drawSprite() { }` | 2.4 |
 | `fill()`, `noFill()`, `stroke()`, `noStroke()`, `strokeWeight()` | 2.4 |
-| `ellipse()`, `arc()`, `PI` | 2.4 |
+| `ellipse()`, `arc()`, `PI`, `TWO_PI` | 2.4 |
 | `pos.x`, `pos.y` | 2.4, Part Three |
 | `rect()`, `triangle()`, `line()` | 2.5 |
 

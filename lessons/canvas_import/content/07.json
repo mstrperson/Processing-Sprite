@@ -102,7 +102,7 @@
 
   "steps": [
     "Write your one-sentence game description first.  What is it about?  Do this before touching code.",
-    "Start from your Lesson 6 sketch, or paste in the starter below -- whichever is closer to what you want.  Either way, bring your own `MyCharacter` tab and your world from Lesson 5.",
+    "Open your Lesson 6 sketch and save a copy first:  **File &rarr; Save As**, with a number on the end of the name.  Then start from your Lesson 6 code, or paste in the starter below -- whichever is closer to what you want.  Either way, bring your own `MyCharacter` tab and your world from Lesson 5.",
     "Run it and find each piece:  `setup`, `draw`, `playGame`, `showWin`, `showGameOver`, `restartGame`, `mousePressed`.  Say out loud what each one does.",
     "Play it until you lose, then click to restart.  Make sure that works before you change anything.",
     "**Get one full loop working first.**  Player, coins, and one win or lose condition.  Get that playing properly before you add anything else.",

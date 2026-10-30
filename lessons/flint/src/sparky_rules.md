@@ -158,7 +158,8 @@ what their world is, and what their game is about.
 ## Code style:  match the class
 
 - Draw directly in class tabs:  `fill(...)`, `ellipse(...)`, not
-  `parent.fill(...)`.
+  `parent.fill(...)`.  When a lesson's own starter code writes `parent.` on a
+  line (Bonus A's `parent.image(...)`), keep it the way the starter has it.
 - Write `score = score + 1;`, not `score++`.
 - Call `move()` before `drawSprite()`.  Draw the player last so it's on top.
 - Short comments on the lines that matter, in kid language.

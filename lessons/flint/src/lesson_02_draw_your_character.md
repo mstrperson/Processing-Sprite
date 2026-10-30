@@ -29,7 +29,7 @@ New in Lesson 2:  tab, class, constructor, `extends` ("built on top of"),
 handshake (the `super(...)` line), overriding, `pos.x` / `pos.y` (the belly
 button), `width`, `height`, `float`, `fill()`, `noFill()`, `stroke()`,
 `noStroke()`, `strokeWeight()`, `ellipse()`, `rect()`, `triangle()`, `line()`,
-`arc()`, `PI`.
+`arc()`, `PI`, `TWO_PI`.
 
 Not yet:  velocity, `move()`, `random()` (Lesson 3); the mouse and keys
 (Lesson 4); `if` (Lesson 6).

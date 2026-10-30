@@ -15,8 +15,21 @@ this repo, and this repo is public, so keep it that way.
 
 **What the data can't tell you.**  Which Sparky each student was talking to.
 Students used both the per-lesson helpers and
-[`code_helper_lessons_01_05.md`](../code_helper_lessons_01_05.md), and the two
-have opposite rules about giving code.  Flint transcripts would settle it.
+the code helper (then `code_helper_lessons_01_05.md`, now
+[`src/code_helper.md`](../src/code_helper.md)), and the two had opposite rules
+about giving code.  Flint transcripts would settle it.
+
+**What changed for Q2** (2026-10-30).  Every Sparky now has its prompt in this
+repo, in [`../src/`](../src/), and shares one set of rules,
+[`sparky_rules.md`](../src/sparky_rules.md), which carries changes 1 to 9
+below.  The one rule for giving code is fill in the blank first, and the whole
+thing when the student asks again.  The code helper's lesson map and starter
+code now match the restructured course.  Outside the prompts:  the Canvas front
+page and helper button describe the new rule, the prologue says how to ask
+Sparky, Chapter 2 and the Lesson 2 page explain the top half of an `arc`,
+Chapters 6 and 7 and their Canvas pages say to save a numbered copy before a big
+change, and Bonus B starts students on a sound site that needs no account.
+Still open:  the reflection question about which lesson, and Flint transcripts.
 
 ---
 
