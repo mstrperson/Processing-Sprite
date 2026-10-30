@@ -1,0 +1,306 @@
+{
+  "_about": "Student self-reflections, Class II (6th grade) coding, end of Q1, fall 2026.  15 students.  De-identified: IDs are arbitrary and not in roster order; the key is kept outside this repo.  Quotes are verbatim but trimmed.  Read alongside 2026-q1_sparky_findings.md.",
+
+  "_lessons": "Students used the pre-restructure lesson names.  'lesson' values below use those names; 'current' maps each to the current course (lessons/canvas_import).",
+  "lesson_map": {
+    "Draw Your Character": "Ch 2",
+    "Bring It to Life": "Ch 3",
+    "You're in Control": "Ch 4",
+    "A World of Objects": "old Lesson 5 (lists); now Bonus D",
+    "Build Your World": "Ch 5 (backgrounds, decorations)",
+    "Collisions": "Ch 6",
+    "Build Your Game": "Ch 7",
+    "Sounds": "Bonus B",
+    "unspecified": "student did not say which lesson"
+  },
+
+  "_prompts": "The four reflection questions.",
+  "questions": {
+    "Q1": "One thing in your game you decided on purpose; what can you make the computer do now that you couldn't in September?",
+    "Q2": "Proudest lesson and how far you got; hardest lesson and what made it work.",
+    "Q3": "Last time your sketch broke: what you tried first, who/what you turned to, and one kind of problem you want to fix on your own.",
+    "Q4": "One time Sparky was useful and what helped; one time Sparky was frustrating and what you wished it had done."
+  },
+
+  "_taxonomy": "Codes used in sparky_useful.mode and sparky_frustrating.mode.",
+  "useful_modes": {
+    "U-art": "Drew or helped draw shapes, backgrounds, decorations, character details",
+    "U-mechanic": "Helped build a game mechanic (score, win/lose, timer)",
+    "U-debug": "Found or explained what was wrong in their code",
+    "U-blanks": "Gave fill-in-the-blank code or made the student type it in themselves",
+    "U-questions": "Asked step-by-step questions instead of answering",
+    "U-experiment": "Suggested changing a number and watching what happens",
+    "U-retype": "Rewrote a whole tab that had many mistakes"
+  },
+  "frustrating_modes": {
+    "F-broke-code": "Code Sparky gave (or a fix it made) broke something that worked, or had its own errors",
+    "F-lost-work": "Student lost working code after a Sparky change and could not recover it",
+    "F-invented-bug": "Claimed a problem that wasn't there, or admitted to guessing",
+    "F-spatial": "Could not get a drawing request right (shape, direction, placement on the character)",
+    "F-loop": "Repeated the same advice after the student had already done it",
+    "F-jargon": "Used words the student didn't know yet, or gave too much at once",
+    "F-placement": "Student didn't understand where to put the code Sparky gave",
+    "F-refusal": "Declined a request as out of scope or as 'you wouldn't learn'",
+    "F-dependency": "Student says Sparky did too much for them",
+    "F-communication": "Student found it hard to describe what they wanted to an AI"
+  },
+  "self_fix_goals": {
+    "G-syntax": "Small syntax errors: missing ; or ), doubled or mismatched brackets",
+    "G-find-error": "Working out what and where the error is",
+    "G-placement": "Getting things to show up in the right place",
+    "G-big-errors": "Larger errors that need bigger fixes",
+    "G-feature": "A feature, not a kind of problem (e.g. add music)"
+  },
+
+  "students": [
+    {
+      "id": "S01",
+      "complete": true,
+      "help_order": ["self", "Sparky"],
+      "proudest": "Draw Your Character",
+      "hardest": "Draw Your Character",
+      "self_fix_goal": "G-syntax",
+      "sparky_useful": [
+        { "lesson": "Build Your Game", "mode": "U-art", "note": "Drew several character skins that would have taken a long time by hand." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Build Your Game", "mode": "F-dependency",
+          "quote": "I got a little lazy and I just asked Sparky to put it in the main code so I wouldn't have to find the line to put it in",
+          "wish": "next time it should tell you what line to put a code in and encourage putting the code in yourself and understanding it all" }
+      ],
+      "other": "Drew the character without AI first and is proud that they still can."
+    },
+    {
+      "id": "S02",
+      "complete": true,
+      "help_order": ["self", "Sparky", "teacher"],
+      "proudest": "Sounds",
+      "hardest": "Sounds",
+      "self_fix_goal": null,
+      "sparky_useful": [
+        { "lesson": "Build Your Game", "mode": "U-mechanic", "note": "Built win-after-60-seconds and lose-on-hit." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Draw Your Character", "mode": "F-spatial",
+          "quote": "I wanted Sparky to make a curve going up and it kept making it either not curved or curved downward. I even drew a picture on a sticky note and it still didn't work." }
+      ],
+      "other": "Sound site would not log them in, then lost the saved music.  Teacher fixed it."
+    },
+    {
+      "id": "S03",
+      "complete": true,
+      "help_order": ["Sparky", "peer", "teacher"],
+      "proudest": null,
+      "hardest": "unspecified",
+      "self_fix_goal": null,
+      "sparky_useful": [
+        { "lesson": "unspecified", "mode": "U-debug", "note": "\"Almost always helpful.\"" }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "unspecified", "mode": "F-refusal",
+          "quote": "we have not covered that in this lesson, is there anything else I can help you with?" }
+      ]
+    },
+    {
+      "id": "S04",
+      "complete": true,
+      "help_order": ["Sparky"],
+      "proudest": "Build Your Game",
+      "hardest": "Collisions",
+      "self_fix_goal": "G-big-errors",
+      "sparky_useful": [
+        { "lesson": "Build Your World", "mode": "U-blanks", "note": "Gave the code for the drawings but made the student add it in themselves." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Collisions", "mode": "F-lost-work",
+          "quote": "when I was using the AI helper it ruined my code and I was unable to get some of it back",
+          "outcome": "Recovered the music; the game still has no collision." },
+        { "lesson": "Collisions", "mode": "F-invented-bug",
+          "quote": "he said to me that he was \"just guessing the commands.\"" },
+        { "lesson": "Collisions", "mode": "F-loop",
+          "quote": "he also began to tell me to do the same thing over and over again" }
+      ],
+      "other": "Went back to Sparky for music and 'made it work without him doing most of the work.'"
+    },
+    {
+      "id": "S05",
+      "complete": false,
+      "_incomplete": "Answered Q2 only.",
+      "help_order": [],
+      "proudest": null,
+      "hardest": null,
+      "self_fix_goal": null,
+      "sparky_useful": [],
+      "sparky_frustrating": [
+        { "lesson": "unspecified", "mode": "F-communication",
+          "quote": "it wasn't a human that could understand what you could say or do. What made it work was using simpler and descriptive words" }
+      ]
+    },
+    {
+      "id": "S06",
+      "complete": true,
+      "help_order": ["Sparky", "teacher"],
+      "proudest": "Collisions",
+      "hardest": "Draw Your Character",
+      "self_fix_goal": "G-syntax",
+      "sparky_useful": [
+        { "lesson": "Build Your World", "mode": "U-art", "note": "Drew mountains in the background." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Draw Your Character", "mode": "F-refusal",
+          "quote": "I asked him to help me make a hat and he said he wasn't able to. I checked that I was on the right lesson, but I was",
+          "note": "The Lesson 2 Canvas page lists 'how do I put a hat on top of my character?' as a good thing to ask." }
+      ]
+    },
+    {
+      "id": "S07",
+      "complete": true,
+      "help_order": ["self", "teacher"],
+      "proudest": "You're in Control",
+      "hardest": "You're in Control",
+      "self_fix_goal": null,
+      "sparky_useful": [
+        { "lesson": "Draw Your Character", "mode": "U-blanks", "note": "Struggled with positions; Sparky gave fill-in-the-blanks." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Draw Your Character", "mode": "F-spatial", "quote": "miss placing the ear on my elephant" }
+      ],
+      "other": "Teacher taught fixes for their usual problems; now fixes most things alone."
+    },
+    {
+      "id": "S08",
+      "complete": true,
+      "help_order": ["Sparky", "self"],
+      "proudest": "Draw Your Character",
+      "hardest": "Build Your World",
+      "self_fix_goal": null,
+      "sparky_useful": [
+        { "lesson": "Draw Your Character", "mode": "U-art", "note": "Hair, eyelashes, sparkles, colors." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Build Your World", "mode": "F-broke-code",
+          "quote": "He gave me the code, and when I tried it it broke my code and it wouldnt run",
+          "note": "Asked for a trail of sparkles behind the character." }
+      ]
+    },
+    {
+      "id": "S09",
+      "complete": true,
+      "help_order": ["Sparky"],
+      "proudest": "Build Your Game",
+      "hardest": "Sounds",
+      "self_fix_goal": null,
+      "sparky_useful": [
+        { "lesson": "unspecified", "mode": "U-retype", "note": "Retyping a tab that had lots of mistakes." },
+        { "lesson": "Bonus C (animation)", "mode": "U-debug", "note": "Pasted animation code in; Sparky fixed it." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Draw Your Character", "mode": "F-broke-code",
+          "quote": "I asked it to remove a shape in my character and it said it fixed it, but it changed the wrong part of my code." }
+      ],
+      "other": "Built a shop into the game."
+    },
+    {
+      "id": "S10",
+      "complete": true,
+      "help_order": ["Sparky", "teacher"],
+      "proudest": "Build Your Game",
+      "hardest": "Draw Your Character",
+      "self_fix_goal": "G-find-error",
+      "sparky_useful": [
+        { "lesson": "Build Your World", "mode": "U-art", "note": "Background and decorations." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "unspecified", "mode": "F-broke-code",
+          "quote": "Some things that Sparky told me to do made errors in other parts of the code" },
+        { "lesson": "unspecified", "mode": "F-jargon",
+          "quote": "it was inarticulate and didn't say exactly what to do to fix it. And it also told me to fix it using coding words that I didn't understand yet.",
+          "outcome": "Teacher fixed it." }
+      ]
+    },
+    {
+      "id": "S11",
+      "complete": false,
+      "_incomplete": "Q3 blank.",
+      "help_order": ["Sparky", "teacher"],
+      "proudest": "Build Your Game",
+      "hardest": "Build Your Game",
+      "self_fix_goal": null,
+      "sparky_useful": [
+        { "lesson": "Collisions", "mode": "U-mechanic", "note": "Helped add the score variables." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Collisions", "mode": "F-refusal",
+          "quote": "I then asked if he could show me how it would look on the code so I could understand what to do. He told me if I did that I wouldn't \"learn\"",
+          "outcome": "Took a while; finished with the teacher's help." },
+        { "lesson": "Collisions", "mode": "F-placement",
+          "quote": "I was confused on what to do after he gave me directions." }
+      ]
+    },
+    {
+      "id": "S12",
+      "complete": true,
+      "help_order": ["self", "teacher", "Sparky"],
+      "proudest": "A World of Objects",
+      "hardest": "Bring It to Life",
+      "self_fix_goal": "G-find-error",
+      "sparky_useful": [
+        { "lesson": "unspecified", "mode": "U-debug", "note": "Said what was wrong and suggested ways to improve the game." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "unspecified", "mode": "F-broke-code",
+          "quote": "it kept giving me code with errors... that was why I was asking sparky for help" }
+      ],
+      "other": "Built a shop so collecting has a purpose."
+    },
+    {
+      "id": "S13",
+      "complete": true,
+      "help_order": ["Sparky", "teacher"],
+      "proudest": null,
+      "hardest": "early lessons",
+      "self_fix_goal": "G-syntax",
+      "sparky_useful": [
+        { "lesson": "unspecified", "mode": "U-experiment",
+          "quote": "Sparky asks you to change the number and asks if your object gets bigger or smaller." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "unspecified", "mode": "F-placement",
+          "quote": "I asked Sparky where to put the line of code they gave me but I didn't understand Sparky's response." }
+      ],
+      "other": "Got past early errors 'by actually reading the message.'"
+    },
+    {
+      "id": "S14",
+      "complete": true,
+      "help_order": ["self", "teacher"],
+      "proudest": "Bring It to Life",
+      "hardest": "Sounds",
+      "self_fix_goal": "G-placement",
+      "sparky_useful": [
+        { "lesson": "unspecified", "mode": "U-questions", "note": "Placement problem; Sparky asked step-by-step questions." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Build Your Game", "mode": "F-invented-bug",
+          "quote": "it imagined a bug in my code and wouldn't let me move on" }
+      ]
+    },
+    {
+      "id": "S15",
+      "complete": true,
+      "help_order": ["self", "peer", "Sparky", "teacher"],
+      "proudest": "Draw Your Character",
+      "hardest": null,
+      "self_fix_goal": "G-feature",
+      "sparky_useful": [
+        { "lesson": "Draw Your Character", "mode": "U-art", "note": "Gave steps and the code needed for the character." }
+      ],
+      "sparky_frustrating": [
+        { "lesson": "Draw Your Character", "mode": "F-loop",
+          "quote": "it kept on telling me to do the same thing when I had already done it" },
+        { "lesson": "Draw Your Character", "mode": "F-jargon",
+          "quote": "it made the wording in a way that was hard for me to understand, so I had to ask for it to give it to me step by step instead of all at once" }
+      ]
+    }
+  ]
+}
