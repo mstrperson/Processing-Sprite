@@ -110,7 +110,7 @@
   ],
   "challenge": "Arrange four or five blobs into a small scene -- a face, a snowman, a planet with moons, whatever you see in them.",
 
-  "flintHint": "Good things to ask:  \"my sketch will not run and it says cannot find class Blob\", \"how do I pick a color?\", or \"what is the difference between setup and draw?\"  Tell it you are on Lesson 1.",
+  "flintHint": "Good things to ask:  \"my sketch will not run and it says cannot find class Blob\", \"how do I pick a color?\", or \"what is the difference between setup and draw?\"  Tell it you are on Lesson 1.  First time using Sparky?  Say hi, and ask for the tour.",
 
   "wrapup": "What are the two magic functions, and when does each one run?",
 
