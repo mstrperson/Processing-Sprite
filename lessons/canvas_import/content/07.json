@@ -7,6 +7,7 @@
   "tagline": "Everything you have learned, in one game that is yours.  This is the one you show people.",
   "whenToUse": null,
   "timing": "Three periods:  two to build, one to play-test and present.",
+  "days": ["Build", "Build", "Play-test and present"],
   "newIdea": "Restarting -- and putting all seven lessons together",
   "builtOn": "Everything.  Lessons 1 through 6, all at once.",
 
