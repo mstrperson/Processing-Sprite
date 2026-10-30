@@ -222,13 +222,44 @@ public abstract class Sprite {
      * Call this inside {@code draw()} to create a "follow the mouse" effect.
      *
      * <p><strong>Note:</strong> if the sprite's speed is 0, it will not move.
-     * Set a velocity first with {@link #setVelocity(float, float)}.</p>
+     * Set a velocity first with {@link #setVelocity(float, float)}. If the
+     * sprite is exactly on the mouse, it stays where it is.</p>
      */
     public void followMouse() {
         float speed = vel.mag();
         Vector2D mLoc = new Vector2D(parent.mouseX, parent.mouseY);
         Vector2D mDir = mLoc.subtract(pos);
+        if (mDir.mag() == 0) return;
         pos = pos.add(mDir.unitVector().scale(speed));
+    }
+
+    /**
+     * Points this sprite's velocity straight at {@code other}, keeping its
+     * current speed. Only the direction changes; call {@link #move()} as usual
+     * to actually take the step. Call this once per frame inside
+     * {@code draw()}, before {@code move()}, to chase a moving target.
+     *
+     * <p><strong>Note:</strong> if the sprite's speed is 0, it will not move.
+     * Set a velocity first with {@link #setVelocity(float, float)}. If the two
+     * sprites are in exactly the same spot, there is no direction to point,
+     * so the velocity is left as it was.</p>
+     *
+     * <p>Example usage:</p>
+     * <pre>
+     *   void draw() {
+     *     enemy.follow(player);
+     *     enemy.move();
+     *     enemy.drawSprite();
+     *   }
+     * </pre>
+     *
+     * @param other the sprite to head toward
+     */
+    public void follow(Sprite other) {
+        Vector2D toOther = other.pos.subtract(pos);
+        float distance = toOther.mag();
+        if (distance == 0) return;
+        setVelocity(toOther.scale(vel.mag() / distance));
     }
 
     /**

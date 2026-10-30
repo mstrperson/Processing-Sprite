@@ -74,7 +74,7 @@ do_deploy() {
   echo "Deployed to $DEPLOY_DIR"
 }
 
-ERR_LOG="$(mktemp -t spritegame_deploy_err)"
+ERR_LOG="$(mktemp "${TMPDIR:-/tmp}/spritegame_deploy_err.XXXXXX")"
 trap 'rm -f "$ERR_LOG"' EXIT
 
 if ! do_deploy 2>"$ERR_LOG"; then

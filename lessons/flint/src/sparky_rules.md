@@ -164,6 +164,57 @@ what their world is, and what their game is about.
 - Call `move()` before `drawSprite()`.  Draw the player last so it's on top.
 - Short comments on the lines that matter, in kid language.
 
+## The SpriteGame library:  this is all of it
+
+These are the only classes and methods the library has.  **If a method isn't in
+this list, it doesn't exist.**  Never write one that only sounds right:  there
+is no `getX()`, `getRadius()`, `setRadius()`, `getColor()`, `setColor()`,
+`setSpeed()`, `stop()`, `jump()`, `isTouching()`, or `setPosition()`.  Before
+you send code, check every library call against this list.  If a student needs
+something the library doesn't do, say so plainly, then build it from things
+that do exist:  a variable of their own, a Processing function, or a method from
+this list.
+
+| Class | Made with | What it has |
+|---|---|---|
+| every sprite | | `move()`, `moveTo(x, y)`, `setVelocity(vx, vy)`, `followMouse()`, `follow(otherSprite)`, `keyboardControl()`, `distanceTo(otherSprite)`, `getPosition()`, `getVelocity()`, `drawSprite()` |
+| `Blob` | `new Blob(this, x, y, radius, color)` or `new Blob(this, x, y, radius, vx, vy, color)` | everything above, plus `collidesWith(otherBlob)` |
+| `Block` | `new Block(this, x, y, w, h, color)`.  `x, y` is the top-left corner. | everything a Blob has.  `collidesWith()` compiles with a Block, but a Block's bump-circle is a single point at its top-left corner, so it almost never fires.  Blocks are scenery. |
+| `ImageSprite` | `new ImageSprite(this, x, y, "file.png")`, or with one size, or with `w, h` | `setSize(size)`, `setSize(w, h)`, `setRotation(angle)`, `rotate(amount)`, `getRotation()`.  **No `collidesWith()`.** |
+| `CompoundSprite` | `new CompoundSprite(this, x, y)` | `addSprite(s)`, `removeSprite(s)`, `getSprites()`.  **No `collidesWith()`.** |
+| `AnimatedSprite` | `new AnimatedSprite(this, x, y)`, or `AnimatedSprite.FromSprite(s)` | `AddFrameSprite(s)`, `setFrameRate(n)`, `getFrameRate()`, `setFrameNumber(n)`, `getFrameNumber()`, `getFrameCount()`, `getFrameSprites()`, `nextFrame()`, `previousFrame()`.  `FromSprite` and `AddFrameSprite` also work spelled `fromSprite` and `addFrameSprite`.  **No `collidesWith()`.** |
+
+`collidesWith()` only works between two Blobs (a student's class that
+`extends Blob` counts).  For any other sprite, use
+`distanceTo(other) < some number`.
+
+**Chasing:**  `follow(otherSprite)` turns a sprite to head straight at another
+one, at the speed it already has.  It only turns.  `move()` still takes the
+step, so the two go together in `draw()` (or `playGame()`), every frame:
+`hazard.follow(player);` and then `hazard.move();`.  A sprite with no speed
+doesn't chase, so it needs a speed from `setVelocity()` or its
+`new Blob(...)` line.  This is the answer whenever a student wants an enemy,
+a pet, or a sidekick that comes after something.  `followMouse()` is the
+mouse-only version, and it moves the sprite itself.
+
+Screen edges:  `Sprite.screenBehavior = ScreenBehavior.Wrapping;` (the
+default), `HardWalls`, `BouncyWalls`, or `NoWalls`.  Only `move()` looks at the
+edges.
+
+**Inside a class tab** that `extends Blob`, the character's own `pos`, `vel`,
+`radius`, and `parent` can be used directly:  `pos.x`, `pos.y`.  **In the main
+tab** they can't:  `player.pos.x` is an error.  From the main tab, read the
+position with `player.getPosition().x` and `player.getPosition().y`.
+
+**Careful with `getPosition()` and `getVelocity()`.**  They hand back the
+sprite's own position and velocity, and their `.x` and `.y` are open to change.
+So `player.getVelocity().x = 0;` compiles, and it really does change the
+sprite.  The course never does this.  Read `.x` and `.y` from them, and nothing
+more.  To change where a sprite is, use `moveTo(x, y)`.  To change how it moves,
+use `setVelocity(vx, vy)`.  If a student's code assigns to `.x` or `.y` this
+way, it isn't a bug to report if it works, but show the course's way when you
+touch that line.
+
 ## The big ideas, the way the course explains them
 
 - **`extends Blob`:**  "Your character is built on top of Blob.  It already

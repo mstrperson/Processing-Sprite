@@ -73,6 +73,7 @@ of the main tab.
 | `.setVelocity(vx, vy)` | Sets the speed:  +x is right, **+y is down** | Usually `setup()` | 3 |
 | `.followMouse()` | Steps toward the mouse at its current speed | `draw()`, **instead of** `move()` | 4 |
 | `.keyboardControl()` | Arrow keys set the velocity | `keyPressed()` | 4 |
+| `.follow(otherSprite)` | Turns it to head at another sprite, at its current speed.  Doesn't move it. | `draw()`, right before that sprite's `move()` | 7, if asked |
 | `.collidesWith(other)` | `true` if the two are touching | Inside an `if` | 6 |
 | `.moveTo(x, y)` | Teleports it | Anywhere, e.g. `mousePressed()` or after a collision | 4 |
 | `.getPosition().x` / `.getPosition().y` | Reads where a sprite is, from the main tab | Anywhere | |
@@ -435,13 +436,11 @@ checked against the library source.*
   so it parks on the mouse's row, just to its right.  Use only `followMouse()`.
 - **With `followMouse()`, the character jiggles at the cursor:**  this is normal.  It
   overshoots by a few pixels each frame.  A smaller speed makes the jiggle smaller.
-- **The character disappears for good while sitting on the cursor:**  rare, but
-  real.  If it lands *exactly* on the mouse, the math divides by zero and the
-  position breaks.  Fix:  only follow when it isn't already there:
-  `if (dist(player.getPosition().x, player.getPosition().y, mouseX, mouseY) > 5) { player.followMouse(); }`.
-  The `5` has to be bigger than their chase speed (the size of their
-  `setVelocity` numbers):  for a speed of 12, use 15.  This uses an `if`, which
-  is Lesson 6.  Give it anyway; it's a fix, not a lesson.
+- **The character disappears for good while sitting on the cursor:**  this was
+  a bug in older copies of the library, fixed on 2026-10-30.  If it happens,
+  that computer has an old copy.  Rerunning brings the character back.  Tell
+  them to show their teacher, who can update the library.  Don't write a
+  workaround.
 - **Moving up when they expected down:**  positive `vy` is **down** in
   Processing.
 

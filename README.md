@@ -129,6 +129,7 @@ The base class for everything in the library.  A `Sprite` knows its position (`p
 | `getPosition()` | Returns current position as `Vector2D` |
 | `getVelocity()` | Returns current velocity as `Vector2D` |
 | `followMouse()` | Moves toward the mouse at the current speed |
+| `follow(Sprite)` | Points the velocity at another sprite, keeping the current speed; call before `move()` |
 | `keyboardControl()` | Maps arrow keys to velocity; call from `keyPressed()` |
 | `distanceTo(Sprite)` | Returns pixel distance to another sprite |
 | `drawSprite()` | **Abstract** — subclasses must implement this |

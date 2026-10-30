@@ -34,7 +34,7 @@ It does it in five parts.
 ## R.1  The family tree
 
 ```
-Sprite  (abstract:  pos, vel, move(), followMouse(), keyboardControl(), distanceTo())
+Sprite  (abstract:  pos, vel, move(), followMouse(), follow(), keyboardControl(), distanceTo())
  |
  +-- Blob  (radius, myColor, collidesWith(Blob), a circle for drawSprite())
  |    |
@@ -151,9 +151,11 @@ leaves `vel` alone.  So the velocity's direction is ignored:  `(5, 0)`, `(0, 5)`
 step, which is why Chapter 4's Watch out says to set one.  Within one step of the
 mouse it overshoots, and jitters back and forth by up to the speed.
 
-It has one real bug.  When the sprite lands **exactly** on the mouse, `mDir` is
-`(0, 0)`, `unitVector()` divides by zero, and the position becomes `(NaN, NaN)`.
-Every later step adds to NaN and gets NaN, so the sprite is gone for good:
+It had one real bug, **fixed on 2026-10-30** with a guard clause:  when the
+sprite is exactly on the mouse, `followMouse()` now returns without moving.
+Before the fix, `mDir` was `(0, 0)` there, `unitVector()` divided by zero, and
+the position became `(NaN, NaN)`.  Every later step added to NaN and got NaN, so
+the sprite was gone for good:
 
 ```
 frame 49:  pos = (596.0, 300.0)
@@ -165,9 +167,31 @@ In a classroom it's exceedingly rare.  The sprite has to land on the mouse
 exactly:  level with it, a whole number of steps away, with the mouse held
 perfectly still the whole way.  A hand on a real mouse doesn't do that.  A test
 script can, and this book's screenshots hit it once that way, in Chapter 5, with
-a scripted mouse parked 200 pixels straight right of a player moving at 4.  It's
-here so that a vanished sprite has an explanation, if you ever see one.  The fix
-is in Part Five.
+a scripted mouse parked 200 pixels straight right of a player moving at 4.  If a
+vanished sprite turns up now, that computer has an older copy of the library.
+The guard doesn't change the jitter within one step of the mouse.  Part Five has
+a fuller fix that removes it too.
+
+**`follow(Sprite other)`**, added on 2026-10-30, is `followMouse()` for a sprite
+target, with one difference:  it only turns.  It points the velocity straight at
+the other sprite, keeps the speed, and leaves the step to `move()`:
+
+```java
+Vector2D toOther = other.pos.subtract(pos);
+float distance = toOther.mag();
+if (distance == 0) return;
+setVelocity(toOther.scale(vel.mag() / distance));
+```
+
+So a chaser takes two lines a frame, `enemy.follow(player);` and then
+`enemy.move();`, and `move()` still handles the edges.  It goes through
+`setVelocity()`, so a `CompoundSprite` carries its children along.  A speed of 0
+doesn't chase, and two sprites on exactly the same spot leave the velocity as it
+was.  Verified with a sketch:  a speed-3 chaser turned after a target moving
+down the screen, stayed at speed 3.00, and closed from 497 pixels to 163 in 150
+frames.  A compound chaser kept its child 10 pixels to the right the whole way.
+No chapter teaches it.  It's in the Lesson 7 Sparky, for students who want a
+hazard that chases them.
 
 Calling `followMouse()` and `move()` together doesn't jitter.  `followMouse()`
 pulls the sprite 4 toward the mouse, and `move()` pushes it `vel`, which is still
@@ -480,12 +504,13 @@ No chapter uses `Event`.
 # Part Five - Known issues
 
 Everything this run found, with a suggested fix for each.  The fixes are
-suggestions.  Only the first was built and run, as an override in a sketch, and
-the library itself is unchanged.
+suggestions.  Only the first was built and run, as an override in a sketch.  The
+library itself took a smaller fix for the first, on 2026-10-30, and is otherwise
+unchanged.
 
 | Where | The issue | Suggested fix |
 |---|---|---|
-| `Sprite.followMouse()` | Landing exactly on the mouse divides by zero:  the position becomes NaN, and the sprite vanishes for good.  Within one step it jitters. | Land on the mouse when it's within one step (below). |
+| `Sprite.followMouse()` | Landing exactly on the mouse divided by zero:  the position became NaN, and the sprite vanished for good.  **Fixed 2026-10-30** with a guard clause (R.6).  Within one step it still jitters. | Land on the mouse when it's within one step (below).  This would also end the jitter. |
 | `Sprite.getPosition()`, `getVelocity()`, `moveTo(Vector2D)`, `setVelocity(Vector2D)`, `Sprite(PApplet, Vector2D)` | Share vectors with the caller (R.7). | Hand out and store copies:  `return new Vector2D(pos.x, pos.y);`, `pos = new Vector2D(p.x, p.y);`. |
 | `ImageSprite` | A missing file stops the sketch later, at `drawSprite()`, with `NullPointerException`. | In `drawSprite()`, `if (img == null) return;`, or draw a placeholder rectangle. |
 | `Block` | Inherits a collision circle of radius 0 at its corner. | Give `Block` a rectangle check of its own, or say plainly that it's scenery (the chapters do). |

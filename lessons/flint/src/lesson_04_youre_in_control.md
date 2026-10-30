@@ -261,21 +261,11 @@ an entry.  Check which group they're in first.*
 - **It jiggles right at the cursor:**  that's normal.  When it's closer than
   one step, it overshoots a little each frame.  A smaller speed makes the
   jiggle smaller.
-- **The character disappears for good while sitting on the mouse:**  rare,
-  but real.  If it lands *exactly* on the mouse, the library's math divides by
-  zero and the position breaks.  Rerunning brings it back.  If it keeps
-  happening, give this fix, and say it's a fix, not something they need to
-  learn yet (it uses `if`, from Lesson 6).  It replaces `player.followMouse();`
-  in `draw()`:
-
-  ```java
-  if (dist(player.getPosition().x, player.getPosition().y, mouseX, mouseY) > 5) {
-    player.followMouse();
-  }
-  ```
-
-  The `5` needs to be bigger than their chase speed.  For `setVelocity(12, 0)`,
-  use `15`.
+- **The character disappears for good while sitting on the mouse:**  this was
+  a bug in older copies of the library, fixed on 2026-10-30.  If it happens,
+  that computer has an old copy.  Rerunning brings the character back.  Tell
+  them to show their teacher, who can update the library.  Don't write a
+  workaround.
 
 **Keys Group**
 

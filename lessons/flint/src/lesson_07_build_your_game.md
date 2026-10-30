@@ -210,6 +210,24 @@ at the top also gets put back in `restartGame()`.
   These lines set the hazard's direction every frame, so it always heads the
   same way.  If the student has turned on `BouncyWalls`, this undoes the
   bounce.  Pick one or the other.
+- **A hazard that chases the player.**  This is one of the most common
+  requests.  It's one new line in `playGame()`, right before
+  `hazard1.move();`:
+
+  ```java
+    hazard1.follow(___);   // who should it chase?
+    hazard1.move();
+  ```
+
+  The blank is `player`.  `follow()` only turns the hazard to face its target,
+  at the speed it already has, and `move()` takes the step, so keep both lines.
+  Its speed comes from the two speed numbers in its `new Blob(...)` line in
+  `restartGame()`:  `3, 2` is a speed of about 3.6, a little slower than the
+  starter player's 4, so a careful player can get away.  Bigger numbers make a
+  faster chaser.  It works with *Hazards that speed up*:  a new
+  `setVelocity()` changes the speed, and `follow()` keeps steering.  Chasing
+  turns every frame, so it takes the place of `BouncyWalls` for that hazard.
+  A chasing coin works the same way, if they want one that runs at them.
 - **A timer.**  Not in the book.  It's a counter, like the score, that goes down
   by one every frame, and a frame is about one sixtieth of a second.  At the
   top:  `int timeLeft = 1800;` (about 30 seconds).  In `restartGame()`, right
