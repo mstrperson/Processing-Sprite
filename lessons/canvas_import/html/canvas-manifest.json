@@ -1,0 +1,466 @@
+{
+    "manifestVersion":  1,
+    "generatedBy":  "lessons/canvas_import/build_canvas_html.ps1",
+    "courseTitle":  "Make Your Own Game",
+    "linkTokenPattern":  "LINK_[A-Z0-9_]+",
+    "modules":  [
+                    {
+                        "name":  "Start Here",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "front-page.html",
+                                          "title":  "Make Your Own Game",
+                                          "audience":  "student",
+                                          "frontPage":  true
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 1: Hello, Blob!",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-01-hello-blob.html",
+                                          "title":  "Lesson 1: Hello, Blob!",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_01_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-01"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-01-hello-blob.html",
+                                          "title":  "Lesson 1 Assignment - Hello, Blob!",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_01_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-01"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 2: Draw Your Character",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-02-draw-your-character.html",
+                                          "title":  "Lesson 2: Draw Your Character",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_02_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-02"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-02-draw-your-character.html",
+                                          "title":  "Lesson 2 Assignment - Draw Your Character",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_02_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-02"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 3: Bring It to Life",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-03-bring-it-to-life.html",
+                                          "title":  "Lesson 3: Bring It to Life",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_03_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-03"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-03-bring-it-to-life.html",
+                                          "title":  "Lesson 3 Assignment - Bring It to Life",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_03_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-03"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 4: You're in Control",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-04-youre-in-control-mouse.html",
+                                          "title":  "Lesson 4: You're in Control -- Mouse Group",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_04_MOUSE_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-04"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-04-youre-in-control-keys.html",
+                                          "title":  "Lesson 4: You're in Control -- Keys Group",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_04_KEYS_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-04"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-04-youre-in-control.html",
+                                          "title":  "Lesson 4 Assignment - You're in Control",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_04_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-04"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 5: Build Your World",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-05-build-your-world.html",
+                                          "title":  "Lesson 5: Build Your World",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_05_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-05"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-05-build-your-world.html",
+                                          "title":  "Lesson 5 Assignment - Build Your World",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_05_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-05"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 6: Collisions:  If This, Then That",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-06-collisions.html",
+                                          "title":  "Lesson 6: Collisions:  If This, Then That",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_06_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-06"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-06-collisions.html",
+                                          "title":  "Lesson 6 Assignment - Collisions:  If This, Then That",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_06_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-06"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Lesson 7: Build Your Game",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/lesson-07-build-your-game.html",
+                                          "title":  "Lesson 7: Build Your Game",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_07_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-07"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/lesson-07-build-your-game.html",
+                                          "title":  "Lesson 7 Assignment - Build Your Game",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_LESSON_07_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:lesson-07"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Bonus Lesson A: Images",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/bonus-a-images.html",
+                                          "title":  "Bonus Lesson A: Images",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_A_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-a"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/bonus-a-images.html",
+                                          "title":  "Bonus Lesson A Assignment - Images",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_A_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-a"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Bonus Lesson B: Sounds",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/bonus-b-sounds.html",
+                                          "title":  "Bonus Lesson B: Sounds",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_B_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-b"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/bonus-b-sounds.html",
+                                          "title":  "Bonus Lesson B Assignment - Sounds",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_B_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-b"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Bonus Lesson C: Animate Your Character",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/bonus-c-animate-your-character.html",
+                                          "title":  "Bonus Lesson C: Animate Your Character",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_C_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-c"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/bonus-c-animate-your-character.html",
+                                          "title":  "Bonus Lesson C Assignment - Animate Your Character",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_C_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-c"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Bonus Lesson D: Lists and Loops",
+                        "audience":  "student",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/bonus-d-lists-and-loops.html",
+                                          "title":  "Bonus Lesson D: Lists and Loops",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_D_PAGE",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-d"
+                                                           }
+                                      },
+                                      {
+                                          "type":  "assignment",
+                                          "file":  "assignments/bonus-d-lists-and-loops.html",
+                                          "title":  "Bonus Lesson D Assignment - Lists and Loops",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_BONUS_D_ASSIGNMENT",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:bonus-d"
+                                                           },
+                                          "assignment":  {
+                                                             "submissionTypes":  [
+                                                                                     "online_upload"
+                                                                                 ],
+                                                             "gradingType":  "not_graded",
+                                                             "pointsPossible":  0
+                                                         }
+                                      }
+                                  ]
+                    },
+                    {
+                        "name":  "Teacher Copies (keep unpublished)",
+                        "audience":  "teacher",
+                        "items":  [
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-01-hello-blob.html",
+                                          "title":  "Teacher Copy - Lesson 1: Hello, Blob!",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-02-draw-your-character.html",
+                                          "title":  "Teacher Copy - Lesson 2: Draw Your Character",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-03-bring-it-to-life.html",
+                                          "title":  "Teacher Copy - Lesson 3: Bring It to Life",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-04-youre-in-control.html",
+                                          "title":  "Teacher Copy - Lesson 4: You're in Control",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-05-build-your-world.html",
+                                          "title":  "Teacher Copy - Lesson 5: Build Your World",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-06-collisions.html",
+                                          "title":  "Teacher Copy - Lesson 6: Collisions:  If This, Then That",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/lesson-07-build-your-game.html",
+                                          "title":  "Teacher Copy - Lesson 7: Build Your Game",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/bonus-a-images.html",
+                                          "title":  "Teacher Copy - Bonus Lesson A: Images",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/bonus-b-sounds.html",
+                                          "title":  "Teacher Copy - Bonus Lesson B: Sounds",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/bonus-c-animate-your-character.html",
+                                          "title":  "Teacher Copy - Bonus Lesson C: Animate Your Character",
+                                          "audience":  "teacher"
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "teacher/bonus-d-lists-and-loops.html",
+                                          "title":  "Teacher Copy - Bonus Lesson D: Lists and Loops",
+                                          "audience":  "teacher"
+                                      }
+                                  ]
+                    }
+                ]
+}

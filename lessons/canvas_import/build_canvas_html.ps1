@@ -8,6 +8,9 @@
            html/assignments/*.html   student-facing Canvas Assignment
            html/teacher/*.html       teacher copy (DO NOT PUBLISH)
            html/README.md            index + paste checklist
+           html/canvas-manifest.json what each file becomes in Canvas, for
+                                     the WinsorForms.Core canvas-import-html
+                                     command (see "canvas manifest" below)
 
   Canvas rules honoured:
     * no <style> blocks, no <script>, no external assets -- inline styles only
@@ -228,6 +231,17 @@ function FileComment($lesson, [string]$kind) {
 }
 
 # ------------------------------------------------------------ page writer ---
+
+# The Canvas title of a lesson's Assignment.  Each Page's "Next:" line names it,
+# and canvas-manifest.json creates the Assignment under it, so both read it from
+# here -- if they ever differ, students are sent looking for a title that does
+# not exist.  A track's Page uses the shared lesson title, not the track's.
+function AssignmentTitle($lesson, $th) {
+  $t = $lesson.title
+  if ($lesson.lessonTitle) { $t = $lesson.lessonTitle }
+  return $th.label + ' ' + $lesson.num + ' Assignment - ' + $t
+}
+
 function Build-Page($lesson, $th) {
   $a = $th.accent
   $sb = New-Object System.Text.StringBuilder
@@ -277,10 +291,8 @@ function Build-Page($lesson, $th) {
   [void]$sb.Append((H2 'Wrap-up' $a))
   [void]$sb.Append((Callout '&#128172;' 'Be ready to answer' $lesson.wrapup '#c2761c' '#fffaf0' '#f0dcbc'))
 
-  $assignmentTitle = $lesson.title
-  if ($lesson.lessonTitle) { $assignmentTitle = $lesson.lessonTitle }
   [void]$sb.Append('<p style="margin:26px 0 0;padding:14px 18px;background:' + $th.soft + ';border:1px dashed ' + $th.edge + ';border-radius:6px;font-size:15px;color:' + $MUTED + ';">' +
-    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc ($th.label + ' ' + $lesson.num + ' Assignment - ' + $assignmentTitle)) + '</strong> to check yourself and turn in your work.</p>')
+    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc (AssignmentTitle $lesson $th)) + '</strong> to check yourself and turn in your work.</p>')
 
   $kind = 'CANVAS PAGE (student-facing)'
   if ($lesson.group) { $kind = 'CANVAS PAGE (student-facing, ' + $lesson.group + ')' }
@@ -506,6 +518,43 @@ function Build-FrontPage($course, $lessons) {
   return Shell $comment $sb.ToString()
 }
 
+# --------------------------------------------------------- canvas manifest ---
+# html/canvas-manifest.json tells an importer what every generated file becomes
+# in Canvas:  its type, its title, the module it sits in, and the LINK_* token
+# other files use to link to it.  The WinsorForms.Core CLI command
+# canvas-import-html reads it;  the schema is documented in that repository at
+# docs/canvas-import-manifest.md.  Bump manifestVersion only for a change an
+# older importer would misread.
+
+# One key per lesson for the AI-helper placeholder, e.g. "flint:lesson-04" or
+# "flint:bonus-a".  Both of a split lesson's Pages share the lesson's key.
+function FlintKey($lesson) {
+  if ($lesson.kind -eq 'bonus') { return 'flint:bonus-' + $lesson.num.ToLower() }
+  return 'flint:lesson-' + $lesson.num.PadLeft(2, '0')
+}
+
+function ManifestItem([string]$type, [string]$file, [string]$title, [string]$token, [string]$audience, [string]$flint) {
+  $item = [ordered]@{ type = $type; file = $file; title = $title; audience = $audience }
+  if ($token) { $item.linkToken = $token }
+  if ($flint) { $item.placeholders = [ordered]@{ PASTE_FLINT_URL_HERE = $flint } }
+  if ($type -eq 'assignment') {
+    # Formative, non-scoring course:  see "The rubrics" in ../README.md.
+    $item.assignment = [ordered]@{ submissionTypes = @('online_upload'); gradingType = 'not_graded'; pointsPossible = 0 }
+  }
+  return $item
+}
+
+# PowerShell 5.1's ConvertTo-Json escapes ' < > & as \u00XX.  That is valid
+# JSON, but the manifest is meant to be read by people too.
+function Write-Manifest([string]$path, $manifest) {
+  $json = $manifest | ConvertTo-Json -Depth 10
+  # The pattern is built from [char]92 (a backslash) so this file never holds a
+  # literal backslash-u sequence, which some editors and tools decode on sight.
+  $bs = [string][char]92
+  $json = [regex]::Replace($json, ($bs + $bs + 'u00(27|3c|3e|26)'), { param($m) [string][char][Convert]::ToInt32($m.Groups[1].Value, 16) })
+  Write-Utf8NoBom $path ($json + "`n")
+}
+
 # ------------------------------------------------------------------ main ---
 function Write-Utf8NoBom([string]$path, [string]$text) {
   $enc = New-Object System.Text.UTF8Encoding($false)
@@ -554,29 +603,39 @@ $index.Add('|---|--------|------|------------|---------|')
 $count = 0
 $fileCount = 1   # the front page
 $all = New-Object System.Collections.Generic.List[object]
+$modules = New-Object System.Collections.Generic.List[object]
+$teacherItems = New-Object System.Collections.Generic.List[object]
 foreach ($f in $files) {
   $lesson = Get-Content -Raw -Encoding UTF8 $f.FullName | ConvertFrom-Json
   $th = $THEME[$lesson.kind]
   if (-not $th) { throw "Unknown kind '$($lesson.kind)' in $($f.Name)" }
 
   $name = $lesson.slug + '.html'
+  $heading = $th.label + ' ' + $lesson.num + ': '
+  $flint = FlintKey $lesson
+  $items = New-Object System.Collections.Generic.List[object]
   $pageLinks = @()
   if ($lesson.tracks) {
     foreach ($t in $lesson.tracks) {
       $tl = Merge-Track $lesson $t
       $tname = $tl.slug + '.html'
       Write-Utf8NoBom (Join-Path $outDir "pages\$tname") (Build-Page $tl $th)
+      $items.Add((ManifestItem 'page' "pages/$tname" ($heading + $tl.title) (TrackToken $lesson $t) 'student' $flint))
       $pageLinks += '[' + $t.slug + ' page](pages/' + $tname + ')'
       $fileCount++
     }
   } else {
     Write-Utf8NoBom (Join-Path $outDir "pages\$name") (Build-Page $lesson $th)
+    $items.Add((ManifestItem 'page' "pages/$name" ($heading + $lesson.title) (LinkToken $lesson 'PAGE') 'student' $flint))
     $pageLinks += '[page](pages/' + $name + ')'
     $fileCount++
   }
   Write-Utf8NoBom (Join-Path $outDir "assignments\$name") (Build-Assignment $lesson $th)
   Write-Utf8NoBom (Join-Path $outDir "teacher\$name")     (Build-Teacher    $lesson $th)
   $fileCount += 2
+  $items.Add((ManifestItem 'assignment' "assignments/$name" (AssignmentTitle $lesson $th) (LinkToken $lesson 'ASSIGNMENT') 'student' $flint))
+  $modules.Add([ordered]@{ name = ($heading + $lesson.title); audience = 'student'; items = $items.ToArray() })
+  $teacherItems.Add((ManifestItem 'page' "teacher/$name" ('Teacher Copy - ' + $heading + $lesson.title) $null 'teacher' $null))
 
   $all.Add($lesson)
   $index.Add('| ' + $lesson.num + ' | ' + $lesson.title + ' | ' + ($pageLinks -join ', ') + ' | [assignment](assignments/' + $name + ') | [teacher](teacher/' + $name + ') |')
@@ -610,5 +669,21 @@ foreach ($l in $all) {
 }
 
 Write-Utf8NoBom (Join-Path $outDir 'README.md') (($index -join "`n") + "`n")
+
+# --- canvas manifest ---
+# Module order is the course order:  Start Here (the front page), every lesson
+# in file order, then the teacher copies last in a module that stays unpublished.
+$frontItem = ManifestItem 'page' 'front-page.html' $course.title $null 'student' $null
+$frontItem.frontPage = $true
+$modules.Insert(0, [ordered]@{ name = 'Start Here'; audience = 'student'; items = @($frontItem) })
+$modules.Add([ordered]@{ name = 'Teacher Copies (keep unpublished)'; audience = 'teacher'; items = $teacherItems.ToArray() })
+Write-Manifest (Join-Path $outDir 'canvas-manifest.json') ([ordered]@{
+  manifestVersion  = 1
+  generatedBy      = 'lessons/canvas_import/build_canvas_html.ps1'
+  courseTitle      = $course.title
+  linkTokenPattern = 'LINK_[A-Z0-9_]+'
+  modules          = $modules.ToArray()
+})
+Write-Host '  built  canvas-manifest.json'
 Write-Host ''
 Write-Host ("Done. $count lessons -> $fileCount HTML files in html\")
