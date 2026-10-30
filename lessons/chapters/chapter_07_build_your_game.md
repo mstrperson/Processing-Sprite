@@ -43,7 +43,9 @@ You can start from your Chapter 6 sketch, or from the starter below, whichever i
 closer to what you want.  Either way, keep your own `MyCharacter` and `Cloud`
 tabs.
 
-**Build it.**  Paste this into your main tab:
+**Build it.**  Open your Chapter 6 sketch and save a copy first:  **File → Save
+As**, with a number on the end of the name.  Your Chapter 6 game stays safe in
+the old one.  Then paste this into your main tab:
 
 ```java
 // Lesson 7 - Build Your Game.  Replace everything marked CHANGE with your own choices!

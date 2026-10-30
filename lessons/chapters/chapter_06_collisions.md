@@ -218,6 +218,12 @@ your world.  The score's `fill()` and `textSize()` are yours.
 Last meeting your character started scoring points.  Today it gets something to
 avoid, and your game gets a way to end.
 
+**Build it.**  Before you change anything today, save a copy:  **File → Save
+As**, and put a number on the end of the name, like `MyGame2`.  Your Day 1 game
+stays safe in the old one.  Do the same any time you're about to make a big
+change, or paste in code from Sparky.  If something breaks, the old version is
+still there.
+
 If your sketch from last time is broken, the Canvas page has a Day 1 checkpoint.
 Paste it into your main tab, keep your own `MyCharacter` and `Cloud` tabs, and
 you're caught up.

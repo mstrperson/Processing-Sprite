@@ -47,11 +47,16 @@ import processing.sound.*;
 
 **Your turn.**  Find two sound files:  one short effect, like a ding, a pop, a
 coin, or a beep, and, if you want one, a music loop about thirty seconds long.
-Free sounds are at freesound.org, opengameart.org, and zapsplat.com.
+Free sounds are at opengameart.org, freesound.org, and zapsplat.com.  Start
+with opengameart.org, which lets you download without an account.
+freesound.org needs a free account first.  If a site won't let you log in,
+don't fight it.  Switch sites, or ask your teacher.
 
 **Build it.**  **Sketch → Show Sketch Folder**, and drag both into the `data`
-folder, exactly as in Bonus A.  MP3, WAV, OGG, and AIFF all work.  **WAV is the
-most reliable**, especially for short effects.
+folder, exactly as in Bonus A.  Do it as soon as each one downloads.  A sound
+that's only saved on a website can vanish, and then it's gone from your game
+too.  MP3, WAV, OGG, and AIFF all work.  **WAV is the most reliable**,
+especially for short effects.
 
 ---
 

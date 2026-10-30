@@ -45,7 +45,8 @@
       "p": [
         "**Sketch &rarr; Show Sketch Folder**, then drag your audio into the `data` folder.  Exactly like Bonus Lesson A.",
         "MP3, WAV, OGG, and AIFF all work.  **WAV is the most reliable**, especially for short effects.",
-        "Free sound:  freesound.org, opengameart.org, zapsplat.com."
+        "Free sound:  opengameart.org, freesound.org, zapsplat.com.  Start with opengameart.org, which lets you download without an account.  freesound.org needs a free account first.  If a site will not let you log in, do not fight it -- switch sites, or ask your teacher.",
+        "Drag each sound into `data` **as soon as you download it**.  A sound that is only saved on a website can vanish, and then it is gone from your game too."
       ]
     },
     {

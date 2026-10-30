@@ -167,7 +167,7 @@ function FlintBox([string]$numLabel, [string]$hint) {
   '<p style="margin:0 0 4px;font-size:17px;font-weight:700;color:#0f766e;">&#129302; Stuck?&nbsp; Ask the ' + (Esc $numLabel) + ' helper</p>' +
   '<p style="margin:0 0 14px;color:#31625d;">' + (Inline $hint) + '</p>' +
   '<a href="PASTE_FLINT_URL_HERE" target="_blank" rel="noopener" style="display:inline-block;background:#0f766e;color:#ffffff;text-decoration:none;' + $FONT + 'font-size:15px;font-weight:700;padding:11px 22px;border-radius:6px;">Open the AI Helper &rarr;</a>' +
-  '<p style="margin:12px 0 0;font-size:13px;color:#4b7c77;">The helper asks you questions and nudges you toward the answer.&nbsp; You get to do the figuring out!</p></div>'
+  '<p style="margin:12px 0 0;font-size:13px;color:#4b7c77;">Sparky gives you code with blanks to fill in.&nbsp; Tell it your lesson and paste your code.&nbsp; Still stuck?&nbsp; Ask again for the whole thing.</p></div>'
 }
 
 function ChecklistBox($items, [string]$accent) {

@@ -112,11 +112,12 @@
     "Add hair, a hat, wings, antennae, a tail, ears, a beak, horns -- anything.",
     "Change every color using **Tools &rarr; Color Selector**.",
     "Add detail:  eyebrows (they change the whole mood), freckles, a nose, a mouth with teeth.",
-    "Give it an expression.  Angry eyebrows are two short `line()` calls and they change everything."
+    "Give it an expression.  Angry eyebrows are two short `line()` calls and they change everything.",
+    "Curves come from `arc()`.  The last two numbers pick which part of the oval you get:  `0, PI` is the bottom half (a smile), and `PI, TWO_PI` is the top half (a frown, a rainbow, a raised eyebrow).  Put `noFill()` first, or the curve fills in."
   ],
   "challenge": "Make a **second** character class in another new tab -- a sidekick, a pet, a rival.  Same pattern, different art.",
 
-  "flintHint": "Good things to ask:  \"my new tab will not compile\", \"how do I draw a triangle in Processing?\", or \"how do I put a hat on top of my character?\"  Tell it you are on Lesson 2 and paste in your `drawSprite()`.",
+  "flintHint": "Good things to ask:  \"my new tab will not compile\", \"how do I draw a triangle in Processing?\", or \"how do I put a hat on top of my character?\"  Tell it you are on Lesson 2 and paste in your `drawSprite()`.  For a new shape, describe it in plain words:  where it starts, where it ends, and which way it curves.",
 
   "wrapup": "Show a neighbor your character and describe one shape you drew and how you positioned it.",
 

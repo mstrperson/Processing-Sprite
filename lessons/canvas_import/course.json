@@ -38,7 +38,10 @@
     {
       "h": "Stuck?  There is a helper",
       "p": [
-        "Every lesson page and every assignment has a button that opens an AI helper for that lesson.  It asks you questions and nudges you in the right direction -- it will not just hand you the answer, because then you would not have learned anything.",
+        "Every lesson page and every assignment has a button that opens **Sparky**, an AI helper for that lesson.  Sparky usually gives you code with a few blanks in it.  You fill in the blanks, type it in yourself, and run it.  Still stuck?  Ask again, and Sparky shows you the whole thing.",
+        "Sparky is great at drawing.  Describe your shape in plain words (where it starts, where it ends, which way it curves) and it can work out the numbers for you.",
+        "To get the best help:  tell Sparky which lesson you are on, paste in your code, and ask for one step at a time.  Before you paste in a big change, save a copy:  **File &rarr; Save As**, and add a number to the name.  Then if something breaks, your old version is still there.",
+        "If Sparky gets something wrong twice, or says it is not sure, take it to your teacher.",
         "Also:  ask the person next to you, and ask your teacher.  Both of those are allowed and both of them work."
       ]
     }
