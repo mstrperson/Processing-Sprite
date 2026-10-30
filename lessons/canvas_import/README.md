@@ -43,6 +43,16 @@ in HTML comments in the source `.md` files. Put them in an unpublished module.
 To change wording, edit the lesson's JSON in `content/` and re-run the build. Do not edit the
 generated HTML by hand — the next build overwrites it.
 
+## Importing into Canvas automatically
+
+The build also writes `html/canvas-manifest.json`, which describes what every file becomes in
+Canvas. The WinsorForms.Core CLI command `canvas-import-html` reads it and does the whole paste
+job above in one step. It creates the Pages, Assignments, and modules, points the front page's
+`LINK_*` links at the real items, and keeps everything unpublished. It's a dry run unless
+`--apply` is given, and re-running it refreshes the content in place. **Read
+[`CANVAS_MANIFEST_NOTE.md`](CANVAS_MANIFEST_NOTE.md) before renaming lessons or changing the
+builder:** titles are how the importer recognises what's already in Canvas.
+
 ---
 
 ## The rubrics
