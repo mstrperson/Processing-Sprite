@@ -34,6 +34,7 @@
   "sections": [
     {
       "h": "Where your sketch is saved",
+      "shot": { "file": "a1_SketchFolder.png", "caption": "A sketch folder open in Finder.  `HelloBlob` holds `HelloBlob.pde` and `MyCharacter.pde`." },
       "p": [
         "A sketch is a **folder**.  When you save a sketch called `HelloBlob`, Processing makes a folder called `HelloBlob`, with a file called `HelloBlob.pde` inside it.  Every tab is another `.pde` file in the same folder, and Bonus A and B add a `data` folder inside it.  The folder is the whole sketch, so the folder is what you hand in.",
         "Processing keeps every sketch together in your **sketchbook**.  On the school's Macs, that's the `Processing` folder inside `Documents`:"
@@ -47,6 +48,7 @@
     },
     {
       "h": "Saving the first time:  File &rarr; Save As",
+      "shot": { "file": "a1_SaveBox.png", "caption": "The Save box.  The name is `HelloBlob`, and **Where** says `Processing`." },
       "p": [
         "A new sketch has a made-up name, like `sketch_261101a`, and lives somewhere temporary until you save it.  Save it before you type anything."
       ],
@@ -71,6 +73,7 @@
     },
     {
       "h": "Opening a lesson's example",
+      "shot": { "file": "a1_Examples.png", "width": 220, "caption": "The Examples window, open to **Contributed Libraries &rarr; SpriteGame &rarr; Lessons**, with `Lesson03_BringItToLife` highlighted." },
       "p": [
         "Every lesson has an **example**:  its finished code, installed along with SpriteGame.  From Lesson 2 on, open it at the start of the lesson.  Run it to see where the lesson is headed, and keep it open, to compare with when your sketch does something strange."
       ],
@@ -89,6 +92,7 @@
     },
     {
       "h": "Finding your sketch in Finder",
+      "shot": { "file": "a1_PathBar.png", "caption": "A Finder window with the path bar along the bottom, showing `Documents` &rsaquo; `Processing`." },
       "p": [
         "**Finder** is the Mac's app for files and folders.  Its icon is the blue and white face at the left end of the Dock.  The surest way to find your sketch is to ask Processing, because it always knows where its own sketch is."
       ],
@@ -103,6 +107,7 @@
     },
     {
       "h": "Zipping your sketch folder",
+      "shot": { "file": "a1_Compress.png", "caption": "The right-click menu on the `HelloBlob` folder, with **Compress \"HelloBlob\"** highlighted." },
       "p": [
         "A **zip** is one file that holds a whole folder inside it.  Canvas takes one file per upload, so the folder goes in a zip.  On a Mac, making one is called **Compress**."
       ],

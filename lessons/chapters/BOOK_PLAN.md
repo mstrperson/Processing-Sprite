@@ -26,7 +26,7 @@ is that run's log.
 | Prologue | [`chapter_00_prologue.md`](chapter_00_prologue.md) | drafted, with Jason's answers in it |
 | Chapters 1 to 7 | `chapter_01_hello_blob.md` to `chapter_07_build_your_game.md` | drafted, every Check verified |
 | Bonus A to D | `bonus_a_images.md` to `bonus_d_lists.md` | drafted, every Check verified, as far as a machine can check sound |
-| Appendix 1, saving and handing in | [`student_reference_files.md`](student_reference_files.md) | drafted 2026-11-01:  saving, Finder, zipping, and handing in on a Mac.  Five screenshot frames left empty (below).  S.6, opening a lesson's example, added the same day |
+| Appendix 1, saving and handing in | [`student_reference_files.md`](student_reference_files.md) | drafted 2026-11-01:  saving, Finder, zipping, and handing in on a Mac.  Its five screenshots taken on a Mac 2026-11-02 (below).  S.6, opening a lesson's example, added the same day |
 | Appendix 2, the library | [`reference_api.md`](reference_api.md) | drafted, every claim about the library verified |
 | Their plans | [`planning/`](planning/) | one per piece, and one verification script per piece |
 | Their openings | [`book/`](book/) | one per chapter and bonus chapter |
@@ -85,16 +85,26 @@ a third:  that a lesson's example sits under **File → Examples → Contributed
 Libraries → SpriteGame → Lessons**, and that closing an example you typed in
 offers **Don't Save**.  Which examples run as they ship was checked on Windows,
 with `planning/verify_examples.sh`:  all but Bonus A and B, which stop on their
-missing pictures and sounds.  The five screenshot frames are empty, waiting for
-real ones from a lab Mac:
+missing pictures and sounds.
 
-| Section | The picture |
-|---|---|
-| A1.1 | a sketch folder open in Finder, list view:  `HelloBlob` with `HelloBlob.pde` and `MyCharacter.pde` |
-| A1.3 | Processing's Save box, name `HelloBlob`, **Where** set to `Processing` |
-| A1.6 | the Examples window, open to **Contributed Libraries → SpriteGame → Lessons**, `Lesson03_BringItToLife` highlighted |
-| A1.9 | a Finder window with the path bar showing `Documents › Processing` |
-| A1.11 | the right-click menu on the `HelloBlob` folder, **Compress "HelloBlob"** highlighted |
+**The five screenshots, taken 2026-11-02** on Jason's Mac (macOS 27, Processing
+4.4.4), in Light mode with the default blue accent, from a stand-in `HelloBlob`
+made from Lesson 2's example and deleted afterward.  Two of the checks above
+held on that Mac:  **Where** in the Save box starts at `Processing`, and the
+Lessons sit under **File → Examples → Contributed Libraries → SpriteGame →
+Lessons**.  The same five are on the Canvas help page, through each section's
+`shot` in `../canvas_import/guides/saving-and-handing-in.json`.
+
+| Section | The picture | File |
+|---|---|---|
+| A1.1 | a sketch folder open in Finder, list view:  `HelloBlob` with `HelloBlob.pde` and `MyCharacter.pde` | `a1_SketchFolder.png` |
+| A1.3 | Processing's Save box, name `HelloBlob`, **Where** set to `Processing` | `a1_SaveBox.png` |
+| A1.6 | the Examples window, open to **Contributed Libraries → SpriteGame → Lessons**, `Lesson03_BringItToLife` highlighted | `a1_Examples.png` |
+| A1.9 | a Finder window with the path bar showing `Documents › Processing` | `a1_PathBar.png` |
+| A1.11 | the right-click menu on the `HelloBlob` folder, **Compress "HelloBlob"** highlighted | `a1_Compress.png` |
+
+The path bar shows the whole path, from **Macintosh HD** through **Users** and
+the account's name.  A1.9's text gives only its last three folders.
 
 A postscript, the C# book's record of how its book got made, was left for Jason:
 it's meta-analysis in his voice, and PROGRESS.md has the raw material.

@@ -57,6 +57,8 @@ folder, and everything in it comes along.
 
 > **Screenshot:**  A sketch folder open in Finder.  `HelloBlob` holds
 > `HelloBlob.pde` and `MyCharacter.pde`.
+>
+> ![](screenshots/a1_SketchFolder.png)
 
 ## A1.2  Where it lives:  Documents, then Processing
 
@@ -98,6 +100,8 @@ double-click `Processing`, and then click **Save**.
 
 > **Screenshot:**  The Save box.  The name is `HelloBlob`, and **Where** says
 > `Processing`.
+>
+> ![](screenshots/a1_SaveBox.png)
 
 ## A1.4  Saving as you go:  File → Save
 
@@ -148,6 +152,8 @@ and when your sketch does something strange, compare the two.
 
 > **Screenshot:**  The Examples window, open to **Contributed Libraries →
 > SpriteGame → Lessons**, with `Lesson03_BringItToLife` highlighted.
+>
+> ![](screenshots/a1_Examples.png){width=1.9in}
 
 Here is each chapter's example.
 
@@ -225,6 +231,8 @@ has it.
 
 > **Screenshot:**  A Finder window with the path bar along the bottom, showing
 > `Documents › Processing`.
+>
+> ![](screenshots/a1_PathBar.png)
 
 ## A1.10  Getting there from Finder alone
 
@@ -261,6 +269,8 @@ file per upload, so the folder goes in a zip.  On a Mac, making a zip is called
 
 > **Screenshot:**  The right-click menu on the `HelloBlob` folder, with
 > **Compress "HelloBlob"** highlighted.
+>
+> ![](screenshots/a1_Compress.png)
 
 > **Watch out.**  Leave the zip alone once it's made.  Double-clicking a zip
 > opens it, and Finder unpacks a second copy of your folder and names it

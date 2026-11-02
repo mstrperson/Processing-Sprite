@@ -44,6 +44,9 @@ through saving in Processing, finding the sketch in Finder, zipping it, and uplo
 tables of fixes for when Finder looks wrong.  Every Assignment's "What to turn in" box links to
 it, and it has its own AI-helper button (`flint:files`).  Its longer twin is the book's Student
 Reference, `../chapters/student_reference_files.md`:  keep the steps in the two the same.
+A section's optional `shot` (`file`, `caption`, and a `width` in pixels, 440 by default) puts
+a screenshot under its steps.  Its `<img>` has a `SCREENSHOT` comment above it:  upload the
+PNG from `../chapters/screenshots` to the course's Files, and point the `src` at it.
 
 **Teacher copies** open with a red "keep this page unpublished" banner. They carry the direct
 instruction notes, guided-activity script, common mistakes, and wrap-up answers that are held

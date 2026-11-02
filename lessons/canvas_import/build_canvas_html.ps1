@@ -148,6 +148,20 @@ function Callout([string]$icon, [string]$title, [string]$body, [string]$bar, [st
   '<p style="margin:0;">' + (Inline $body) + '</p></div>'
 }
 
+# A screenshot and its caption, matching the book's Canvas pages
+# (lessons/chapters/tools/build_chapter.lua).  The src is just the file name:
+# upload the PNG from lessons/chapters/screenshots to the course's Files, then
+# point the src at it.
+function Shot($shot) {
+  if (-not $shot) { return '' }
+  $alt = [regex]::Replace($shot.caption, '\*\*([^*]+)\*\*', '$1')
+  $alt = (Esc ([regex]::Replace($alt, '`([^`]+)`', '$1'))) -replace '"', '&quot;'
+  return '<!-- SCREENSHOT:  upload ' + $shot.file + ' to Files, then point this src at it -->' +
+  '<p style="margin:20px 0 6px;text-align:center;"><img src="' + $shot.file + '" alt="' + $alt +
+  '" style="max-width:100%;width:' + $(if ($shot.width) { $shot.width } else { 440 }) + 'px;border:1px solid #c9d8e8;border-radius:6px;" /></p>' +
+  '<div style="font-size:14px;color:#5b6b7a;font-style:italic;margin:0 0 18px;text-align:center;">' + (P $shot.caption) + '</div>'
+}
+
 function VocabList($vocab, [string]$accent, [string]$soft) {
   if (-not $vocab) { return '' }
   $sb = New-Object System.Text.StringBuilder
@@ -464,6 +478,7 @@ function Build-Guide($guide) {
     [void]$sb.Append((H2 $sec.h $a))
     foreach ($p in $sec.p) { [void]$sb.Append((P $p)) }
     if ($sec.steps) { [void]$sb.Append((Numbered $sec.steps)) }
+    [void]$sb.Append((Shot $sec.shot))
     if ($sec.bullets) { [void]$sb.Append((Bullets $sec.bullets)) }
     foreach ($p in $sec.after) { [void]$sb.Append((P $p)) }
     if ($sec.check) { [void]$sb.Append((Callout '&#9989;' 'Check' $sec.check '#1d7a44' '#f1fbf5' '#c2e6d1')) }

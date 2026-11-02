@@ -92,3 +92,40 @@ first is **Saving and Handing In Your Work** (`guides/saving-and-handing-in.json
   Saving and Handing In Sparky exists in Flint (`lessons/flint/helpers/files_helper.md`).
 - **A re-import changes every Assignment body**, only in that one line, and creates the new Page.
   Nothing is renamed, so nothing is orphaned.
+
+## Added 2026-11-02: screenshots in a guide page
+
+A guide section can now have a **`shot`**: `{ "file", "caption", "width" }`, with `width` in pixels
+(440 if it's left out). The builder's `Shot()` renders it under the section's steps.
+**Saving and Handing In Your Work** has five, one in each of these sections: where a sketch is saved,
+saving the first time, opening a lesson's example, finding a sketch in Finder, and zipping.
+
+What `html/pages/saving-and-handing-in.html` now contains, five times:
+
+```html
+<!-- SCREENSHOT:  upload a1_SaveBox.png to Files, then point this src at it -->
+<p ...><img src="a1_SaveBox.png" alt="..." style="..." /></p>
+```
+
+- **The `src` is a bare file name, and the file isn't in `html/`.** The PNGs live in
+  `lessons/chapters/screenshots/` (`../../chapters/screenshots/` from `html/`), with the book's
+  other screenshots. Today the five are `a1_SketchFolder.png`, `a1_SaveBox.png`, `a1_Examples.png`,
+  `a1_PathBar.png`, and `a1_Compress.png`. Unless the importer does something about these, the Page
+  shows five broken images.
+- **What the importer needs to do:** for each `<img>` whose `src` is a bare name, upload that file
+  from the screenshots folder to the course's Files, then rewrite the `src` to the Canvas file's
+  URL before writing the Page body. Upload with overwrite on a matching name, so a retaken screenshot
+  replaces the old file and keeps the same name. The `SCREENSHOT` comment above each image marks
+  it, but the `<img>` tag alone is enough to find it.
+- **The manifest doesn't list the images.** The importer can read them from each body. If it's
+  better for the manifest to list them, an optional field per item, such as
+  `"images": ["a1_SaveBox.png", ...]`, would do it, and adding it doesn't need a
+  `manifestVersion` bump (rule 5). The builder doesn't write that field yet.
+- **The book's Canvas pages work the same way.** `lessons/chapters/build/canvas/*.html` puts
+  every chapter screenshot in the same `<img>` and `SCREENSHOT` comment form, which is 64 in all,
+  and `appendix-1.html` has these five. Those pages aren't in this manifest, but if they're
+  ever imported, the same image handling covers them.
+- **Building on a Mac rewrites the JSON outputs.** PowerShell 7 (`pwsh`) indents
+  `ConvertTo-Json` output differently from Windows PowerShell 5.1. A Mac build shows
+  `canvas-manifest.json` and `planbook-sequence.json` as fully rewritten, but `git diff -w` is
+  empty. Commit whichever spacing you like; the importer reads both the same way.
