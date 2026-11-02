@@ -224,13 +224,14 @@ Now the window shows the inside of your `Processing` folder, and `HelloBlob` is
 one of the folders in the list.
 
 **Turn on the path bar** while you're here.  Click **View → Show Path Bar**.  A
-thin bar appears along the bottom of the window, and it shows where you are:
-`Documents › Processing › HelloBlob`.  Double-click any folder in that bar to
-jump straight to it.  You only turn it on once:  every Finder window after that
+thin bar appears along the bottom of the window, and it shows where you are.
+It starts with **Macintosh HD**, then **Users** and your own name, and ends
+with `Documents › Processing › HelloBlob`.  Double-click any folder in that bar
+to jump straight to it.  You only turn it on once:  every Finder window after that
 has it.
 
-> **Screenshot:**  A Finder window with the path bar along the bottom, showing
-> `Documents › Processing`.
+> **Screenshot:**  A Finder window with the path bar along the bottom.  It ends
+> with `Documents › Processing`.
 >
 > ![](screenshots/a1_PathBar.png)
 

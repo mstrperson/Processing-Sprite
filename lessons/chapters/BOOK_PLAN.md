@@ -104,7 +104,7 @@ Lessons**.  The same five are on the Canvas help page, through each section's
 | A1.11 | the right-click menu on the `HelloBlob` folder, **Compress "HelloBlob"** highlighted | `a1_Compress.png` |
 
 The path bar shows the whole path, from **Macintosh HD** through **Users** and
-the account's name.  A1.9's text gives only its last three folders.
+the account's name.  A1.9 and the help page say so, from 2026-11-02.
 
 A postscript, the C# book's record of how its book got made, was left for Jason:
 it's meta-analysis in his voice, and PROGRESS.md has the raw material.

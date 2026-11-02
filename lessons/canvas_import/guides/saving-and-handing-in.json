@@ -92,14 +92,14 @@
     },
     {
       "h": "Finding your sketch in Finder",
-      "shot": { "file": "a1_PathBar.png", "caption": "A Finder window with the path bar along the bottom, showing `Documents` &rsaquo; `Processing`." },
+      "shot": { "file": "a1_PathBar.png", "caption": "A Finder window with the path bar along the bottom.  It ends with `Documents` &rsaquo; `Processing`." },
       "p": [
         "**Finder** is the Mac's app for files and folders.  Its icon is the blue and white face at the left end of the Dock.  The surest way to find your sketch is to ask Processing, because it always knows where its own sketch is."
       ],
       "steps": [
         "With your sketch open in Processing, click **Sketch &rarr; Show Sketch Folder** (**Command-K**).  A Finder window opens inside your sketch's folder.",
         "To see the folder itself, step out of it:  **Go &rarr; Enclosing Folder** (**Command-Up Arrow**).",
-        "Turn on the path bar:  **View &rarr; Show Path Bar**.  The bar along the bottom of the window shows where you are:  `Documents` &rsaquo; `Processing` &rsaquo; `HelloBlob`."
+        "Turn on the path bar:  **View &rarr; Show Path Bar**.  The bar along the bottom of the window shows where you are.  It starts with **Macintosh HD**, then **Users** and your own name, and ends with `Documents` &rsaquo; `Processing` &rsaquo; `HelloBlob`."
       ],
       "after": [
         "**From Finder alone:**  click **Go &rarr; Documents**, then double-click `Processing`.  Your sketches are the folders in the list."
