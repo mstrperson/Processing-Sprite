@@ -23,6 +23,21 @@ This chapter does it in three moves.
 Part One is reading.  Part Two is six small steps, and the sketch runs at the
 end of every one.
 
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> Lesson03_BringItToLife**.  Run it, and a plain blue character drifts up and to
+> the right, off one edge and back on the other.  Its `MyCharacter` tab is a
+> stand-in.  Your own character is the one in your own sketch.  Keep the
+> example's window open, and when your sketch does something strange, compare
+> the two.
+> Appendix 1, section A1.6, walks through opening an example one click at a
+> time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Lesson 3
+> page on Canvas.  Good things to ask it:  "my character will not move," "why
+> does negative y go up?", or "how do I make it move in a random direction?"
+> Tell it you're on Lesson 3, and paste in your `setup()` and `draw()`.
+
 ---
 
 # Part One - Two numbers and a step
@@ -56,8 +71,8 @@ player.setVelocity(3, -2);  // 3 pixels right, 2 pixels up per frame
 That's 3 pixels to the right and 2 pixels up, **every frame**.  At sixty frames
 a second, it adds up fast.
 
-Velocity is one more of your character's properties.  Blob gave it one when it
-was made, set to zero across and zero down.  That's why your character has been
+Velocity is one more of your character's properties.  Blob set it to zero across
+and zero down when your character was made.  That's why your character has been
 sitting still.
 
 ## 3.2  `move()` is the step
@@ -215,8 +230,8 @@ Press **▶ Run** five times in a row.
 
 > **Aside:  `random(a, b)`**
 >
-> `random(-5, 5)` picks a surprise number between `-5` and `5`, fresh every time
-> it runs.  It's usually not a whole number:  it might be `2.7`, or `-0.4`.
+> `random(-5, 5)` picks a new surprise number between `-5` and `5` every time it
+> runs.  It's usually not a whole number:  it might be `2.7`, or `-0.4`.
 > That's fine, because velocities are floats, like positions.  Put `random()`
 > anywhere a number goes, and you get a different number every run.
 
@@ -236,7 +251,7 @@ void draw() {
 Make a guess before you read on.
 
 Each frame, that version draws your character, and only then moves it.  So it's
-always drawing your character where it *used to be*:  one frame behind, forever.
+always drawing your character where it *used to be*:  one frame behind.
 
 Try it, and you'll see it looks the same.  It is the same, one frame late.  At
 sixty frames a second, one frame is too short to see.  It's still a habit worth
@@ -291,9 +306,8 @@ purpose.  Some of the best-looking sketches leave their trails on the screen.
 
 ## Chapter summary
 
-You started with a character that could move, waiting to be asked.  You end
-with one that slides across the screen at a speed you chose, and wraps around
-the edges on its own.
+You started with a character that could move.  You end with one that slides
+across the screen at a speed you chose, and wraps around the edges on its own.
 
 | You built | It's an example of |
 |---|---|
@@ -322,8 +336,8 @@ skips it.  Take the `//` away to switch it back on.  (Step 3)
 **`move()`** -- the step.  It adds your character's velocity to its position,
 once.  It goes in `draw()`.  (3.2)
 
-**`random(a, b)`** -- a surprise number between `a` and `b`, fresh every time
-it runs.  (Step 6)
+**`random(a, b)`** -- a new surprise number between `a` and `b` every time it
+runs.  (Step 6)
 
 **velocity** -- how fast something moves, and which way.  Two numbers:  `vx`,
 left and right, and `vy`, up and down.  (3.1)
@@ -344,8 +358,8 @@ opposite edge.  (Step 4)
 
 ## What's next
 
-Your character moves now, all on its own, in whatever direction you gave it at
-the start.  Once it's going, it goes where you pointed it.
+Your character moves now, all on its own.  Once it's going, it goes where you
+pointed it at the start.
 
 In Chapter 4 you take the controls.  Your character follows your mouse, or goes
 where the arrow keys send it, and your game gets its player.

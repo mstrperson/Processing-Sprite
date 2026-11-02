@@ -4,11 +4,12 @@
 
 ---
 
-Chapter 4 ended with a character you can steer, across an empty grey window.
+Chapter 4 ended with a character you can steer across an empty grey window.
 
 Today it gets a world:  ground to stand on, a sky, clouds drifting past, and a
-coin floating through, waiting for Chapter 6.  There's very little new code
-today.  Most of the chapter is you, deciding what your world looks like.
+coin floating through.  You collect the coin in Chapter 6.  There's very little
+new code today.  Most of the chapter is you, deciding what your world looks
+like.
 
 The one new idea is **draw order**:  the order of your lines decides what
 appears in front.
@@ -24,6 +25,21 @@ This chapter does it in four moves.
 
 You keep everything from Chapters 1 to 4, and you leave your `MyCharacter` tab
 exactly as it is.
+
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> Lesson05_BuildYourWorld**.  Run it, and you see a sky, green ground, two
+> clouds drifting, and a yellow coin, with a stand-in character in the middle.
+> Its `Cloud` tab is the one you build in Part Three.  Keep its window open, and
+> when your sketch does something strange, compare the two.  Your own work goes
+> in your own sketch.  Appendix 1, section A1.6, walks through opening an
+> example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Lesson 5
+> page on Canvas.  Good things to ask it:  "my ground is covering my player,"
+> "why is my Block in the wrong place?", "how do I make a new tab?", or "how do
+> I make a background that looks like space?"  Describe the world you're going
+> for, and Sparky can help you plan the layers.
 
 ---
 
@@ -189,8 +205,7 @@ Two things are new, both in the constructor.
 >
 > `Cloud(PApplet p, float x, float y, float speed)` takes a fourth thing, the
 > cloud's speed.  Then the constructor uses it:  `setVelocity(speed, 0)`.  So
-> every cloud sets its own velocity when it's made, right in its own
-> constructor.
+> every cloud sets its own velocity when it's made.
 
 **Build it.**  In the main tab, add two clouds, in the same three places:
 
@@ -248,8 +263,8 @@ coin = new Blob(this, random(width), random(100, height - 150),
 > This Blob gets seven things where Chapter 1's got five:  the sketch, x, y, the
 > radius, then **two more**, its velocity, and then its color.  It's the same as
 > making a Blob and calling `setVelocity()` on it, in one line.  Every number
-> here except the radius and color is `random()`, so the coin starts somewhere
-> different, going a different way, every run.
+> here except the radius and color is `random()`, so every run, the coin starts
+> in a different spot and goes a different way.
 
 Move and draw it in `draw()`, **after** the ground and **before** the player.
 Run it.
@@ -301,8 +316,9 @@ candy world?  Start with the background.
 looks wrong.  Make it a star, or a gem, or an asteroid.
 
 **Your turn.**  Redesign the `Cloud` tab completely:  a star, a bubble, a bird, a
-fish.  Rename the class if you like.  Or write a brand-new decoration in a new
-tab, a `Tree`, a `Rock`, with the same `extends Blob` pattern as your character.
+fish.  Rename the class if you like.  Or write a brand-new decoration, like a
+`Tree` or a `Rock`, in a new tab with the same `extends Blob` pattern as your
+character.
 
 **Your turn.**  Add more `Block`s:  a platform, a wall, a border around your
 scene.  Pick where each one goes in `draw()`.
@@ -330,7 +346,7 @@ coin darts.  Your player goes wherever you send it.
 
 **Your turn.**  **Optional:**  build a real parallax effect.  Three clouds at three
 different speeds:  the slowest one faintest and drawn first, the fastest one
-solid and drawn last.  It's the oldest trick in 2D games, and it still works.
+solid and drawn last.
 
 ---
 

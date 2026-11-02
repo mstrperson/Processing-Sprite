@@ -1,0 +1,208 @@
+{
+  "_comment": "A help page for the Start Here module.  The book's version, with more detail, is lessons/chapters/student_reference_files.md.  Keep the steps in the two the same.",
+
+  "slug": "saving-and-handing-in",
+  "title": "Saving and Handing In Your Work",
+  "kicker": "Help page",
+  "tagline": "Where your sketch lives, how to find it, and how it gets to Canvas.",
+  "fromAssignments": true,
+  "frontPageLine": "where Processing saves your sketch, how to zip it and upload it, and what to do when Finder looks strange.",
+
+  "flintKey": "flint:files",
+  "flintLabel": "Saving and Handing In",
+  "flintHint": "Good things to ask:  \"where did my sketch go?\", \"how do I zip my sketch?\", or \"my Finder window looks weird.\"  Tell it what you see on your screen, and it goes one step at a time.",
+  "flintFooter": "This Sparky knows Processing, Finder, and Canvas on a Mac.  Tell it what your window shows, and do one step before you ask for the next.",
+
+  "intro": [
+    "Every lesson ends with the same job:  zip your sketch folder and upload it to the Assignment.  This page walks through it one click at a time.  The table at the bottom fixes a Finder window that looks wrong.  It also shows how to open a lesson's example, which every lesson from Lesson 2 on asks you to do.",
+    "On a Mac, **right-click** means hold down the **Control** key and click.  On a trackpad, you can also click with two fingers."
+  ],
+
+  "quick": {
+    "h": "The short version",
+    "steps": [
+      "In Processing, save:  **File &rarr; Save**.",
+      "Open the folder:  **Sketch &rarr; Show Sketch Folder**.  A Finder window opens.",
+      "Step out of the folder:  in Finder, **Go &rarr; Enclosing Folder**.",
+      "Find your sketch's folder in the list (like `HelloBlob`), and click it once.",
+      "Right-click it, and choose **Compress \"HelloBlob\"**.",
+      "A new file, `HelloBlob.zip`, appears next to the folder.  That's the one you hand in.",
+      "On the Assignment, click **Start Assignment**, upload `HelloBlob.zip`, and click **Submit Assignment**."
+    ]
+  },
+
+  "sections": [
+    {
+      "h": "Where your sketch is saved",
+      "p": [
+        "A sketch is a **folder**.  When you save a sketch called `HelloBlob`, Processing makes a folder called `HelloBlob`, with a file called `HelloBlob.pde` inside it.  Every tab is another `.pde` file in the same folder, and Bonus A and B add a `data` folder inside it.  The folder is the whole sketch, so the folder is what you hand in.",
+        "Processing keeps every sketch together in your **sketchbook**.  On the school's Macs, that's the `Processing` folder inside `Documents`:"
+      ],
+      "bullets": [
+        "`Documents` &rsaquo; `Processing` &rsaquo; `HelloBlob` &rsaquo; `HelloBlob.pde`"
+      ],
+      "after": [
+        "The `libraries` folder in there is where SpriteGame is installed.  Leave it alone:  every lesson needs it."
+      ]
+    },
+    {
+      "h": "Saving the first time:  File &rarr; Save As",
+      "p": [
+        "A new sketch has a made-up name, like `sketch_261101a`, and lives somewhere temporary until you save it.  Save it before you type anything."
+      ],
+      "steps": [
+        "Click **File &rarr; Save As**.  A Save box opens.",
+        "Next to **Save As**, type the name, like `HelloBlob`.  Use letters and numbers, start with a letter, and leave out spaces.",
+        "Look at **Where**.  It should say `Processing`.",
+        "Click **Save**."
+      ],
+      "after": [
+        "**Where says something else?**  Click it, and choose `Processing` from the list.  If it isn't in the list, click the small arrow button next to the name.  The box grows into a full window with a sidebar.  Click **Documents** in the sidebar, double-click `Processing`, and click **Save**."
+      ]
+    },
+    {
+      "h": "Saving as you go",
+      "bullets": [
+        "**File &rarr; Save**, or **Command-S**, saves the sketch where it already is.  Do it every time something works.",
+        "**Before a big change, save a copy:**  **File &rarr; Save As**, and add a number to the name, like `MyGame2`.  You keep working in the copy, and the old version stays put in its own folder.",
+        "**To rename a sketch, use Save As.**  The folder and the main `.pde` file need the same name, and renaming either one in Finder breaks the match.",
+        "**To open it again:**  **File &rarr; Open Recent**, or **File &rarr; Sketchbook**, in Processing."
+      ]
+    },
+    {
+      "h": "Opening a lesson's example",
+      "p": [
+        "Every lesson has an **example**:  its finished code, installed along with SpriteGame.  From Lesson 2 on, open it at the start of the lesson.  Run it to see where the lesson is headed, and keep it open, to compare with when your sketch does something strange."
+      ],
+      "steps": [
+        "In Processing, click **File &rarr; Examples**.  A window opens with a list of folders.",
+        "Find **Contributed Libraries**, and click the small arrow next to it.  Then open **SpriteGame** the same way, and then **Lessons**.",
+        "Double-click the lesson you want, like `Lesson03_BringItToLife`.  It opens in a new window.",
+        "Click **&#9654; Run**."
+      ],
+      "bullets": [
+        "**Your work goes in your own sketch.**  The example's character is a plain stand-in.  Before you type, check the name on the window's first tab.",
+        "**To compare,** put the two windows side by side, and read the same tab and function in both.  The example has more comments, so look past them to the code.",
+        "**Typed in the example by accident?**  Close its window, and click **Don't Save**.",
+        "Lesson 4 has two examples, `_Mouse` and `_Keys`, and Lesson 6 has one per day, `_Day1` and `_Day2`.  The Bonus A and B examples are for reading:  they stop until they have your pictures or sounds."
+      ]
+    },
+    {
+      "h": "Finding your sketch in Finder",
+      "p": [
+        "**Finder** is the Mac's app for files and folders.  Its icon is the blue and white face at the left end of the Dock.  The surest way to find your sketch is to ask Processing, because it always knows where its own sketch is."
+      ],
+      "steps": [
+        "With your sketch open in Processing, click **Sketch &rarr; Show Sketch Folder** (**Command-K**).  A Finder window opens inside your sketch's folder.",
+        "To see the folder itself, step out of it:  **Go &rarr; Enclosing Folder** (**Command-Up Arrow**).",
+        "Turn on the path bar:  **View &rarr; Show Path Bar**.  The bar along the bottom of the window shows where you are:  `Documents` &rsaquo; `Processing` &rsaquo; `HelloBlob`."
+      ],
+      "after": [
+        "**From Finder alone:**  click **Go &rarr; Documents**, then double-click `Processing`.  Your sketches are the folders in the list."
+      ]
+    },
+    {
+      "h": "Zipping your sketch folder",
+      "p": [
+        "A **zip** is one file that holds a whole folder inside it.  Canvas takes one file per upload, so the folder goes in a zip.  On a Mac, making one is called **Compress**."
+      ],
+      "steps": [
+        "In Processing, **File &rarr; Save**.  The zip holds your sketch as it was when you last saved.",
+        "**Sketch &rarr; Show Sketch Folder**, then in Finder, **Go &rarr; Enclosing Folder**.",
+        "Click your sketch's folder **once**, so it's the only thing highlighted.",
+        "Right-click the folder (Control-click, or two fingers on the trackpad).",
+        "Choose **Compress \"HelloBlob\"**, with your sketch's name in the quotes.",
+        "A new file appears next to the folder:  `HelloBlob.zip`."
+      ],
+      "check": "The zip's name is your sketch's name, then `.zip`.  Got `Archive.zip`, `HelloBlob.pde.zip`, or `HelloBlob 2.zip` instead?  The table at the bottom of this page says what happened.",
+      "watch": "Leave the zip alone once it's made.  Double-clicking it unpacks a second copy of your folder and names it `HelloBlob 2`.  If that happens, drag `HelloBlob 2`, the one with the 2, to the Trash."
+    },
+    {
+      "h": "A screenshot of your sketch",
+      "p": [
+        "Some Assignments ask for a picture of your sketch running, too."
+      ],
+      "steps": [
+        "Run your sketch, so its window is open.",
+        "Press **Shift-Command-4**.  The pointer turns into a small cross.",
+        "Drag a box around the sketch window, and let go."
+      ],
+      "after": [
+        "The picture is saved on your Desktop, named `Screenshot` with the date and time.  To get the whole window in one click:  **Shift-Command-4**, then the **Space** bar, then click the window."
+      ]
+    },
+    {
+      "h": "Uploading to Canvas",
+      "steps": [
+        "Open the lesson's **Assignment**, and click **Start Assignment**.",
+        "Click **Choose File**.  Some Canvas pages call it **Upload File**, or let you drag the zip onto the page.",
+        "A window opens that works like Finder.  Click **Documents** in its sidebar, double-click `Processing`, click your zip, and click **Open**.",
+        "If the Assignment asks for a screenshot too, click **Add Another File**, then **Choose File**, click **Desktop** in the sidebar, and pick your screenshot.",
+        "Click **Submit Assignment**."
+      ],
+      "check": "Canvas says your work is submitted, and shows your zip's name."
+    },
+    {
+      "h": "Handing it in again",
+      "p": [
+        "You can hand in every Assignment again, as many times as you like.  A zip is a snapshot of your sketch when you made it, so after a change you need a new zip."
+      ],
+      "steps": [
+        "Save in Processing, and open the folder that holds your sketch folder, as above.",
+        "Drag the old zip to the Trash, so the new one can take the same name.",
+        "Compress the folder again.",
+        "On the Assignment, click **New Attempt** (or **Re-submit Assignment**), and upload the new zip."
+      ]
+    },
+    {
+      "h": "When Finder looks wrong",
+      "p": [
+        "A Finder window remembers how it was last left, and sometimes it was left strange.  Click a Finder window first, so the menus at the top of the screen are Finder's."
+      ],
+      "fixes": {
+        "cols": ["What you see", "What to do"],
+        "rows": [
+          ["No Finder window anywhere", "Click the Finder face in the Dock.  If nothing opens, click **File &rarr; New Finder Window**."],
+          ["The window says **Recents**, and your folder isn't there", "**Recents** shows files you used lately, and leaves folders out.  Click **Go &rarr; Documents**, then double-click `Processing`."],
+          ["No sidebar down the left side", "**View &rarr; Show Sidebar**."],
+          ["**Documents** is missing from the sidebar", "**Go &rarr; Documents** gets you there now.  To put it back:  **Finder &rarr; Settings**, then **Sidebar**, and tick **Documents**."],
+          ["**Documents** is in the sidebar under **iCloud**", "That's still your Documents folder.  Click it as usual."],
+          ["No buttons or search box across the top of the window", "**View &rarr; Show Toolbar**."],
+          ["You can't tell which folder you're in", "**View &rarr; Show Path Bar**, and read the bar along the bottom."],
+          ["Big icons scattered around the window", "**View &rarr; as List**."],
+          ["You see `HelloBlob.pde`, and no `HelloBlob` folder", "You're inside the folder.  **Go &rarr; Enclosing Folder**."],
+          ["The window says **Searching \"This Mac\"**", "Click the small **x** in the search box, or click **Documents** in the sidebar."],
+          ["The window fills the whole screen, and the menu bar is gone", "Move the pointer to the very top of the screen, and the menu bar slides down.  Click **View &rarr; Exit Full Screen**."],
+          ["The right-click menu has no **Compress**", "You clicked the empty space beside the folder.  Click right on the folder's name or its icon."]
+        ]
+      }
+    },
+    {
+      "h": "When the zip comes out wrong",
+      "fixes": {
+        "cols": ["What you got", "What happened", "What to do"],
+        "rows": [
+          ["`Archive.zip`", "More than one thing was highlighted.", "Drag it to the Trash.  Click just the one folder, and compress again."],
+          ["`HelloBlob.pde.zip`", "You compressed the file inside the folder.", "Drag it to the Trash.  **Go &rarr; Enclosing Folder**, and compress the folder."],
+          ["`HelloBlob 2.zip`", "An older `HelloBlob.zip` was already there.", "Drag both zips to the Trash, and compress again."],
+          ["`Processing.zip`, and it's huge", "You compressed the whole sketchbook, `libraries` and all.", "Drag it to the Trash.  Double-click `Processing`, and compress just your sketch's folder."],
+          ["A new folder, `HelloBlob 2`", "You double-clicked the zip, and Finder unpacked it.", "Drag `HelloBlob 2` to the Trash.  Your real sketch is the one without the 2."]
+        ]
+      }
+    },
+    {
+      "h": "When Processing can't find your sketch",
+      "fixes": {
+        "cols": ["What you see", "What happened", "What to do"],
+        "rows": [
+          ["A folder with a name like `sketch_261101a`", "A sketch saved with its made-up name.", "Open it in Processing, and give it a real name with **File &rarr; Save As**."],
+          ["Processing says the `.pde` file has to be in a folder with the same name", "The folder or the file got renamed in Finder.", "Let Processing fix it if it offers, and rename with **Save As** from now on."],
+          ["Two sketches with the same name", "A copy got saved somewhere else, maybe the Desktop or Downloads.", "In Processing, **Sketch &rarr; Show Sketch Folder** shows the one that's open.  Hand in that one."],
+          ["Your sketch isn't in `Processing` at all", "It got saved somewhere else.", "Open it with **File &rarr; Open Recent**, then **File &rarr; Save As** into `Processing`."],
+          ["**File &rarr; Examples** has no **SpriteGame** under **Contributed Libraries**", "SpriteGame isn't installed for your account on this Mac.", "Show your teacher.  Every lesson needs SpriteGame, so it's the first thing to fix."],
+          ["You did today's work in the example's window", "The window's first tab has the example's name, like `Lesson03_BringItToLife`.", "Keep the window open.  **File &rarr; Save As**, with your own name, into `Processing`.  Now it's a sketch of yours."]
+        ]
+      }
+    }
+  ]
+}

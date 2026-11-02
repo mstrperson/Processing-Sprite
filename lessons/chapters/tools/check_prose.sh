@@ -25,5 +25,7 @@ for f in "$@"; do
   echo "$prose" | grep -E '\b(it|that|there|they|you|we|what|here|let|don|won|can|isn|doesn)\.(s|re|ll|ve|t)\b'
   echo "-- marks this book leaves out"
   grep -nE '\{\.iceberg\}|Answer in your notes|\*\*Tonight' "$f"
+  echo "-- comma tails, five words or fewer (entry 27:  delete it, reread)"
+  perl "$(dirname "$0")/comma_tails.pl" 5 "$f" | grep '\[BARE\]'
 done
 true

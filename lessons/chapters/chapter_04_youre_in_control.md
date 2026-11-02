@@ -23,6 +23,23 @@ This chapter does it in four moves.
 Leave your `MyCharacter` tab exactly as it is.  Everything happens in the main
 tab.
 
+> **Today's example.**  This chapter has two, one for each option.  Open them
+> from **File → Examples**, then **Contributed Libraries → SpriteGame →
+> Lessons**:  **Lesson04_YoureInControl_Mouse** for Option A, and
+> **Lesson04_YoureInControl_Keys** for Option B.  Each opens in a window of its
+> own, with a stand-in character.  Run the one for the option you're on, and
+> keep it open.  When your sketch does something strange, compare the two.  In
+> the Keys example, click inside its window before you press an arrow key.  Your
+> own work goes in your own sketch.  Appendix 1, section A1.6, walks through
+> opening an example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on either Lesson 4
+> page on Canvas.  For Option A, ask it:  "my character will not follow the
+> mouse," or "why does my character stop next to the mouse instead of on it?"
+> For Option B:  "why do the arrow keys do nothing?", or "how do I make my
+> character stop when I let go of the key?"  Canvas calls the two options the
+> Mouse Group and the Keys Group.  Tell Sparky which group you're in.
+
 ---
 
 # Part One - Two kinds of input
@@ -101,7 +118,7 @@ ignores which way the velocity points.  `setVelocity(5, 0)` and
 > `followMouse()` moves your character zero pixels, and it looks broken.  When
 > your character ignores the mouse, check `setup()` for a velocity first.
 
-> **Watch out.**  Use `followMouse()` *or* `move()`, one or the other.
+> **Watch out.**  Use `followMouse()` *or* `move()`, not both.
 > `followMouse()` moves the character itself.  With both, `followMouse()` pulls
 > it toward the mouse, and `move()` pushes it to the right by its velocity, every
 > frame.  Your character curves over and parks just to the right of the mouse,
@@ -203,8 +220,8 @@ Option B has two halves, and they're the two kinds of input from 4.1.
 
 - `keyboardControl()`, in `keyPressed()`, runs once per key press.  It
   **changes** the velocity.  That's an event.
-- `move()`, in `draw()`, runs every frame.  It **uses** the velocity, to take
-  a step.
+- `move()`, in `draw()`, runs every frame.  It **uses** the velocity to take a
+  step.
 
 > **Watch out.**  Switch to the keys and forget to put `move()` back, and your
 > character sits still.  Every key press sets a velocity, and only `move()` takes
@@ -328,4 +345,4 @@ gives up.  (4.5)
 Your character goes where you tell it now, across an empty grey window.
 
 In Chapter 5 you build it a world:  ground, scenery that drifts past, and a coin
-floating through it, waiting for Chapter 6.
+floating through it.

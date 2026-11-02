@@ -21,6 +21,20 @@ This chapter does it in three moves.
 | Two | **One class, several poses.**  Your character, drawn a few slightly different ways. |
 | Three | **Build the flipbook.**  An `AnimatedSprite` has the poses, and flips through them for you. |
 
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> BonusC_Animation**.  Run it, and a stand-in character talks:  its mouth flips
+> through three poses, over and over.  Its `MyCharacterFrame` tab is the one you
+> build in Part Two.  Keep its window open, and when your sketch does something
+> strange, compare the two.  Your own work goes in your own sketch.  Appendix 1,
+> section A1.6, walks through opening an example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Bonus C
+> page on Canvas.  Good things to ask it:  "my character jumps around when it
+> animates," "my animation is too fast," or "how do I use an AnimatedSprite in
+> my Lesson 7 game with collisions?"  If the poses look wrong, paste in your
+> frame class.
+
 ---
 
 # Part One - A flipbook
@@ -173,13 +187,13 @@ void keyPressed() {
 > `AnimatedSprite.FromSprite(...)` starts the flipbook with its first page.
 > `.AddFrameSprite(...)` adds another page.  `.setFrameRate(8)` sets the speed.
 > Each one hands back the flipbook, so the next one can go right on the end.
-> That's why it's one long line, split over four.
+> That's why four lines on the screen are really one long line of code.
 
 **Every frame is made at the same `x` and `y`.**  That's the crucial part.
 
 Run it.
 
-> **Check.**  Your character flips through its poses on its own, over and over.
+> **Check.**  Your character flips through its poses on its own.
 
 > **Screenshot:**  Pose 0, game frames 1 to 8.
 >
@@ -263,8 +277,8 @@ Pick a number that matches your character's size:  about your character's
 radius plus the coin's.
 
 Two more changes put it in your game.  At the top, the player is an
-`AnimatedSprite`.  And in `restartGame()`, the player is built from frames,
-the way Step 3 builds it, in place of `new MyCharacter(...)`.
+`AnimatedSprite`.  And in `restartGame()`, `new MyCharacter(...)`
+becomes the chain of frames from Step 3.
 
 > **Check.**  Your animated character collects coins and runs into hazards, the
 > same as before.
@@ -276,9 +290,8 @@ the mouth, and make it walk.
 
 **Your turn.**  **Optional:**  any of these.
 
-- More frames, for smoother motion.  More pages make a smoother flipbook.
-- A second animated creature, a pet, with its own `setVelocity()`, drifting
-  across the scene.
+- More frames.  More pages make a smoother flipbook.
+- A second animated creature, a pet, with its own `setVelocity()`.
 - Poses by hand.  Turn one page on a key, in `keyPressed()`:
 
 ```java

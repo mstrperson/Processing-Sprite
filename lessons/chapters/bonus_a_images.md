@@ -20,6 +20,20 @@ This chapter does it in three moves.
 | Two | **Scenery:  `ImageSprite`.**  A sprite that's a picture. |
 | Three | **Your character as a picture.**  Keep `extends Blob`, and draw a picture in `drawSprite()`. |
 
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> BonusA_Images**.  This one is for reading.  It stops as soon as it runs,
+> because its `data` folder is empty, and the pictures are yours to find:
+> Processing's message says `hero.png` is missing.  Read its main tab for Part
+> Two, and its `MyImageCharacter` tab for Part Three.  Your own work goes in your
+> own sketch.  Appendix 1, section A1.6, walks through opening an example one
+> click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Bonus A
+> page on Canvas.  Good things to ask it:  "my image shows up as a white box,"
+> "Processing says it cannot load my image," or "how do I make my picture the
+> right size?"  Tell it your file's name and where you put it.
+
 ---
 
 # Part One - Pictures live in a folder
@@ -33,7 +47,7 @@ any paint program, or find free art at opengameart.org.
 
 ## A.2  The `data` folder
 
-Processing looks for pictures in exactly one place:  a folder called `data`,
+Processing looks for pictures in exactly one place:  a folder called `data`
 inside your sketch's folder.
 
 **Build it.**
@@ -113,7 +127,7 @@ Three things go wrong here, and each one looks different.
 > The file "pine.png" is missing or inaccessible, make sure the URL is valid or that the file has been added to your sketch and is readable.
 > ```
 >
-> Check that the file is in `data`, and check the name, letter by letter.
+> Check that the file is in `data`, and check the name letter by letter.
 
 > **Watch out.**  **The capitals don't match.**  Ask for `"Tree.PNG"` when the file
 > is `tree.png`, and Processing stops and tells you exactly what's wrong:
@@ -182,7 +196,8 @@ Read it against your `MyCharacter` tab.  The class line, the handshake, and a
 
 > **Aside:  `imageMode(CENTER)`, and `pushStyle()`**
 >
-> `image(img, pos.x, pos.y, 60, 60)` draws the picture, 60 by 60.  Normally a
+> `image(img, pos.x, pos.y, 60, 60)` draws the picture 60 pixels wide and 60
+> tall.  Normally a
 > picture is placed by its top-left corner, like a `Block`.
 > `imageMode(CENTER)` places it by its middle, so it sits on the belly button
 > like every other part of your character.  `pushStyle()` and `popStyle()` save
@@ -223,7 +238,7 @@ as a ring:
 > ![](screenshots/bA_Center.png)
 
 Tune the `30` in `super(...)` until the ring fits.  A ring slightly smaller than
-the picture usually feels fairest.  Then take the three ring lines out, before
+the picture usually feels fairest.  Then take the three ring lines out before
 anybody else plays.
 
 > **Watch out.**  Leave out `imageMode(CENTER)`, and the picture is placed by its

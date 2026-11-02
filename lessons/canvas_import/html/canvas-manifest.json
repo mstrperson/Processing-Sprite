@@ -14,6 +14,16 @@
                                           "title":  "Make Your Own Game",
                                           "audience":  "student",
                                           "frontPage":  true
+                                      },
+                                      {
+                                          "type":  "page",
+                                          "file":  "pages/saving-and-handing-in.html",
+                                          "title":  "Saving and Handing In Your Work",
+                                          "audience":  "student",
+                                          "linkToken":  "LINK_GUIDE_SAVING_AND_HANDING_IN",
+                                          "placeholders":  {
+                                                               "PASTE_FLINT_URL_HERE":  "flint:files"
+                                                           }
                                       }
                                   ]
                     },

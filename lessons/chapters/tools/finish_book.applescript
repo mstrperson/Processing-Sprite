@@ -278,7 +278,7 @@ on finish(d, work)
 		set {s, lvl, txt} to contents of h
 		if lvl = 1 then
 			set s to s + blanks
-			set isUnit to (txt starts with "Unit ") or (txt starts with "Bonus Chapters") or (txt starts with "For Teachers")
+			set isUnit to (txt starts with "Unit ") or (txt starts with "Bonus Chapters") or (txt starts with "Appendices")
 			if not isUnit and afterUnit then
 				set afterUnit to false
 			else

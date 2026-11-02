@@ -23,6 +23,22 @@ This chapter does it in three moves.
 | Two | **Your drawing replaces Blob's.**  Break it two ways, and see the plain Blob underneath. |
 | Three | **Measure from the belly button.**  Every shape goes where it goes because of `pos.x` and `pos.y`.  Moving the character proves it, and then you make it yours. |
 
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> Lesson02_DrawYourCharacter**.  It opens in a window of its own.  Run it, and
+> you see a blue character with two eyes and a smile:  the plain character
+> you'll start from in 2.1.  Keep its window open, and when your sketch does
+> something strange, compare the two.  Your own work goes in your own sketch.
+> Appendix 1, section A1.6, walks through opening an example one click at a
+> time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Lesson 2
+> page on Canvas.  Good things to ask it:  "my new tab will not compile," "how
+> do I draw a triangle in Processing?", or "how do I put a hat on top of my
+> character?"  Tell it you're on Lesson 2, and paste in your `drawSprite()`.
+> For a new shape, describe it in plain words:  where it starts, where it ends,
+> and which way it curves.
+
 ---
 
 # Part One - A Blob with a new face
@@ -123,9 +139,9 @@ Run it.
 
 The main tab is Chapter 1's sketch with three changes.
 
-`MyCharacter player;` makes a box called `player`, for holding a
-`MyCharacter`.  In Chapter 1 the box was for a `Blob`.  `MyCharacter` is a kind
-of thing you just invented, in the new tab.
+`MyCharacter player;` makes a box called `player` that holds a `MyCharacter`.
+In Chapter 1 the box was for a `Blob`.  `MyCharacter` is a kind of thing you
+just invented in the new tab.
 
 `new MyCharacter(this, width/2, height/2)` makes your character and puts it in
 the box.  It takes three things:  the sketch, then x, then y.
@@ -156,7 +172,7 @@ the last one in the tab.
 how to move, wrap around the screen, and detect collisions.  All you add is
 what it looks like.
 
-Your character gets all of Blob's properties and behaviors, for free.  It has a
+Your character gets all of Blob's properties and behaviors.  It has a
 position, a radius, and a color, and it can do everything a Blob can do.  In a
 minute you'll swap out one behavior, `drawSprite()`, for your own.
 
@@ -177,17 +193,17 @@ The three things in the first line catch the three things the main tab sent.
 > `float` is the kind of number that can have a decimal point, like `2.5`.
 > Positions are floats, because a character can sit partway between two pixels.
 > `PApplet` is the kind of thing a sketch is.  Every character class you write
-> has both words, right in this spot.
+> has both words in this same spot.
 
 The line starting with `super` is the **handshake**.  It connects your character
 to the library.  Copy it exactly.
 
 Look at what's inside it, though:  the sketch, x, y, a radius, and a color.
-That's the five things a Blob needs, from Chapter 1.  The handshake hands them
-to the Blob your character is built on.
+That's the same five things you gave a Blob in Chapter 1.  The handshake hands
+them to the Blob your character is built on.
 
 - The `30` is your character's radius:  an invisible circle the library uses
-  later, for collisions.  Keep it about the size of your character's body.
+  later to detect collisions.  Keep it about the size of your character's body.
 - The color is a backup.  You're about to draw over it.
 
 > **Watch out.**  Delete the `super` line, and the sketch stops with this:
@@ -286,10 +302,10 @@ Try it here, on the method in your class.
 >
 > ![](screenshots/ch02_Misspelled.png)
 
-`drawsprite` is a brand-new method, with a name of its own.  The main tab calls
-`drawSprite()`, with a capital `S`, and now the only `drawSprite()` your
-character has is Blob's.  Blob's draws a plain circle, at the radius and in the backup color from
-your handshake, with Processing's outline.  That circle was under your face the
+`drawsprite` is a brand-new method.  The main tab calls `drawSprite()`, with a
+capital `S`, and now the only `drawSprite()` your character has is Blob's.
+Blob's draws a plain circle with Processing's outline.  It uses the radius and
+the backup color from your handshake.  That circle was under your face the
 whole time.  Your `drawSprite()` was covering it up.
 
 **Build it.**  Put the capital `S` back, and run.  The face is back.
@@ -431,7 +447,7 @@ The shapes you can use, all measured from the belly button:
 - Change the **body shape**.  `rect()`, `triangle()`, or several overlapping
   `ellipse()` calls all work.
 - Add hair, a hat, wings, antennae, a tail, ears, a beak, horns.  Anything.
-- Change every color, with the Color Selector.
+- Change every color with the Color Selector.
 - Add detail.  Eyebrows change the whole mood.  So do freckles, a nose, or a
   mouth with teeth.
 - Give it an expression.  Angry eyebrows are two short `line()` calls.

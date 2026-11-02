@@ -76,3 +76,19 @@ course. The section's last two meetings were left empty on purpose.
 - **The text must be ASCII.** The plan book columns are `varchar`. `PlainText()` strips markup,
   decodes entities, and maps the typographic characters it knows. A new character it doesn't know
   fails the build with its code point, and the fix is to add it to `$ASCII_MAP`.
+
+## Added 2026-11-01: help pages from `guides/`
+
+The build now reads **`guides/*.json`** as well as `content/*.json`. Each guide becomes one student
+Page, `html/pages/<slug>.html`, listed in the **Start Here** module right after the front page. The
+first is **Saving and Handing In Your Work** (`guides/saving-and-handing-in.json`).
+
+- **Its link token is used outside the front page.** `LINK_GUIDE_SAVING_AND_HANDING_IN` appears on
+  the front page and in the "What to turn in" box of every Assignment, so the importer has to
+  resolve `LINK_*` tokens in Assignment bodies too. Rule 2 above says it already checks every
+  file; if it only rewrites the front page's links, the eleven Assignments will keep the raw
+  token as an href, and that needs a change in WinsorForms.Core.
+- **It has a new Flint key, `flint:files`.** Add its chat URL to the `--values` file once the
+  Saving and Handing In Sparky exists in Flint (`lessons/flint/helpers/files_helper.md`).
+- **A re-import changes every Assignment body**, only in that one line, and creates the new Page.
+  Nothing is renamed, so nothing is orphaned.

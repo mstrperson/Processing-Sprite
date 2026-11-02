@@ -1,4 +1,4 @@
-# Teacher Reference - The SpriteGame Library
+# Appendix 2 - The SpriteGame Library
 
 *What's inside the toolbox, for the person teaching from it.*
 
@@ -6,18 +6,18 @@
 
 This part of the book is for teachers.  The chapters treat SpriteGame as a magic
 toolbox, on purpose:  Guiding Principle 5 says students *"call methods the way
-they push buttons on a machine,"* and the button works.  This reference opens the
+they push buttons on a machine,"* and the button works.  This appendix opens the
 box.  It documents every class and every public member, it shows how `Sprite`
 works on the inside, and it explains why the course builds every student class on
-`Blob`, along with what that choice costs.
+`Blob` and what that choice costs.
 
-Every behavior this reference describes was run against the library as it is in
-this repository, `library/SpriteGame.jar`, with Processing 4.5.2.  The checks are
-in `lessons/chapters/planning/verify_api.sh`, and the messages and numbers below
-are what they printed.  The generated Javadoc is in the repository too, under
-`reference/`.
+Every behavior this appendix describes was checked with Processing 4.5.2
+against the library in this repository, `library/SpriteGame.jar`.  The checks
+are in `lessons/chapters/planning/verify_api.sh`, and the messages and numbers
+below are what they printed.  The generated Javadoc is in the repository's
+`reference/` folder.
 
-It does it in five parts.
+This appendix has five parts.
 
 | Part | What it covers |
 |---|---|
@@ -31,7 +31,7 @@ It does it in five parts.
 
 # Part One - The shape of the library
 
-## R.1  The family tree
+## A2.1  The family tree
 
 ```
 Sprite  (abstract:  pos, vel, move(), followMouse(), follow(), keyboardControl(), distanceTo())
@@ -54,9 +54,9 @@ Helpers:  Vector2D (a pair of floats), ScreenBehavior (an enum), Event (callback
 Everything a student puts on the screen, from Chapter 1's first circle to Chapter
 7's game, is a `Blob` or a subclass of one.  `ImageSprite` and `AnimatedSprite`
 arrive only in Bonus A and Bonus C.  `CompoundSprite`, `Vector2D` by name, and
-`Event` appear in this reference alone.
+`Event` appear in this appendix alone.
 
-## R.2  How a student class fits
+## A2.2  How a student class fits
 
 A class in a Processing tab is compiled as a nested class inside the sketch.  That
 explains three things students do without knowing why.
@@ -67,8 +67,8 @@ explains three things students do without knowing why.
   passes it up.
 - **Why `MyCharacter` can call `fill()` directly, and the library calls
   `parent.fill()`.**  A nested class can call the sketch's methods as its own.
-  `MyImageCharacter` in Bonus A uses `parent.image(...)`, which works too.
-  Both styles appear in the course, and both are correct.
+  `MyImageCharacter` in Bonus A uses `parent.image(...)`.  Both styles appear
+  in the course, and both are correct.
 - **Why `pos.x` works in a student's `drawSprite()`.**  `pos` is `protected` in
   `Sprite`, so any subclass, including a nested class in a tab, can use it.
 
@@ -76,48 +76,48 @@ explains three things students do without knowing why.
 
 # Part Two - `Sprite`, the base
 
-## R.3  Fields
+## A2.3  Fields
 
 | Field | Type | Notes |
 |---|---|---|
 | `parent` | `PApplet` (`protected`) | the sketch.  Used for drawing, `width`, `height`, `mouseX`, `mouseY`, `keyCode`. |
 | `pos` | `Vector2D` (`protected`) | the sprite's position.  For a `Blob` it's the center;  for a `Block` it's the top-left corner. |
 | `vel` | `Vector2D` (`protected`) | pixels per frame.  Every constructor without a velocity starts it at `(0, 0)`. |
-| `screenBehavior` | `ScreenBehavior` (`public static`) | what `move()` does at the window's edges.  One setting, shared by every sprite.  See R.12. |
+| `screenBehavior` | `ScreenBehavior` (`public static`) | what `move()` does at the window's edges.  One setting, shared by every sprite.  See A2.12. |
 
-## R.4  Constructors
+## A2.4  Constructors
 
 | Constructor | Notes |
 |---|---|
 | `Sprite(PApplet parent, float x, float y)` | velocity `(0, 0)` |
 | `Sprite(PApplet parent, float x, float y, float dx, float dy)` | with a velocity |
-| `Sprite(PApplet parent, Vector2D s)` | stores `s` itself as the position, so the caller's vector and the sprite's position are the same object.  See R.7. |
+| `Sprite(PApplet parent, Vector2D s)` | stores `s` itself as the position, so the caller's vector and the sprite's position are the same object.  See A2.7. |
 
 `Sprite` is `abstract`, so these are only ever called through `super(...)`.
 
-## R.5  Moving
+## A2.5  Moving
 
 | Method | What it does |
 |---|---|
 | `move()` | `pos = pos.add(vel)`, which builds a new vector every frame, and then applies `screenBehavior` to the center. |
 | `moveTo(float x, float y)` | sets `pos.x` and `pos.y` **in place**. |
-| `moveTo(Vector2D p)` | stores `p` itself as the position.  See R.7. |
+| `moveTo(Vector2D p)` | stores `p` itself as the position.  See A2.7. |
 | `setVelocity(float dx, float dy)` | sets `vel.x` and `vel.y` **in place**. |
-| `setVelocity(Vector2D v)` | stores `v` itself as the velocity.  See R.7. |
-| `getPosition()`, `getVelocity()` | hand back the sprite's own vectors, not copies.  See R.7. |
+| `setVelocity(Vector2D v)` | stores `v` itself as the velocity.  See A2.7. |
+| `getPosition()`, `getVelocity()` | hand back the sprite's own vectors, not copies.  See A2.7. |
 | `distanceTo(Sprite other)` | center to center:  `pos` to `pos`.  For a `Block`, that's its corner. |
 | `drawSprite()` | `abstract`.  Every subclass supplies one. |
 
 `move()` is the only method that looks at the window's edges.  `followMouse()`
-and `moveTo()` skip them entirely, so a character steered by the mouse can be
-parked anywhere, edges included, whatever `screenBehavior` says.
+and `moveTo()` skip them entirely, so whatever `screenBehavior` says, a
+character steered by the mouse can be parked anywhere, edges included.
 
 Wrapping is by the **center**.  When the center crosses an edge, the position
 jumps by the window's width or height in one frame.  So half a character hangs off
 the edge before it wraps, and then the whole character pops across.  Chapter 3
 shows the stripe this makes.
 
-## R.6  The two input methods
+## A2.6  The two input methods
 
 **`keyboardControl()`** is a `switch` on `parent.keyCode`:
 
@@ -166,8 +166,8 @@ frame 51:  pos = (NaN, NaN)
 In a classroom it's exceedingly rare.  The sprite has to land on the mouse
 exactly:  level with it, a whole number of steps away, with the mouse held
 perfectly still the whole way.  A hand on a real mouse doesn't do that.  A test
-script can, and this book's screenshots hit it once that way, in Chapter 5, with
-a scripted mouse parked 200 pixels straight right of a player moving at 4.  If a
+script can.  One of this book's Chapter 5 screenshot scripts hit it by parking
+the mouse 200 pixels straight right of a player moving at 4.  If a
 vanished sprite turns up now, that computer has an older copy of the library.
 The guard doesn't change the jitter within one step of the mouse.  Part Five has
 a fuller fix that removes it too.
@@ -200,7 +200,7 @@ sprite parks on the mouse's row, just to its right, and stays perfectly still.
 Chapter 4 shows it, and the Lesson 4 Mouse Group page has students try it on
 purpose.
 
-## R.7  The vectors it hands out
+## A2.7  The vectors it hands out
 
 `Vector2D`'s own documentation says *"Every method returns a new Vector2D rather
 than changing the original."*  That's true of `Vector2D`'s methods.  It isn't true
@@ -217,14 +217,14 @@ vector, and changing it through one name changes it through the other.  Verified
 
 The chapters use only the `float` versions of `moveTo()` and `setVelocity()`, and
 leave the getters alone, so the course itself steers clear of all of this.  A
-curious student can find it, though, and it's the C# course's Chapter 1, aliasing,
-living in this library.  The suggested fix is in Part Five.
+curious student can find it, though, and it's the C# course's Chapter 1:
+aliasing.  The suggested fix is in Part Five.
 
 ---
 
 # Part Three - `Blob`, and why the course builds on it
 
-## R.8  `Blob`
+## A2.8  `Blob`
 
 | Member | Notes |
 |---|---|
@@ -233,9 +233,9 @@ living in this library.  The suggested fix is in Part Five.
 | `Blob(PApplet parent, float x, float y, float r, int c)` | Chapter 1's five things |
 | `Blob(PApplet parent, float x, float y, float r, float dx, float dy, int c)` | with a velocity:  Chapter 5's coin |
 | `collidesWith(Blob other)` | `distanceTo(other) <= radius + other.radius`.  Circles only, and touching counts:  centers exactly 20 apart, with radii 10 and 10, is `true`, and 21 apart is `false`. |
-| `drawSprite()` | `fill(myColor)`, then a circle of `2 * radius`.  It sets no stroke, so it uses whatever stroke is current.  See R.10. |
+| `drawSprite()` | `fill(myColor)`, then a circle of `2 * radius`.  It sets no stroke, so it uses whatever stroke is current.  See A2.10. |
 
-## R.9  Why `Blob`
+## A2.9  Why `Blob`
 
 The course's own guiding principles say it:  *"`collidesWith()` is on `Blob`, not
 on the base `Sprite`.  Students' custom characters should use `class MyCharacter
@@ -270,15 +270,15 @@ No chapter uses `@Override`.  Adding it would put one more copied line in every
 class a student writes.
 
 **2.  Only Blobs can collide.**  `collidesWith()` lives on `Blob`, and it takes a
-`Blob`.  So only Blobs can use it, from either side.  A plain `Sprite` subclass
-has no `collidesWith()`, and a Blob can't collide with one either:
+`Blob`.  So both sides of a collision have to be Blobs.  A plain `Sprite`
+subclass has no `collidesWith()`, and a Blob can't collide with one either:
 
 ```
 The function collidesWith(Blob) does not exist.
 The method collidesWith(Blob) in the type Blob is not applicable for the arguments (BlobVsSprite.Thing)
 ```
 
-`ImageSprite` and `AnimatedSprite` hit the same wall, in Bonus A and Bonus C.  The
+In Bonus A and Bonus C, `ImageSprite` and `AnimatedSprite` hit the same wall.  The
 way around it is `distanceTo()`, which lives on `Sprite` and works between any two
 sprites.  What it buys:  one type for the whole world.  The character, the clouds,
 the coins, and the hazards are all Blobs, so one kind of variable fits any of
@@ -309,11 +309,11 @@ thing that goes anywhere a `Blob` goes, at no cost in new code.
 
 **6.  `pos` and `vel` are open to students.**  Because they're `protected`, a
 student's class can change `pos` directly, skipping `moveTo()`, and the getters
-hand out the live objects (R.7).  What it buys:  the belly button.  A sixth grader
+hand out the live objects (A2.7).  What it buys:  the belly button.  A sixth grader
 writes `ellipse(pos.x - 12, pos.y - 8, 16, 16)`, with no getter and no copy, and
 Chapter 2's whole Part Three rests on it.
 
-## R.10  Style leaks from one sprite to the next
+## A2.10  Style leaks from one sprite to the next
 
 Processing keeps one set of drawing settings, `fill`, `stroke`, `strokeWeight`, and
 the rest, and each one carries on until something changes it:  from shape to
@@ -344,21 +344,21 @@ drawn, and that's the habit to teach:  a `drawSprite()` sets everything it needs
 
 # Part Four - The rest of the family
 
-## R.11  `Block`
+## A2.11  `Block`
 
 | Member | Notes |
 |---|---|
 | `w`, `h` | `float` (`protected`).  Width and height, stored as absolute values. |
 | `Block(PApplet parent, float x, float y, float w, float h, int c)` | `x, y` is the **top-left corner**.  The radius is 0. |
-| `drawSprite()` | `fill(myColor); noStroke(); rect(pos.x, pos.y, w, h)`.  The `noStroke()` leaks (R.10). |
+| `drawSprite()` | `fill(myColor); noStroke(); rect(pos.x, pos.y, w, h)`.  The `noStroke()` leaks (A2.10). |
 
 A `Block` has `move()` and `setVelocity()`, and starts still.  Its collision is
-R.9's trade-off 5:  a point at its corner.
+A2.9's trade-off 5:  a point at its corner.
 
-## R.12  `ScreenBehavior`
+## A2.12  `ScreenBehavior`
 
 An enum with four values, set through the static `Sprite.screenBehavior`, so one
-line changes every sprite in the sketch, immediately, mid-game included.  It
+line changes every sprite in the sketch, even mid-game.  It
 applies only inside `move()`, and only to each sprite's center.
 
 | Value | At an edge | Verified |
@@ -372,7 +372,7 @@ Chapter 7 offers `BouncyWalls` as a one-line extra.  Because it's static, the
 clouds bounce too, and a student can't make the hazards bounce and the clouds wrap
 at the same time.
 
-## R.13  `ImageSprite`
+## A2.13  `ImageSprite`
 
 `ImageSprite` extends `Sprite` directly.  It isn't a `Blob`, so it has no radius
 and no `collidesWith()`.
@@ -386,7 +386,7 @@ and no `collidesWith()`.
 | `setRotation(float rotation)`, `rotate(float amount)`, `getRotation()` | radians, around the center |
 | `drawSprite()` | `pushMatrix`, `pushStyle`, `translate`, `rotate`, `imageMode(CENTER)`, `image`, and both pops.  The one `drawSprite()` in the library that puts every setting back. |
 
-The image loads once, in the constructor, from the sketch's `data` folder.  A
+The constructor loads the image once from the sketch's `data` folder.  A
 missing file prints Processing's *"is missing or inaccessible"* message and leaves
 the image `null`.  The constructor carries on, and the sketch stops with
 `NullPointerException` the first time `drawSprite()` passes `null` to `image()`.
@@ -394,7 +394,7 @@ A name with the wrong capitals gets Processing's own clear message instead:
 *"This file is named tree.png not Tree.PNG.  Rename the file or change your
 code."*
 
-## R.14  `CompoundSprite`
+## A2.14  `CompoundSprite`
 
 A sprite made of other sprites, its **children**.  The compound's own `pos` is a
 reference point.  It isn't drawn, and it needn't be anywhere near its children.
@@ -417,14 +417,14 @@ child separately.  Verified with two Blobs 50 pixels apart moving right:  the
 right one wraps to `x = 2` while the left is at `752`, and the compound's own point
 wraps later still.  A compound that crosses an edge splits for a few frames, and
 comes back together on the other side.  And **the compound's `distanceTo()`
-measures from its own point**, which is wherever it was made, so for collisions
-measure from a child.
+measures from its own point**:  the `x, y` it was made at, moved since by its
+own velocity.  For collisions, measure from a child.
 
 No chapter uses `CompoundSprite` directly.  The library's `FractalExample` builds
 its branches from it, and `AnimatedSceneExample` builds its clouds and sun from
 its subclass, `AnimatedSprite`.
 
-## R.15  `AnimatedSprite`
+## A2.15  `AnimatedSprite`
 
 A `CompoundSprite` that draws one child at a time:  a flipbook.  Bonus C.
 
@@ -446,7 +446,7 @@ drawn twice a frame animates twice as fast.  Each frame is a full sprite with it
 own position, so frames made at different spots jump (Bonus C shows it), and every
 frame under the current one still carries its own unused radius and color.
 
-## R.16  `Vector2D`
+## A2.16  `Vector2D`
 
 A pair of floats, `x` and `y`, both public.  Every method returns a new vector.
 
@@ -457,7 +457,7 @@ A pair of floats, `x` and `y`, both public.  Every method returns a new vector.
 | `add`, `subtract`, `scale`, `inverse` | the usual |
 | `mag()` | length.  For a velocity, the speed. |
 | `dotProduct(Vector2D other)` | the usual |
-| `unitVector()` | length 1.  `(0, 0)` gives `(NaN, NaN)`, which the documentation warns about, and which is R.6's bug. |
+| `unitVector()` | length 1.  `(0, 0)` gives `(NaN, NaN)`, which the documentation warns about, and which is A2.6's bug. |
 | `perpendicular()` | `(y, -x)`.  `(1, 0)`, right, becomes `(0, -1)`, which is **up** on the screen:  a quarter turn counter-clockwise as you see it.  The documentation says *clockwise*, which is true in math's y-up coordinates. |
 | `rotate(float rads)` | the standard formula.  `(1, 0)` rotated by `HALF_PI` is `(0, 1)`, **down** on the screen:  positive angles turn clockwise as you see it.  The documentation says *counter-clockwise*, true in y-up coordinates. |
 | `angleTo(Vector2D other)` | wrong for any vector pointing left.  See Part Five. |
@@ -473,7 +473,7 @@ right.angleTo(upLeft) = 0.7853982   (the true angle is -2.3561945)
 
 No chapter uses it.
 
-## R.17  `Event`
+## A2.17  `Event`
 
 An observer:  bind methods to an event by name, and `trigger()` calls every bound
 method.  The original author is credited in the source as Stephcraft.
@@ -510,11 +510,11 @@ unchanged.
 
 | Where | The issue | Suggested fix |
 |---|---|---|
-| `Sprite.followMouse()` | Landing exactly on the mouse divided by zero:  the position became NaN, and the sprite vanished for good.  **Fixed 2026-10-30** with a guard clause (R.6).  Within one step it still jitters. | Land on the mouse when it's within one step (below).  This would also end the jitter. |
-| `Sprite.getPosition()`, `getVelocity()`, `moveTo(Vector2D)`, `setVelocity(Vector2D)`, `Sprite(PApplet, Vector2D)` | Share vectors with the caller (R.7). | Hand out and store copies:  `return new Vector2D(pos.x, pos.y);`, `pos = new Vector2D(p.x, p.y);`. |
+| `Sprite.followMouse()` | Landing exactly on the mouse divided by zero:  the position became NaN, and the sprite vanished for good.  **Fixed 2026-10-30** with a guard clause (A2.6).  Within one step it still jitters. | Land on the mouse when it's within one step (below).  This would also end the jitter. |
+| `Sprite.getPosition()`, `getVelocity()`, `moveTo(Vector2D)`, `setVelocity(Vector2D)`, `Sprite(PApplet, Vector2D)` | Share vectors with the caller (A2.7). | Hand out and store copies:  `return new Vector2D(pos.x, pos.y);`, `pos = new Vector2D(p.x, p.y);`. |
 | `ImageSprite` | A missing file stops the sketch later, at `drawSprite()`, with `NullPointerException`. | In `drawSprite()`, `if (img == null) return;`, or draw a placeholder rectangle. |
 | `Block` | Inherits a collision circle of radius 0 at its corner. | Give `Block` a rectangle check of its own, or say plainly that it's scenery (the chapters do). |
-| `Blob.drawSprite()`, `Block.drawSprite()` | Leave fill and stroke changed for everything after them (R.10). | Wrap each in `parent.pushStyle()` and `parent.popStyle()`, the way `ImageSprite` does.  This would also give Chapter 1's blob and Chapter 5's coin the same outline. |
+| `Blob.drawSprite()`, `Block.drawSprite()` | Leave fill and stroke changed for everything after them (A2.10). | Wrap each in `parent.pushStyle()` and `parent.popStyle()`, the way `ImageSprite` does.  This would also give Chapter 1's blob and Chapter 5's coin the same outline. |
 | `Event` | Ambiguous by name in a sketch, and can't call methods in a sketch's classes. | Rename it, `GameEvent`, and call `method.setAccessible(true)` in `bind()`. |
 | `Vector2D.theta()` | `atan(y / x)` can't tell left from right, so `angleTo()` is wrong for left-pointing vectors. | `(float) Math.atan2(y, x)`. |
 | `Vector2D` documentation | *Clockwise* and *counter-clockwise* are y-up words, and the screen is y-down. | Say which way it turns on the screen. |

@@ -35,6 +35,12 @@
 </tr>
 </tbody>
 </table></div>
+<div style="background:#F0FDFA;border:1px solid #B5E8DF;border-left:5px solid #0F766E;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
+<p style="margin:0 0 12px;"><strong>Today's example.</strong>&nbsp; Before you start, open this chapter's finished code:&nbsp; <strong>File &#8594; Examples</strong>, then <strong>Contributed Libraries &#8594; SpriteGame &#8594; Lessons &#8594; BonusC_Animation</strong>.&nbsp; Run it, and a stand-in character talks:&nbsp; its mouth flips through three poses, over and over.&nbsp; Its <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">MyCharacterFrame</code> tab is the one you build in Part Two.&nbsp; Keep its window open, and when your sketch does something strange, compare the two.&nbsp; Your own work goes in your own sketch.&nbsp; Appendix 1, section A1.6, walks through opening an example one click at a time.</p>
+</div>
+<div style="background:#FFFBEB;border:1px solid #F5DE9B;border-left:5px solid #B45309;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
+<p style="margin:0 0 12px;"><strong>Ask Sparky.</strong>&nbsp; This lesson's Sparky opens from the button on the Bonus C page on Canvas.&nbsp; Good things to ask it:&nbsp; "my character jumps around when it animates," "my animation is too fast," or "how do I use an AnimatedSprite in my Lesson 7 game with collisions?"&nbsp; If the poses look wrong, paste in your frame class.</p>
+</div>
 <hr style="border:none;border-top:2px solid #dfe6ec;margin:36px 0;" />
 <h1 id="part-one---a-flipbook" style="font-family:Lato,Helvetica,Arial,sans-serif;color:#1f4e79;font-size:27px;font-weight:700;margin:44px 0 14px;">Part One - A flipbook</h1>
 <h2 id="c.1-pictures-shown-fast" style="font-family:Lato,Helvetica,Arial,sans-serif;color:#2b6cb0;font-size:21px;font-weight:700;margin:34px 0 12px;padding-bottom:7px;border-bottom:2px solid #dfe6ec;">C.1&nbsp; Pictures, shown fast</h2>
@@ -142,12 +148,12 @@ AnimatedSprite player<span>;</span>
 <span>}</span></pre>
 <div style="background:#F2F7FD;border:1px solid #CFE0F3;border-left:5px solid #2B6CB0;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
 <p style="margin:0 0 12px;"><strong>Aside:&nbsp; a chain of calls</strong></p>
-<p style="margin:0 0 12px;"><code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">AnimatedSprite.FromSprite(...)</code> starts the flipbook with its first page.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">.AddFrameSprite(...)</code> adds another page.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">.setFrameRate(8)</code> sets the speed.&nbsp; Each one hands back the flipbook, so the next one can go right on the end.&nbsp; That's why it's one long line, split over four.</p>
+<p style="margin:0 0 12px;"><code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">AnimatedSprite.FromSprite(...)</code> starts the flipbook with its first page.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">.AddFrameSprite(...)</code> adds another page.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">.setFrameRate(8)</code> sets the speed.&nbsp; Each one hands back the flipbook, so the next one can go right on the end.&nbsp; That's why four lines on the screen are really one long line of code.</p>
 </div>
 <p style="margin:0 0 12px;"><strong>Every frame is made at the same <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">x</code> and <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">y</code>.</strong>&nbsp; That's the crucial part.</p>
 <p style="margin:0 0 12px;">Run it.</p>
 <div style="background:#F1FBF5;border:1px solid #C2E6D1;border-left:5px solid #1D7A44;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
-<p style="margin:0 0 12px;"><strong>Check.</strong>&nbsp; Your character flips through its poses on its own, over and over.</p>
+<p style="margin:0 0 12px;"><strong>Check.</strong>&nbsp; Your character flips through its poses on its own.</p>
 </div>
 <!-- SCREENSHOT:  upload bC_Pose0.png to Files, then point this src at it -->
 <p style="margin:20px 0 6px;text-align:center;"><img src="bC_Pose0.png" alt="Pose 0, game frames 1 to 8." style="max-width:100%;width:440px;border:1px solid #c9d8e8;border-radius:6px;" /></p>
@@ -202,7 +208,7 @@ AnimatedSprite player<span>;</span>
     coin1<span>.</span><span style="color:#00627a;">moveTo</span><span>(</span><span style="color:#00627a;">random</span><span>(</span>width<span>),</span> <span style="color:#00627a;">random</span><span>(</span><span style="color:#1750eb;">80</span><span>,</span> height <span>-</span> <span style="color:#1750eb;">150</span><span>));</span>
   <span>}</span></pre>
 <p style="margin:0 0 12px;">Pick a number that matches your character's size:&nbsp; about your character's radius plus the coin's.</p>
-<p style="margin:0 0 12px;">Two more changes put it in your game.&nbsp; At the top, the player is an <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">AnimatedSprite</code>.&nbsp; And in <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">restartGame()</code>, the player is built from frames, the way Step 3 builds it, in place of <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">new MyCharacter(...)</code>.</p>
+<p style="margin:0 0 12px;">Two more changes put it in your game.&nbsp; At the top, the player is an <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">AnimatedSprite</code>.&nbsp; And in <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">restartGame()</code>, <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">new MyCharacter(...)</code> becomes the chain of frames from Step 3.</p>
 <div style="background:#F1FBF5;border:1px solid #C2E6D1;border-left:5px solid #1D7A44;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
 <p style="margin:0 0 12px;"><strong>Check.</strong>&nbsp; Your animated character collects coins and runs into hazards, the same as before.</p>
 </div>
@@ -210,8 +216,8 @@ AnimatedSprite player<span>;</span>
 <p style="margin:0 0 12px;"><strong>Your turn.</strong>&nbsp; Add a fourth pose.&nbsp; Try animating <strong>legs or arms</strong> in place of the mouth, and make it walk.</p>
 <p style="margin:0 0 12px;"><strong>Your turn.</strong>&nbsp; <strong>Optional:</strong>&nbsp; any of these.</p>
 <ul style="margin:0 0 14px;padding-left:24px;">
-<li style="margin:0 0 7px;">More frames, for smoother motion.&nbsp; More pages make a smoother flipbook.</li>
-<li style="margin:0 0 7px;">A second animated creature, a pet, with its own <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">setVelocity()</code>, drifting across the scene.</li>
+<li style="margin:0 0 7px;">More frames.&nbsp; More pages make a smoother flipbook.</li>
+<li style="margin:0 0 7px;">A second animated creature, a pet, with its own <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">setVelocity()</code>.</li>
 <li style="margin:0 0 7px;">Poses by hand.&nbsp; Turn one page on a key, in <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">keyPressed()</code>:</li>
 </ul>
 <pre style="margin:18px 0;background:#f8fafc;border:1px solid #c9d8e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Consolas,Menlo,Monaco,monospace;font-size:13px;line-height:1.55;color:#1f2933;white-space:pre;">  <span style="color:#0033b3;">if</span> <span>(</span>key <span>==</span> <span style="color:#067d17;">&#39;n&#39;</span><span>)</span> <span>{</span>

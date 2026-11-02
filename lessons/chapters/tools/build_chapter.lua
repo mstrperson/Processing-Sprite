@@ -78,17 +78,43 @@ for letter, file in pairs { A = "bonus_a_images.md", B = "bonus_b_sounds.md",
   CHAPTERS[letter] = cfg
 end
 
--- The teacher reference.  A Word file for Flint, and no Canvas page:  it's for
--- teachers.
+-- Appendix 1, for students:  saving, Finder, zipping, and handing in, on a Mac.
+-- A Word file for Flint (the Saving and Handing In Sparky), and a Canvas page.
+CHAPTERS["S"] = (function()
+  local cfg = draft(0, "student_reference_files.md", { { starts = nil } })
+  cfg.label = "Appendix 1"
+  cfg.word_name = "Appendix1.docx"
+  cfg.canvas_name = "appendix-1.html"
+  return cfg
+end)()
+
+-- Appendix 2, the teacher reference.  A Word file for Flint, and no Canvas
+-- page:  it's for teachers.
 CHAPTERS["R"] = (function()
   local cfg = draft(0, "reference_api.md", { { starts = nil } })
-  cfg.label = "Teacher Reference"
-  cfg.word_name = "Teacher_Reference.docx"
+  cfg.label = "Appendix 2"
+  cfg.word_name = "Appendix2.docx"
+  cfg.canvas_dir = {}
+  return cfg
+end)()
+
+-- Appendix 3, the Sparky prompts, word for word, for teachers.  The prompts
+-- themselves come from lessons/flint/src at build time (see read_source).  No Word file and no
+-- Canvas page:  the prompts are already in Flint, and it's for teachers.  The
+-- Word name only names its PDF.
+CHAPTERS["T"] = (function()
+  local cfg = draft(0, "teacher_sparky_prompts.md", { { starts = nil } })
+  cfg.label = "Appendix 3"
+  cfg.word_name = "Appendix3.docx"
+  cfg.word_dir = {}
   cfg.canvas_dir = {}
   return cfg
 end)()
 
 local NBSP = "\u{A0}"
+
+-- Marks a box whose screenshot follows it.  See keep_marked_boxes.
+local KEEP_MARK = '<w:tblCaption w:val="keep-with-next"/>'
 
 -- Smart typography stays off.  It would turn `--` into an en dash and straight
 -- quotes into curly ones, and meta/WRITING_COMMON_ERRORS.md entry 1 bans the
@@ -151,6 +177,50 @@ local function protect_spaces(md)
 end
 
 ---------------------------------------------------------------------------
+-- The Sparky prompts
+---------------------------------------------------------------------------
+
+-- A line `<!-- SPARKY PROMPT lesson_03_bring_it_to_life.md -->` becomes that
+-- file from lessons/flint/src, under the chapter's own heading for it.  Its
+-- title line goes, every heading in it moves down one level, and the marker
+-- where build_helpers.ps1 puts the shared rules becomes a line that says so.
+local FLINT_SRC = pandoc.path.join { pandoc.path.directory(DRAFTS), "flint", "src" }
+
+local function sparky_prompt(name)
+  local f = assert(io.open(pandoc.path.join { FLINT_SRC, name }, "rb"), "no prompt " .. name)
+  local text = f:read("a"):gsub("\r\n", "\n"):gsub("^# [^\n]*\n%s*", "")
+  f:close()
+  text = text:gsub("<!%-%- SPARKY RULES %-%->",
+    "*Here the build puts in the shared rules, from Part Two.*")
+  text = text:gsub("<!%-%- NO SPARKY RULES.-%-%->",
+    "*This one gets no shared rules.  Its own rules are below.*")
+  -- Flint reads a list that starts right under a line of prose.  Pandoc wants
+  -- a blank line first, or the list runs into the paragraph.
+  local function list_item(line) return line:match("^%s*[-*] ") or line:match("^%s*%d+%. ") end
+  local lines, fenced = {}, false
+  for line in (text .. "\n"):gmatch("(.-)\n") do
+    if line:match("^```") then fenced = not fenced end
+    if not fenced and line:match("^#+ ") then line = "#" .. line end
+    local before = lines[#lines]
+    if not fenced and list_item(line) and before and before:match("^[^%s>|]")
+        and not list_item(before) then
+      lines[#lines + 1] = ""
+    end
+    lines[#lines + 1] = line
+  end
+  return table.concat(lines, "\n")
+end
+
+-- A chapter's Markdown, with any Sparky prompts put in and its spaces kept.
+local function read_source(cfg)
+  local f = assert(io.open(cfg.source, "rb"))
+  local md = f:read("a"):gsub("\r\n", "\n")
+  f:close()
+  md = md:gsub("<!%-%- SPARKY PROMPT ([%w_%.%-]+) %-%->", sparky_prompt)
+  return protect_spaces(md)
+end
+
+---------------------------------------------------------------------------
 -- Splitting into meetings
 ---------------------------------------------------------------------------
 
@@ -189,6 +259,8 @@ local BOXES = {
   ["Check"] = { fill = "F1FBF5", edge = "C2E6D1", accent = "1D7A44" },
   ["Tonight"] = { fill = "FFFAF0", edge = "F0DCBC", accent = "C2761C" },
   ["Watch out"] = { fill = "FDF2F1", edge = "F0C9C4", accent = "B4382C" },
+  ["Today's example"] = { fill = "F0FDFA", edge = "B5E8DF", accent = "0F766E" },
+  ["Ask Sparky"] = { fill = "FFFBEB", edge = "F5DE9B", accent = "B45309" },
   ["Answer in your notes"] = { fill = "FAF4FE", edge = "E0CBF0", accent = "7B3FA0" },
   ["Argue it"] = { fill = "FAF4FE", edge = "E0CBF0", accent = "7B3FA0" },
 }
@@ -435,8 +507,26 @@ local function box_filter(format)
           -- on the same page as it.  The boxes are raw tables by now.
           local leads_in = after and (after.t == "CodeBlock" or after.t == "Table"
             or (after.t == "RawBlock" and after.text:sub(1, 7) == "<w:tbl>"))
-          if block.t == "Para" and leads_in then
+          -- A screenshot shows the work just before it, so that work comes
+          -- onto the picture's page:  the paragraph, or the whole box (Jason,
+          -- 2026-11-01).  A screenshot is a picture in the Screenshot style,
+          -- or the dashed empty frame.  A box ends in a raw </w:tbl> and a thin
+          -- paragraph;  its opening table gets KEEP_MARK, which
+          -- keep_marked_boxes turns into keep-with-next on every row.
+          local shows = after and ((after.t == "Div" and after.attributes["custom-style"] == "Screenshot")
+            or (after.t == "RawBlock" and after.text:find('w:val="dashed"', 1, true) ~= nil))
+          if block.t == "Para" and (leads_in or shows) then
             out:insert(pandoc.Div({ block }, { ["custom-style"] = "Keep With Next" }))
+          elseif shows and block.t == "RawBlock" and block.text:sub(1, 8) == "</w:tbl>" then
+            for j = #out, 1, -1 do
+              local o = out[j]
+              if o.t == "RawBlock" and o.text:sub(1, 7) == "<w:tbl>" then
+                o.text = (o.text:gsub("</w:tblPr>", KEEP_MARK .. "</w:tblPr>", 1))
+                break
+              end
+            end
+            block.text = (block.text:gsub("<w:p><w:pPr>", "<w:p><w:pPr><w:keepNext/>", 1))
+            out:insert(block)
           else
             out:insert(block)
           end
@@ -651,12 +741,43 @@ local function frame_pictures(xml)
   end))
 end
 
+-- A box the Blocks filter marked, because a screenshot of its work comes right
+-- after it, keeps every row with the next, so Word moves the box and the
+-- picture as one.  A box can hold a table of its own, so its end is found by
+-- counting.  The mark (KEEP_MARK, at the top) comes out.
+local function keep_marked_boxes(xml)
+  local from = 1
+  while true do
+    local mark = xml:find(KEEP_MARK, from, true)
+    if not mark then return xml end
+    local start = 1
+    for at in xml:sub(1, mark):gmatch("()<w:tbl>") do start = at end
+    local depth, pos, stop = 0, start, nil
+    while true do
+      local open = xml:find("<w:tbl>", pos, true)
+      local close = xml:find("</w:tbl>", pos, true)
+      if open and open < close then
+        depth, pos = depth + 1, open + 7
+      else
+        depth, pos = depth - 1, close + 8
+        if depth == 0 then stop = close + 7 break end
+      end
+    end
+    local box = xml:sub(start, stop):gsub(KEEP_MARK:gsub("%p", "%%%0"), "", 1)
+    box = keep_with_next(box)
+    xml = xml:sub(1, start - 1) .. box .. xml:sub(stop + 1)
+    from = start + #box
+  end
+end
+
 local function finish_docx(bytes)
   local archive = pandoc.zip.Archive(bytes)
   local entries = pandoc.List()
   for _, entry in ipairs(archive.entries) do
     local contents = entry:contents()
-    if entry.path == "word/document.xml" then contents = frame_pictures(keep_tables_whole(contents)) end
+    if entry.path == "word/document.xml" then
+      contents = frame_pictures(keep_marked_boxes(keep_tables_whole(contents)))
+    end
     entries:insert(pandoc.zip.Entry(entry.path, contents))
   end
   return pandoc.zip.Archive(entries):bytestring()
@@ -804,9 +925,7 @@ end
 
 local function build(key)
   local cfg = assert(CHAPTERS[key], "no chapter " .. key .. " in CHAPTERS")
-  local f = assert(io.open(cfg.source, "rb"))
-  local md = protect_spaces(f:read("a"))
-  f:close()
+  local md = read_source(cfg)
 
   local reference = pandoc.path.join { HERE, "chapter-reference.docx" }
   make_reference_doc(reference)
@@ -870,8 +989,8 @@ local BOOK = {
   "05", "06", "07",
   { unit = "Bonus Chapters", about = "Images, sounds, animation, and lists.  Each one says when it's best taken." },
   "A", "B", "C", "D",
-  { unit = "For Teachers", about = "What's inside the toolbox." },
-  "R",
+  { unit = "Appendices", about = "Appendix 1 is for students.  Appendices 2 and 3 are for teachers." },
+  "S", "R", "T",
 }
 local BOOK_TITLE = "Objects First with Processing"   -- Jason's, 2026-10-20
 local BOOK_TAGLINE = "Your character, your world, your rules."
@@ -923,9 +1042,7 @@ local function compile_book()
       goto continue      -- the chapter's own heading starts the next page
     end
     local cfg = assert(CHAPTERS[key], "no chapter " .. key)
-    local f = assert(io.open(cfg.source, "rb"))
-    local md = protect_spaces(f:read("a"))
-    f:close()
+    local md = read_source(cfg)
     local title, subtitle, body = take_title(trim_rules(md))
     for k, meeting in ipairs(cfg.meetings) do
       local name = (cfg.word_name or (#cfg.meetings == 1 and ("Chapter%02d.docx"):format(cfg.number)

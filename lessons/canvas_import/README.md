@@ -7,6 +7,7 @@ This folder holds everything needed to put the lesson series into Canvas:
 | **Course front page, Lesson Pages, Assignments, and teacher copies** as Canvas-ready HTML | [`html/`](html/) — see [`html/README.md`](html/README.md) |
 | Lesson content, one JSON file per lesson (the source the HTML is built from) | [`content/`](content/) |
 | Course-level content for the front page — **the course title lives here** | [`course.json`](course.json) |
+| Help pages for the Start Here module, one JSON file each (*Saving and Handing In Your Work*) | [`guides/`](guides/) |
 | The generator that turns the JSON into HTML | [`build_canvas_html.ps1`](build_canvas_html.ps1) |
 | Non-scoring rubrics as a CSV, for Canvas's rubric importer | [`canvas_rubrics.csv`](canvas_rubrics.csv) |
 
@@ -18,8 +19,9 @@ powershell -ExecutionPolicy Bypass -File build_canvas_html.ps1
 
 Reads every `content/*.json` and writes 3 files per lesson into `html/` — a student-facing
 Page, a student-facing Assignment, and a teacher copy — plus `front-page.html` from
-`course.json`. 11 lessons → 35 files:  Lesson 4 splits the class, so it has two
-Pages (Mouse Group and Keys Group) sharing one Assignment and one teacher copy.
+`course.json`, plus one Page per help page in `guides/`. 11 lessons and 1 help page → 36
+files:  Lesson 4 splits the class, so it has two Pages (Mouse Group and Keys Group) sharing one
+Assignment and one teacher copy.
 
 Each output file is a **body fragment**: copy the whole file and paste it into the Canvas
 HTML editor (the `</>` button in the Rich Content Editor). There are no `<style>` or
@@ -35,6 +37,13 @@ carries the course overview, the goals, the four stages, and an index of all 11 
 22 links are `LINK_*` placeholders — build the lessons first, then click each link in the
 Canvas editor and re-point it at the real item. The full token list is in
 [`html/README.md`](html/README.md).
+
+**Help pages** come from `guides/*.json`, one Canvas Page each, in the Start Here module under
+the front page.  The front page links to each one.  *Saving and Handing In Your Work* walks
+through saving in Processing, finding the sketch in Finder, zipping it, and uploading it, with
+tables of fixes for when Finder looks wrong.  Every Assignment's "What to turn in" box links to
+it, and it has its own AI-helper button (`flint:files`).  Its longer twin is the book's Student
+Reference, `../chapters/student_reference_files.md`:  keep the steps in the two the same.
 
 **Teacher copies** open with a red "keep this page unpublished" banner. They carry the direct
 instruction notes, guided-activity script, common mistakes, and wrap-up answers that are held

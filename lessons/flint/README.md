@@ -19,7 +19,7 @@ powershell -ExecutionPolicy Bypass -File build_helpers.ps1
 ```
 
 Each file in `src/` has one line, `<!-- SPARKY RULES -->`, where the shared
-rules go.  The script puts them in and writes the result to `helpers/`.  To
+rules go (all but `files_helper.md`:  see below).  The script puts them in and writes the result to `helpers/`.  To
 change how every Sparky behaves, edit `sparky_rules.md`.  To change what one
 Sparky knows, edit its lesson file.  Then rebuild, and paste the changed files
 into Flint.  Don't edit `helpers/` by hand:  the next build overwrites it.
@@ -44,7 +44,18 @@ buttons at it.
 | Bonus B | `bonus_b_sounds.md` | Bonus B Page and Assignment | `flint:bonus-b` |
 | Bonus C | `bonus_c_animation.md` | Bonus C Page and Assignment | `flint:bonus-c` |
 | Bonus D | `bonus_d_lists.md` | Bonus D Page and Assignment | `flint:bonus-d` |
+| Saving and Handing In | `files_helper.md` | the **Saving and Handing In Your Work** help page, in Start Here | `flint:files` |
 | Any lesson | `code_helper.md` | the course front page, or wherever you want a general helper | none |
+
+**The Saving and Handing In Sparky does no code.**  It walks students through
+saving in Processing, finding a sketch in Finder, zipping it, and uploading it
+to Canvas, and it fixes a Finder window that looks wrong.  The shared rules are
+about code, so its source has a `<!-- NO SPARKY RULES ... -->` comment where the
+others have `<!-- SPARKY RULES -->`, and its own rules instead, including a list
+of things it must never tell a student to delete.  Attach
+`../chapters/build/word/Appendix1.docx` (Appendix 1, saving and handing in) to it as a knowledge file if
+Flint allows it.  Every other Sparky's rules end with the five-step hand-in
+recipe, and send anything harder to this one.
 
 **You don't have to paste the links by hand.**  The Canvas importer in
 WinsorForms.Core fills them in (see
@@ -61,6 +72,12 @@ Once each Flint helper exists, copy its chat URL into a JSON file under its key:
 Then pass that file to the import with `--values flint.json`.  Keep the file out
 of this repo if the URLs are private:  the repo is public.  The any-lesson
 helper has no key, because no generated page links to it.
+
+**The book prints every prompt.**  Its Teacher Appendix
+(`../chapters/teacher_sparky_prompts.md`) pulls each file from `src/` when the
+book is built, so a rebuild of the book picks up any change here.  Each
+chapter's **Ask Sparky** box repeats its lesson's "Good things to ask," which
+also appear on the Canvas page:  change all three together.
 
 The book's chapters are built as Word files for Flint too
 (`../chapters/build/word`, see [`../chapters/PROCESS.md`](../chapters/PROCESS.md)

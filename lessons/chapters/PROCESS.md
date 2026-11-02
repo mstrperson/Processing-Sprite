@@ -108,7 +108,7 @@ lessons/chapters/tools/verify.sh shot  <scratch>/Starter  lessons/chapters/scree
   The plan says which pictures were driven this way.
 - Park the mouse off the character's row and column.  A character level with the
   mouse, a whole number of steps away, lands on it exactly, and `followMouse()`
-  turns its position into NaN (the teacher reference, R.6).
+  turns its position into NaN (Appendix 2, A2.6).
 - Where two frames must match and the sketch uses `random()`, put
   `randomSeed(5)` in both scratch copies' `setup()`.
 - When the thing to check isn't visible, print it:  a `println()` in `PRE` reports
@@ -168,6 +168,8 @@ The marks, which the build turns into boxes:
 | Watch out | `> **Watch out.**  ...` | the mistake nearly everybody makes here |
 | Screenshot | `> **Screenshot:**  caption`, then `> ![](screenshots/chNN_What.png)` | the frame the Check describes |
 | Argue it | `> **Argue it.**  ...` | a choice with no settled answer, for class |
+| Today's example | `> **Today's example.**  ...` | Chapter 2 on, right after the opening's moves table (and at a meeting that has its own example):  open the lesson's example from **File → Examples**, run it, and keep it open to compare.  Each box says what the example shows when it runs, checked with `planning/verify_examples.sh` |
+| Ask Sparky | `> **Ask Sparky.**  ...` | Every chapter, right after Today's example (Chapter 1:  after the moves table).  Where the lesson's Sparky is, its good things to ask, and what to paste in.  The questions are the Canvas page's `flintHint` and the Sparky's own "Good things to ask" list, so change all three together |
 
 **Each chapter teaches what it needs, at the point it needs it**, and only once
 in the whole book.  The syntax ledger in `BOOK_PLAN.md` says which chapter
@@ -203,14 +205,14 @@ done:
 | no abstract "stays" (entry 29) | `grep -niE '\bstay(s\|ed\|ing)?\b'`, and ask whether you could point at it |
 | no "landed" meaning got-through (entry 37) | `grep -niE '\bland(s\|ed\|ing)?\b'`, and ask whether you could watch it land |
 | no commentary lines (entry 36) | read every paragraph's last sentence:  does it add a fact? |
-| no beat that only completes a shape (entry 27) | delete each comma-tail, third item, and vouching sentence, and reread |
+| no beat that only completes a shape (entry 27) | delete each comma-tail, third item, and vouching sentence, and reread.  `tools/comma_tails.pl` lists the sentences that end `, <short phrase>.` |
 | the register (entry 22) | the `register` function:  contractions near the prologue's rate |
 | no asterisks in this book | `grep -n '{.iceberg}'` finds nothing |
 
 ### 9.  Build
 
 ```
-pandoc lua lessons/chapters/tools/build_chapter.lua 00 01 02 03 04 05 06 07 A B C D R
+pandoc lua lessons/chapters/tools/build_chapter.lua 00 01 02 03 04 05 06 07 A B C D S R T
 pandoc lua lessons/chapters/tools/build_chapter.lua book
 powershell -ExecutionPolicy Bypass -File lessons/chapters/tools/finish_book.ps1
 ```

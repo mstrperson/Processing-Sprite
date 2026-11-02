@@ -58,3 +58,13 @@ click each link and re-point it at the real Page or Assignment (or find/replace 
 | Sounds | `LINK_BONUS_B_PAGE` | `LINK_BONUS_B_ASSIGNMENT` |
 | Animate Your Character | `LINK_BONUS_C_PAGE` | `LINK_BONUS_C_ASSIGNMENT` |
 | Lists and Loops | `LINK_BONUS_D_PAGE` | `LINK_BONUS_D_ASSIGNMENT` |
+
+## Help pages
+
+Built from `guides/*.json`. Each is a Page in the Start Here module, under the front page,
+with its own AI-helper button. The front page links to each one, and every Assignment's
+"What to turn in" box links to the hand-in guide, so its token appears in those files too.
+
+| Page | File | Link token | Flint key |
+|------|------|------------|-----------|
+| Saving and Handing In Your Work | [page](pages/saving-and-handing-in.html) | `LINK_GUIDE_SAVING_AND_HANDING_IN` | `flint:files` |
