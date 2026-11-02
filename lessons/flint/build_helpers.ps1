@@ -12,6 +12,10 @@ $here    = Split-Path -Parent $MyInvocation.MyCommand.Path
 $src     = Join-Path $here 'src'
 $out     = Join-Path $here 'helpers'
 $marker  = '<!-- SPARKY RULES -->'
+# A helper that isn't about code (files_helper.md) brings its own rules and says
+# so with this marker, which the build takes out along with the rest of its
+# comment.
+$optOut  = '<!-- NO SPARKY RULES'
 $utf8    = New-Object System.Text.UTF8Encoding($false)
 
 $rules = [IO.File]::ReadAllText((Join-Path $src 'sparky_rules.md'), $utf8).TrimEnd()
@@ -22,9 +26,14 @@ $built = 0
 foreach ($f in Get-ChildItem $src -Filter *.md | Where-Object { $_.Name -ne 'sparky_rules.md' } | Sort-Object Name) {
   $text = [IO.File]::ReadAllText($f.FullName, $utf8)
   $count = ([regex]::Matches($text, [regex]::Escape($marker))).Count
-  if ($count -ne 1) { throw "$($f.Name):  expected one '$marker' line, found $count." }
-
-  $text = $text.Replace($marker, $rules).Replace("`r`n", "`n")
+  if ($text.Contains($optOut)) {
+    if ($count -ne 0) { throw "$($f.Name):  has both '$optOut' and '$marker'." }
+    $text = [regex]::Replace($text, '(?s)' + [regex]::Escape($optOut) + '.*?-->\r?\n\r?\n', '')
+  } else {
+    if ($count -ne 1) { throw "$($f.Name):  expected one '$marker' line, found $count." }
+    $text = $text.Replace($marker, $rules)
+  }
+  $text = $text.Replace("`r`n", "`n")
   [IO.File]::WriteAllText((Join-Path $out $f.Name), $text, $utf8)
   Write-Host "  $($f.Name)"
   $built++

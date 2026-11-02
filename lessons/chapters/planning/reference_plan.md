@@ -23,7 +23,7 @@ For teachers, so the words the student chapters avoid are used plainly:
 *inheritance*, *abstract*, *protected*, *static*, *reflection*, *nested class*.
 The voice rules are the same.  Each trade-off is written cost first, then *"What it
 buys"*, per the C# book's trade-offs thread, and called a trade-off once, at the
-top of R.9.
+top of A2.9 (then R.9).
 
 **Nothing in it states Jason's reasons.**  The one reason given for building on
 `Blob` is quoted from `meta/GUIDING_PRINCIPLES.md`.  The six trade-offs are

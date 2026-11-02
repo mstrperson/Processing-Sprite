@@ -37,6 +37,12 @@
 </tr>
 </tbody>
 </table></div>
+<div style="background:#F0FDFA;border:1px solid #B5E8DF;border-left:5px solid #0F766E;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
+<p style="margin:0 0 12px;"><strong>Today's example.</strong>&nbsp; Before you start, open this chapter's finished code:&nbsp; <strong>File &#8594; Examples</strong>, then <strong>Contributed Libraries &#8594; SpriteGame &#8594; Lessons &#8594; BonusD_Lists</strong>.&nbsp; Run it, and twelve coins and a red hazard drift around a stand-in character.&nbsp; Collect every coin, and a new wave arrives.&nbsp; Keep its window open, and when your sketch does something strange, compare the two.&nbsp; Your own work goes in your own sketch.&nbsp; Appendix 1, section A1.6, walks through opening an example one click at a time.</p>
+</div>
+<div style="background:#FFFBEB;border:1px solid #F5DE9B;border-left:5px solid #B45309;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
+<p style="margin:0 0 12px;"><strong>Ask Sparky.</strong>&nbsp; This lesson's Sparky opens from the button on the Bonus D page on Canvas.&nbsp; Good things to ask it:&nbsp; "what is the difference between a counting for loop and a for-each loop?", "my sketch crashes when I collect a coin," "why do we loop backwards?", or "how do I put a list into my Lesson 7 game?"&nbsp; If something won't run, paste in your <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">setup()</code> or <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">playGame()</code>.</p>
+</div>
 <hr style="border:none;border-top:2px solid #dfe6ec;margin:36px 0;" />
 <h1 id="part-one---a-bag" style="font-family:Lato,Helvetica,Arial,sans-serif;color:#1f4e79;font-size:27px;font-weight:700;margin:44px 0 14px;">Part One - A bag</h1>
 <h2 id="d.1-arraylist" style="font-family:Lato,Helvetica,Arial,sans-serif;color:#2b6cb0;font-size:21px;font-weight:700;margin:34px 0 12px;padding-bottom:7px;border-bottom:2px solid #dfe6ec;">D.1&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">ArrayList</code></h2>
@@ -104,7 +110,7 @@ coins<span>.</span><span style="color:#00627a;">add</span><span>(</span><span st
 <div style="background:#FDF2F1;border:1px solid #F0C9C4;border-left:5px solid #B4382C;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
 <p style="margin:0 0 12px;"><strong>Watch out.</strong>&nbsp; The bag is a bag.&nbsp; It can't draw itself.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">coins.drawSprite();</code> stops the sketch with:</p>
 <pre style="margin:18px 0;background:#f8fafc;border:1px solid #c9d8e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Consolas,Menlo,Monaco,monospace;font-size:13px;line-height:1.55;color:#1f2933;white-space:pre;">The function drawSprite() does not exist.</pre>
-<p style="margin:0 0 12px;">Reach into the bag and ask each coin, with the for-each loop.</p>
+<p style="margin:0 0 12px;">Use the for-each loop to reach into the bag and ask each coin.</p>
 </div>
 <div style="background:#FDF2F1;border:1px solid #F0C9C4;border-left:5px solid #B4382C;border-radius:6px;padding:12px 20px 2px;margin:20px 0;">
 <p style="margin:0 0 12px;"><strong>Watch out.</strong>&nbsp; Mix the two loops up, and the messages get strange.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">for (int i = 0; i &lt; coins; i++)</code> gets <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">The operator &lt; is undefined for the argument type(s) int, ArrayList&lt;Blob&gt;</code>, because you can't count up to a bag.&nbsp; <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">for (Blob c : 12)</code> gets <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">Can only iterate over an array or an instance of java.lang.Iterable</code>, because you can't visit a number.&nbsp; One counts.&nbsp; One visits.</p>
@@ -186,10 +192,10 @@ coins<span>.</span><span style="color:#00627a;">add</span><span>(</span><span st
 <p style="margin:0 0 12px;"><strong>Your turn.</strong>&nbsp; Change how many coins are in a wave, how big they are, and how fast.</p>
 <p style="margin:0 0 12px;"><strong>Your turn.</strong>&nbsp; <strong>Optional:</strong>&nbsp; any of these.</p>
 <ul style="margin:0 0 14px;padding-left:24px;">
-<li style="margin:0 0 7px;">Make each wave bigger than the last, with a variable that counts waves, used in the counting loop.</li>
+<li style="margin:0 0 7px;">Make each wave bigger than the last.&nbsp; Count the waves in a variable, and use it in the counting loop.</li>
 <li style="margin:0 0 7px;">Add one more hazard to the hazards list every time a wave clears.</li>
 <li style="margin:0 0 7px;">Put a list into your Chapter 7 game.&nbsp; Convert your coins, and keep the hazards as they are.&nbsp; In <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">restartGame()</code>, <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">coins = new ArrayList&lt;Blob&gt;();</code> and then the counting loop give you a fresh, full board every restart:&nbsp; the same rebuild-from-scratch idea as the rest of <code style="background:#eef2f7;border:1px solid #d8e2ec;border-radius:3px;padding:1px 5px;font-family:Consolas,Menlo,Monaco,monospace;font-size:0.92em;color:#1a4d80;">restartGame()</code>.</li>
-<li style="margin:0 0 7px;">Make a collected coin <strong>split</strong> into two smaller coins, added to the list.</li>
+<li style="margin:0 0 7px;">Make a collected coin <strong>split</strong>:&nbsp; add two smaller coins to the list in its place.</li>
 </ul>
 <hr style="border:none;border-top:2px solid #dfe6ec;margin:36px 0;" />
 <h2 id="chapter-summary" style="font-family:Lato,Helvetica,Arial,sans-serif;color:#2b6cb0;font-size:21px;font-weight:700;margin:34px 0 12px;padding-bottom:7px;border-bottom:2px solid #dfe6ec;">Chapter summary</h2>

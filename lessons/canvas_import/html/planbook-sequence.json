@@ -1,0 +1,47 @@
+{
+    "sequenceVersion":  1,
+    "generatedBy":  "lessons/canvas_import/build_canvas_html.ps1",
+    "title":  "Make Your Own Game -- core lessons",
+    "meetings":  [
+                     {
+                         "scopeAndSequence":  "Lesson 1: Hello, Blob!",
+                         "planNotes":  "New idea: setup() and draw() -- and your first object\nGoals:\n- Open Processing and run a sketch\n- Explain that setup() runs once and draw() runs over and over\n- Create a Blob from the SpriteGame library and put it on screen\n- Use RGB numbers to pick any color you want"
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 2: Draw Your Character",
+                         "planNotes":  "New idea: Writing your own class with extends Blob\nGoals:\n- Make a new tab and write your own sprite class using extends Blob\n- Override drawSprite() so your character looks the way you want\n- Use pos.x and pos.y to anchor every shape to your character's center\n- Explain that extends means \"built on top of something that already exists\""
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 3: Bring It to Life",
+                         "planNotes":  "New idea: Velocity -- changing position over time\nGoals:\n- Use setVelocity(vx, vy) to give your character a speed and a direction\n- Call move() every frame to animate it\n- Explain what screen wrapping is and when it happens\n- Use random() to make things different every time you run"
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 4: You're in Control",
+                         "planNotes":  "New idea: Input -- the program reacting to you\nThe class splits: Mouse Group / Keys Group"
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 5: Build Your World",
+                         "planNotes":  "New idea: Draw order -- the order of your lines decides what appears in front\nGoals:\n- Use Block to add ground, walls, and platforms to your scene\n- Write a second sprite class, like Cloud, with the same extends Blob pattern as your character\n- Explain draw order:  whatever you draw later appears in front\n- Design a world with a theme that is yours"
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 6: Collisions:  If This, Then That (day 1 of 2)",
+                         "planNotes":  "Today: touch the coin, score a point\nNew idea: if -- making something happen only when it is true.  Collisions give it something to be true about.\nGoals:\n- Use collidesWith() to find out whether your player is touching something\n- Use an if statement so something happens only when it is true\n- Keep score with a variable that changes, and show it on screen with text()\n- Use a boolean to switch your game between two states:  playing and game over"
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 6: Collisions:  If This, Then That (day 2 of 2)",
+                         "planNotes":  "Today: a game that can end\nContinues from day 1."
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 7: Build Your Game (day 1 of 3)",
+                         "planNotes":  "Today: Build\nNew idea: Restarting -- and putting all seven lessons together\nGoals:\n- Combine everything you have learned into a complete, playable game with your character in it\n- Add a restart so the game can be played again without closing it\n- Make your own design decisions about difficulty, theme, rules, and how it ends\n- Go through the real cycle:  build, test, adjust, test again"
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 7: Build Your Game (day 2 of 3)",
+                         "planNotes":  "Today: Build\nContinues from day 1."
+                     },
+                     {
+                         "scopeAndSequence":  "Lesson 7: Build Your Game (day 3 of 3)",
+                         "planNotes":  "Today: Play-test and present\nContinues from day 2."
+                     }
+                 ]
+}

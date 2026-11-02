@@ -25,6 +25,22 @@ This chapter takes three meetings, and does it in four moves.
 Parts One and Two are the first meeting.  Part Three is the second.  Part Four
 is the third.
 
+> **Today's example.**  Before you start, open this chapter's example:  **File →
+> Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> Lesson07_BuildYourGame**.  Its main tab is the starter in 7.2, so you can read
+> it there as well as on the page.  Run it, and play one round:  coins to
+> collect, hazards to dodge, a way to win, a way to lose, and a click to play
+> again.  Every line marked `CHANGE` is a choice for you to make in your own
+> game.  Keep its window open for all three meetings, and when your sketch does
+> something strange, compare the two.  Appendix 1, section A1.6, walks through
+> opening an example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Lesson 7
+> page on Canvas.  Good things to ask it:  "my restart is not resetting
+> everything," "how do I add 3 lives?", "how do I make my hazards speed up?", or
+> "my game is too easy, what should I change?"  Describe your game first, so
+> Sparky's advice fits it.
+
 ---
 
 # Part One - You already know all of this
@@ -212,8 +228,8 @@ Look through it.  Every piece of it is something you've written before:
 | `mousePressed()` | a click | Chapter 4 |
 | `restartGame()` | **new** | today |
 
-The coins and hazards are plain colored blobs.  They're placeholders, there so
-the code runs.  Replacing them with things that belong in your world is the
+The coins and hazards are plain colored blobs.  They're placeholders that let
+the code run.  Replacing them with things that belong in your world is the
 assignment.
 
 If you drive with the arrow keys, put your `keyPressed()` from Chapter 4 at the
@@ -242,8 +258,8 @@ winning and losing should look different.  `playerWon` joins `gameOver`, and
 > was false, try this one.  Processing goes down the list, and the first one
 > that's true wins.  The last `else` catches whatever's left.
 
-You win when `score >= goal`.  The `goal` is at the top, `15` to start.  Change
-it to make the game longer or shorter.
+You win when `score >= goal`.  The `goal` at the top starts at `15`.  Change it
+to make the game longer or shorter.
 
 ## 7.4  Restarting
 
@@ -330,7 +346,7 @@ Click to play again, and make sure the win restarts too.  Then set the goal back
 > changes.  Leave one out, and the restart misses it.  Take out
 > `gameOver = false;`, lose, and click:  the game rebuilds everything else, and
 > you're still on the game over screen.  Check every variable at the top of your
-> sketch against `restartGame()`, one at a time.
+> sketch against `restartGame()`.
 
 ## Step 3 - One full loop, in your world
 
@@ -387,8 +403,8 @@ Want a fourth coin?  It goes in four places:  declare `coin4`, create it in
 > **Watch out.**  Copy the `coin3` block to make `coin4`, and every `coin3` in the
 > copy has to become `coin4`.  Miss the one in `moveTo()`, and touching `coin4`
 > moves `coin3` away.  `coin4` sits still under your player, scoring a point every
-> frame, and you win the whole game in under a second.  Read the copied lines out
-> loud, name by name.
+> frame, and you win the whole game in under a second.  Read every name in the
+> copied lines out loud.
 
 Want twenty coins?  That's what Bonus D is for.
 

@@ -528,7 +528,7 @@ void chD() {
   saveArt("art/chD.png");
 }
 
-// Teacher Reference:  the family tree.
+// Appendix 2:  the family tree.
 void chR() {
   begin(1600, 900);
   String[][] rows = {

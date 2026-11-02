@@ -19,6 +19,20 @@ This chapter does it in three moves.
 | Two | **Declare, load, play.**  The same three places as everything else. |
 | Three | **Where the sound goes.**  One line of code, and the real thinking is where to put it. |
 
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> BonusB_Sounds**.  This one is for reading.  It needs the Sound library from
+> B.1, and sound files in its `data` folder, and the sounds are yours to find.
+> Without them it stops, and Processing's message says it can't find
+> `collect.wav`.  Read its main tab to see where each sound is declared, loaded,
+> and played.  Your own work goes in your own sketch.  Appendix 1, section
+> A1.6, walks through opening an example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Bonus B
+> page on Canvas.  Good things to ask it:  "I get a NullPointerException on my
+> SoundFile," "my sound will not play," or "how do I make the music quieter than
+> the sound effects?"  Tell it your files' names and where you put them.
+
 ---
 
 # Part One - A second library
@@ -107,14 +121,14 @@ Run it, and collect a coin.
 > Sound library error: unable to find file colect.wav
 > ```
 >
-> The game still runs, right up until the first coin.  Then the sketch stops with
-> `NullPointerException`, on the `play()` line.  So when a `play()` line stops
-> your sketch, check the folder and the file's name first, every time.
+> The game still runs, right up until the first coin.  Then the sketch stops on
+> the `play()` line with `NullPointerException`.  So when a `play()` line stops
+> your sketch, check the folder and the file's name first.
 
 ## Step 2 - A sound for the end
 
-**Build it.**  Declare and load a second sound the same way, `gameOverSound`.
-Play it right where you set `gameOver = true;`:
+**Build it.**  Declare and load a second sound called `gameOverSound` the same
+way.  Play it right where you set `gameOver = true;`:
 
 ```java
   if (player.collidesWith(hazard)) {
@@ -167,9 +181,8 @@ the actual thinking.  A sound belongs at the exact moment its event happens.
 | the game ended | right where you set `gameOver = true;` |
 | music, all the time | once, in `setup()`, with `loop()` |
 
-That's Chapter 4's idea again.  A sound effect is an event:  it happens once,
-when something happens.  Music is more like continuous input:  it's going the
-whole time.
+That's Chapter 4's idea again.  A sound effect is an event:  it happens once.
+Music is more like continuous input:  it's going the whole time.
 
 > **Watch out.**  Put `collectSound.play();` in `draw()`, outside any `if`, and it
 > starts over sixty times a second.  It sounds like a machine gun.
@@ -226,8 +239,7 @@ Then decide which version you like.  Sometimes the stutter is the right choice.
 
 ### Vocabulary
 
-**`loop()`** -- plays a sound over and over, restarting when it reaches the end,
-until `stop()`.  (Step 3)
+**`loop()`** -- plays a sound over and over until `stop()`.  (Step 3)
 
 **`play()`** -- plays a sound once, from the beginning.  (Step 1)
 

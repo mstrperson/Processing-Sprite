@@ -28,6 +28,20 @@ This chapter does it in three moves.
 | Two | **Two loops that both say `for`.**  One counts, to make things.  One visits, to move and draw them. |
 | Three | **Taking things out.**  Removing a coin you collected, safely. |
 
+> **Today's example.**  Before you start, open this chapter's finished code:
+> **File → Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> BonusD_Lists**.  Run it, and twelve coins and a red hazard drift around a
+> stand-in character.  Collect every coin, and a new wave arrives.  Keep its window open,
+> and when your sketch does something strange, compare the two.  Your own work
+> goes in your own sketch.  Appendix 1, section A1.6, walks through opening an
+> example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Bonus D
+> page on Canvas.  Good things to ask it:  "what is the difference between a
+> counting for loop and a for-each loop?", "my sketch crashes when I collect a
+> coin," "why do we loop backwards?", or "how do I put a list into my Lesson 7
+> game?"  If something won't run, paste in your `setup()` or `playGame()`.
+
 ---
 
 # Part One - A bag
@@ -140,7 +154,7 @@ Run it.
 > The function drawSprite() does not exist.
 > ```
 >
-> Reach into the bag and ask each coin, with the for-each loop.
+> Use the for-each loop to reach into the bag and ask each coin.
 
 > **Watch out.**  Mix the two loops up, and the messages get strange.
 > `for (int i = 0; i < coins; i++)` gets
@@ -289,14 +303,15 @@ fast.
 
 **Your turn.**  **Optional:**  any of these.
 
-- Make each wave bigger than the last, with a variable that counts waves, used in
-  the counting loop.
+- Make each wave bigger than the last.  Count the waves in a variable, and use it
+  in the counting loop.
 - Add one more hazard to the hazards list every time a wave clears.
 - Put a list into your Chapter 7 game.  Convert your coins, and keep the
   hazards as they are.  In `restartGame()`, `coins = new ArrayList<Blob>();` and
   then the counting loop give you a fresh, full board every restart:  the same
   rebuild-from-scratch idea as the rest of `restartGame()`.
-- Make a collected coin **split** into two smaller coins, added to the list.
+- Make a collected coin **split**:  add two smaller coins to the list in its
+  place.
 
 ---
 

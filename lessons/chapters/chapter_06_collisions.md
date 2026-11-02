@@ -25,6 +25,21 @@ This chapter takes two meetings, and does it in four moves.
 
 Parts One and Two are the first meeting.  Parts Three and Four are the second.
 
+> **Today's example.**  This chapter has one for each meeting.  Before you
+> start, open the first:  **File → Examples**, then **Contributed Libraries →
+> SpriteGame → Lessons → Lesson06_Collisions_Day1**.  Run it, and the stand-in
+> character chases your mouse.  Steer it onto the coin:  the score in the corner
+> goes up, and the coin jumps somewhere new.  That's where the first meeting
+> ends up.  Keep its window open, and when your sketch does something strange,
+> compare the two.  Your own work goes in your own sketch.  Appendix 1,
+> section A1.6, walks through opening an example one click at a time.
+
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Lesson 6
+> page on Canvas.  Good things to ask it:  "my score goes up way too fast," "my
+> score will not show up on screen," "what is the difference between = and
+> ==?", or "how do I add a second hazard?"  If something won't run, paste in
+> your `draw()` or `playGame()`.
+
 ---
 
 # Part One - Are they touching?
@@ -40,7 +55,7 @@ checks whether their circles overlap, and hands back `true` or `false`.
 
 Your character has `collidesWith()` because you wrote `class MyCharacter extends
 Blob` back in Chapter 2.  It's one of the things a Blob can do, so your
-character got it for free, and you never had to write it.
+character got it for free.
 
 Remember the `30` in your `super(...)` line?  In Chapter 2 you changed it, and
 nothing on the screen changed.  This is what it's for.  That number is the
@@ -75,7 +90,7 @@ if (player.collidesWith(coin)) {
 > ![](screenshots/ch06_Flash.png)
 
 `draw()` runs sixty times a second, so it asks *are they touching?* sixty times
-a second.  On every frame the answer is yes, the sky is gold.
+a second.  On every frame where the answer is yes, the sky is gold.
 
 ## Step 2 - Generous or precise
 
@@ -101,8 +116,8 @@ int score = 0;     // a whole number, starts at zero
 > **Aside:  `int`**
 >
 > `int` is the kind of variable that holds a whole number:  `0`, `7`, `-3`.  No
-> decimal point.  `int score = 0;` makes a box called `score` and puts a `0` in
-> it, on the same line.
+> decimal point.  In one line, `int score = 0;` makes a box called `score` and
+> puts a `0` in it.
 
 A score has to remember something from one frame to the next.  So it goes at the
 very **top** of your sketch, outside `setup()` and outside `draw()`.  Up there,
@@ -217,6 +232,12 @@ your world.  The score's `fill()` and `textSize()` are yours.
 
 Last meeting your character started scoring points.  Today it gets something to
 avoid, and your game gets a way to end.
+
+> **Today's example.**  Open the second meeting's example:  **File →
+> Examples**, then **Contributed Libraries → SpriteGame → Lessons →
+> Lesson06_Collisions_Day2**.  Run it, and a red hazard bounces around with the
+> coin.  Touch the hazard, and the game shows **Game Over** and your final score.
+> Keep its window open, and compare your sketch with it as you build Part Three.
 
 **Build it.**  Before you change anything today, save a copy:  **File → Save
 As**, and put a number on the end of the name, like `MyGame2`.  Your Day 1 game

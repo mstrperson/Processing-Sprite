@@ -23,6 +23,12 @@ This chapter does it in three moves.
 Part One is mostly reading.  Parts Two and Three are five small steps, and the
 sketch runs at the end of every one.
 
+> **Ask Sparky.**  This lesson's Sparky opens from the button on the Lesson 1
+> page on Canvas.  Good things to ask it:  "my sketch will not run and it says
+> cannot find class Blob," "how do I pick a color?", or "what is the difference
+> between setup and draw?"  Tell it you're on Lesson 1.  First time using
+> Sparky?  Say hi, and ask for the tour.
+
 ---
 
 # Part One - A Blob is an object
@@ -35,6 +41,8 @@ button, and a **■ Stop** button.  A program in Processing is called a
 
 Save before you type anything:  **File → Save As**, and name it `HelloBlob`.
 Saving first means you'll know where your sketch lives when you come back to it.
+Appendix 1, at the back of the book, walks through the Save box one
+click at a time, and shows where your sketch ends up.
 
 **Build it.**  Type this in.  Type it by hand.  Your fingers learn the code
 faster than your eyes do.
@@ -68,8 +76,8 @@ Then press **▶ Run**.
 > ![](screenshots/ch01_Starter.png)
 
 If you get an error instead, look at the line Processing highlights, and check
-it letter by letter against the code above.  Step 2 shows you the three most
-common mistakes, on purpose.
+it letter by letter against the code above.  In Step 2 you make the three most
+common mistakes on purpose.
 
 ## 1.2  Objects have properties and behaviors
 
@@ -103,8 +111,8 @@ import coxprogramming.processing.sprites.*;
 ```
 
 This tells Processing you want to use the library's tools.  A **library** is a
-set of tools somebody else built, so you can use them.  `Blob` is one of them.
-This line goes first, always.
+set of tools somebody else built for you to use.  `Blob` is one of them.
+This line goes at the top of the sketch.
 
 ```java
 Blob myBlob;
@@ -223,7 +231,7 @@ void draw() {
 
 Run it.
 
-> **Check.**  A white window, empty.
+> **Check.**  An empty white window.
 
 > **Screenshot:**  The blob's somewhere in this picture.
 >
@@ -234,7 +242,7 @@ Where did the blob go?  Make a guess before you read on.
 The blob got drawn.  `setup()` drew it, once, right at the start.  Then
 `draw()` ran, and its first instruction is `background(255)`, which paints the
 whole window white, right over the blob.  Then `draw()` ran again, and again,
-sixty times a second, painting white each time.  The blob's under the paint.
+sixty times a second.  The blob's under the paint.
 
 That's why `drawSprite()` belongs in `draw()`.  Anything you want to see has to
 be drawn again on every frame, after the background.
@@ -330,10 +338,10 @@ off the panel.
 its three numbers in your blob's `color( , , )`.  "Because I like green" is a
 perfectly good reason.
 
-One more, for that outline from 1.1.  Try `color(255, 255, 255)`, a white blob
-on a white background.
+Remember the outline from 1.1?  Try `color(255, 255, 255)`, a white blob on a
+white background.
 
-> **Check.**  You can still see it, as a thin black ring.
+> **Check.**  All you can see is a thin black ring.
 
 > **Screenshot:**  A white blob on white.  The outline gives it away.
 >
@@ -353,7 +361,7 @@ The blob moves up, because a smaller y is closer to the top.
 
 Now predict where `(0, 0)` will put it, and try it.
 
-> **Check.**  A quarter of a blob, tucked into the top-left corner.
+> **Check.**  A quarter of a blob in the top-left corner.
 
 > **Screenshot:**  The blob's center is on the corner.
 >
@@ -365,7 +373,7 @@ window.
 
 Then the size.  Change the radius, the `40`, to `80` and run.  Then try `15`.
 
-**Your turn.**  Put your blob where you want it, at the size you want.
+**Your turn.**  Put your blob where you want it, and make it the size you want.
 
 ## Step 5 - What's behind it
 
@@ -405,7 +413,7 @@ You pick its name, and all five of its numbers.
 > ![](screenshots/ch01_Two.png)
 
 > **Watch out.**  Skip the second of those three lines, and the sketch starts,
-> then stops with `NullPointerException`, on your friend's `drawSprite()` line.
+> then stops on your friend's `drawSprite()` line with `NullPointerException`.
 > The box at the top is still empty when `draw()` asks it to draw.
 
 If one friend goes well, keep going:  four or five blobs make a small scene.  A
@@ -458,10 +466,10 @@ runs, about 60 a second.  (Part Two)
 **function** -- a set of instructions with a name, like `setup()` and
 `draw()`.  (1.3)
 
-**library** -- a set of tools somebody else built, so you can use them.
+**library** -- a set of tools somebody else built for you to use.
 SpriteGame is the library that has `Blob`.  (1.3)
 
-**method** -- a behavior, written in code.  You ask for one with a dot:
+**method** -- a behavior written in code.  You ask for one with a dot:
 `myBlob.drawSprite()`.  (1.3)
 
 **object** -- a thing in your program that has its own information and knows

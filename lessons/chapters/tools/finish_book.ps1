@@ -218,7 +218,7 @@ try {
   foreach ($h in $tops) {
     # A unit page, or one of the two section pages that work the same way.
     $text = $h.Range.Text
-    $isUnit = $text.StartsWith('Unit ') -or $text.StartsWith('Bonus Chapters') -or $text.StartsWith('For Teachers')
+    $isUnit = $text.StartsWith('Unit ') -or $text.StartsWith('Bonus Chapters') -or $text.StartsWith('Appendices')
     if (-not $isUnit -and $afterUnit) { $afterUnit = $false; continue }   # faces its unit page
     $page = $h.Range.Information(3)
     $wantOdd = -not $isUnit

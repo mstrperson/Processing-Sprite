@@ -26,18 +26,75 @@ is that run's log.
 | Prologue | [`chapter_00_prologue.md`](chapter_00_prologue.md) | drafted, with Jason's answers in it |
 | Chapters 1 to 7 | `chapter_01_hello_blob.md` to `chapter_07_build_your_game.md` | drafted, every Check verified |
 | Bonus A to D | `bonus_a_images.md` to `bonus_d_lists.md` | drafted, every Check verified, as far as a machine can check sound |
-| Teacher reference | [`reference_api.md`](reference_api.md) | drafted, every claim about the library verified |
+| Appendix 1, saving and handing in | [`student_reference_files.md`](student_reference_files.md) | drafted 2026-11-01:  saving, Finder, zipping, and handing in on a Mac.  Five screenshot frames left empty (below).  S.6, opening a lesson's example, added the same day |
+| Appendix 2, the library | [`reference_api.md`](reference_api.md) | drafted, every claim about the library verified |
 | Their plans | [`planning/`](planning/) | one per piece, and one verification script per piece |
 | Their openings | [`book/`](book/) | one per chapter and bonus chapter |
 | Screenshots | [`screenshots/`](screenshots/) | real frames, saved from the real code, some cropped |
 | Build | [`tools/`](tools/) | see PROCESS.md |
 
-The printed draft, `build/book/Book_Draft.pdf`, runs 183 pages:  the prologue,
-two units, the bonus chapters, and the teacher reference, each with a page of its
-own.  Every meeting's PDF is cut from it, into `build/pdf`.  Most of the length is
+The printed draft, `build/book/Book_Draft.pdf`, runs 310 pages (2026-11-01):
+the prologue, two units, the bonus chapters, and the appendices, each with a
+page of its own.  Appendix 3, the Sparky prompts, is 112 of them.  Every
+meeting's PDF is cut from it, into `build/pdf`.  Most of the length is
 pictures and the page break that starts every Part and every numbered section,
 which is the C# book's rule.  If that's too much paper for a sixth-grade meeting,
 those breaks are the first thing to bend.
+
+**A picture never opens a page alone (Jason, 2026-11-01).**  A screenshot at
+the top of a page, mid-chapter, shows the work on the page before it.  So at
+least the paragraph before it comes down with it, and when that's a box (the
+Check it shows), the whole box and its lead-in line come too.
+`tools/build_chapter.lua` does it as it writes the Word file:  the block before
+each screenshot keeps with it, so Word moves them as one, in the book and in
+every meeting's Word file.  It covers a paragraph or a box before the picture,
+63 of the 66 screenshots.  The other three follow a code block or a list and
+are left alone.  A first try measured pages in `finish_book.ps1`, and Word hung
+asking which page a picture was on, so it moved to the build.
+
+**The appendices.**  Jason, 2026-11-01:  every reference at the back is an
+appendix.  One section page, **Appendices**, follows the bonus chapters.
+Appendix 1 is for students, and Appendices 2 and 3 are for teachers.  Their
+sections are numbered A1.1, A2.1, A3.1, so they never clash with Chapter 1's
+1.1.  The source files keep their old names, and the build's keys stay S, R, T.
+
+**Appendix 1, saving and handing in, added 2026-11-01.**  Saving, finding a
+sketch in Finder, zipping it, and uploading it to Canvas, for students to come
+back to, with tables of fixes for a Finder window left in an odd state.  The
+prologue and Chapter 1's first save point to it.  Its twin is
+the Canvas help page *Saving and Handing In Your Work*
+(`../canvas_import/guides/saving-and-handing-in.json`), and its Sparky is
+`../flint/src/files_helper.md`.  Keep the steps in all three the same.
+
+**Appendix 3, the Sparky prompts, added 2026-11-01.**  Every Sparky prompt, word for
+word, after Appendix 2:  `teacher_sparky_prompts.md`.  Part One is
+written here:  Sparky's three jobs (Jason's answer to question 4, below), the Q1
+feedback behind the rules, and the Flint set-up.  Parts Two to Four come from
+`../flint/src` at build time.  A line `<!-- SPARKY PROMPT name.md -->` becomes
+that file, with its title dropped and its headings moved down a level, so the
+book always prints what's pasted into Flint.  It's long:  the prompts are most
+of a hundred pages.  It makes a PDF and no Word file or Canvas page.
+
+None of it could be checked the way the chapters are:  the build machine runs
+Windows, so every Finder, Save box, and Canvas step comes from how macOS and
+Canvas work, and none was clicked through.  Things to check on a lab Mac:
+that **Where** in Processing's Save As box starts at the `Processing` folder,
+and the Canvas button names on an Assignment (**Start Assignment**, **Choose
+File** or **Upload File**, **New Attempt** or **Re-submit Assignment**).  A1.6 adds
+a third:  that a lesson's example sits under **File → Examples → Contributed
+Libraries → SpriteGame → Lessons**, and that closing an example you typed in
+offers **Don't Save**.  Which examples run as they ship was checked on Windows,
+with `planning/verify_examples.sh`:  all but Bonus A and B, which stop on their
+missing pictures and sounds.  The five screenshot frames are empty, waiting for
+real ones from a lab Mac:
+
+| Section | The picture |
+|---|---|
+| A1.1 | a sketch folder open in Finder, list view:  `HelloBlob` with `HelloBlob.pde` and `MyCharacter.pde` |
+| A1.3 | Processing's Save box, name `HelloBlob`, **Where** set to `Processing` |
+| A1.6 | the Examples window, open to **Contributed Libraries → SpriteGame → Lessons**, `Lesson03_BringItToLife` highlighted |
+| A1.9 | a Finder window with the path bar showing `Documents › Processing` |
+| A1.11 | the right-click menu on the `HelloBlob` folder, **Compress "HelloBlob"** highlighted |
 
 A postscript, the C# book's record of how its book got made, was left for Jason:
 it's meta-analysis in his voice, and PROGRESS.md has the raw material.
@@ -123,6 +180,8 @@ The marks are the C# book's, minus two.
 | Argue it | yes, rarely | where a choice is real:  mouse or keys (Ch 4), three named coins or a list (Ch 7) |
 | Tonight | **no** | no homework in the plans |
 | Screenshot | yes | `> **Screenshot:**  caption`, then the image on the next line of the box |
+| Today's example | yes, added 2026-11-01 | Jason:  after Chapter 1, every chapter asks students to open the lesson's example from **File → Examples**.  The example is the lesson's finished code, so it's opened alongside, to run and compare, and the work stays in the student's own sketch.  A teal box after the opening's moves table, and one more at Chapter 6's second meeting, which has its own example.  How to open one is Appendix 1, A1.6 |
+| Ask Sparky | yes, added 2026-11-01 | Jason:  the book has to name Sparky and say what it's for.  An amber box after Today's example in every chapter, with the lesson's good things to ask.  The questions match the Canvas `flintHint` and the Sparky's "Good things to ask" list.  The prologue's **Sparky** section gives the three jobs |
 
 ---
 
@@ -366,7 +425,7 @@ chapters follow the code, and every disagreement is written down here.
 | Lesson 7 pitfalls | A stale name in a copied coin block:  verified sharper than the notes say.  With `coin3` left in `coin4`'s `moveTo()`, the game is won in under a second.  Chapter 7 plan. |
 | Bonus A Canvas page | A missing file draws *"a blank or colored box."*  It stops the sketch with `NullPointerException`.  Only a PNG without transparency draws a box.  A folder named `Data` works on Windows.  Bonus A plan, 4. |
 | Bonus C Canvas page | A constructor left with its old name *"becomes a method that never runs."*  It's a compile error.  And its `distanceTo()` example uses Bonus D's list.  Bonus C plan, 4. |
-| The library | Eight rough edges, the `followMouse()` NaN among them, with a suggested fix for each:  the teacher reference, Part Five. |
+| The library | Eight rough edges, the `followMouse()` NaN among them, with a suggested fix for each:  Appendix 2, Part Five. |
 
 ---
 

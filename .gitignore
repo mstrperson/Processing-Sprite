@@ -1,3 +1,6 @@
 CONTEXT.md
 .DS_Store
 jamf/dist/
+
+# Flint helper links for the Canvas importer (--values).  Private:  this repo is public.
+flint.json

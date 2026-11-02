@@ -4,10 +4,14 @@
   Generates Canvas-ready HTML for every lesson in the Processing Sprite series.
 
   Reads  : content/*.json        (one file per lesson)
-  Writes : html/pages/*.html         student-facing Canvas Page
+           guides/*.json         (help pages for the Start Here module)
+  Writes : html/pages/*.html         student-facing Canvas Page (lessons and guides)
            html/assignments/*.html   student-facing Canvas Assignment
            html/teacher/*.html       teacher copy (DO NOT PUBLISH)
            html/README.md            index + paste checklist
+           html/canvas-manifest.json what each file becomes in Canvas, for
+                                     the WinsorForms.Core canvas-import-html
+                                     command (see "canvas manifest" below)
 
   Canvas rules honoured:
     * no <style> blocks, no <script>, no external assets -- inline styles only
@@ -161,13 +165,14 @@ function CodeBlock($block) {
   '<pre style="margin:0;background:#f8fafc;border:1px solid #c9d8e8;border-radius:0 0 6px 6px;padding:14px 16px;overflow-x:auto;' + $MONO + 'font-size:13px;line-height:1.55;color:#1f2933;white-space:pre;">' + (FormatCode $block.body) + '</pre></div>'
 }
 
-function FlintBox([string]$numLabel, [string]$hint) {
+function FlintBox([string]$numLabel, [string]$hint, [string]$footer) {
+  if (-not $footer) { $footer = 'Sparky gives you code with blanks to fill in.  Tell it your lesson and paste your code.  Still stuck?  Ask again for the whole thing.' }
   return '<!-- FLINT-LINK: swap the placeholder href below for the Flint AI chat URL for this lesson -->' +
   '<div style="background:#f0fdfa;border:2px solid #14b8a6;border-radius:10px;padding:16px 20px;margin:20px 0;">' +
   '<p style="margin:0 0 4px;font-size:17px;font-weight:700;color:#0f766e;">&#129302; Stuck?&nbsp; Ask the ' + (Esc $numLabel) + ' helper</p>' +
   '<p style="margin:0 0 14px;color:#31625d;">' + (Inline $hint) + '</p>' +
   '<a href="PASTE_FLINT_URL_HERE" target="_blank" rel="noopener" style="display:inline-block;background:#0f766e;color:#ffffff;text-decoration:none;' + $FONT + 'font-size:15px;font-weight:700;padding:11px 22px;border-radius:6px;">Open the AI Helper &rarr;</a>' +
-  '<p style="margin:12px 0 0;font-size:13px;color:#4b7c77;">Sparky gives you code with blanks to fill in.&nbsp; Tell it your lesson and paste your code.&nbsp; Still stuck?&nbsp; Ask again for the whole thing.</p></div>'
+  '<p style="margin:12px 0 0;font-size:13px;color:#4b7c77;">' + (Inline $footer) + '</p></div>'
 }
 
 function ChecklistBox($items, [string]$accent) {
@@ -228,6 +233,17 @@ function FileComment($lesson, [string]$kind) {
 }
 
 # ------------------------------------------------------------ page writer ---
+
+# The Canvas title of a lesson's Assignment.  Each Page's "Next:" line names it,
+# and canvas-manifest.json creates the Assignment under it, so both read it from
+# here -- if they ever differ, students are sent looking for a title that does
+# not exist.  A track's Page uses the shared lesson title, not the track's.
+function AssignmentTitle($lesson, $th) {
+  $t = $lesson.title
+  if ($lesson.lessonTitle) { $t = $lesson.lessonTitle }
+  return $th.label + ' ' + $lesson.num + ' Assignment - ' + $t
+}
+
 function Build-Page($lesson, $th) {
   $a = $th.accent
   $sb = New-Object System.Text.StringBuilder
@@ -277,10 +293,8 @@ function Build-Page($lesson, $th) {
   [void]$sb.Append((H2 'Wrap-up' $a))
   [void]$sb.Append((Callout '&#128172;' 'Be ready to answer' $lesson.wrapup '#c2761c' '#fffaf0' '#f0dcbc'))
 
-  $assignmentTitle = $lesson.title
-  if ($lesson.lessonTitle) { $assignmentTitle = $lesson.lessonTitle }
   [void]$sb.Append('<p style="margin:26px 0 0;padding:14px 18px;background:' + $th.soft + ';border:1px dashed ' + $th.edge + ';border-radius:6px;font-size:15px;color:' + $MUTED + ';">' +
-    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc ($th.label + ' ' + $lesson.num + ' Assignment - ' + $assignmentTitle)) + '</strong> to check yourself and turn in your work.</p>')
+    '<strong style="color:' + $a + ';">Next:</strong>&nbsp; open <strong>' + (Esc (AssignmentTitle $lesson $th)) + '</strong> to check yourself and turn in your work.</p>')
 
   $kind = 'CANVAS PAGE (student-facing)'
   if ($lesson.group) { $kind = 'CANVAS PAGE (student-facing, ' + $lesson.group + ')' }
@@ -319,7 +333,7 @@ function Build-Assignment($lesson, $th) {
   [void]$sb.Append((H2 'What to turn in' $a))
   [void]$sb.Append('<div style="background:#f7fafc;border:1px solid ' + $RULE + ';border-radius:8px;padding:16px 20px 6px;margin:14px 0;">')
   [void]$sb.Append((Numbered $lesson.submit))
-  [void]$sb.Append('<p style="margin:0 0 12px;font-size:14px;color:' + $MUTED + ';">To zip your sketch:&nbsp; <strong>Sketch &rarr; Show Sketch Folder</strong>, go up one level, then right-click the sketch folder and compress it.</p></div>')
+  [void]$sb.Append('<p style="margin:0 0 12px;font-size:14px;color:' + $MUTED + ';">' + (HandInHowTo) + '</p></div>')
 
   [void]$sb.Append((H2 'Check yourself first' $a))
   [void]$sb.Append((ChecklistBox $lesson.checklist $a))
@@ -388,6 +402,83 @@ function Build-Teacher($lesson, $th) {
   return Shell (FileComment $lesson 'TEACHER COPY - DO NOT PUBLISH') $sb.ToString()
 }
 
+# ----------------------------------------------------------- guide writer ---
+# A guide is a help page that belongs to no lesson, such as how to save, zip,
+# and hand in a sketch.  It sits in the Start Here module, under the front
+# page, which links to it.  A guide marked "fromAssignments" is also linked
+# from every Assignment's "What to turn in" box;  $HANDIN holds it.
+#   guide saving-and-handing-in -> LINK_GUIDE_SAVING_AND_HANDING_IN
+function GuideToken($guide) {
+  return 'LINK_GUIDE_' + ($guide.slug.ToUpper() -replace '-', '_')
+}
+
+function GuideLink($guide) {
+  return '<a href="' + (GuideToken $guide) + '" style="color:#2b6cb0;font-weight:700;">' + (Esc $guide.title) + '</a>'
+}
+
+# The line under every Assignment's list of things to turn in.
+$HANDIN = $null
+function HandInHowTo() {
+  $t = 'To zip your sketch:&nbsp; <strong>Sketch &rarr; Show Sketch Folder</strong>, then <strong>Go &rarr; Enclosing Folder</strong> in Finder.&nbsp; Right-click your sketch folder, and choose <strong>Compress</strong>.'
+  if ($HANDIN) { $t += '&nbsp; Every click, and help when Finder looks strange:&nbsp; ' + (GuideLink $HANDIN) + '.' }
+  return $t
+}
+
+# A table of things that can go wrong:  a header row from "cols", then one row
+# per problem.  The first column is what the student sees, in bold.
+function FixTable($fixes) {
+  $sb = New-Object System.Text.StringBuilder
+  [void]$sb.Append('<div style="overflow-x:auto;"><table style="border-collapse:collapse;width:100%;min-width:520px;' + $FONT + 'font-size:15px;"><tr>')
+  foreach ($c in $fixes.cols) {
+    [void]$sb.Append('<th style="background:#e5edf5;border:1px solid #c9d8e8;padding:9px 12px;text-align:left;">' + (Inline $c) + '</th>')
+  }
+  [void]$sb.Append('</tr>')
+  foreach ($r in $fixes.rows) {
+    [void]$sb.Append('<tr>')
+    for ($i = 0; $i -lt $r.Count; $i++) {
+      $cell = Inline $r[$i]
+      if ($i -eq 0) { $cell = '<span style="font-weight:700;color:' + $INK + ';">' + $cell + '</span>' }
+      [void]$sb.Append('<td style="border:1px solid ' + $RULE + ';padding:9px 12px;vertical-align:top;">' + $cell + '</td>')
+    }
+    [void]$sb.Append('</tr>')
+  }
+  [void]$sb.Append('</table></div>')
+  return $sb.ToString()
+}
+
+function Build-Guide($guide) {
+  $th = $THEME['core']
+  $a = $th.accent
+  $sb = New-Object System.Text.StringBuilder
+  [void]$sb.Append((Banner $guide $th ($guide.kicker + '  &middot;  Processing Sprite')))
+  foreach ($p in $guide.intro) { [void]$sb.Append((P $p)) }
+
+  [void]$sb.Append((H2 $guide.quick.h $a))
+  [void]$sb.Append('<div style="background:#f1fbf5;border:1px solid #c2e6d1;border-left:5px solid #1d7a44;border-radius:6px;padding:16px 20px 6px;margin:14px 0;">')
+  [void]$sb.Append((Numbered $guide.quick.steps))
+  [void]$sb.Append('</div>')
+
+  [void]$sb.Append((FlintBox $guide.flintLabel $guide.flintHint $guide.flintFooter))
+
+  foreach ($sec in $guide.sections) {
+    [void]$sb.Append((H2 $sec.h $a))
+    foreach ($p in $sec.p) { [void]$sb.Append((P $p)) }
+    if ($sec.steps) { [void]$sb.Append((Numbered $sec.steps)) }
+    if ($sec.bullets) { [void]$sb.Append((Bullets $sec.bullets)) }
+    foreach ($p in $sec.after) { [void]$sb.Append((P $p)) }
+    if ($sec.check) { [void]$sb.Append((Callout '&#9989;' 'Check' $sec.check '#1d7a44' '#f1fbf5' '#c2e6d1')) }
+    if ($sec.watch) { [void]$sb.Append((Callout '&#9888;&#65039;' 'Watch out' $sec.watch '#b4382c' '#fdf2f1' '#f0c9c4')) }
+    if ($sec.fixes) { [void]$sb.Append((FixTable $sec.fixes)) }
+  }
+
+  $comment = '<!-- ==========================================================' + "`n" +
+  '     ' + $guide.title + '  |  CANVAS PAGE (student-facing help page)' + "`n" +
+  '     Generated by build_canvas_html.ps1 - do not edit by hand.' + "`n" +
+  '     Source: lessons/canvas_import/guides/' + $guide.slug + '.json' + "`n" +
+  '     ========================================================== -->'
+  return Shell $comment $sb.ToString()
+}
+
 # ------------------------------------------------------ front page writer ---
 
 # Placeholder token for a course link the teacher wires up inside Canvas.
@@ -454,7 +545,7 @@ function StageLadder($course) {
   return $sb.ToString()
 }
 
-function Build-FrontPage($course, $lessons) {
+function Build-FrontPage($course, $lessons, $guides) {
   $th = $THEME['core']
   $bt = $THEME['bonus']
   $a = $th.accent
@@ -490,6 +581,12 @@ function Build-FrontPage($course, $lessons) {
     [void]$sb.Append((H3 $sec.h))
     foreach ($p in $sec.p) { [void]$sb.Append((P $p)) }
   }
+  if ($guides) {
+    [void]$sb.Append((H3 'Help pages'))
+    foreach ($g in $guides) {
+      [void]$sb.Append('<p style="margin:0 0 12px;">' + (GuideLink $g) + ':&nbsp; ' + (Inline $g.frontPageLine) + '</p>')
+    }
+  }
 
   [void]$sb.Append((H2 'How your work is looked at' $a))
   [void]$sb.Append((StageLadder $course))
@@ -506,6 +603,107 @@ function Build-FrontPage($course, $lessons) {
   return Shell $comment $sb.ToString()
 }
 
+# --------------------------------------------------------- canvas manifest ---
+# html/canvas-manifest.json tells an importer what every generated file becomes
+# in Canvas:  its type, its title, the module it sits in, and the LINK_* token
+# other files use to link to it.  The WinsorForms.Core CLI command
+# canvas-import-html reads it;  the schema is documented in that repository at
+# docs/canvas-import-manifest.md.  Bump manifestVersion only for a change an
+# older importer would misread.
+
+# One key per lesson for the AI-helper placeholder, e.g. "flint:lesson-04" or
+# "flint:bonus-a".  Both of a split lesson's Pages share the lesson's key.
+function FlintKey($lesson) {
+  if ($lesson.kind -eq 'bonus') { return 'flint:bonus-' + $lesson.num.ToLower() }
+  return 'flint:lesson-' + $lesson.num.PadLeft(2, '0')
+}
+
+function ManifestItem([string]$type, [string]$file, [string]$title, [string]$token, [string]$audience, [string]$flint) {
+  $item = [ordered]@{ type = $type; file = $file; title = $title; audience = $audience }
+  if ($token) { $item.linkToken = $token }
+  if ($flint) { $item.placeholders = [ordered]@{ PASTE_FLINT_URL_HERE = $flint } }
+  if ($type -eq 'assignment') {
+    # Formative, non-scoring course:  see "The rubrics" in ../README.md.
+    $item.assignment = [ordered]@{ submissionTypes = @('online_upload'); gradingType = 'not_graded'; pointsPossible = 0 }
+  }
+  return $item
+}
+
+# PowerShell 5.1's ConvertTo-Json escapes ' < > & as backslash-u escapes.
+# That is valid JSON, but these files are meant to be read by people too.
+function Write-Manifest([string]$path, $manifest) {
+  $json = $manifest | ConvertTo-Json -Depth 10
+  # The pattern is built from [char]92 (a backslash) so this file never holds a
+  # literal backslash-u sequence, which some editors and tools decode on sight.
+  $bs = [string][char]92
+  $json = [regex]::Replace($json, ($bs + $bs + 'u00(27|3c|3e|26)'), { param($m) [string][char][Convert]::ToInt32($m.Groups[1].Value, 16) })
+  Write-Utf8NoBom $path ($json + "`n")
+}
+
+# ------------------------------------------------------ plan book sequence ---
+# html/planbook-sequence.json is the core lessons as one plan book entry per
+# class meeting, in teaching order.  The WinsorForms.Core CLI command
+# planbook-import-sequence lays it onto a section's real meetings;  the schema
+# is documented in that repository at docs/planbook-sequence.md.
+#
+# It is an outline, not the lesson plan:  the plan book shows plain text with
+# no links, so each entry is the lesson (and day), the day's focus, the new
+# idea, and the goals.  The full plan stays in the teacher copy in Canvas.
+
+# The plan book stores varchar and shows text unformatted, so this strips the
+# inline markup, decodes entities, and maps typographic characters to ASCII.
+# Anything still outside ASCII is an error, not a silent "?" in the database.
+$ASCII_MAP = @{
+  0x2192 = '->'; 0x2190 = '<-'; 0x2026 = '...'; 0x00B7 = '-'; 0x2014 = '--'; 0x2013 = '-'
+  0x2018 = "'";  0x2019 = "'";  0x201C = '"';   0x201D = '"'; 0x00A0 = ' ';  0x00D7 = 'x'
+}
+function PlainText([string]$s) {
+  if ([string]::IsNullOrEmpty($s)) { return '' }
+  $t = [regex]::Replace($s, '\*\*([^*]+)\*\*', '$1')
+  $t = [regex]::Replace($t, '`([^`]+)`', '$1')
+  $t = [System.Net.WebUtility]::HtmlDecode($t)
+  foreach ($code in $ASCII_MAP.Keys) { $t = $t.Replace([string][char]$code, $ASCII_MAP[$code]) }
+  $bad = [regex]::Match($t, '[^\x00-\x7F]')
+  if ($bad.Success) { throw ('Plan book text has a character with no ASCII mapping (U+{0:X4}) in: {1}' -f [int][char]$bad.Value, $t) }
+  return $t
+}
+
+# The meetings a lesson takes, as one label per meeting ($null = no label).
+# An explicit "days" array in the lesson JSON wins;  otherwise a step list split
+# by "### Day N - focus" headings gives one meeting per heading;  otherwise one.
+function LessonDays($lesson) {
+  if ($lesson.days) { return , @($lesson.days) }
+  $heads = @($lesson.steps | Where-Object { $_ -like '### Day *' } | ForEach-Object { $_.Substring(4) -replace '^Day \d+\s*-+\s*', '' })
+  if ($heads.Count -gt 0) { return , $heads }
+  return , @($null)
+}
+
+function PlanBookMeetings($lesson, $th) {
+  $days = LessonDays $lesson
+  $heading = $th.label + ' ' + $lesson.num + ': ' + (PlainText $lesson.title)
+  $out = @()
+  for ($i = 0; $i -lt $days.Count; $i++) {
+    $scope = $heading
+    if ($days.Count -gt 1) { $scope += ' (day ' + ($i + 1) + ' of ' + $days.Count + ')' }
+    $lines = New-Object System.Collections.Generic.List[string]
+    if ($days[$i]) { $lines.Add('Today: ' + (PlainText $days[$i])) }
+    if ($i -eq 0) {
+      $lines.Add('New idea: ' + (PlainText $lesson.newIdea))
+      if ($lesson.tracks) { $lines.Add('The class splits: ' + (@($lesson.tracks | ForEach-Object { $_.group }) -join ' / ')) }
+      if ($lesson.goals) {
+        $lines.Add('Goals:')
+        foreach ($g in $lesson.goals) { $lines.Add('- ' + (PlainText $g)) }
+      }
+    } else {
+      $lines.Add('Continues from day ' + $i + '.')
+    }
+    $notes = $lines -join "`n"
+    if ($scope.Length -gt 2000 -or $notes.Length -gt 2000) { throw "Plan book text over 2000 characters for $scope" }
+    $out += [ordered]@{ scopeAndSequence = $scope; planNotes = $notes }
+  }
+  return , $out
+}
+
 # ------------------------------------------------------------------ main ---
 function Write-Utf8NoBom([string]$path, [string]$text) {
   $enc = New-Object System.Text.UTF8Encoding($false)
@@ -519,6 +717,16 @@ foreach ($d in @('pages', 'assignments', 'teacher')) {
 
 $files = Get-ChildItem -Path $srcDir -Filter '*.json' | Sort-Object Name
 if (-not $files) { throw "No lesson JSON found in $srcDir" }
+
+# Guides first, so every Assignment can link to the hand-in guide.
+$guides = @()
+$guideDir = Join-Path $root 'guides'
+if (Test-Path $guideDir) {
+  foreach ($gf in (Get-ChildItem -Path $guideDir -Filter '*.json' | Sort-Object Name)) {
+    $guides += (Get-Content -Raw -Encoding UTF8 $gf.FullName | ConvertFrom-Json)
+  }
+}
+$HANDIN = $guides | Where-Object { $_.fromAssignments } | Select-Object -First 1
 
 $index = New-Object System.Collections.Generic.List[string]
 $index.Add('# Canvas HTML - generated output')
@@ -554,29 +762,41 @@ $index.Add('|---|--------|------|------------|---------|')
 $count = 0
 $fileCount = 1   # the front page
 $all = New-Object System.Collections.Generic.List[object]
+$modules = New-Object System.Collections.Generic.List[object]
+$teacherItems = New-Object System.Collections.Generic.List[object]
+$planMeetings = @()
 foreach ($f in $files) {
   $lesson = Get-Content -Raw -Encoding UTF8 $f.FullName | ConvertFrom-Json
   $th = $THEME[$lesson.kind]
   if (-not $th) { throw "Unknown kind '$($lesson.kind)' in $($f.Name)" }
 
   $name = $lesson.slug + '.html'
+  $heading = $th.label + ' ' + $lesson.num + ': '
+  $flint = FlintKey $lesson
+  $items = New-Object System.Collections.Generic.List[object]
   $pageLinks = @()
   if ($lesson.tracks) {
     foreach ($t in $lesson.tracks) {
       $tl = Merge-Track $lesson $t
       $tname = $tl.slug + '.html'
       Write-Utf8NoBom (Join-Path $outDir "pages\$tname") (Build-Page $tl $th)
+      $items.Add((ManifestItem 'page' "pages/$tname" ($heading + $tl.title) (TrackToken $lesson $t) 'student' $flint))
       $pageLinks += '[' + $t.slug + ' page](pages/' + $tname + ')'
       $fileCount++
     }
   } else {
     Write-Utf8NoBom (Join-Path $outDir "pages\$name") (Build-Page $lesson $th)
+    $items.Add((ManifestItem 'page' "pages/$name" ($heading + $lesson.title) (LinkToken $lesson 'PAGE') 'student' $flint))
     $pageLinks += '[page](pages/' + $name + ')'
     $fileCount++
   }
   Write-Utf8NoBom (Join-Path $outDir "assignments\$name") (Build-Assignment $lesson $th)
   Write-Utf8NoBom (Join-Path $outDir "teacher\$name")     (Build-Teacher    $lesson $th)
   $fileCount += 2
+  $items.Add((ManifestItem 'assignment' "assignments/$name" (AssignmentTitle $lesson $th) (LinkToken $lesson 'ASSIGNMENT') 'student' $flint))
+  $modules.Add([ordered]@{ name = ($heading + $lesson.title); audience = 'student'; items = $items.ToArray() })
+  $teacherItems.Add((ManifestItem 'page' "teacher/$name" ('Teacher Copy - ' + $heading + $lesson.title) $null 'teacher' $null))
+  if ($lesson.kind -eq 'core') { $planMeetings += PlanBookMeetings $lesson $th }
 
   $all.Add($lesson)
   $index.Add('| ' + $lesson.num + ' | ' + $lesson.title + ' | ' + ($pageLinks -join ', ') + ' | [assignment](assignments/' + $name + ') | [teacher](teacher/' + $name + ') |')
@@ -588,8 +808,17 @@ foreach ($f in $files) {
 $coursePath = Join-Path $root 'course.json'
 if (-not (Test-Path $coursePath)) { throw "Missing course.json at $coursePath" }
 $course = Get-Content -Raw -Encoding UTF8 $coursePath | ConvertFrom-Json
-Write-Utf8NoBom (Join-Path $outDir 'front-page.html') (Build-FrontPage $course $all)
+Write-Utf8NoBom (Join-Path $outDir 'front-page.html') (Build-FrontPage $course $all $guides)
 Write-Host ("  built  home  " + $course.title + '  (front-page.html)')
+
+# --- guides:  help pages in the Start Here module ---
+$guideItems = @()
+foreach ($g in $guides) {
+  Write-Utf8NoBom (Join-Path $outDir ('pages\' + $g.slug + '.html')) (Build-Guide $g)
+  $guideItems += (ManifestItem 'page' ('pages/' + $g.slug + '.html') $g.title (GuideToken $g) 'student' $g.flintKey)
+  $fileCount++
+  Write-Host ("  built  help  " + $g.title)
+}
 
 # --- link-token checklist appended to the generated index ---
 $index.Add('')
@@ -609,6 +838,47 @@ foreach ($l in $all) {
   $index.Add('| ' + $l.title + ' | ' + $pageTokens + ' | `' + (LinkToken $l 'ASSIGNMENT') + '` |')
 }
 
+if ($guides) {
+  $index.Add('')
+  $index.Add('## Help pages')
+  $index.Add('')
+  $index.Add('Built from `guides/*.json`. Each is a Page in the Start Here module, under the front page,')
+  $index.Add('with its own AI-helper button. The front page links to each one, and every Assignment''s')
+  $index.Add('"What to turn in" box links to the hand-in guide, so its token appears in those files too.')
+  $index.Add('')
+  $index.Add('| Page | File | Link token | Flint key |')
+  $index.Add('|------|------|------------|-----------|')
+  foreach ($g in $guides) {
+    $index.Add('| ' + $g.title + ' | [page](pages/' + $g.slug + '.html) | `' + (GuideToken $g) + '` | `' + $g.flintKey + '` |')
+  }
+}
+
 Write-Utf8NoBom (Join-Path $outDir 'README.md') (($index -join "`n") + "`n")
+
+# --- canvas manifest ---
+# Module order is the course order:  Start Here (the front page, then the help
+# pages), every lesson in file order, then the teacher copies last in a module
+# that stays unpublished.
+$frontItem = ManifestItem 'page' 'front-page.html' $course.title $null 'student' $null
+$frontItem.frontPage = $true
+$modules.Insert(0, [ordered]@{ name = 'Start Here'; audience = 'student'; items = @(@($frontItem) + $guideItems) })
+$modules.Add([ordered]@{ name = 'Teacher Copies (keep unpublished)'; audience = 'teacher'; items = $teacherItems.ToArray() })
+Write-Manifest (Join-Path $outDir 'canvas-manifest.json') ([ordered]@{
+  manifestVersion  = 1
+  generatedBy      = 'lessons/canvas_import/build_canvas_html.ps1'
+  courseTitle      = $course.title
+  linkTokenPattern = 'LINK_[A-Z0-9_]+'
+  modules          = $modules.ToArray()
+})
+Write-Host '  built  canvas-manifest.json'
+
+# --- plan book sequence:  core lessons only, one entry per class meeting ---
+Write-Manifest (Join-Path $outDir 'planbook-sequence.json') ([ordered]@{
+  sequenceVersion = 1
+  generatedBy     = 'lessons/canvas_import/build_canvas_html.ps1'
+  title           = (PlainText $course.title) + ' -- core lessons'
+  meetings        = $planMeetings
+})
+Write-Host ('  built  planbook-sequence.json  (' + $planMeetings.Count + ' meetings)')
 Write-Host ''
 Write-Host ("Done. $count lessons -> $fileCount HTML files in html\")
