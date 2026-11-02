@@ -110,17 +110,19 @@ What `html/pages/saving-and-handing-in.html` now contains, five times:
 - **The `src` is a bare file name, and the file isn't in `html/`.** The PNGs live in
   `lessons/chapters/screenshots/` (`../../chapters/screenshots/` from `html/`), with the book's
   other screenshots. Today the five are `a1_SketchFolder.png`, `a1_SaveBox.png`, `a1_Examples.png`,
-  `a1_PathBar.png`, and `a1_Compress.png`. Unless the importer does something about these, the Page
-  shows five broken images.
-- **What the importer needs to do:** for each `<img>` whose `src` is a bare name, upload that file
-  from the screenshots folder to the course's Files, then rewrite the `src` to the Canvas file's
-  URL before writing the Page body. Upload with overwrite on a matching name, so a retaken screenshot
-  replaces the old file and keeps the same name. The `SCREENSHOT` comment above each image marks
-  it, but the `<img>` tag alone is enough to find it.
-- **The manifest doesn't list the images.** The importer can read them from each body. If it's
-  better for the manifest to list them, an optional field per item, such as
-  `"images": ["a1_SaveBox.png", ...]`, would do it, and adding it doesn't need a
-  `manifestVersion` bump (rule 5). The builder doesn't write that field yet.
+  `a1_PathBar.png`, and `a1_Compress.png`.
+- **Done (2026-11-02, WinsorForms.Core branch `feature/canvas-import-images`):** the manifest now
+  has a top-level **`imageFolder: "../../chapters/screenshots"`**, written by `Write-Manifest`'s
+  caller. For every `<img>` whose `src` is a bare name, the importer reads the file from there,
+  uploads it to the course's Files in a **`Page images`** folder, and rewrites the `src` to the
+  uploaded file before writing the body. A same-named file of the same size is reused. A changed
+  one is uploaded again with overwrite, so **retake a screenshot under the same file name**. A
+  bare name the folder doesn't have fails validation before anything is sent. Schema:
+  WinsorForms.Core `docs/canvas-import-manifest.md` (Images).
+- **The manifest doesn't list the images.** The importer reads them from each body, so a new
+  `shot` needs no manifest change. Keep the PNG in `lessons/chapters/screenshots/`.
+- **Live on Canvas since 2026-11-02:** the five PNGs are uploaded, and the guide page was
+  created **unpublished** in Start Here. Its `flint:files` link is still the placeholder.
 - **The book's Canvas pages work the same way.** `lessons/chapters/build/canvas/*.html` puts
   every chapter screenshot in the same `<img>` and `SCREENSHOT` comment form, which is 64 in all,
   and `appendix-1.html` has these five. Those pages aren't in this manifest, but if they're

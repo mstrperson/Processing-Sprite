@@ -3,6 +3,7 @@
     "generatedBy":  "lessons/canvas_import/build_canvas_html.ps1",
     "courseTitle":  "Make Your Own Game",
     "linkTokenPattern":  "LINK_[A-Z0-9_]+",
+    "imageFolder":  "../../chapters/screenshots",
     "modules":  [
                     {
                         "name":  "Start Here",

@@ -149,9 +149,9 @@ function Callout([string]$icon, [string]$title, [string]$body, [string]$bar, [st
 }
 
 # A screenshot and its caption, matching the book's Canvas pages
-# (lessons/chapters/tools/build_chapter.lua).  The src is just the file name:
-# upload the PNG from lessons/chapters/screenshots to the course's Files, then
-# point the src at it.
+# (lessons/chapters/tools/build_chapter.lua).  The src is just the file name;
+# the manifest's imageFolder says where the PNG is, and the Canvas importer
+# uploads it to the course's Files and points the src at it.
 function Shot($shot) {
   if (-not $shot) { return '' }
   $alt = [regex]::Replace($shot.caption, '\*\*([^*]+)\*\*', '$1')
@@ -883,6 +883,7 @@ Write-Manifest (Join-Path $outDir 'canvas-manifest.json') ([ordered]@{
   generatedBy      = 'lessons/canvas_import/build_canvas_html.ps1'
   courseTitle      = $course.title
   linkTokenPattern = 'LINK_[A-Z0-9_]+'
+  imageFolder      = '../../chapters/screenshots'
   modules          = $modules.ToArray()
 })
 Write-Host '  built  canvas-manifest.json'
