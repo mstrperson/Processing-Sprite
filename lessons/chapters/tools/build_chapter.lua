@@ -983,7 +983,7 @@ end
 -- back go in as their chapters get written.
 local BOOK = {
   "00",
-  { unit = "Unit 1", name = "Your Character", about = "Chapters 1 to 4" },
+  { unit = "Unit 1", name = "Your Character", about = "Chapters 1 to 4", art = "unit1" },
   "01", "02", "03", "04",
   { unit = "Unit 2", name = "Your Game", about = "Chapters 5 to 7" },
   "05", "06", "07",
@@ -1039,6 +1039,14 @@ local function compile_book()
       table.insert(meetings, { "", heading })
       blocks:insert(pandoc.Header(1, { pandoc.Str(heading) }))
       blocks:insert(styled("Book Byline", { pandoc.Str((key.about:gsub("  ", NBSP .. " "))) }))
+      -- Its picture, if it has one and build/book/art holds it.  Unit 1's
+      -- comes from tools/make_dragon.
+      local unit_art = key.art and pandoc.path.join { out_dir, "art", key.art .. ".png" }
+      local unit_file = unit_art and io.open(unit_art, "rb")
+      if unit_file then
+        unit_file:close()
+        blocks:insert(styled("Book Cover", { pandoc.Image({}, unit_art, "", { width = "5.6in" }) }))
+      end
       goto continue      -- the chapter's own heading starts the next page
     end
     local cfg = assert(CHAPTERS[key], "no chapter " .. key)
