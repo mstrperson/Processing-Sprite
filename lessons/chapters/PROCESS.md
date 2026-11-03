@@ -229,6 +229,7 @@ The tools, all in `tools/`:
 | `canvas_sketch.ps1` | writes a lesson's Canvas code into a sketch, with the last lesson's tabs carried in.  Use its parameter names. |
 | `make_test_art.ps1` | stand-in pictures for Bonus A and Bonus C |
 | `make_art/` | a Processing sketch that draws the book's cover, each chapter's title-page picture, and the spot pictures, into `build/book` |
+| `make_dragon/` | a Processing sketch:  the dragon on the Unit 1 page, drawn the way Chapter 2 draws a character, saved as `build/book/art/unit1.png` |
 | `check_prose.sh` | step 8's mechanical checks, on any chapter |
 | `verify_all.sh` | reruns every `planning/verify_*.sh`, and compares the new pictures with the book's |
 | `build_chapter.lua` | Word files, Canvas pages, and the book |
