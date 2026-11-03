@@ -149,9 +149,9 @@ function Callout([string]$icon, [string]$title, [string]$body, [string]$bar, [st
 }
 
 # A screenshot and its caption, matching the book's Canvas pages
-# (lessons/chapters/tools/build_chapter.lua).  The src is just the file name:
-# upload the PNG from lessons/chapters/screenshots to the course's Files, then
-# point the src at it.
+# (lessons/chapters/tools/build_chapter.lua).  The src is just the file name;
+# the manifest's imageFolder says where the PNG is, and the Canvas importer
+# uploads it to the course's Files and points the src at it.
 function Shot($shot) {
   if (-not $shot) { return '' }
   $alt = [regex]::Replace($shot.caption, '\*\*([^*]+)\*\*', '$1')
@@ -574,6 +574,19 @@ function Build-FrontPage($course, $lessons, $guides) {
   [void]$sb.Append('<div style="background:' + $th.soft + ';border:1px solid ' + $th.edge + ';border-radius:0 0 8px 8px;border-top:none;padding:13px 20px;margin:0 0 8px;font-size:14px;color:' + $MUTED + ';text-align:center;">' +
     (Inline $course.factStrip) + '</div>')
 
+  # The hand-in guide gets a box with a big button right under the banner:  every
+  # Assignment sends students there, so it has to be the first thing they find.
+  if ($HANDIN) {
+    # frontPageLine is written to follow "Title:", so it starts lowercase;  here it stands alone.
+    $line = Inline $HANDIN.frontPageLine
+    $line = $line.Substring(0, 1).ToUpper() + $line.Substring(1)
+    [void]$sb.Append('<div style="background:' + $th.soft + ';border:2px solid ' + $a + ';border-radius:10px;padding:20px 24px;margin:22px 0 10px;text-align:center;">' +
+      '<p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:' + $a + ';">Read this first</p>' +
+      '<p style="margin:0 0 8px;' + $FONT + 'font-size:22px;font-weight:700;color:' + $a + ';">' + (Esc $HANDIN.title) + '</p>' +
+      '<p style="margin:0 0 16px;">' + $line + '</p>' +
+      '<p style="margin:0;"><a href="' + (GuideToken $HANDIN) + '" style="display:inline-block;background:' + $a + ';color:#ffffff;font-weight:700;font-size:17px;text-decoration:none;padding:12px 26px;border-radius:8px;">Open the guide &rarr;</a></p></div>')
+  }
+
   [void]$sb.Append((H2 'What this is' $a))
   foreach ($p in $course.overview) { [void]$sb.Append((P $p)) }
 
@@ -883,6 +896,7 @@ Write-Manifest (Join-Path $outDir 'canvas-manifest.json') ([ordered]@{
   generatedBy      = 'lessons/canvas_import/build_canvas_html.ps1'
   courseTitle      = $course.title
   linkTokenPattern = 'LINK_[A-Z0-9_]+'
+  imageFolder      = '../../chapters/screenshots'
   modules          = $modules.ToArray()
 })
 Write-Host '  built  canvas-manifest.json'
