@@ -474,8 +474,10 @@ entry.*
   an `if`, like `if (score = 10)`.  Make it `==`.
 - **"The function collidesWith(Blob) does not exist":**  the class line says
   `extends Sprite`.  Change it to `extends Blob`.
-- **Touching a `Block` does nothing:**  a block can't be touched in this
-  course.  Use a Blob for anything the player should touch.
+- **Touching a `Block` does nothing:**  first check for an
+  `if (player.collidesWith(...))` that names the block.  A block's hitbox is its
+  whole rectangle.  If the `if` is there and a touch in the block's middle still
+  never counts, the computer has an old copy of the library.  Ask the teacher.
 - **Touching the hazard does nothing (Day 2, step 8):**  expected.  `gameOver`
   changed, and nothing reads it until the `if` / `else` in step 10.
 - **The game ends the instant it starts:**  the hazard was made on top of the

@@ -207,7 +207,7 @@ this list.
 |---|---|---|
 | every sprite | | `move()`, `moveTo(x, y)`, `setVelocity(vx, vy)`, `followMouse()`, `follow(otherSprite)`, `keyboardControl()`, `distanceTo(otherSprite)`, `getPosition()`, `getVelocity()`, `drawSprite()` |
 | `Blob` | `new Blob(this, x, y, radius, color)` or `new Blob(this, x, y, radius, vx, vy, color)` | everything above, plus `collidesWith(otherBlob)` |
-| `Block` | `new Block(this, x, y, w, h, color)`.  `x, y` is the top-left corner. | everything a Blob has.  `collidesWith()` compiles with a Block, but a Block's bump-circle is a single point at its top-left corner, so it almost never fires.  Blocks are scenery. |
+| `Block` | `new Block(this, x, y, w, h, color)`.  `x, y` is the top-left corner. | everything a Blob has.  `collidesWith()` works with a Block:  its hitbox is its whole rectangle, from either side (`player.collidesWith(wall)` or `wall.collidesWith(player)`). |
 | `ImageSprite` | `new ImageSprite(this, x, y, "file.png")`, or with one size, or with `w, h` | `setSize(size)`, `setSize(w, h)`, `setRotation(angle)`, `rotate(amount)`, `getRotation()`.  **No `collidesWith()`.** |
 | `CompoundSprite` | `new CompoundSprite(this, x, y)` | `addSprite(s)`, `removeSprite(s)`, `getSprites()`.  **No `collidesWith()`.** |
 | `AnimatedSprite` | `new AnimatedSprite(this, x, y)`, or `AnimatedSprite.FromSprite(s)` | `AddFrameSprite(s)`, `setFrameRate(n)`, `getFrameRate()`, `setFrameNumber(n)`, `getFrameNumber()`, `getFrameCount()`, `getFrameSprites()`, `nextFrame()`, `previousFrame()`.  `FromSprite` and `AddFrameSprite` also work spelled `fromSprite` and `addFrameSprite`.  **No `collidesWith()`.** |

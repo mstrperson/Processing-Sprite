@@ -214,7 +214,7 @@ this list.
 |---|---|---|
 | every sprite | | `move()`, `moveTo(x, y)`, `setVelocity(vx, vy)`, `followMouse()`, `follow(otherSprite)`, `keyboardControl()`, `distanceTo(otherSprite)`, `getPosition()`, `getVelocity()`, `drawSprite()` |
 | `Blob` | `new Blob(this, x, y, radius, color)` or `new Blob(this, x, y, radius, vx, vy, color)` | everything above, plus `collidesWith(otherBlob)` |
-| `Block` | `new Block(this, x, y, w, h, color)`.  `x, y` is the top-left corner. | everything a Blob has.  `collidesWith()` compiles with a Block, but a Block's bump-circle is a single point at its top-left corner, so it almost never fires.  Blocks are scenery. |
+| `Block` | `new Block(this, x, y, w, h, color)`.  `x, y` is the top-left corner. | everything a Blob has.  `collidesWith()` works with a Block:  its hitbox is its whole rectangle, from either side (`player.collidesWith(wall)` or `wall.collidesWith(player)`). |
 | `ImageSprite` | `new ImageSprite(this, x, y, "file.png")`, or with one size, or with `w, h` | `setSize(size)`, `setSize(w, h)`, `setRotation(angle)`, `rotate(amount)`, `getRotation()`.  **No `collidesWith()`.** |
 | `CompoundSprite` | `new CompoundSprite(this, x, y)` | `addSprite(s)`, `removeSprite(s)`, `getSprites()`.  **No `collidesWith()`.** |
 | `AnimatedSprite` | `new AnimatedSprite(this, x, y)`, or `AnimatedSprite.FromSprite(s)` | `AddFrameSprite(s)`, `setFrameRate(n)`, `getFrameRate()`, `setFrameNumber(n)`, `getFrameNumber()`, `getFrameCount()`, `getFrameSprites()`, `nextFrame()`, `previousFrame()`.  `FromSprite` and `AddFrameSprite` also work spelled `fromSprite` and `addFrameSprite`.  **No `collidesWith()`.** |
@@ -753,8 +753,10 @@ entry.*
   an `if`, like `if (score = 10)`.  Make it `==`.
 - **"The function collidesWith(Blob) does not exist":**  the class line says
   `extends Sprite`.  Change it to `extends Blob`.
-- **Touching a `Block` does nothing:**  a block can't be touched in this
-  course.  Use a Blob for anything the player should touch.
+- **Touching a `Block` does nothing:**  first check for an
+  `if (player.collidesWith(...))` that names the block.  A block's hitbox is its
+  whole rectangle.  If the `if` is there and a touch in the block's middle still
+  never counts, the computer has an old copy of the library.  Ask the teacher.
 - **Touching the hazard does nothing (Day 2, step 8):**  expected.  `gameOver`
   changed, and nothing reads it until the `if` / `else` in step 10.
 - **The game ends the instant it starts:**  the hazard was made on top of the

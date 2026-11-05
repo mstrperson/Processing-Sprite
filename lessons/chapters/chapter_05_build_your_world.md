@@ -82,8 +82,10 @@ So this one fills the bottom 70 pixels of the window, edge to edge.
 > **Watch out.**  For a `Block`, `x` and `y` are the **top-left corner**.  For a
 > Blob they were the **center**.  This catches everyone once.
 
-A `Block` is scenery.  Your character passes straight through it, the same as
-it passes through everything else in your world right now.
+Your character passes straight through a `Block`, the same as it passes through
+everything else in your world right now.  In Chapter 6 your sketch learns to
+notice when two things touch, and a `Block` counts:  touch it anywhere on its
+rectangle.
 
 ---
 

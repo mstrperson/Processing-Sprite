@@ -232,7 +232,7 @@ aliasing.  The suggested fix is in Part Five.
 | `myColor` | `int` (`protected`).  Used only by `Blob`'s own `drawSprite()`. |
 | `Blob(PApplet parent, float x, float y, float r, int c)` | Chapter 1's five things |
 | `Blob(PApplet parent, float x, float y, float r, float dx, float dy, int c)` | with a velocity:  Chapter 5's coin |
-| `collidesWith(Blob other)` | `distanceTo(other) <= radius + other.radius`.  Circles only, and touching counts:  centers exactly 20 apart, with radii 10 and 10, is `true`, and 21 apart is `false`. |
+| `collidesWith(Blob other)` | `distanceTo(other) <= radius + other.radius`, and touching counts:  centers exactly 20 apart, with radii 10 and 10, is `true`, and 21 apart is `false`.  If `other` is a `Block`, it hands the question to the `Block`, which checks its rectangle (A2.11). |
 | `drawSprite()` | `fill(myColor)`, then a circle of `2 * radius`.  It sets no stroke, so it uses whatever stroke is current.  See A2.10. |
 
 ## A2.9  Why `Blob`
@@ -285,8 +285,9 @@ the coins, and the hazards are all Blobs, so one kind of variable fits any of
 them, and Bonus D's `ArrayList<Blob>` takes every one.
 
 **3.  Collisions are circles.**  `collidesWith()` compares two radii, so every
-hitbox is a circle, and a tall character or a long platform can only be
-approximated.  The radius is also separate from the drawing, so a student's art
+student class's hitbox is a circle, and a tall character can only be
+approximated.  `Block` is the one exception:  its hitbox is its rectangle
+(A2.11).  The radius is also separate from the drawing, so a student's art
 can drift far from its hitbox, which is a pitfall the Lesson 6 Canvas page names.
 What it buys:  one number as the design lever.  Chapter 6 asks *"generous or
 precise?"*, and the answer is the radius.  The rule fits in one sentence a sixth
@@ -300,11 +301,11 @@ these five before."*  The color is also what shows up when a misspelling falls
 back to Blob's circle, which makes trade-off 1 easier to explain.
 
 **5.  `Block` is a `Blob`.**  A rectangle isn't a circle, and `Block` inherits
-anyway, to reuse `myColor` and to fit wherever a Blob fits.  So a `Block` inherits
-a collision circle of radius 0 at its top-left corner.  Verified:  a Blob sitting
-in the middle of a 200-by-100 `Block` is `false`, and a Blob near its corner is
-`true`.  `distanceTo()` measures to the corner too.  That's why Chapter 5 calls a
-`Block` scenery.  What it buys:  one more
+anyway, to reuse `myColor` and to fit wherever a Blob fits.  Its radius is 0,
+so it needs a collision check of its own, and it has one:  `Block` overrides
+`collidesWith()` with a rectangle check (A2.11).  Until 2026-11-05 it didn't,
+and a `Block`'s hitbox was a single point at its top-left corner.  `distanceTo()`
+still measures to the corner.  That's where `pos` is.  What it buys:  one more
 thing that goes anywhere a `Blob` goes, at no cost in new code.
 
 **6.  `pos` and `vel` are open to students.**  Because they're `protected`, a
@@ -350,10 +351,24 @@ drawn, and that's the habit to teach:  a `drawSprite()` sets everything it needs
 |---|---|
 | `w`, `h` | `float` (`protected`).  Width and height, stored as absolute values. |
 | `Block(PApplet parent, float x, float y, float w, float h, int c)` | `x, y` is the **top-left corner**.  The radius is 0. |
+| `collidesWith(Blob other)` | An override.  Against another `Block`:  the two rectangles overlap on both x and y.  Against a circle:  the point on the rectangle nearest the circle's center is within its radius.  Touching counts. |
 | `drawSprite()` | `fill(myColor); noStroke(); rect(pos.x, pos.y, w, h)`.  The `noStroke()` leaks (A2.10). |
 
-A `Block` has `move()` and `setVelocity()`, and starts still.  Its collision is
-A2.9's trade-off 5:  a point at its corner.
+A `Block` has `move()` and `setVelocity()`, and starts still.  Its hitbox is the
+rectangle it draws, and it doesn't matter which side asks:  `ball.collidesWith(wall)`
+and `wall.collidesWith(ball)` give the same answer.  Verified, with a 200-by-100
+`Block` whose corner is at `(300, 300)`:
+
+```
+a Blob in the middle of the Block:  true;  the Block asking:  true
+a Blob touching its left edge:  true;  one pixel farther:  false
+a Blob off the corner, diagonally:  false
+two overlapping Blocks:  true;  one pixel apart:  false
+```
+
+The diagonal one is a radius-20 Blob centered at `(280, 280)`.  It's inside the
+box around the corner, but 28.3 pixels from the corner itself.  A `Block`'s
+hitbox has the same sharp corners as its drawing.
 
 ## A2.12  `ScreenBehavior`
 
@@ -505,15 +520,15 @@ No chapter uses `Event`.
 
 Everything this run found, with a suggested fix for each.  The fixes are
 suggestions.  Only the first was built and run, as an override in a sketch.  The
-library itself took a smaller fix for the first, on 2026-10-30, and is otherwise
-unchanged.
+library itself took a smaller fix for the first, on 2026-10-30, and fixed
+`Block`'s collision on 2026-11-05.  It is otherwise unchanged.
 
 | Where | The issue | Suggested fix |
 |---|---|---|
 | `Sprite.followMouse()` | Landing exactly on the mouse divided by zero:  the position became NaN, and the sprite vanished for good.  **Fixed 2026-10-30** with a guard clause (A2.6).  Within one step it still jitters. | Land on the mouse when it's within one step (below).  This would also end the jitter. |
 | `Sprite.getPosition()`, `getVelocity()`, `moveTo(Vector2D)`, `setVelocity(Vector2D)`, `Sprite(PApplet, Vector2D)` | Share vectors with the caller (A2.7). | Hand out and store copies:  `return new Vector2D(pos.x, pos.y);`, `pos = new Vector2D(p.x, p.y);`. |
 | `ImageSprite` | A missing file stops the sketch later, at `drawSprite()`, with `NullPointerException`. | In `drawSprite()`, `if (img == null) return;`, or draw a placeholder rectangle. |
-| `Block` | Inherits a collision circle of radius 0 at its corner. | Give `Block` a rectangle check of its own, or say plainly that it's scenery (the chapters do). |
+| `Block` | Inherited a collision circle of radius 0 at its corner, so a Blob in the middle of a `Block` wasn't touching it.  **Fixed 2026-11-05** (library 1.0.2):  `Block` overrides `collidesWith()` with a rectangle check (A2.11). | Done. |
 | `Blob.drawSprite()`, `Block.drawSprite()` | Leave fill and stroke changed for everything after them (A2.10). | Wrap each in `parent.pushStyle()` and `parent.popStyle()`, the way `ImageSprite` does.  This would also give Chapter 1's blob and Chapter 5's coin the same outline. |
 | `Event` | Ambiguous by name in a sketch, and can't call methods in a sketch's classes. | Rename it, `GameEvent`, and call `method.setAccessible(true)` in `bind()`. |
 | `Vector2D.theta()` | `atan(y / x)` can't tell left from right, so `angleTo()` is wrong for left-pointing vectors. | `(float) Math.atan2(y, x)`. |

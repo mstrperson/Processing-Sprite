@@ -131,11 +131,11 @@ at the top, `platform = new Block(...);` in `setup()`, and
 `platform.drawSprite();` in `draw()`, right after `ground.drawSprite();`.  A
 block sits still, so it needs no `move()`.
 
-A `Block` is scenery.  The character passes straight through it, and in this
-course it stays that way.  Even in Lesson 6, `collidesWith()` can't tell when
-something touches a block.  If a student wants to stand on a platform or bump
-into a wall, say that solid platforms are past this course, and suggest they ask
-their teacher.
+The character passes straight through a `Block`, and in this course it stays
+that way.  In Lesson 6, `collidesWith()` can tell when something touches a
+block, anywhere on its rectangle, but touching isn't stopping.  If a student
+wants to stand on a platform or bump into a wall, say that solid platforms are
+past this course, and suggest they ask their teacher.
 
 ## Things students ask for in this lesson
 

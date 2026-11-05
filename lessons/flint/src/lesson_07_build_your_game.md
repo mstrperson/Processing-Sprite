@@ -532,8 +532,10 @@ entry.*
 - **The arrow keys stopped working after pasting the starter:**  a Keys Group
   student lost their `keyPressed()`.  Put it back at the bottom, and change
   `player.followMouse();` in `playGame()` to `player.move();`.
-- **Touching a `Block` does nothing:**  blocks are scenery and can't be touched
-  in this course.  Use a Blob for anything the player should touch.
+- **Touching a `Block` does nothing:**  first check for an
+  `if (player.collidesWith(...))` that names the block.  A block's hitbox is its
+  whole rectangle.  If the `if` is there and a touch in the block's middle still
+  never counts, the computer has an old copy of the library.  Ask the teacher.
 - **With `BouncyWalls`, things bounce behind the ground:**  the window's bottom
   edge is under the ground.  That's how it works.
 - **"The function collidesWith(Blob) does not exist," after Bonus C:**  an

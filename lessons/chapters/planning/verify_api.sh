@@ -51,16 +51,22 @@ void draw() {}
 PDE
 run Touch 3
 
-echo "== a Block's collision circle:  radius 0, at its top-left corner"
+echo "== a Block's hitbox:  its whole rectangle"
 sketch BlockHit <<'PDE'
 import coxprogramming.processing.sprites.*;
 void setup() {
   size(800, 600);
-  Block wall = new Block(this, 300, 300, 200, 100, color(0));          // corner (300, 300), middle (400, 350)
+  Block wall = new Block(this, 300, 300, 200, 100, color(0));          // x 300 to 500, y 300 to 400
   Blob middle = new Blob(this, 400, 350, 30, color(0));
-  Blob corner = new Blob(this, 320, 310, 30, color(0));
-  println("a Blob in the middle of the Block:  " + middle.collidesWith(wall));
-  println("a Blob near its corner:  " + corner.collidesWith(wall));
+  Blob edge = new Blob(this, 270, 350, 30, color(0));                  // exactly 30 left of the left edge
+  Blob gap = new Blob(this, 269, 350, 30, color(0));                   // 31 left of it
+  Blob diagonal = new Blob(this, 280, 280, 20, color(0));              // 28.3 from the corner
+  Block overlap = new Block(this, 450, 380, 100, 100, color(0));
+  Block apart = new Block(this, 501, 300, 50, 50, color(0));
+  println("a Blob in the middle of the Block:  " + middle.collidesWith(wall) + ";  the Block asking:  " + wall.collidesWith(middle));
+  println("a Blob touching its left edge:  " + edge.collidesWith(wall) + ";  one pixel farther:  " + gap.collidesWith(wall));
+  println("a Blob off the corner, diagonally:  " + diagonal.collidesWith(wall));
+  println("two overlapping Blocks:  " + wall.collidesWith(overlap) + ";  one pixel apart:  " + wall.collidesWith(apart));
 }
 void draw() {}
 PDE
