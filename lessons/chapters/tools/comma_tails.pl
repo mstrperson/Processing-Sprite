@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # Lists sentences that end ", <short phrase>." in book Markdown:  the stacked
-# tail, meta/WRITING_COMMON_ERRORS.md entry 27.  Added 2026-11-01, when Jason
+# tail, WRITING_COMMON_ERRORS.md entry 27.  Added 2026-11-01, when Jason
 # found many of them proofreading.  check_prose.sh runs it.
 #
 #     perl lessons/chapters/tools/comma_tails.pl [maxwords] file.md ...

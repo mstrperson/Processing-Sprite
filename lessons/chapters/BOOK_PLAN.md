@@ -150,9 +150,8 @@ What follows from those answers, as rules for drafting:
   none of them.
 
 The style rules come from OODP_Lessons' copies of
-`APPALACHIAN_ACADEMIC_STYLE.md` and `WRITING_COMMON_ERRORS.md`.  This repo's
-`meta/WRITING_COMMON_ERRORS.md` is an older copy (95 KB against 111 KB), and
-lacks entries 36 to 39.  See question 9.12.
+`APPALACHIAN_ACADEMIC_STYLE.md` and `WRITING_COMMON_ERRORS.md`.  The style
+guides live outside this repo now.
 
 ---
 
@@ -482,6 +481,7 @@ The chapters were drafted with a default for each.  A yes or no settles most.
     lacks entries 36 to 39.  Bring it up to date from OODP_Lessons, or leave
     it for the ClaudeWritingProject sync?
     > Please update this repo's copy.
+    > Superseded 2026-11-05:  the style guides moved out of this repo.
 13. **The book's title.**  *Make Your Own Game*, from the Canvas front page, with
     its own line *"your character, your world, your rules"* as the tagline?
     > Defer this and leave your suggestion for now, it's not a good title, but I need to think about that one more... lol.

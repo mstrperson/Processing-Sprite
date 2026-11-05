@@ -191,7 +191,7 @@ goes in a bonus chapter, the way lists and loops did.
 ### 8.  Check the prose
 
 The voice rules are in OODP_Lessons' `meta/APPALACHIAN_ACADEMIC_STYLE.md` and
-`meta/WRITING_COMMON_ERRORS.md`, which are newer than this repo's copies.  Every
+`meta/WRITING_COMMON_ERRORS.md`, which live outside this repo.  Every
 drafter reads both in full.  The mechanical ones get a grep before a chapter is
 done:
 

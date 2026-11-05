@@ -117,7 +117,7 @@ local NBSP = "\u{A0}"
 local KEEP_MARK = '<w:tblCaption w:val="keep-with-next"/>'
 
 -- Smart typography stays off.  It would turn `--` into an en dash and straight
--- quotes into curly ones, and meta/WRITING_COMMON_ERRORS.md entry 1 bans the
+-- quotes into curly ones, and WRITING_COMMON_ERRORS.md entry 1 bans the
 -- typographic dash.  The chapter's own characters go through unchanged.
 local READER = "markdown-smart"
 

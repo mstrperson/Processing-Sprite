@@ -63,7 +63,7 @@ function Esc([string]$s) {
 #   `code`  ->  <code>      **bold**  ->  <strong>
 # The JSON puts two spaces after . ? ! and : -- HTML collapses them, so the
 # second one goes out as &nbsp; (an accessibility requirement, see
-# meta/WRITING_COMMON_ERRORS.md entry 2).
+# WRITING_COMMON_ERRORS.md entry 2).
 function Inline([string]$s) {
   $t = Esc $s
   $t = [regex]::Replace($t, '`([^`]+)`', ('<code style="' + $CODE_INLINE + '">$1</code>'))
