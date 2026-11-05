@@ -59,12 +59,16 @@ public class Blob extends Sprite {
     /**
      * Checks whether this Blob is touching another Blob.
      * Two circles are touching when the distance between their centers is
-     * less than or equal to the sum of their radii.
+     * less than or equal to the sum of their radii. If the other Blob is a
+     * {@link Block}, its rectangular shape is used instead.
      *
      * @param other the other Blob to check against
      * @return {@code true} if the two Blobs overlap or touch, {@code false} otherwise
      */
     public boolean collidesWith(Blob other) {
+        if (other instanceof Block) {
+            return other.collidesWith(this);
+        }
         return this.distanceTo(other) <= this.radius + other.radius;
     }
 

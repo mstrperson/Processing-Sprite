@@ -45,6 +45,30 @@ public class Block extends Blob {
     }
 
     /**
+     * Checks whether this Block is touching another Blob or Block.
+     * Against another Block, the two rectangles are touching when they
+     * overlap on both the x-axis and the y-axis. Against a circular Blob,
+     * they are touching when the point on the rectangle closest to the
+     * circle's center is within the circle's radius.
+     *
+     * @param other the Blob or Block to check against
+     * @return {@code true} if the two shapes overlap or touch, {@code false} otherwise
+     */
+    @Override
+    public boolean collidesWith(Blob other) {
+        if (other instanceof Block) {
+            Block b = (Block) other;
+            return pos.x <= b.pos.x + b.w && b.pos.x <= pos.x + w
+                && pos.y <= b.pos.y + b.h && b.pos.y <= pos.y + h;
+        }
+        float closestX = Math.max(pos.x, Math.min(other.pos.x, pos.x + w));
+        float closestY = Math.max(pos.y, Math.min(other.pos.y, pos.y + h));
+        float dx = other.pos.x - closestX;
+        float dy = other.pos.y - closestY;
+        return dx * dx + dy * dy <= other.radius * other.radius;
+    }
+
+    /**
      * Draws this Block as a filled rectangle with no outline.
      * Call this once per frame inside your {@code draw()} loop.
      */
