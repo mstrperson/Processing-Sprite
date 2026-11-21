@@ -389,6 +389,18 @@ new Button(this, x, y, 75, 75, "+", orange, white)
 
 ---
 
+### SketchZipper
+
+A utility for turning in work.  It lists the sketches in the student's
+Processing sketchbook; the student picks one and clicks **Save to Zip**, and a
+`.zip` of the whole sketch folder is saved to the Desktop, ready to upload to
+Canvas.  It doesn't use the SpriteGame library.
+
+**Concepts:** `java.io.File`, `java.util.zip`, recursion over folders,
+`thread()` for background work, a hand-drawn list and button
+
+---
+
 ## Building from Source
 
 The build script looks for Processing's bundled Java compiler and `core.jar`

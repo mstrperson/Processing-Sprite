@@ -1,6 +1,6 @@
 name=SpriteGame
-version=1
-prettyVersion=0.1.0
+version=4
+prettyVersion=1.0.3
 minRevision=1270
 maxRevision=0
 authors=[Jason Cox]
